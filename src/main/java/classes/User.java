@@ -11,6 +11,7 @@ public class User {
         this.debts = new ArrayList<>();
     }
 
+    //Todo: addDebt og simplifyDebtForSingleUser er ikke up to date
     public void addDebt(User toUser, double sum){
         if(debts.size()==0)debts.add(new Debt(sum, toUser));
         for (Debt debt :debts) {
