@@ -6,12 +6,13 @@ public class User {
     private String name;
     private ArrayList<Debt> debts;
 
-    public User(String name, ArrayList<Debt> debts){
+    public User(String name){
         this.name = name;
-        this.debts = debts;
+        this.debts = new ArrayList<>();
     }
 
     public void addDebt(User toUser, double sum){
+        if(debts.size()==0)debts.add(new Debt(sum, toUser));
         for (Debt debt :debts) {
             if(debt.getToUser().equals(toUser)){
                 debt.setSum(debt.getSum()+sum);
