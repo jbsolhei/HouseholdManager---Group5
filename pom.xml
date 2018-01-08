@@ -7,84 +7,104 @@
   <version>1.0-SNAPSHOT</version>
   <name>HouseHoldApp</name>
   <url>http://maven.apache.org</url>
-
-    <repositories>
-        <repository>
-            <id>clojars</id>
-            <url>http://clojars.org/repo/</url>
-        </repository>
-    </repositories>
-
   <dependencies>
-      <dependency>
-          <groupId>javax.ws.rs</groupId>
-          <artifactId>javax.ws.rs-api</artifactId>
-          <version>2.0-rc3</version>
-      </dependency>
-      <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.12</version>
-          <scope>test</scope>
-      </dependency>
+    <dependency>
+      <groupId>edu.stanford.nlp</groupId>
+      <artifactId>stanford-corenlp</artifactId>
+      <version>3.6.0</version>
+    </dependency>
+  <dependency>
+    <groupId>edu.stanford.nlp</groupId>
+    <artifactId>stanford-corenlp</artifactId>
+    <version>3.8.0</version>
+    <classifier>models</classifier>
+  </dependency>
 
-      <dependency>
-          <groupId>org.glassfish.jersey.containers</groupId>
-          <artifactId>jersey-container-servlet</artifactId>
-          <version>2.25.1</version>
-      </dependency>
-      <dependency>
-          <groupId>org.glassfish.jersey.core</groupId>
-          <artifactId>jersey-server</artifactId>
-          <version>2.25.1</version>
-      </dependency>
-      <dependency>
-          <groupId>org.glassfish.jersey.core</groupId>
-          <artifactId>jersey-client</artifactId>
-          <version>2.25.1</version>
-      </dependency>
-      <dependency>
-          <groupId>org.glassfish.jersey.media</groupId>
-          <artifactId>jersey-media-json-jackson</artifactId>
-          <version>2.25.1</version>
-      </dependency>
-  </dependencies>
+  <dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.0.1</version>
+    <scope>provided</scope>
+  </dependency>
 
-  <build>
-    <finalName>hhapp</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+  <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.12</version>
+  </dependency>
+
+  <dependency>
+    <groupId>javax.ws.rs</groupId>
+    <artifactId>javax.ws.rs-api</artifactId>
+    <version>2.0.1</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.glassfish.jersey.containers</groupId>
+    <artifactId>jersey-container-servlet</artifactId>
+    <version>2.25.1</version>
+  </dependency>
+  <dependency>
+    <groupId>org.glassfish.jersey.core</groupId>
+    <artifactId>jersey-server</artifactId>
+    <version>2.25.1</version>
+  </dependency>
+  <dependency>
+    <groupId>org.glassfish.jersey.core</groupId>
+    <artifactId>jersey-client</artifactId>
+    <version>2.25.1</version>
+  </dependency>
+</dependencies>
+
+<properties>
+  <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <maven.compiler.source>1.8</maven.compiler.source>
+  <maven.compiler.target>1.8</maven.compiler.target>
+</properties>
+
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.tomcat.maven</groupId>
+      <artifactId>tomcat7-maven-plugin</artifactId>
+      <version>2.2</version>
+    </plugin>
+
+    <plugin>
+      <groupId>org.jacoco</groupId>
+      <artifactId>jacoco-maven-plugin</artifactId>
+      <version>0.7.9</version>
+      <executions>
+        <execution>
+          <goals>
+            <goal>prepare-agent</goal>
+          </goals>
+        </execution>
+        <execution>
+          <id>report</id>
+          <phase>test</phase>
+          <goals>
+            <goal>report</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>cobertura-maven-plugin</artifactId>
+      <version>2.7</version>
+      <configuration>
+        <formats>
+          <format>html</format>
+          <format>xml</format>
+        </formats>
+        <check />
+      </configuration>
+    </plugin>
+
+  </plugins>
+</build>
 </project>
+
