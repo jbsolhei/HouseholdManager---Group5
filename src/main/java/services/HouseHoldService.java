@@ -7,12 +7,12 @@ import javax.ws.rs.Produces;
 /**
  * @author team5
  */
-@Path("user")
-public class UserService {
+@Path("household")
+public class HouseHoldService {
 
     @GET
     @Produces("text/plain")
     public String getTest(){
-        return "User service says hello!";
+        return "Household service says hello!";
     }
 }
