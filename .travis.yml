@@ -4,14 +4,6 @@ script: mvn clean verify
 jdk:
   - oraclejdk8
 
-notifications:
-  email:
-    recipients:
-      - joaki.m@hotmail.com
-      - bragehs@stud.ntnu.no
-    on_sucess: never
-    on_failure: always
-
 script: "mvn cobertura:cobertura"
 
 after_success:
