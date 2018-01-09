@@ -6,6 +6,7 @@ public class User {
     private String name;
     private String email;
     private String phone;
+    private String password;
     private ArrayList<Debt> debts;
 
     public User(){}
@@ -53,6 +54,8 @@ public class User {
     public String getPhone() {
         return phone;
     }
+
+    public String getPassword() {return password; }
 
     public void setDebts(ArrayList<Debt> debts) {
         this.debts = debts;
