@@ -34,13 +34,4 @@ public class DBConnector {
     public ResultSet getResultSetFromStatement(PreparedStatement statement){
         return null;
     }
-
-    public static void main(String[] args) throws SQLException {
-        DBConnector dbc = new DBConnector();
-        Connection conn = dbc.getConn();
-        Statement statement = conn.createStatement();
-        String testStatement = "INSERT INTO Person (email, name, password, telephone) VALUES ('olaNormann@gmail.com','Ola Normann','123456', 42112312)";
-        statement.executeUpdate(testStatement);
-        dbc.disconnect();
-    }
 }
