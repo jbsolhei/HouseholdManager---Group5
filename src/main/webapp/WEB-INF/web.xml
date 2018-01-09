@@ -18,6 +18,6 @@
 
     <servlet-mapping>
         <servlet-name>jersey-serlvet</servlet-name>
-        <url-pattern>/webresources/*</url-pattern>
+        <url-pattern>/res/*</url-pattern>
     </servlet-mapping>
 </web-app>
