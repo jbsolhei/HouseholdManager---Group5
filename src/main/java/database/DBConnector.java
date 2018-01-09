@@ -24,7 +24,6 @@ public class DBConnector {
             throw e;
         }
     }
-
     public DBConnector(String DBPath) throws Exception {
         try {
             conn = DriverManager.getConnection(DBPath);
@@ -43,5 +42,10 @@ public class DBConnector {
             CleanUp.writeMessage(sqle, "getResultFromStatement");
         }
         return null;
+    }
+
+
+    public static void main(String[] args) {
+
     }
 }
