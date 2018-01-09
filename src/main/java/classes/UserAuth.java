@@ -8,6 +8,6 @@ public class UserAuth {
      * @return
      */
     public static String authUser(String email, String password) {
-
+        return null;
     }
 }

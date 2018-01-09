@@ -19,7 +19,7 @@ public class Sessions {
         else {
             long now = System.currentTimeMillis() / 1000;
 
-            session.setLastActivityTimestamp();
+            session.setLastActivityTimestamp(0);
         }
     }
 }
