@@ -44,4 +44,9 @@ public class DBConnector {
         return null;
     }
 
+
+    public static void main(String[] args) {
+
+    }
+
 }
