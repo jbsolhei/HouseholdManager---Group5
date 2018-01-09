@@ -18,7 +18,7 @@ userId INTEGER AUTO_INCREMENT,
 email VARCHAR(45) NOT NULL,
 name VARCHAR(45) NOT NULL,
 password VARCHAR(45) NOT NULL,
-telephone BIGINT,
+telephone VARCHAR(20),
 CONSTRAINT user_pk PRIMARY KEY(userId));
 
 CREATE TABLE House_user (

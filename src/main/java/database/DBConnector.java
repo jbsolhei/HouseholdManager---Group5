@@ -34,18 +34,24 @@ public class DBConnector {
     }
 
     public ResultSet getResultSetFromStatement(String statement) {
-        if(statement==null||statement.length()==0)return null;
-        try{
+        if (statement == null || statement.length() == 0) return null;
+        try {
             PreparedStatement preparedStatement = conn.prepareStatement(statement);
             return preparedStatement.executeQuery();
-        }catch(SQLException sqle){
+        } catch (SQLException sqle) {
             CleanUp.writeMessage(sqle, "getResultFromStatement");
         }
         return null;
     }
 
-
-    public static void main(String[] args) {
-
+    public boolean updateDatabase(String statement){
+        if (statement == null || statement.length() == 0) return false;
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(statement);
+            return preparedStatement.executeUpdate()!=0;
+        }catch(SQLException sqle){
+            CleanUp.writeMessage(sqle, "updateDatabase");
+            return false;
+        }
     }
 }
