@@ -1,9 +1,6 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class DBConnector {
     private Connection conn;
@@ -15,7 +12,7 @@ public class DBConnector {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://juicebuster.wada.world:3306/juicebuster?user=*********&password=**********&useSSL=true&verifyServerCertificate=false");
         } catch (Exception e) {
-            e.printStackTrace();
+            CleanUp.writeMessage(e, "DBConnector constructor");
             throw e;
         }
     }
@@ -23,7 +20,7 @@ public class DBConnector {
         try {
             conn = DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
-            e.printStackTrace();
+            CleanUp.writeMessage(e, "DBConnector constructor");
             throw e;
         }
     }
@@ -32,13 +29,19 @@ public class DBConnector {
         try {
             conn = DriverManager.getConnection(DBPath);
         } catch (Exception e) {
-            e.printStackTrace();
+            CleanUp.writeMessage(e, "DBConnector constructor");
             throw e;
         }
     }
 
-    public ResultSet getResultSetFromStatement(PreparedStatement statement){
+    public ResultSet getResultSetFromStatement(String statement) {
+        if(statement==null||statement.length()==0)return null;
+        try{
+            PreparedStatement preparedStatement = conn.prepareStatement(statement);
+            return preparedStatement.executeQuery();
+        }catch(SQLException sqle){
+            CleanUp.writeMessage(sqle, "getResultFromStatement");
+        }
         return null;
     }
-
 }
