@@ -1,24 +1,24 @@
 package classes;
 
 public class Debt {
-    private double sum;
+    private double amount;
     private User toUser;
 
-    public Debt(double sum, User toUser){
-        this.sum = sum;
+    public Debt(double amount, User toUser){
+        this.amount = amount;
         this.toUser = toUser;
     }
 
-    public double getSum() {
-        return sum;
+    public double getAmount() {
+        return amount;
     }
 
     public User getToUser() {
         return toUser;
     }
 
-    public void setSum(double sum) {
-        this.sum = sum;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public void setToUser(User toUser) {

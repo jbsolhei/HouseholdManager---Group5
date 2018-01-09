@@ -63,8 +63,10 @@ CREATE TABLE Item (
 itemId INTEGER AUTO_INCREMENT,
 name VARCHAR(45),
 checked BOOLEAN,
-checkedBy INTEGER NOT NULL,
+checkedBy INTEGER,
+  shopping_listId INTEGER,
 FOREIGN KEY (checkedBy) REFERENCES Person(UserId),
+FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId),
 CONSTRAINT item_pk PRIMARY KEY (itemId));
 
 CREATE TABLE Shopping_tour (
