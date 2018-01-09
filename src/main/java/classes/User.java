@@ -6,10 +6,7 @@ public class User {
     private String name;
     private ArrayList<Debt> debts;
 
-    public User(String name){
-        this.name = name;
-        this.debts = new ArrayList<>();
-    }
+    public User(String name){}
 
     //Todo: addDebt og simplifyDebtForSingleUser er shit
     public void addDebt(User toUser, double sum){
