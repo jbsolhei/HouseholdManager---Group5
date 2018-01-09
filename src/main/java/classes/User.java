@@ -8,7 +8,7 @@ public class User {
     private String phone;
     private ArrayList<Debt> debts;
 
-    public User(String name){}
+    public User(){}
 
     //Todo: addDebt og simplifyDebtForSingleUser er shit
     public void addDebt(User toUser, double sum){
