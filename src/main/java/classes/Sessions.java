@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Sessions {
 
-    private static final int timeoutSecs = 60
+    private static final int timeoutSecs = 60;
     private static HashMap<String, Session> sessions;
 
     private Sessions() {
@@ -19,7 +19,8 @@ public class Sessions {
         else {
             long now = System.currentTimeMillis() / 1000;
 
-            session.setLastActivityTimestamp();
+            session.setLastActivityTimestamp(1);
         }
+        return null;
     }
 }

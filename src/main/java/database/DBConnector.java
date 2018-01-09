@@ -1,9 +1,7 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+
 
 public class DBConnector {
     private Connection conn;
@@ -11,29 +9,25 @@ public class DBConnector {
     /**
      * Laster JDBC-klassene og åpner databaseforbindelsen.
      */
-    public DBConnector () throws Exception {
+    public DBConnector () {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://juicebuster.wada.world:3306/juicebuster?user=*********&password=**********&useSSL=true&verifyServerCertificate=false");
+            conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.iie.ntnu.no/g_tdat2003_t5?user=g_tdat2003_t5&password=DPiNHSqD&useSSL=true&verifyServerCertificate=false");
+            System.out.println("Connection created");
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
-        }
-    }
-    public DBConnector(String url, String username, String password) throws Exception {
-        try {
-            conn = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
         }
     }
 
-    public DBConnector(String DBPath) throws Exception {
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void disconnect () {
         try {
-            conn = DriverManager.getConnection(DBPath);
-        } catch (Exception e) {
+            conn.close();
+            System.out.println("Connection disconnected");
+        } catch (SQLException e) {
             e.printStackTrace();
-            throw e;
         }
     }
 
@@ -41,4 +35,12 @@ public class DBConnector {
         return null;
     }
 
+    public static void main(String[] args) throws SQLException {
+        DBConnector dbc = new DBConnector();
+        Connection conn = dbc.getConn();
+        Statement statement = conn.createStatement();
+        String testStatement = "INSERT INTO Person (email, name, password, telephone) VALUES ('olaNormann@gmail.com','Ola Normann','123456', 42112312)";
+        statement.executeUpdate(testStatement);
+        dbc.disconnect();
+    }
 }
