@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class User {
     private String name;
+    private String email;
+    private String phone;
     private ArrayList<Debt> debts;
 
     public User(String name){}
@@ -44,11 +46,27 @@ public class User {
         return name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
     public void setDebts(ArrayList<Debt> debts) {
         this.debts = debts;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
