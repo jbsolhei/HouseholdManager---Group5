@@ -8,28 +8,25 @@ public class DBConnector {
     /**
      * Laster JDBC-klassene og åpner databaseforbindelsen.
      */
-    public DBConnector () throws Exception {
+    public DBConnector () {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://juicebuster.wada.world:3306/juicebuster?user=*********&password=**********&useSSL=true&verifyServerCertificate=false");
+            conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.iie.ntnu.no/g_tdat2003_t5?user=g_tdat2003_t5&password=DPiNHSqD&useSSL=true&verifyServerCertificate=false");
+            System.out.println("Connection created");
         } catch (Exception e) {
             CleanUp.writeMessage(e, "DBConnector constructor");
-            throw e;
         }
     }
-    public DBConnector(String url, String username, String password) throws Exception {
-        try {
-            conn = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
-            CleanUp.writeMessage(e, "DBConnector constructor");
-            throw e;
-        }
+
+    public Connection getConn() {
+        return conn;
     }
-    public DBConnector(String DBPath) throws Exception {
+
+    public void disconnect () {
         try {
-            conn = DriverManager.getConnection(DBPath);
-        } catch (Exception e) {
-            CleanUp.writeMessage(e, "DBConnector constructor");
-            throw e;
+            conn.close();
+            System.out.println("Connection disconnected");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
