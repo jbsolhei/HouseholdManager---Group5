@@ -28,7 +28,9 @@ public class User {
         return phone;
     }
 
-    public String getPassword() {return password; }
+    public String getPassword() {
+        return password;
+    }
 
     public void setDebts(ArrayList<Debt> debts) {
         this.debts = debts;
