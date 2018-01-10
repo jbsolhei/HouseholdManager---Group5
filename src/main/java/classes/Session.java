@@ -2,18 +2,18 @@ package classes;
 
 public class Session {
 
-    private String tokenID;
+    private String token;
     private User loggedInUser;
     private long lastActivityTimestamp;
 
-    public Session(String tokenID, User loggedInUser, long lastActivityTimestamp) {
-        this.tokenID = tokenID;
+    public Session(String token, User loggedInUser, long lastActivityTimestamp) {
+        this.token = token;
         this.loggedInUser = loggedInUser;
         this.lastActivityTimestamp = lastActivityTimestamp;
     }
 
-    public String getTokenID() {
-        return tokenID;
+    public String getToken() {
+        return token;
     }
 
     public User getLoggedInUser() {
