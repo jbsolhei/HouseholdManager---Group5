@@ -14,17 +14,6 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.39</version>
     </dependency>
-    <dependency>
-      <groupId>edu.stanford.nlp</groupId>
-      <artifactId>stanford-corenlp</artifactId>
-      <version>3.6.0</version>
-    </dependency>
-  <dependency>
-    <groupId>edu.stanford.nlp</groupId>
-    <artifactId>stanford-corenlp</artifactId>
-    <version>3.8.0</version>
-    <classifier>models</classifier>
-  </dependency>
 
   <dependency>
     <groupId>javax.servlet</groupId>
@@ -76,6 +65,11 @@
     <artifactId>jersey-client</artifactId>
     <version>2.25.1</version>
   </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-jackson</artifactId>
+      <version>2.22.2</version>
+    </dependency>
     <dependency>
       <groupId>org.mindrot</groupId>
       <artifactId>jbcrypt</artifactId>
@@ -129,6 +123,17 @@
         </formats>
         <check />
       </configuration>
+    </plugin>
+
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12.4</version>
+        <configuration>
+            <excludes>
+                <exclude>**/database/UserDAOTest.java</exclude>
+            </excludes>
+        </configuration>
     </plugin>
 
   </plugins>

@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS Person;
 CREATE TABLE Household (
 houseId INTEGER AUTO_INCREMENT,
 house_name VARCHAR(45) NOT NULL,
+house_address VARCHAR(45) NOT NULL,
 CONSTRAINT household_pk PRIMARY KEY(houseId));
 
 CREATE TABLE Person (

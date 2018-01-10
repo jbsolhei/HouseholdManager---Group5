@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Sessions {
 
-    private static final int timeoutSecs = 1800; // 30 min
+    private static final int TIMEOUT_SECS = 1800; // 30 min
     private static HashMap<String, Session> sessions = new HashMap<>();
 
     private Sessions() {
@@ -25,7 +25,7 @@ public class Sessions {
         }
         else {
             long now = System.currentTimeMillis() / 1000;
-            if (now - session.getLastActivityTimestamp() > timeoutSecs) {
+            if (now - session.getLastActivityTimestamp() > TIMEOUT_SECS) {
                 sessions.remove(token);
                 return null;
             }
@@ -35,17 +35,17 @@ public class Sessions {
     }
 
     /**
-     * Generates a new sesssion with a random token associated with a user.
+     * Generates a new sesssion with a random token associated with a user ID.
      * Last activity timestamp is set to now.
-     * @param user the user for this session
+     * @param userId the user ID for this session
      * @return the Session object
      */
-    public static Session generateSession(User user) {
+    public static Session generateSession(int userId) {
         SecureRandom random = new SecureRandom();
-        byte randomBytes[] = new byte[128];
+        byte randomBytes[] = new byte[64];
         random.nextBytes(randomBytes);
         String token = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
-        Session session = new Session(token, user, System.currentTimeMillis() / 1000);
+        Session session = new Session(token, userId, System.currentTimeMillis() / 1000);
         sessions.put(token, session);
         return session;
     }
