@@ -28,7 +28,14 @@
                     </button>
                 </div>
                 <div class="navbar-collapse collapse" id="mobileNavbar">
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" data-toggle="collapse" data-target="#mobileNavbar">
+                        <li><a class="visible-xs">Dashboard</a></li>
+                        <li><a class="visible-xs">Household</a></li>
+                        <li><a class="visible-xs">Shopping lists</a></li>
+                        <li><a class="visible-xs">Shopping trip</a></li>
+                        <li><a class="visible-xs">To Do</a></li>
+                        <li><a class="visible-xs">Statistics</a></li>
+                        <li><a class="visible-xs">News</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Current household
                                 <span class="caret"></span></a>
@@ -46,20 +53,57 @@
         <!-- sidebar -->
         <nav class="sidebar hidden-xs">
             <ul class="list-unstyled components">
-                <li><button class="btn-sidebar">Dashboard</button></li>
-                <li><button class="btn-sidebar">Household</button></li>
-                <li><button class="btn-sidebar">Shopping lists</button></li>
-                <li><button class="btn-sidebar">Shopping trip</button></li>
-                <li><button class="btn-block btn-sidebar">To Do</button></li>
-                <li><button class="btn-block btn-sidebar">Statistics</button></li>
-                <li><button class="btn-block btn-sidebar">News</button></li>
+                <li><a class="btn btn-default btn-sidebar">Dashboard</a></li>
+                <li><a class="btn btn-default btn-sidebar">Household</a></li>
+                <li><a class="btn btn-default btn-sidebar">Shopping lists</a></li>
+                <li><a class="btn btn-default btn-sidebar">Shopping trip</a></li>
+                <li><a class="btn btn-default btn-sidebar">To Do</a></li>
+                <li><a class="btn btn-default btn-sidebar">Statistics</a></li>
+                <li><a class="btn btn-default btn-sidebar">News</a></li>
             </ul>
         </nav>
     </div>
     <div class="page-wrapper">
         <!-- innhold -->
-        <a data-toggle="modal" onclick='callModal("modals/modaltest.html")' data-target="#theModal">Click me</a>
-        <a data-toggle="modal" onclick='callModal("modals/modaltest2.html")' data-target="#theModal">Click me2</a>
+        <div class="container-fluid">
+            <div class="row equal" style="min-height: 280px">
+                <div class="col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Your to do, today</div>
+                        <div class="panel-body">
+                            Modal testing:<br>
+                            <a data-toggle="modal" onclick='callModal("modals/welcome.html")' data-target="#theModal">Welcome</a>
+                            <a data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal">New household</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Shoppinglists</div>
+                        <div class="panel-body">Panel Content</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Debt</div>
+                        <div class="panel-body">Panel Content</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row equal">
+                <div class="col-md-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Your to do, today</div>
+                        <div class="panel-body">Panel Content</div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-body">Statistics go here</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- /innhold -->
     </div>
     <!-- Denne må være her, trengs aldri å endres -->
