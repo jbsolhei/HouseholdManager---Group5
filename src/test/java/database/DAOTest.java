@@ -10,7 +10,8 @@ import java.sql.Statement;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        UserDAOTest.class
+        UserDAOTest.class,
+        HouseholdDAOTest.class
 })
 
 public class DAOTest {

@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS Person;
 CREATE TABLE Household (
 houseId INTEGER AUTO_INCREMENT,
 house_name VARCHAR(45) NOT NULL,
+house_address VARCHAR(45) NOT NULL,
 CONSTRAINT household_pk PRIMARY KEY(houseId));
 
 CREATE TABLE Person (
@@ -24,6 +25,7 @@ CREATE TABLE House_user (
 roomnumber INTEGER,
 houseId INTEGER NOT NULL,
 userId INTEGER NOT NULL,
+isAdmin BOOL,
 CONSTRAINT house_user_pk PRIMARY KEY(houseId, userId),
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 FOREIGN KEY (userId) REFERENCES Person(userId)
