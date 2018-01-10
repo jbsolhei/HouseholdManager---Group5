@@ -51,6 +51,23 @@
         </div>
     </div>
 </div>
+<a data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal">test</a>
 
+<!-- /innhold -->
+
+<!-- Denne må være her, trengs aldri å endres -->
+<div class="modal fade text-center" id="theModal">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modal">
+        </div>
+    </div>
+</div>
+
+<script>
+    // Ikke rør
+    function callModal(modalContent) {
+        $("#modal").load(modalContent);
+    }
+</script>
 </body>
 </html>
