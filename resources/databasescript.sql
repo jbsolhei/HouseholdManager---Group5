@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS Finance;
 DROP TABLE IF EXISTS Shopping_tour;
 DROP TABLE IF EXISTS Shopping_list;
-DROP TABLE IF EXISTS Item;
+# DROP TABLE IF EXISTS Item;
 DROP TABLE IF EXISTS Message;
 DROP TABLE IF EXISTS Task;
 DROP TABLE IF EXISTS House_user;
@@ -59,7 +59,7 @@ houseId INTEGER NOT NULL,
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 CONSTRAINT shopping_listId PRIMARY KEY (shopping_listId));
 
-CREATE TABLE Item (
+/*CREATE TABLE Item (
 itemId INTEGER AUTO_INCREMENT,
 name VARCHAR(45),
 checked BOOLEAN,
@@ -67,7 +67,7 @@ checkedBy INTEGER,
   shopping_listId INTEGER,
 FOREIGN KEY (checkedBy) REFERENCES Person(UserId),
 FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId),
-CONSTRAINT item_pk PRIMARY KEY (itemId));
+CONSTRAINT item_pk PRIMARY KEY (itemId));*/
 
 CREATE TABLE Shopping_tour (
 expence INTEGER,
