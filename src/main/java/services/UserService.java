@@ -1,5 +1,6 @@
 package services;
 
+import classes.Session;
 import classes.User;
 import classes.UserAuth;
 import database.UserDAO;
@@ -41,13 +42,19 @@ public class UserService {
     }
 
     @GET
-    @Path("/auth")
-    public String authenticateUser(
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String authenticateLogin(
             @QueryParam("email") String email,
             @QueryParam("password") String password) {
 
-        String token = UserAuth.authUser(email, password);
+        Session session = UserAuth.authenticateLogin(email, password);
 
-        return token;
+        if (session == null) {
+            return "";
+        }
+
+        return session.getToken();
     }
+
 }
