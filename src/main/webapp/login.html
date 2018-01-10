@@ -36,9 +36,9 @@
             <p>
                 <a data-toggle="modal" onclick='callModal("forgotten.html")' data-target="#theModal">Forgotten password?</a>
             </p>
-            <form action="/signup">
-                <input type="submit" value="Register new user" />
-            </form>
+
+            <button data-toggle="modal" onclick='callModal("createuser.html")' data-target="#theModal">Register new user</button>
+
         </div>
     </div>
     <footer class="panel-footer">
@@ -50,8 +50,8 @@
     </footer>
 
     <!-- Denne må være her, trengs aldri å endres -->
-    <div class="modal fade text-center" id="theModal">
-        <div class="modal-dialog">
+    <div class="modal fade" id="theModal">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content" id="modal">
             </div>
         </div>
