@@ -2,7 +2,6 @@ package database;
 
 import java.sql.*;
 
-
 public class DBConnector {
     private Connection conn;
 
@@ -14,7 +13,7 @@ public class DBConnector {
             conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.iie.ntnu.no/g_tdat2003_t5?user=g_tdat2003_t5&password=DPiNHSqD&useSSL=true&verifyServerCertificate=false");
             System.out.println("Connection created");
         } catch (Exception e) {
-            e.printStackTrace();
+            CleanUp.writeMessage(e, "DBConnector constructor");
         }
     }
 
@@ -31,7 +30,25 @@ public class DBConnector {
         }
     }
 
-    public ResultSet getResultSetFromStatement(PreparedStatement statement){
+    public ResultSet getResultSetFromStatement(String statement) {
+        if (statement == null || statement.length() == 0) return null;
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(statement);
+            return preparedStatement.executeQuery();
+        } catch (SQLException sqle) {
+            CleanUp.writeMessage(sqle, "getResultFromStatement");
+        }
         return null;
+    }
+
+    public boolean updateDatabase(String statement){
+        if (statement == null || statement.length() == 0) return false;
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(statement);
+            return preparedStatement.executeUpdate()!=0;
+        }catch(SQLException sqle){
+            CleanUp.writeMessage(sqle, "updateDatabase");
+            return false;
+        }
     }
 }
