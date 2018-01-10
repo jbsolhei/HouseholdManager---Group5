@@ -1,0 +1,26 @@
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #eee;
+}
+
+.container {
+    max-width: 400px;
+}
+
+.panel-heading {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#result {
+    height: 150px;
+    margin-top: 10px;
+}
+
+#emoticon {
+    height: 150px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}

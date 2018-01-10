@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="no"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SentimentService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">HouseHoldApp</a> &gt; <a href="index.source.html" class="el_package">services</a> &gt; <span class="el_source">SentimentService.java</span></div><h1>SentimentService.java</h1><pre class="source lang-java linenums">package services;
+
+import analysis.Analyser;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Service that analyzes text sentiment
+ * @author nilstes
+ */
+@Path(&quot;sentiment&quot;)
+<span class="nc" id="L18">public class SentimentService {</span>
+    
+<span class="nc" id="L20">    private static final Logger log = Logger.getLogger(SentimentService.class.getName());</span>
+
+<span class="nc" id="L22">    private static Analyser analyser = new Analyser();</span>
+
+    @POST
+    @Consumes(&quot;text/plain&quot;)
+    @Produces(&quot;text/plain&quot;)
+    public int getSentiment(@Context HttpServletRequest req, String text) {
+<span class="nc" id="L28">        String userAgent = req.getHeader(&quot;User-Agent&quot;);</span>
+<span class="nc" id="L29">        log.log(Level.INFO, &quot;SentimentService.getSentiment(): text={0}, userAgent={1}&quot;, new Object[] {text, userAgent});</span>
+<span class="nc" id="L30">        int sentiment = analyser.findSentiment(text);</span>
+<span class="nc" id="L31">        log.log(Level.INFO, &quot;Returning {0}&quot;, sentiment);</span>
+<span class="nc" id="L32">        return sentiment;</span>
+    }    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
