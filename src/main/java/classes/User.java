@@ -28,7 +28,9 @@ public class User {
         return phone;
     }
 
-    public String getPassword() {return password; }
+    public String getPassword() {
+        return password;
+    }
 
     public void setDebts(ArrayList<Debt> debts) {
         this.debts = debts;
@@ -44,5 +46,9 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
