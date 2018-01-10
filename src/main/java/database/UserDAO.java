@@ -85,6 +85,7 @@ public class UserDAO {
      */
     public static boolean updateUser(int id, String newEmail, String newTelephone, String newName) {
         String query = "UPDATE Person SET email = ?, telephone = ?, name = ? WHERE userId = ?";
+
         boolean userInfoUpdated = false;
         DBConnector dbc = new DBConnector();
 
@@ -144,6 +145,7 @@ public class UserDAO {
      */
     public static boolean updatePassword(int id, String newPassword) {
         String query = "UPDATE Person SET password = ? WHERE userId = ?";
+
         boolean passwordUpdated = false;
         DBConnector dbc = new DBConnector();
 
