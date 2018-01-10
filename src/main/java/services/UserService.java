@@ -1,5 +1,6 @@
 package services;
 
+import classes.LoginAttemptResponse;
 import classes.Session;
 import classes.User;
 import classes.UserAuth;
@@ -44,17 +45,22 @@ public class UserService {
     @GET
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
-    public String authenticateLogin(
+    public LoginAttemptResponse authenticateLogin(
             @QueryParam("email") String email,
             @QueryParam("password") String password) {
 
         Session session = UserAuth.authenticateLogin(email, password);
+        LoginAttemptResponse response = new LoginAttemptResponse();
 
         if (session == null) {
-            return "";
+            response.setSuccess(false);
+        }
+        else {
+            response.setSuccess(true);
+            response.setSessionToken(session.getToken());
         }
 
-        return session.getToken();
+        return response;
     }
 
 }
