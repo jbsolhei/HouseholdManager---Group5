@@ -123,7 +123,7 @@ public class UserDAOTest {
     }
 
     @After
-    public void teatDown() throws Exception {
+    public void tearDown() throws Exception {
         st.close();
         dbc.disconnect();
     }
