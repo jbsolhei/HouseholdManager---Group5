@@ -5,7 +5,6 @@ public class ShoppingList {
     private String name;
     private User[] participants;
     private boolean isPrivate;
-    private Item[] items;
 
     public ShoppingList(){}
 
@@ -15,10 +14,6 @@ public class ShoppingList {
 
     public User[] getParticipants() {
         return participants;
-    }
-
-    public Item[] getItems() {
-        return items;
     }
 
     public boolean isPrivate() {
@@ -31,10 +26,6 @@ public class ShoppingList {
 
     public void setParticipants(User[] participants) {
         this.participants = participants;
-    }
-
-    public void setItems(Item[] items) {
-        this.items = items;
     }
 
     public void setPrivate(boolean aPrivate) {
