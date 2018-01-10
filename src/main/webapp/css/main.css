@@ -10,15 +10,52 @@ body {
 }
 
 header {
-    border: 1px solid #0f0f0f;
-    padding: 10px auto;
-}
-
-#logo {
-    border: 1px solid #0f0f0f;
-    max-width: 720px;
-    min-width: 280px;
     text-align: center;
 }
 
-figure
+#logo {
+    width: auto;
+    max-width: 50%;
+    height: auto;
+    text-align: center;
+}
+
+div {
+    margin: 10px;
+    padding-bottom: 10px;
+    width: auto;
+}
+
+.title {
+    width: 100px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.submit {
+    padding-bottom: 0;
+}
+
+.footer, form{
+    text-align: center;
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+ul {
+    width: auto;
+    padding: 5px;
+    margin: 0px auto;
+    text-align: center;
+}
+
+li {
+    display: inline;
+    margin: 0px 3px;
+}
+
+
