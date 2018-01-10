@@ -1,61 +1,44 @@
-body    {
-    background-color: #eee;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+.navbar {
+    border-radius: 0;!important;
+    margin-bottom: 0;!important;
+>>>>>>> master
 }
 
-.page {
-    min-width: 320px;
-    max-width: 920px;
-    margin: 10px auto;
-}
-
-header {
-    text-align: center;
-}
-
-#logo {
-    width: auto;
-    max-width: 50%;
-    height: auto;
-    text-align: center;
-}
-
-div {
-    margin: 10px;
-    padding-bottom: 10px;
-    width: auto;
-}
-
-.title {
-    width: 100px;
-    text-align: right;
-    padding-right: 10px;
-}
-
-.submit {
-    padding-bottom: 0;
-}
-
-.footer, form{
-    text-align: center;
-}
-
-footer {
+.sidebar {
     position: fixed;
+    margin-right: 20px;
+    width: 13%;
+    height: 100vh;
+    background: #222;
+    color: #9d9d9d;
+}
+
+.btn-sidebar {
     width: 100%;
-    bottom: 0;
-}
-
-ul {
-    width: auto;
-    padding: 5px;
-    margin: 0px auto;
+    height: 36px;
     text-align: center;
+    display: block;
+    border: none;
+    background-color: #222;
+    color: #9d9d9d;
+    outline: none;!important;
+    border: none;!important;
 }
 
-li {
-    display: inline;
-    margin: 0px 3px;
+.btn-sidebar:active {
+
 }
 
 
+.page-wrapper{
+    margin-top: 1%;
+    margin-left: 14%;
+}
+
+@media (max-width: 767px) {
+    .page-wrapper {
+        margin-top: 1%;
+        margin-left: 1%;
+    }
+}
