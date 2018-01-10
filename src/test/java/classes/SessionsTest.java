@@ -7,21 +7,18 @@ import static org.junit.Assert.*;
 
 public class SessionsTest {
 
-    private User alice;
-    private User bob;
+    private int aliceId;
+    private int bobId;
     private Session aliceSession;
     private Session bobSession;
 
     @Before
     public void setup() {
-        alice = new User();
-        alice.setName("Alice");
+        aliceId = 1;
+        bobId = 2;
 
-        bob = new User();
-        bob.setName("Bob");
-
-        aliceSession = Sessions.generateSession(alice);
-        bobSession = Sessions.generateSession(bob);
+        aliceSession = Sessions.generateSession(aliceId);
+        bobSession = Sessions.generateSession(bobId);
     }
 
     @Test
@@ -44,7 +41,7 @@ public class SessionsTest {
 
     @Test
     public void generateSession() throws Exception {
-        Session newAliceSession = Sessions.generateSession(alice);
+        Session newAliceSession = Sessions.generateSession(aliceId);
         String token = newAliceSession.getToken();
         assertEquals(newAliceSession, Sessions.getSession(token));
         assertNotEquals(aliceSession, Sessions.getSession(token));

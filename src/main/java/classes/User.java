@@ -3,13 +3,23 @@ package classes;
 import java.util.ArrayList;
 
 public class User {
+    private int userId;
     private String name;
     private String email;
     private String phone;
     private String password;
     private ArrayList<Debt> debts;
+    private ArrayList<Household> associatedHouseholds;
 
     public User(){}
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     //Todo: addDebt og simplifyDebtForSingleUser er shit
     public void addDebt(User toUser, double sum){
@@ -77,5 +87,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ArrayList<Household> getAssociatedHouseholds() {
+        return associatedHouseholds;
+    }
+
+    public void setAssociatedHouseholds(ArrayList<Household> associatedHouseholds) {
+        this.associatedHouseholds = associatedHouseholds;
     }
 }

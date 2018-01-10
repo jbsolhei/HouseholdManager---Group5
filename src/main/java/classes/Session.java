@@ -3,12 +3,12 @@ package classes;
 public class Session {
 
     private String token;
-    private User loggedInUser;
+    private int loggedInUserId;
     private long lastActivityTimestamp;
 
-    public Session(String token, User loggedInUser, long lastActivityTimestamp) {
+    public Session(String token, int loggedInUserId, long lastActivityTimestamp) {
         this.token = token;
-        this.loggedInUser = loggedInUser;
+        this.loggedInUserId = loggedInUserId;
         this.lastActivityTimestamp = lastActivityTimestamp;
     }
 
@@ -16,8 +16,8 @@ public class Session {
         return token;
     }
 
-    public User getLoggedInUser() {
-        return loggedInUser;
+    public int getLoggedInUserId() {
+        return loggedInUserId;
     }
 
     public long getLastActivityTimestamp() {

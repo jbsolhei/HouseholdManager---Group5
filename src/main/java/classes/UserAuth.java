@@ -15,28 +15,24 @@ public class UserAuth {
      * @param password the plain-text password
      * @return a Session object, or null.
      */
-    public static Session authUser(String email, String password) {
-        String query = "SELECT * FROM Person WHERE email = ? and password = ?";
-        boolean userAuthenticated = false;
-        DBConnector dbc = new DBConnector();
+    public static Session authenticateLogin(String email, String password) {
+        String query = "SELECT userId FROM Person WHERE email = ? and password = ?";
 
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)){
+
             st.setString(1, email);
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
 
-            while (rs.next()) {
-                userAuthenticated = true;
+            if (rs.next()) {
+                int userId = rs.getInt("userId");
+                return Sessions.generateSession(userId);
             }
-
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
 
         return null;

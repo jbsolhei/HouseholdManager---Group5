@@ -41,14 +41,19 @@ public class UserService {
     }
 
     @GET
-    @Path("/auth")
-    public Session authenticateUser(
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String authenticateLogin(
             @QueryParam("email") String email,
             @QueryParam("password") String password) {
 
-        Session token = UserAuth.authUser(email, password);
+        Session session = UserAuth.authenticateLogin(email, password);
 
-        return token;
+        if (session == null) {
+            return "";
+        }
+
+        return session.getToken();
     }
 
 }
