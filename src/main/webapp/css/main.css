@@ -57,5 +57,17 @@ li {
     display: inline;
     margin: 0px 3px;
 }
-
-
+dt{
+    font-size: 16px;
+    font-family: Calibri;
+}
+dd{
+    font-size: 14px;
+    font-family: Calibri;
+}
+/*Spesifications for profile.css*/
+#profile_pic_img{
+    width: auto;
+    height: auto;
+    max-width: 100%;
+}
