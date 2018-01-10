@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+<!--
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+-->
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script language="JavaScript">
+        $(document).ready(function(){
+            $("#profile_information_descriptive_list").append(
+                "<dd> - Ole er kul</dd> <dd> - Han bor på Larssen</dd>"
+            );
+            $("#profile_households_table_body").append(
+                "<tr><td>Hotell Larssen</td><td>Thomas Angells Gate 10B</td><td>Yes</td></tr>" +
+                "<tr><td>Mosjøen</td><td>Veigata 1</td><td>Hell no</td></tr>"
+            )
+        });
+    </script>
+
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3" id="profile_pic_container">
+            <img id="profile_pic_img" src="https://s3-eu-west-1.amazonaws.com/apps.o5.no/apdm/lifeloop/helgeland-arbeiderblad/birthday/20130504040655-1333-wrdv/700.jpg"/>
+        </div>
+        <div class="col-md-3" id="profile_info_container">
+            <dl id="profile_information_descriptive_list">
+                <dt><h2>Profile information</h2></dt>
+            </dl>
+        </div>
+        <div class="col-md-3" id="profile_households_container">
+            <h2>Your households</h2>
+            <h3><small>These are the households for which you are a registered resident</small></h3>
+            <table class="table table-striped" id="profile_households_table">
+                <thead>
+                <tr>
+                    <th>Household name</th>
+                    <th>Adress</th>
+                    <th>Admin</th>
+                </tr>
+                </thead>
+                <tbody id="profile_households_table_body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" id="profile_todos_contaioner">Tasks for today</div>
+        <div class="col-md-3" id="profile_economics_container">Economics</div>
+        <div class="col-md-3" id="profile_statistics_contaioner">Statistics</div>
+    </div>
+</div>
+</body>
+</html>
