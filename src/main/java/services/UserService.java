@@ -1,5 +1,6 @@
 package services;
 
+import classes.Session;
 import classes.User;
 import classes.UserAuth;
 import database.UserDAO;
@@ -7,7 +8,6 @@ import database.UserDAO;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.QueryParam;
-
 
 /**
  * @author team5
@@ -42,14 +42,13 @@ public class UserService {
 
     @GET
     @Path("/auth")
-    public String authenticateUser(
+    public Session authenticateUser(
             @QueryParam("email") String email,
             @QueryParam("password") String password) {
 
-        String token = UserAuth.authUser(email, password);
+        Session token = UserAuth.authUser(email, password);
 
         return token;
     }
-
 
 }
