@@ -25,6 +25,7 @@ CREATE TABLE House_user (
 roomnumber INTEGER,
 houseId INTEGER NOT NULL,
 userId INTEGER NOT NULL,
+isAdmin BOOL,
 CONSTRAINT house_user_pk PRIMARY KEY(houseId, userId),
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 FOREIGN KEY (userId) REFERENCES Person(userId)
