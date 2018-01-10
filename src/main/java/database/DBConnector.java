@@ -2,7 +2,7 @@ package database;
 
 import java.sql.*;
 
-public class DBConnector {
+public class DBConnector implements AutoCloseable {
     static String url = "jdbc:mysql://mysql.stud.iie.ntnu.no/g_tdat2003_t5?user=g_tdat2003_t5&password=DPiNHSqD&useSSL=true&verifyServerCertificate=false";
     private Connection conn;
 
@@ -51,5 +51,10 @@ public class DBConnector {
             CleanUp.writeMessage(sqle, "updateDatabase");
             return false;
         }
+    }
+
+    @Override
+    public void close() throws SQLException {
+        disconnect();
     }
 }

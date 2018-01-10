@@ -47,6 +47,37 @@ public class UserDAO {
     }
 
     /**
+     * Get a user from a user ID.
+     * @param userId the user ID
+     * @return a User object, or null if a user with the given ID doesn't exist.
+     */
+    public static User getUser(int userId) {
+        String query = "SELECT * FROM Person WHERE userId = ?";
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, userId);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                User user = new User();
+                user.setUserId(rs.getInt("userId"));
+                user.setEmail(rs.getString("email"));
+                user.setName(rs.getString("name"));
+                user.setPassword(rs.getString("password"));
+                user.setPhone(rs.getString("telephone"));
+                return user;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * Used to get user info (name and telephone) from database based on the users email.
      * Returns an array of Strings with the name on index 0 and the telephone number on
      * index 1.
