@@ -58,6 +58,7 @@ public class UserDAO {
         String name = "";
         String telephone = "";
         String[] userInfo = new String[2];
+        boolean userExists = false;
 
 
         String query = "SELECT name, telephone FROM Person WHERE email = ?";
@@ -73,8 +74,8 @@ public class UserDAO {
             while (rs.next()) {
                 name = rs.getString("name");
                 telephone = rs.getString("telephone");
+                userExists = true;
             }
-
 
             userInfo[0] = name;
             userInfo[1] = telephone;
@@ -82,12 +83,11 @@ public class UserDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            userInfo = null;
         } finally {
             dbc.disconnect();
         }
-
-        return userInfo;
+        if (userExists) return userInfo;
+        return null;
     }
 
     /**

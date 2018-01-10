@@ -3,6 +3,7 @@ package database;
 import java.sql.*;
 
 public class DBConnector {
+    static String url = "jdbc:mysql://mysql.stud.iie.ntnu.no/g_tdat2003_t5?user=g_tdat2003_t5&password=DPiNHSqD&useSSL=true&verifyServerCertificate=false";
     private Connection conn;
 
     /**
@@ -10,7 +11,7 @@ public class DBConnector {
      */
     public DBConnector () {
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.iie.ntnu.no/g_tdat2003_t5?user=g_tdat2003_t5&password=DPiNHSqD&useSSL=true&verifyServerCertificate=false");
+            conn = DriverManager.getConnection(url);
             System.out.println("Connection created");
         } catch (Exception e) {
             CleanUp.writeMessage(e, "DBConnector constructor");
