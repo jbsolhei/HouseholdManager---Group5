@@ -20,10 +20,6 @@ public class UserDAO {
         String password = newUser.getPassword();
         String telephone = newUser.getPhone();
 
-        /*
-        Fiks passordhashing til passordet!!!!!!!!!!!!!!!!
-         */
-
         String hashedPassword = HashHandler.makeHashFromPassword(password);
 
         String query = "INSERT INTO Person (email, name, password, telephone) VALUES (?,?,?,?)";
@@ -55,22 +51,22 @@ public class UserDAO {
      * @param id the user's id in the database
      * @return String[] an array of info
      */
-    public static String[] getUser(int id) {
+    public static User getUser(int id) {
         String name = "";
         String telephone = "";
         String email = "";
-        String[] userInfo = new String[3];
+        User user = new User();
         boolean userExists = false;
 
 
-        String query = "SELECT name, telephone, email FROM Person WHERE id = ?";
+        String query = "SELECT name, telephone, email FROM Person WHERE userId = ?";
         DBConnector dbc = new DBConnector();
         PreparedStatement st;
 
         try {
             Connection conn = dbc.getConn();
             st = conn.prepareStatement(query);
-            st.setString(1, email);
+            st.setInt(1, id);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -80,9 +76,10 @@ public class UserDAO {
                 userExists = true;
             }
 
-            userInfo[0] = name;
-            userInfo[1] = telephone;
-            userInfo[2] = email;
+            user.setName(name);
+            user.setPhone(telephone);
+            user.setEmail(email);
+
             st.close();
 
         } catch (SQLException e) {
@@ -90,7 +87,7 @@ public class UserDAO {
         } finally {
             dbc.disconnect();
         }
-        if (userExists) return userInfo;
+        if (userExists) return user;
         return null;
     }
 
@@ -104,7 +101,7 @@ public class UserDAO {
      * @return True or false depending on success.
      */
     public static boolean updateUser(int id, String newEmail, String newTelephone, String newName) {
-        String query = "UPDATE Person SET email = ?, telephone = ?, name = ? WHERE id = ?";
+        String query = "UPDATE Person SET email = ?, telephone = ?, name = ? WHERE userId = ?";
         boolean userInfoUpdated = false;
         DBConnector dbc = new DBConnector();
 
@@ -138,7 +135,7 @@ public class UserDAO {
      * @param id The user's id
      */
     public static void deleteUser(int id) {
-        String query = "DELETE FROM Person WHERE id = ?";
+        String query = "DELETE FROM Person WHERE userId = ?";
 
         DBConnector dbc = new DBConnector();
 
@@ -163,7 +160,7 @@ public class UserDAO {
      * @return False if the user does not exist and true if successful.
      */
     public static boolean updatePassword(int id, String newPassword) {
-        String query = "UPDATE Person SET password = ? WHERE id = ?";
+        String query = "UPDATE Person SET password = ? WHERE userId = ?";
         boolean passwordUpdated = false;
         DBConnector dbc = new DBConnector();
 
