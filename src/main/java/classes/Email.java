@@ -73,8 +73,4 @@ public class Email {
             me.printStackTrace();
         }
     }
-    public static void main (String[] args) {
-        String[] emails = {"joaki.xamooz@gmail.com"};
-        sendMail(emails, "Test", "test \nJoakim");
-    }
 }
