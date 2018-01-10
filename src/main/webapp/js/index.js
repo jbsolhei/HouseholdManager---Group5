@@ -3,7 +3,7 @@ $(document).ready(function() {
 });
 
 var dashboard = "dashboard.html";
-var household = "";
+var household = "HouseholdOverview.html";
 var shoppinglists = "";
 var shoppingtrips = "";
 var todo = "";
