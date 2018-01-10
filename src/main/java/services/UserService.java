@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.QueryParam;
 
 /**
+ *
  * @author team5
  */
 @Path("/user")
@@ -49,6 +50,4 @@ public class UserService {
 
         return token;
     }
-
-
 }
