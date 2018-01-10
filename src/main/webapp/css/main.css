@@ -1,20 +1,20 @@
 /*Spesifications for profile.css:*/
 #profile_row_1{
-    max-height: 50%;
+    margin-bottom: 20px;
 }
-
 #profile_pic_img {
     width: auto;
     height: auto;
-    max-width: 100%;
+    max-width: 20vw;
 }
 
 #profile_households_container{
     overflow-y: scroll;
+    max-height:22vw;
 }
 
 #profile_economics_container{
-    height:15vw;
+    height:22vw;
     overflow-y:scroll;
 }
 
