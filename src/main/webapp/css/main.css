@@ -1,22 +1,4 @@
 /*Spesifications for profile.css:*/
-#profile_row_1{
-    margin-bottom: 20px;
-}
-#profile_pic_img {
-    width: auto;
-    height: auto;
-    max-width: 20vw;
-}
-
-#profile_households_container{
-    overflow-y: scroll;
-    max-height:22vw;
-}
-
-#profile_economics_container{
-    height:22vw;
-    overflow-y:scroll;
-}
 
 .navbar {
     border-radius: 0;!important;
