@@ -6,6 +6,7 @@
         <title>HHManager</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/simple-sidebar.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
 
         <script src="js/jquery.min.js"></script>
@@ -13,6 +14,46 @@
         <script src="js/index.js"></script>
     </head>
     <body>
+    <!-- top bar -->
+    <!-- pc -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand " href="#">Meg</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mobileNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="mobileNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Current household
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Other household</a></li>
+                            <li><a href="#">New Household</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- navbar end -->
+    <!-- sidebar -->
+    <nav id="sidebar">
+        <ul class="list-unstyled components">
+            <li class="active"><a href="#">Dashboard</a></li>
+            <li><a href="#">Household</a></li>
+            <li><a href="#">Shopping lists</a></li>
+            <li><a href="#">Shopping trip</a></li>
+            <li><a href="#">To Do</a></li>
+            <li><a href="#">Statistics</a></li>
+            <li><a href="#">News</a></li>
+        </ul>
+    </nav>
     <!-- innhold -->
 
     <!-- Slik åpnes modal fra separat html fil -->
