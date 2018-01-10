@@ -1,11 +1,13 @@
 package database;
 
 import classes.Household;
+import classes.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class HouseholdDAO {
 
@@ -44,10 +46,10 @@ public class HouseholdDAO {
      * @param id the id of the house.
      * @return String[]
      */
-    public static String[] getHousehold(int id) {
+    public static Household getHousehold(int id) { // TODO: more data
         String name = "";
         String address = "";
-        String[] householdInfo = new String[2];
+        Household household = new Household();
         boolean householdExists = false;
 
 
@@ -64,11 +66,11 @@ public class HouseholdDAO {
             while (rs.next()) {
                 name = rs.getString("house_name");
                 address = rs.getString("house_address");
+                household.setName(name);
+                household.setAdress(address);
                 householdExists = true;
             }
 
-            householdInfo[0] = name;
-            householdInfo[1] = address;
             st.close();
 
         } catch (SQLException e) {
@@ -76,7 +78,45 @@ public class HouseholdDAO {
         } finally {
             dbc.disconnect();
         }
-        if (householdExists) return householdInfo;
+        if (householdExists) return household;
+        return null;
+    }
+
+    /**
+     * Used to get all members of a household from database based on the households id.
+     * Returns an array of users.
+     * Returns null if the id does not exist in the database or no members are found.
+     * @param id the id of the house.
+     * @return User[]
+     */
+    public static User[] getMembers(int id) {
+        ArrayList<User> members = new ArrayList<>();
+        boolean householdExists = false;
+
+        String query = "SELECT userId FROM House_user WHERE houseId = ?";
+        DBConnector dbc = new DBConnector();
+        PreparedStatement st;
+
+        try {
+            Connection conn = dbc.getConn();
+            st = conn.prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                //members.add(UserDAO.getUser(rs.getInt("userId")));
+                //members.add(UserDAO.getUser(""));
+                householdExists = true;
+            }
+
+            st.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+        //if (householdExists) return members;
         return null;
     }
 
@@ -120,7 +160,7 @@ public class HouseholdDAO {
      * Used to delete household from the database based on the household id.
      * @param id the id of the household
      */
-    public static void deleteUser(int id) {
+    public static void deleteHousehold(int id) {
         String query = "DELETE FROM Household WHERE houseId = ?";
 
         DBConnector dbc = new DBConnector();

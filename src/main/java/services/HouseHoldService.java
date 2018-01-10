@@ -1,6 +1,7 @@
 package services;
 
 import classes.Household;
+import classes.User;
 import database.HouseholdDAO;
 
 import javax.ws.rs.*;
@@ -25,14 +26,16 @@ public class HouseHoldService {
     }
 
     @GET
+    @Path("/{id}/users")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public User[] getMembers(@PathParam("id") String id) {
+        return HouseholdDAO.getMembers(Integer.parseInt(id));
+    }
+
+    @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Household getHousehold(@PathParam("id") String id) {
-        String[] householdInfo = HouseholdDAO.getHousehold(Integer.parseInt(id));
-        Household household = new Household();
-        household.setName(householdInfo[0]);
-        household.setAdress(householdInfo[1]);
-
-        return household;
+        return HouseholdDAO.getHousehold(Integer.parseInt(id));
     }
 }
