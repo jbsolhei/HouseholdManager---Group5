@@ -1,0 +1,62 @@
+/*Spesifications for profile.css:*/
+#profile_row_1{
+    max-height: 50%;
+}
+
+#profile_pic_img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+}
+
+#profile_households_container{
+    overflow-y: scroll;
+}
+
+#profile_economics_container{
+    height:15vw;
+    overflow-y:scroll;
+}
+
+.navbar {
+    border-radius: 0;!important;
+    margin-bottom: 0;!important;
+}
+
+.sidebar {
+    position: fixed;
+    margin-right: 20px;
+    width: 13%;
+    height: 100vh;
+    background: #222;
+    color: #9d9d9d;
+}
+
+.btn-sidebar {
+    width: 100%;
+    height: 36px;
+    text-align: center;
+    display: block;
+    border: none;
+    background-color: #222;
+    color: #9d9d9d;
+    outline: none;!important;
+    border: none;!important;
+}
+
+.btn-sidebar:active {
+
+}
+
+
+.page-wrapper{
+    margin-top: 1%;
+    margin-left: 14%;
+}
+
+@media (max-width: 767px) {
+    .page-wrapper {
+        margin-top: 1%;
+        margin-left: 1%;
+    }
+}

@@ -6,24 +6,110 @@
         <title>HHManager</title>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/sidebar.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="index.js"></script>
+        <script src="js/index.js"></script>
     </head>
     <body>
-    <!-- innhold -->
-
-    <!-- Slik åpnes modal fra separat html fil -->
-    <a data-toggle="modal" href="modaltest.html" data-target="#theModal">Click me</a>
-
-    <!-- /innhold -->
-
+    <div class="top-and-sidebar">
+        <!-- top bar -->
+        <!-- pc -->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand " href="#">Meg</a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mobileNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse" id="mobileNavbar">
+                    <ul class="nav navbar-nav navbar-right" data-toggle="collapse" data-target="#mobileNavbar">
+                        <li><a class="visible-xs">Dashboard</a></li>
+                        <li><a class="visible-xs">Household</a></li>
+                        <li><a class="visible-xs">Shopping lists</a></li>
+                        <li><a class="visible-xs">Shopping trip</a></li>
+                        <li><a class="visible-xs">To Do</a></li>
+                        <li><a class="visible-xs">Statistics</a></li>
+                        <li><a class="visible-xs">News</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Current household
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Other household</a></li>
+                                <li><a href="#">New Household</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- navbar end -->
+        <!-- sidebar -->
+        <nav class="sidebar hidden-xs">
+            <ul class="list-unstyled components">
+                <li><a class="btn btn-default btn-sidebar">Dashboard</a></li>
+                <li><a class="btn btn-default btn-sidebar">Household</a></li>
+                <li><a class="btn btn-default btn-sidebar">Shopping lists</a></li>
+                <li><a class="btn btn-default btn-sidebar">Shopping trip</a></li>
+                <li><a class="btn btn-default btn-sidebar">To Do</a></li>
+                <li><a class="btn btn-default btn-sidebar">Statistics</a></li>
+                <li><a class="btn btn-default btn-sidebar">News</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="page-wrapper"> <!-- Innholdet her byttes ut med js for hver side -->
+        <!-- innhold -->
+        <div class="container-fluid">
+            <div class="row equal" style="min-height: 280px">
+                <div class="col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Your to do, today</div>
+                        <div class="panel-body">
+                            Modal testing:<br>
+                            <a data-toggle="modal" onclick='callModal("modals/welcome.html")' data-target="#theModal">Welcome</a>
+                            <a data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal">New household</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Shoppinglists</div>
+                        <div class="panel-body">Panel Content</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Debt</div>
+                        <div class="panel-body">Panel Content</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row equal">
+                <div class="col-md-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">Your to do, today</div>
+                        <div class="panel-body">Panel Content</div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-body">Statistics go here</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /innhold -->
+    </div>
     <!-- Denne må være her, trengs aldri å endres -->
     <div class="modal fade text-center" id="theModal">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" id="modal">
             </div>
         </div>
     </div>
