@@ -52,6 +52,7 @@ public class UserService {
         return UserDAO.getHouseholds(id);
     }
 
+
     @GET
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
