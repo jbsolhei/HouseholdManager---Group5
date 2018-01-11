@@ -3,8 +3,10 @@
 }
 
 .long-scroll-panel{
-    max-height: 75vh;
+    min-height: 65vh;
+    max-height: 65vh;
     overflow-y: scroll;
+
 }
 
 .navbar {
@@ -45,6 +47,7 @@
     }
     .long-scroll-panel{
         max-height: 20vh;
+        min-height: 20vh;
         overflow-y: scroll;
     }
 }

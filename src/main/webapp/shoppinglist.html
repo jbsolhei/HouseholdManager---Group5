@@ -1,61 +1,67 @@
-
-    <!--<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-    <link href="css/shoppinglist.css" rel="stylesheet">
+<link href="css/shoppinglist.css" rel="stylesheet">
+<script src="js/shoppinglist.js"></script>
 
 <div class="container-fluid">
     <div class="row content">
-        <div class="col-sm-3 sidenav">
-            <h4>Your shopping lists</h4>
-            <ul id="sideMenu" class="nav nav-pills nav-stacked">
-                <li class="active" onclick="updateShowingList('MainList')" id="MainList"><a>Main shopping list</a></li>
-                <li onclick="updateShowingList('TacoFriday')" id="TacoFriday"><a>Taco friday</a></li>
-                <li onclick="updateShowingList('FootballNight')" id="FootballNight"><a>FootballNight</a></li>
-            </ul>
-            <a onclick="createNewList('ThisIsANewList')" class="btn btn-md">
-                <span class="glyphicon glyphicon-plus"></span> Create new list
-            </a>
-            <br><br>
-            <div id="searchField" class="input-group">
-                <input type="text" class="form-control" placeholder="Search for list..">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </span>
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4>Your shopping lists</h4></div>
+                <div class="panel-body long-scroll-panel">
+                    <ul id="sideMenu" class="nav nav-pills nav-stacked">
+                    </ul>
+                    <a onclick="createNewList('ThisIsANewList')" class="btn btn-md">
+                        <span class="glyphicon glyphicon-plus"></span> Create new list
+                    </a>
+                    <br><br>
+
+                </div>
+                <div class="panel-footer">
+                    <div id="searchField" class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for list..">
+                    <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                </div>
+                </div>
+
             </div>
         </div>
-
         <div class="col-sm-9">
-            <div class="container">
-
-                <h2 id="headline">Main shopping list</h2>
-                <h5 id="date"><span class="glyphicon glyphicon-time"></span> Post by Camilla Larsen, Sep 27, 2015.</h5>
-
-                <div class="input-group">
-                    <span onclick="additem()" id="additem" class="input-group-addon btn btn-info btn-lg">Add item</span>
-                    <input id="item" type="text" class="form-control" name="item" placeholder="Item">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 id="headline">Overskrift</h4>
+                    <div class="input-group">
+                        <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
+                        <span  id="okButton" onclick="okButton()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
+                    </div>
                 </div>
-                <div class="row content">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th class="col-sm-1">Checked</th>
-                            <th class="col-sm-10">Item</th>
-                            <th class="col-sm-1"></th>
-                        </tr>
-                        </thead>
-                        <tbody id="newItem">
-                        </tbody>
-                    </table>
+                <div class="panel-body long-scroll-panel">
+                    <div class="input-group">
+                        <span onclick="additem()" id="additem" class="input-group-addon btn btn-info btn-lg">Add item</span>
+                        <input id="item" type="text" class="form-control" name="item" placeholder="Item">
+                    </div>
+                    <div class="row content">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-1">Checked</th>
+                                    <th class="col-sm-10">Item</th>
+                                    <th class="col-sm-1"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="newItem"></tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="panel-footer">
                     <div id="buttonDiv">
-                        <a onclick="createNewList('ThisIsANewList')" class="btn btn-success btn-md">
+                        <a onclick="createNewList('ThisIsANewList')" class="btn btn-success btn-sm">
                             <span class="glyphicon glyphicon-plus"></span> Create new list
                         </a>
-                        <a class="btn btn-warning btn-md">
+                        <a class="btn btn-warning btn-sm">
                             <span class="glyphicon glyphicon-trash"></span> Delete this list
                         </a>
                     </div>
@@ -64,58 +70,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    var numberOfItems = 0;
-
-    var activeTab = "MainList";
-
-    function additem() {
-        var newItem = document.getElementById("item").value;
-        if(newItem != "" && newItem != null) {
-            numberOfItems += 1;
-            $("#newItem").append('<tr id="item' + numberOfItems + '"><td><span onclick="check(' + numberOfItems + ')" id="unchecked' + numberOfItems + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + newItem + '</td><td><span onclick="deleteItem(' + numberOfItems + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
-            document.getElementById("item").value = "";
-        }
-        document.getElementById("item").focus();
-    }
-
-    function check(itemNumber){
-        $("#unchecked" + itemNumber).replaceWith('<span onclick="unCheck(' + itemNumber + ')" name="checked" id="checked' + itemNumber + '" class="glyphicon glyphicon-ok"></span>');
-    }
-
-    function unCheck(itemNumber){
-        $("#checked" + itemNumber).replaceWith('<span onclick="check(' + itemNumber + ')" name="unchecked" id="unchecked' + itemNumber + '" class="glyphicon glyphicon-asterisk"></span>');
-    }
-
-    function deleteItem(itemNumber){
-        $("#item" + itemNumber).remove();
-    }
-
-    function updateShowingList(listName){
-
-        $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-        $("#headline").replaceWith('<h2 id="headline">' + listName + '</h2>');
-        $("#" + activeTab).removeClass("active");  // this deactivates the home tab
-        $("#" + listName).addClass("active");
-        activeTab = listName;
-    }
-
-    function createNewList(name){
-        $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-        $("#headline").replaceWith('<h2 id="headline">New List</h2>');
-        //$("#date").replaceWith('<h5 id="date"><span class="glyphicon glyphicon-time"></span> Post by Camilla Larsen' + date + '</h5>');
-        $("#sideMenu").append('<li onclick="updateShowingList(' + name.value + ')" id="' + name + '"><a>' + name + '</a></li>');
-    }
-
-    function deleteList(listName){
-
-    }
-
-    $("#item").keyup(function(event) {
-        if (event.keyCode === 13) {
-            $("#additem").click();
-        }
-    });
-
-</script>
