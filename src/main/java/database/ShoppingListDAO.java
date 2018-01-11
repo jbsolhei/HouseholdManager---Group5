@@ -1,12 +1,10 @@
 package database;
 
+import classes.Item;
 import classes.ShoppingList;
 import classes.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ShoppingListDAO {
@@ -82,6 +80,11 @@ public class ShoppingListDAO {
 
                 shoppingLists.add(sl);
 
+                for (ShoppingList shoppingList: shoppingLists) {
+                    Item[] items = getItems(shoppingList.getShoppingListId());
+                    shoppingList.setItems(items);
+                }
+
                 return toShoppingListArray(shoppingLists);
 
             } else {
@@ -92,6 +95,72 @@ public class ShoppingListDAO {
         }
 
         return null;
+    }
+
+    public static Item[] getItems(int shopping_listId) {
+        ArrayList<Item> items = new ArrayList<>();
+        int itemId;
+        String itemName;
+        int userId;
+        String email;
+        String personName;
+        String telephone;
+
+        String query = "SELECT Item.*, Person.* FROM Item LEFT JOIN Person ON Item.checkedBy = Person.userId WHERE shopping_listId = ?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, shopping_listId);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Item item = new Item();
+                User user = null;
+
+                itemId = rs.getInt("itemId");
+                itemName = rs.getString("Item.name");
+                userId = rs.getInt("checkedBy");
+
+                if (userId != 0) {
+                    user = new User();
+                    user.setUserId(userId);
+                    email = rs.getString("email");
+                    personName = rs.getString("Person.name");
+                    telephone = rs.getString("telephone");
+                }
+
+                item.setItemId(itemId);
+                item.setName(itemName);
+                item.setCheckedBy(user);
+
+                items.add(item);
+            }
+
+            return toItemArray(items);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static void createShoppingList(String name, int houseId, int[] userIds) {
+        String query_sl = "INSERT INTO Shopping_list (name, houseId) VALUES (?, ?);";
+        String query_user_sl = "";
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st_sl = conn.prepareStatement(query_sl)) {
+
+            st_sl.setInt(1, houseId);
+            ResultSet rs_sl = st_sl.executeQuery();
+            ResultSet pk_sl = st_sl.getGeneratedKeys();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static User[] toUserArray(ArrayList<User> users) {
@@ -110,8 +179,66 @@ public class ShoppingListDAO {
         return shoppingListArray;
     }
 
+    private static Item[] toItemArray(ArrayList<Item> items) {
+        Item[] itemsArray = new Item[items.size()];
+        for (int i = 0; i < items.size(); i++) {
+            itemsArray[i] = items.get(i);
+        }
+        return itemsArray;
+    }
+
+        /**
+         * Runs a PreparedStatement with INSERT-queries and returns the auto-generated
+         * primary keys.
+         * Note: Does not automatically close connection.
+         *
+         * @return a Result with primary keys, or null if an error occurred
+
+    public static Result insertAndGetKeys(String query, String[] params){
+        PreparedStatement statement = getConnection(query);
+        prepare(statement, params);
+        return executeAndGetKeys(statement);
+    }
+
+        /**
+         * Execute a prepated statement, commits it, and returns the auto-generated primary keys.
+         * Note: Does not automatically close connection
+         * @param statement the PreparedStatement
+         * @return a Result containing generated primary keys, or null if something went wrong
+         */
+    private static Result executeAndGetKeys(PreparedStatement statement) {
+        Result result = null;
+        try {
+            if (statement == null)
+                return null;
+            statement.execute();
+            result = new Result(statement.getGeneratedKeys(), statement);
+            statement.getConnection().commit();
+        } catch (SQLException e) {
+            System.out.println("Error in executing query\n" + statement.toString() + "\n\n" + e.getMessage());
+            CleanUp.closeStatement(statement);
+        }
+        return result;
+    }
+
+    /**
+     * Add the parameters to the statement
+     *
+     * @param statement the statement to prepare the data for
+     * @param params the data to put into the statement
+     */
+    private static void prepare(PreparedStatement statement, String[] params){
+        try {
+            for(int i = 0; i < params.length; i++){
+                statement.setString(i + 1, params[i]);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in preparing statement\n\n" + e.getMessage());
+        }
+    }
+
     public static void main (String[] args) {
-        ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(1);
+        Item[] items = ShoppingListDAO.getItems(3);
         System.out.println("stop");
     }
 }
