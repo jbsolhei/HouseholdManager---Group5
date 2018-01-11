@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 var dashboard = "dashboard.html";
 var household = "HouseholdOverview.html";
-var shoppinglists = "";
+var shoppinglists = "shoppinglist.html";
 var shoppingtrips = "";
 var todo = "";
 var statistics = "";
