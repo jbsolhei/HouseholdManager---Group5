@@ -13,7 +13,11 @@
         <div class="col-md-3">
             <div class="panel panel-info">
                 <div class="panel-heading">Shoppinglists</div>
-                <div class="panel-body">Panel Content</div>
+                <div class="panel-body">Panel Content
+                    <a onclick='alert(getUser(1))'>alert user</a>
+                    <button onclick='getUserFromRest(1,function (user){alert(user.name)})'> alert user </button>
+                    <button onclick='getHouseholdFromRest(1,function (house){alert(house.name)})'> alert house </button>
+                </div>
             </div>
         </div>
         <div class="col-md-3">
