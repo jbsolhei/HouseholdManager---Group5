@@ -13,11 +13,11 @@ import javax.ws.rs.QueryParam;
  *
  * @author team5
  */
-@Path("/user")
+@Path("user")
 public class UserService {
 
     @GET
-    @Produces("text/plain")
+    @Produces(MediaType.APPLICATION_JSON)
     public String getTest(){
         return "User service says hello!";
     }
