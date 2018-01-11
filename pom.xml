@@ -132,6 +132,7 @@
         <configuration>
             <excludes>
                 <exclude>**/database/UserDAOTest.java</exclude>
+                <exclude>**/database/HouseholdDAOTest.java</exclude>
             </excludes>
         </configuration>
     </plugin>
