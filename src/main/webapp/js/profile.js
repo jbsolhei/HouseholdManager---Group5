@@ -45,6 +45,23 @@ $(document).ready(function(){
             });
         }
     }
+    $.ajax({
+        url: "res/user/login",
+        type: "GET",
+        contentType: "application/json; charset = utf-8",
+        data: {
+            email: "camilve@stud.ntnu.no",
+            password: "123"
+        },
+        success: function(data){
+            console.log("OK!");
+            console.log(data.responseText);
+        },
+        error: function(){
+            console.log("Kukskalle, getUserTodos()");
+        },
+        dataType:"json"
+    });
 });
 
 

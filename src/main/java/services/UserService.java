@@ -46,7 +46,7 @@ public class UserService {
         Session session = UserAuth.authenticateLogin(email, password);
 
         if (session == null) {
-            return "";
+            return "woufqeprjon";
         }
 
         return session.getToken();
