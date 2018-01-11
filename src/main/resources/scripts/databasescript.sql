@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Invite_token;
 DROP TABLE IF EXISTS Finance;
 DROP TABLE IF EXISTS Shopping_tour;
 DROP TABLE IF EXISTS Shopping_list;
@@ -22,7 +23,6 @@ telephone VARCHAR(20),
 CONSTRAINT user_pk PRIMARY KEY(userId));
 
 CREATE TABLE House_user (
-roomnumber INTEGER,
 houseId INTEGER NOT NULL,
 userId INTEGER NOT NULL,
 isAdmin BOOL,
@@ -31,6 +31,13 @@ FOREIGN KEY (houseId) REFERENCES Household(houseId),
 FOREIGN KEY (userId) REFERENCES Person(userId)
 );
 
+CREATE TABLE Invite_token (
+  token VARCHAR(64) NOT NULL,
+  houseId INTEGER NOT NULL,
+  email VARCHAR(45) NOT NULL,
+  CONSTRAINT invite_token_pk PRIMARY KEY(token),
+  FOREIGN KEY (houseId) REFERENCES Household(houseId)
+);
 
 CREATE TABLE Task (
 date DATE,

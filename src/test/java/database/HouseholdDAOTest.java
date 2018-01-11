@@ -1,6 +1,7 @@
 package database;
 
 import classes.Household;
+import classes.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,9 +11,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class HouseholdDAOTest {
-
     DBConnector dbc = new DBConnector();
     Connection conn;
     Statement st;
@@ -22,6 +23,30 @@ public class HouseholdDAOTest {
         conn = dbc.getConn();
         st = conn.createStatement();
     }
+
+    @Test
+    public void getMembers() throws Exception {
+        User[] members = HouseholdDAO.getMembers(1);
+        assert members!=null;
+        assertEquals(2,members.length);
+    }
+
+    @Test
+    public void addUserToHousehold() throws Exception {
+        HouseholdDAO.addUserToHousehold(2,35);
+
+        String query = "SELECT * FROM House_user WHERE houseId=2";
+        ResultSet rs = st.executeQuery(query);
+
+        int userid = 0;
+
+        while (rs.next()){
+            userid = rs.getInt("userId");
+        }
+
+        assertEquals(35, userid);
+    }
+
 
     @Test
     public void addNewHouseHold() throws Exception {
@@ -48,14 +73,43 @@ public class HouseholdDAOTest {
 
     @Test
     public void getHousehold() throws Exception {
+        Household temp = HouseholdDAO.getHousehold(1);
+        assertEquals("Testhouse",temp.getName());
+        assertEquals("Testaddress 22",temp.getAdress());
     }
 
     @Test
     public void updateHousehold() throws Exception {
+        Household newHouse = new Household();
+        newHouse.setName("Newname");
+        newHouse.setAdress("Newaddress");
+        HouseholdDAO.updateHousehold(2, newHouse);
+
+        String query = "SELECT * FROM Household WHERE houseId=2";
+        ResultSet rs = st.executeQuery(query);
+
+        String name = "";
+        String address = "";
+
+        while (rs.next()){
+            name = rs.getString("house_name");
+            address = rs.getString("house_address");
+        }
+
+        assertEquals("Newname", name);
+        assertEquals("Newaddress", address);
     }
 
     @Test
-    public void deleteUser() throws Exception {
+    public void deleteHouse() throws Exception {
+        HouseholdDAO.deleteHousehold(3);
+
+        String query = "SELECT * FROM Household WHERE houseId=3";
+        ResultSet rs = st.executeQuery(query);
+
+        while (rs.next()){
+            fail();
+        }
     }
 
     @After
