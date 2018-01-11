@@ -1,6 +1,7 @@
 package database;
 
 import classes.Household;
+import classes.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class HouseholdDAOTest {
-
     DBConnector dbc = new DBConnector();
     Connection conn;
     Statement st;
@@ -23,6 +23,30 @@ public class HouseholdDAOTest {
         conn = dbc.getConn();
         st = conn.createStatement();
     }
+
+    @Test
+    public void getMembers() throws Exception {
+        User[] members = HouseholdDAO.getMembers(1);
+        assert members!=null;
+        assertEquals(2,members.length);
+    }
+
+    @Test
+    public void addUserToHousehold() throws Exception {
+        HouseholdDAO.addUserToHousehold(2,35);
+
+        String query = "SELECT * FROM House_user WHERE houseId=2";
+        ResultSet rs = st.executeQuery(query);
+
+        int userid = 0;
+
+        while (rs.next()){
+            userid = rs.getInt("userId");
+        }
+
+        assertEquals(35, userid);
+    }
+
 
     @Test
     public void addNewHouseHold() throws Exception {
@@ -56,7 +80,10 @@ public class HouseholdDAOTest {
 
     @Test
     public void updateHousehold() throws Exception {
-        HouseholdDAO.updateHousehold(2,"Newname","Newaddress");
+        Household newHouse = new Household();
+        newHouse.setName("Newname");
+        newHouse.setAdress("Newaddress");
+        HouseholdDAO.updateHousehold(2, newHouse);
 
         String query = "SELECT * FROM Household WHERE houseId=2";
         ResultSet rs = st.executeQuery(query);

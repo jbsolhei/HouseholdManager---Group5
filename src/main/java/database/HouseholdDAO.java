@@ -116,13 +116,18 @@ public class HouseholdDAO {
             dbc.disconnect();
         }
 
-        if (householdExists) return (User[]) members.toArray();
+        User[] data = new User[members.size()];
+        for (int i = 0; i < members.size(); i++) {
+            data[i] = members.get(i);
+        }
+
+        if (householdExists) return data;
         return null;
     }
 
     /**
-     * Used to update name, address of a household based on id.
-     * Returns false if the user does not exist and true if the update was successful.
+     * Used to update name and/or address of a household based on id.
+     * Returns false if the household does not exist and true if the update was successful.
      * @param id the id of the house.
      * @param newHouse the new data to update
      */
