@@ -60,7 +60,6 @@ public class UserDAOTest {
     public void getUser() throws Exception {
 
         User user1 = new User();
-<<<<<<< HEAD
         user1.setName("Frank");
         user1.setTelephone("22334455");
         user1.setEmail("Frank@gmail.com");
@@ -68,17 +67,6 @@ public class UserDAOTest {
         assertEquals("Frank", UserDAO.getUser(2).getName());
         assertEquals("22334455", UserDAO.getUser(2).getTelephone());
         assertEquals("Frank@gmail.com", UserDAO.getUser(2).getEmail());
-=======
-        user1.setName("Trym");
-        user1.setTelephone("11223344");
-        user1.setEmail("trym@gmail.com");
-        User user2 = null;
-
-        assertEquals("Trym", UserDAO.getUser(1).getName());
-        assertEquals("11223344", UserDAO.getUser(1).getTelephone());
-        assertEquals("trym@gmail.com", UserDAO.getUser(1).getEmail());
-        assertEquals(user2, UserDAO.getUser(4));
->>>>>>> 3bc8b75a80662ba804f0feb5d54093313d2f2a82
     }
 
     @Test
