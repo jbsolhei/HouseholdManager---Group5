@@ -19,7 +19,7 @@ $(document).ready(function(){
         function printInfo(data){
             $("#profile_information_list_name").html(data.name);
             $("#profile_information_list_email").html(data.email);
-            $("#profile_information_list_phone").html(data.phone);
+            $("#profile_information_list_phone").html(data.telephone);
         }
     }
     function getUserHouseholds(userId){
@@ -33,19 +33,21 @@ $(document).ready(function(){
             },
             error: function(){
                 console.log("Kukskalle, getUserHouseholds()");
+                printHouseholds(data);
             },
             dataType:"json"
         });
         function printHouseholds(data){
             var inputString = "";
             $.each(data, function(val){
-                var householdName = val.name;
+               /* var householdName = val.name;
                 var householdAdress = val.adress;
-                inputString += "<tr><td>" + householdName + "</td><td>" + householdAdress + "</td><td>isAdmin?</td></tr>"
+                inputString += "<tr><td>" + householdName + "</td><td>" + householdAdress + "</td><td>isAdmin?</td></tr>"*/
             });
             $("#profile_households_table_body").html(inputString);
         }
     }
+    getInfo(1);
     getUserHouseholds(1);
 });
 
