@@ -2,6 +2,7 @@ $(document).ready(function() {
     swapContent("dashboard.html")
 });
 
+var sessionToken = "validforever";
 var dashboard = "dashboard.html";
 var household = "HouseholdOverview.html";
 var shoppinglists = "";

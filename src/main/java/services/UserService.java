@@ -1,14 +1,14 @@
 package services;
 
-import classes.LoginAttemptResponse;
-import classes.Session;
-import classes.User;
-import classes.UserAuth;
+import classes.*;
 import database.UserDAO;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
+import java.util.HashMap;
 
 /**
  *
@@ -29,38 +29,42 @@ public class UserService {
         UserDAO.addNewUser(newUser);
     }
 
-    @GET
-    @Path("/{email}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public User getUser(@PathParam("email") String email) {
-        String[] userInfo = UserDAO.getUser(email);
-        User user = new User();
-        user.setName(userInfo[0]);
-        user.setPhone(userInfo[1]);
-        user.setEmail(email);
-
-        return user;
-    }
-
-    @GET
+    @POST
     @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public LoginAttemptResponse authenticateLogin(
-            @QueryParam("email") String email,
-            @QueryParam("password") String password) {
+    public Response authenticateLogin(User credentials) {
+        System.out.println("Login attempt by " + credentials.getEmail());
 
-        Session session = UserAuth.authenticateLogin(email, password);
-        LoginAttemptResponse response = new LoginAttemptResponse();
+        Session session = UserAuth.authenticateLogin(credentials.getEmail(), credentials.getPassword());
 
         if (session == null) {
-            response.setSuccess(false);
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
         else {
-            response.setSuccess(true);
-            response.setSessionToken(session.getToken());
+            HashMap<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("sessionToken", session.getToken());
+            return Response.ok(response).build();
         }
-
-        return response;
     }
 
+    @DELETE
+    @Auth
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response logout(@Context HttpHeaders request) {
+        Sessions.invalidateSession(AuthenticationFilter.retrieveTokenFromHeader(request.getHeaderString("Authorization")));
+
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        return Response.ok(response).build();
+    }
+
+    @GET
+    @Auth
+    @Path("/test")
+    public Response authTest() {
+        return Response.ok("Du klarte det! Du kom deg inn på en side som krever autentisering!").build();
+    }
 }
