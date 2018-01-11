@@ -25,17 +25,38 @@ public class HouseHoldService {
         HouseholdDAO.addNewHouseHold(newHousehold);
     }
 
+    @POST
+    @Path("/{id}/users")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public void addUserToHousehold(@PathParam("id") int house, String user){
+        HouseholdDAO.addUserToHousehold(house,Integer.parseInt(user));
+    }
+
     @GET
     @Path("/{id}/users")
     @Consumes(MediaType.APPLICATION_JSON)
-    public User[] getMembers(@PathParam("id") String id) {
-        return HouseholdDAO.getMembers(Integer.parseInt(id));
+    public User[] getMembers(@PathParam("id") int id) {
+        return HouseholdDAO.getMembers(id);
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Household getHousehold(@PathParam("id") String id) {
-        return HouseholdDAO.getHousehold(Integer.parseInt(id));
+    public Household getHousehold(@PathParam("id") int id) {
+        return HouseholdDAO.getHousehold(id);
     }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void updateHousehold(@PathParam("id") int id, Household newHouse){
+        HouseholdDAO.updateHousehold(id,newHouse);
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteHousehold(@PathParam("id") int id){
+        HouseholdDAO.deleteHousehold(id);
+    }
+
 }

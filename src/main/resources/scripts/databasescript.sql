@@ -22,7 +22,6 @@ telephone VARCHAR(20),
 CONSTRAINT user_pk PRIMARY KEY(userId));
 
 CREATE TABLE House_user (
-roomnumber INTEGER,
 houseId INTEGER NOT NULL,
 userId INTEGER NOT NULL,
 isAdmin BOOL,

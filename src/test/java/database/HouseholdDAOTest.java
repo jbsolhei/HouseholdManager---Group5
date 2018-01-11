@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class HouseholdDAOTest {
 
@@ -48,14 +49,40 @@ public class HouseholdDAOTest {
 
     @Test
     public void getHousehold() throws Exception {
+        Household temp = HouseholdDAO.getHousehold(1);
+        assertEquals("Testhouse",temp.getName());
+        assertEquals("Testaddress 22",temp.getAdress());
     }
 
     @Test
     public void updateHousehold() throws Exception {
+        HouseholdDAO.updateHousehold(2,"Newname","Newaddress");
+
+        String query = "SELECT * FROM Household WHERE houseId=2";
+        ResultSet rs = st.executeQuery(query);
+
+        String name = "";
+        String address = "";
+
+        while (rs.next()){
+            name = rs.getString("house_name");
+            address = rs.getString("house_address");
+        }
+
+        assertEquals("Newname", name);
+        assertEquals("Newaddress", address);
     }
 
     @Test
-    public void deleteUser() throws Exception {
+    public void deleteHouse() throws Exception {
+        HouseholdDAO.deleteHousehold(3);
+
+        String query = "SELECT * FROM Household WHERE houseId=3";
+        ResultSet rs = st.executeQuery(query);
+
+        while (rs.next()){
+            fail();
+        }
     }
 
     @After
