@@ -8,10 +8,10 @@
                         <h6>'household address'</h6>
                     </div>
                 </div>
-                <div class="panel panel-default" style="max-height: 180px" id="scrollable">
+                <div class="panel panel-default scrollable" style="max-height: 180px">
                     <div class="panel-body">
                         <h4>Administrators</h4>
-                        <table style="width:100%">
+                        <table class="membertable">
                             <tr>
                                 <th></th>
                                 <th>Name</th>
@@ -19,10 +19,10 @@
                                 <th>Phone</th>
                             </tr>
                             <tr>
-                                <td><img class="img-responsive img-circle" src="http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg"></div></td>
-                                <td>Jill</td>
-                                <td>Smith</td>
-                                <td>50</td>
+                                <td><div class="img-circle"><img class="img-responsive img-pic" src="http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg"></div></td>
+                                <td>Ola Nordmann</td>
+                                <td>olanordmann@gmail.com</td>
+                                <td>12345678</td>
                             </tr>
                             <tr>
                                 <td><div class="img-circle"><img class="img-responsive img-pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Martin_Henriksen.jpg/250px-Martin_Henriksen.jpg"></div></td>
@@ -45,21 +45,56 @@
                         </table>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-5">
-                <div class="panel panel-default">
-                    <div class="panel-body" style="min-height: 400px">
-                        <h4>Members</h4>
-
+                <div class="panel panel-default scrollable" style="max-height: 135px">
+                    <div class="panel-body">
+                        <h4>Other information</h4>
+                        <ul>
+                            <li>Her skriver man informasjon om kollektivet</li>
+                            <li>bla bla bla bla</li>
+                            <li>slfhrkdgnlke</li>
+                        </ul>
                     </div>
-
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="col-md-5">
+                <div class="panel panel-default scrollable">
+                    <div class="panel-body" id="membersheight">
+                        <h4>Members</h4>
+                        <table class="membertable">
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Email</th>
+                            </tr>
+                            <tr>
+                                <td><div class="img-circle"><img class="img-responsive img-pic" src="http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg"></div></td>
+                                <td>Ola Nordmann</td>
+                                <td>olanordmann@gmail.com</td>
+                            </tr>
+                            <tr>
+                                <td><div class="img-circle"><img class="img-responsive img-pic" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Martin_Henriksen.jpg/250px-Martin_Henriksen.jpg"></div></td>
+                                <td>Eve</td>
+                                <td>Jackson</td>
+                            </tr>
+                            <tr>
+                                <td><div class="img-circle"><img class="img-responsive img-pic" src="http://www.hf.uio.no/imv/personer/vit/midlertidig/stephaau/stephane-aubinet-200px-4625.jpg"></div></td>
+                                <td>Eve</td>
+                                <td>Jackson</td>
+                            </tr>
+                            <tr>
+                                <td><div class="img-circle"><img class="img-responsive img-pic" src="http://bloggfiler.no/bartebloggen.blogg.no/images/1097136-7-1300440055964.jpg"></div></td>
+                                <td>Eve</td>
+                                <td>Jackson</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+       </div>
+</div>
 
 <style type="text/css">
-    #scrollable {
+    .scrollable {
         overflow-y: scroll;
     }
     .img-circle {
@@ -74,6 +109,14 @@
     }
     th, td {
         border-bottom: 1px solid #ddd;
+        height: 50px;
+        padding: 10px;
+    }
+    .membertable {
+        width: 100%;
+    }
+    #membersheight {
+        min-height: 500px;
     }
 </style>
 
