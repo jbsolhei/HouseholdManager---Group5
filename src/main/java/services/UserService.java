@@ -29,15 +29,10 @@ public class UserService {
     }
 
     @GET
-    @Path("/{email}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public User getUser(@PathParam("email") String email) {
-        String[] userInfo = UserDAO.getUser(email);
-        User user = new User();
-        user.setName(userInfo[0]);
-        user.setPhone(userInfo[1]);
-        user.setEmail(email);
-
+    public User getUser(@PathParam("id") int id) {
+        User user = UserDAO.getUser(id);
         return user;
     }
 
