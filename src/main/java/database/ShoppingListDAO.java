@@ -155,9 +155,7 @@ public class ShoppingListDAO {
              PreparedStatement st_sl = conn.prepareStatement(query_sl)) {
 
             st_sl.setInt(1, houseId);
-            ResultSet rs_sl = st_sl.executeQuery();
-            ResultSet pk_sl = st_sl.getGeneratedKeys();
-
+            int key = st_sl.executeUpdate(query_sl, Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException e) {
             e.printStackTrace();
         }
