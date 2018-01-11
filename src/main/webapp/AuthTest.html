@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#out").append("jQuery version: " + jQuery.fn.jquery + "<br>");
+
+            $("button").click(function () {
+                $("#out").append("Knappen er trykket<br>");
+                var token = $("#token").val();
+
+                $.ajax({
+                    url: "http://localhost:8080/hhapp/res/user/test",
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    }
+                })
+
+                .done(function (text) {
+                    $("#out").append("Respons: " + text + "<br>");
+                })
+
+                .fail(function (xhr, err, err2) {
+                    $("#out").append("Error: [" + xhr.status + "] " + err + "<br>");
+                    console.log(xhr);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<button class="btn-primary btn-lg">Push me</button>
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">LoginSessionToken</span>
+    <input type="text" id="token" class="form-control">
+</div>
+
+<div id="out"></div>
+
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

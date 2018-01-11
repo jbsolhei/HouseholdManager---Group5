@@ -16,19 +16,20 @@ public class UserAuth {
      * @return a Session object, or null.
      */
     public static Session authenticateLogin(String email, String password) {
-        String query = "SELECT userId FROM Person WHERE email = ? and password = ?";
+        String query = "SELECT userId, password FROM Person WHERE email = ?";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)){
 
             st.setString(1, email);
-            st.setString(2, password);
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
                 int userId = rs.getInt("userId");
-                return Sessions.generateSession(userId);
+                if (HashHandler.passwordMatchesHash(password, rs.getString("password"))) {
+                    return Sessions.generateSession(userId);
+                }
             }
 
         } catch (SQLException e) {

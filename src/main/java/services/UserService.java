@@ -4,8 +4,11 @@ import classes.*;
 import database.UserDAO;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
+import java.util.HashMap;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +29,7 @@ public class UserService {
     public boolean addUser(User newUser) {
         return UserDAO.addNewUser(newUser);
     }
+
 
     @GET
     @Path("/{id}")
@@ -52,21 +56,43 @@ public class UserService {
 
     @GET
     @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String authenticateLogin(
-            @QueryParam("email") String email,
-            @QueryParam("password") String password) {
+    public Response authenticateLogin(User credentials) {
+        System.out.println("Login attempt by " + credentials.getEmail());
 
-        Session session = UserAuth.authenticateLogin(email, password);
+        Session session = UserAuth.authenticateLogin(credentials.getEmail(), credentials.getPassword());
 
         if (session == null) {
-            return "";
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+        else {
+            HashMap<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("sessionToken", session.getToken());
+            return Response.ok(response).build();
+        }
+    }
 
-        return session.getToken();
+    @DELETE
+    @Auth
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response logout(@Context HttpHeaders request) {
+        Sessions.invalidateSession(AuthenticationFilter.retrieveTokenFromHeader(request.getHeaderString("Authorization")));
+
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        return Response.ok(response).build();
     }
 
     @GET
+    @Auth
+    @Path("/test")
+    public Response authTest() {
+        return Response.ok("Du klarte det! Du kom deg inn på en side som krever autentisering!").build();
+    }
+
     @Path("/tasks/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Todo> todos(@PathParam("id") int id) {
