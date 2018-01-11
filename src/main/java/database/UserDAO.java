@@ -74,53 +74,6 @@ public class UserDAO {
         return null;
     }
 
-    /**
-     * Used to get user info (name and telephone) from database based on the users email.
-     * Returns an array of Strings with the name on index 0 and the telephone number on
-     * index 1.
-     * Returns null if the email does not exist in the database.
-     * @param id the user's id in the database
-     * @return String[] an array of info
-     */
-    public static User getUser(int id) {
-        String name = "";
-        String telephone = "";
-        String email = "";
-        User user = new User();
-        boolean userExists = false;
-
-
-        String query = "SELECT name, telephone, email FROM Person WHERE userId = ?";
-        DBConnector dbc = new DBConnector();
-        PreparedStatement st;
-
-        try {
-            Connection conn = dbc.getConn();
-            st = conn.prepareStatement(query);
-            st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                name = rs.getString("name");
-                telephone = rs.getString("telephone");
-                email = rs.getString("email");
-                userExists = true;
-            }
-
-            user.setName(name);
-            user.setPhone(telephone);
-            user.setEmail(email);
-
-            st.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            dbc.disconnect();
-        }
-        if (userExists) return user;
-        return null;
-    }
 
     /**
      * Used to update email, name and the telephone of a user based on email.
@@ -133,6 +86,7 @@ public class UserDAO {
      */
     public static boolean updateUser(int id, String newEmail, String newTelephone, String newName) {
         String query = "UPDATE Person SET email = ?, telephone = ?, name = ? WHERE userId = ?";
+
         boolean userInfoUpdated = false;
         DBConnector dbc = new DBConnector();
 
@@ -167,7 +121,6 @@ public class UserDAO {
      */
     public static void deleteUser(int id) {
         String query = "DELETE FROM Person WHERE userId = ?";
-
         DBConnector dbc = new DBConnector();
 
         try {
@@ -192,6 +145,7 @@ public class UserDAO {
      */
     public static boolean updatePassword(int id, String newPassword) {
         String query = "UPDATE Person SET password = ? WHERE userId = ?";
+
         boolean passwordUpdated = false;
         DBConnector dbc = new DBConnector();
 
