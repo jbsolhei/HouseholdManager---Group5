@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+
+<!--<head>
     <meta charset="UTF-8">
     <title>Profile</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -8,16 +7,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 
-    <script language="JavaScript">
-        $(document).ready(function(){
-            $("#profile_households_table_body").append(
-                "<tr><td><a href='http://www.larssen.party'>Hotell Larssen</a> </td><td>Thomas Angells Gate 10B</td><td>Yes</td></tr>" +
-                "<tr><td>Mosjøen</td><td>Veigata 1</td><td>Hell no</td></tr>"
-            )
-        });
-    </script>
-
-</head>
+</head>-->
 <!--
 Format for input to profile_payment_table:
 "<tr><td>" + household_name + "</td><td><table class="table table-striped"><thead>" +
@@ -29,8 +19,6 @@ Variables: household_name - name of each household that the person is involved i
            payment_sum - amount of money involved, TODO: Decide rules for negative/positive numbers
 -->
 
-<body>
-<div class="page-wrapper">
     <div class="container-fluid">
         <div class="panel">
             <div class="panel-body">
@@ -38,7 +26,7 @@ Variables: household_name - name of each household that the person is involved i
                     <div class="col-md-2" id="profile_pic_container">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <img id="profile_pic_img" class="img-responsive" src="https://s3-eu-west-1.amazonaws.com/apps.o5.no/apdm/lifeloop/helgeland-arbeiderblad/birthday/20130504040655-1333-wrdv/700.jpg" class="img-rounded">
+                                <img id="profile_pic_img" class="img-responsive" src="https://s3-eu-west-1.amazonaws.com/apps.o5.no/apdm/lifeloop/helgeland-arbeiderblad/birthday/20130504040655-1333-wrdv/700.jpg">
                             </div>
                         </div>
                     </div>
@@ -58,7 +46,6 @@ Variables: household_name - name of each household that the person is involved i
                         <div class="panel">
                             <div class="panel-heading">Your households</div>
                             <div class="panel-body">
-                                <h3><small>These are the households for which you are a registered resident</small></h3>
                                 <table class="table table-striped" id="profile_households_table">
                                     <thead>
                                     <tr>
@@ -144,6 +131,5 @@ Variables: household_name - name of each household that the person is involved i
             </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+<!--</div>
+</body>-->
