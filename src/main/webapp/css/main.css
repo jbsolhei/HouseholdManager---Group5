@@ -1,4 +1,6 @@
-/*Spesifications for profile.css:*/
+#profile_pic_img{
+    max-width:10vw;
+}
 
 .navbar {
     border-radius: 0;!important;
