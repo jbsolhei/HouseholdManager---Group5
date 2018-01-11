@@ -22,46 +22,31 @@ $(document).ready(function(){
             $("#profile_information_list_phone").html(data.phone);
         }
     }
-    function getUserTodos(userId){
+    function getUserHouseholds(userId){
         $.ajax({
-            url: "res/user/???/" + userId,
+            url: "res/user/hh/" + userId,
             type: "GET",
             contentType: "application/json; charset = utf-8",
             success: function(data){
-                console.log("getUserTodos()");
-                printTodos(data);
+                console.log("getUserHouseholds()");
+                printHouseholds(data);
             },
             error: function(){
-                console.log("Kukskalle, getUserTodos()");
+                console.log("Kukskalle, getUserHouseholds()");
             },
             dataType:"json"
         });
-        function printTodos(data){
+        function printHouseholds(data){
+            var inputString = "";
             $.each(data, function(val){
-                var houseTodos = val.todos;
-                $.each(houseTodos, function(val){
-                    $("#profile_todos_container").append(val.name);
-                });
+                var householdName = val.name;
+                var householdAdress = val.adress;
+                inputString += "<tr><td>" + householdName + "</td><td>" + householdAdress + "</td><td>isAdmin?</td></tr>"
             });
+            $("#profile_households_table_body").html(inputString);
         }
     }
-    $.ajax({
-        url: "res/user/login",
-        type: "GET",
-        contentType: "application/json; charset = utf-8",
-        data: {
-            email: "camilve@stud.ntnu.no",
-            password: "123"
-        },
-        success: function(data){
-            console.log("OK!");
-            console.log(data.responseText);
-        },
-        error: function(){
-            console.log("Kukskalle, getUserTodos()");
-        },
-        dataType:"json"
-    });
+    getUserHouseholds(1);
 });
 
 
