@@ -3,14 +3,17 @@ package classes;
 import java.util.Date;
 
 public class Todo {
-    private String name;
+    private String description;
     private Date date;
     private boolean done;
+    private int houseId;
+    private int userId;
+    private int taskId;
 
     public Todo(){}
 
-    public String getName() {
-        return name;
+    public String getdescription() {
+        return description;
     }
 
     public Date getDate() {
@@ -21,8 +24,8 @@ public class Todo {
         return done;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
     public void setDate(Date date) {
@@ -31,5 +34,29 @@ public class Todo {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public int getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(int houseId) {
+        this.houseId = houseId;
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

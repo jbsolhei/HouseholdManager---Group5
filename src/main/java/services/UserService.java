@@ -1,9 +1,6 @@
 package services;
 
-import classes.Household;
-import classes.Session;
-import classes.User;
-import classes.UserAuth;
+import classes.*;
 import database.UserDAO;
 
 import javax.ws.rs.*;
@@ -67,6 +64,13 @@ public class UserService {
         }
 
         return session.getToken();
+    }
+
+    @GET
+    @Path("/tasks/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Todo> todos(@PathParam("id") int id) {
+        return UserDAO.getTasks(id);
     }
 
     @PUT

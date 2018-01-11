@@ -10,8 +10,6 @@ public class Household {
     private ShoppingList shoppingList;
     private TodoList todoList;
 
-
-
     private int houseId;
 
     public Household(){}
