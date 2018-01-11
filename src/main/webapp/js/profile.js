@@ -3,24 +3,11 @@
  */
 $(document).ready(function(){
     function getInfo(id){
-        $.ajax({
-            url: "res/user/" + id,
-            type: "GET",
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                console.log("getInfo()");
-                printInfo((data));
-            },
-            error: function (res) {
-                console.log("Kukskalle, getInfo()");
-            },
-            dataType: "json"
-        });
-        function printInfo(data){
+        getUserFromRest(1,function (data){
             $("#profile_information_list_name").html(data.name);
             $("#profile_information_list_email").html(data.email);
             $("#profile_information_list_phone").html(data.telephone);
-        }
+        })
     }
     function getUserHouseholds(userId){
         $.ajax({
