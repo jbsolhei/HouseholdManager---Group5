@@ -3,20 +3,18 @@
  */
 $(document).ready(function(){
     function getInfo(id){
-        $(document).ready(function() {
-            $.ajax({
-                url: "res/user/" + id,
-                type: "GET",
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    console.log("OK!");
-                    printInfo((data));
-                },
-                error: function (res) {
-                    console.log("Kukskalle");
-                },
-                dataType: "json"
-            });
+        $.ajax({
+            url: "res/user/" + id,
+            type: "GET",
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.log("getInfo()");
+                printInfo((data));
+            },
+            error: function (res) {
+                console.log("Kukskalle, getInfo()");
+            },
+            dataType: "json"
         });
         function printInfo(data){
             $("#profile_information_list_name").html(data.name);
@@ -25,7 +23,27 @@ $(document).ready(function(){
         }
     }
     function getUserTodos(userId){
-
+        $.ajax({
+            url: "res/user/???/" + userId,
+            type: "GET",
+            contentType: "application/json; charset = utf-8",
+            success: function(data){
+                console.log("getUserTodos()");
+                printTodos(data);
+            },
+            error: function(){
+                console.log("Kukskalle, getUserTodos()");
+            },
+            dataType:"json"
+        });
+        function printTodos(data){
+            $.each(data, function(val){
+                var houseTodos = val.todos;
+                $.each(houseTodos, function(val){
+                    $("#profile_todos_container").append(val.name);
+                });
+            });
+        }
     }
 });
 
