@@ -1,13 +1,16 @@
 package database;
 
+import classes.Email;
 import classes.Household;
 import classes.User;
 
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class HouseholdDAO {
 
@@ -104,8 +107,7 @@ public class HouseholdDAO {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                //members.add(UserDAO.getUser(rs.getInt("userId")));
-                //members.add(UserDAO.getUser(""));
+                members.add(UserDAO.getUser(rs.getInt("userId")));
                 householdExists = true;
             }
 
@@ -116,28 +118,53 @@ public class HouseholdDAO {
         } finally {
             dbc.disconnect();
         }
-        //if (householdExists) return members;
+
+        User[] data = new User[members.size()];
+        for (int i = 0; i < members.size(); i++) {
+            data[i] = members.get(i);
+        }
+
+        if (householdExists) return data;
         return null;
     }
 
     /**
-     * Used to update name, address of a household based on id.
-     * Returns false if the user does not exist and true if the update was successful.
+     * Used to update name and/or address of a household based on id.
+     * Returns false if the household does not exist and true if the update was successful.
      * @param id the id of the house.
-     * @param newName the new name
-     * @param newAddress the new address
+     * @param newHouse the new data to update
      */
-    public static boolean updateHousehold(int id, String newName, String newAddress) {
-        String query = "UPDATE Household SET house_name = ?, house_address = ? WHERE houseId = ?";
+    public static boolean updateHousehold(int id, Household newHouse) {
+        String query = "";
+
+        String newName = newHouse.getName();
+        String newAddress = newHouse.getAdress();
+
+        if (newName.equals("")){
+            query = "UPDATE Household SET house_address = ? WHERE houseId = ?";
+        } else if (newAddress.equals("")){
+            query = "UPDATE Household SET house_name = ? WHERE houseId = ?";
+        } else {
+            query = "UPDATE Household SET house_name = ?, house_address = ? WHERE houseId = ?";
+        }
+
         boolean householdInfoUpdated = false;
         DBConnector dbc = new DBConnector();
 
         try {
             Connection conn = dbc.getConn();
             PreparedStatement st = conn.prepareStatement(query);
-            st.setString(1, newName);
-            st.setString(2, newAddress);
-            st.setInt(3, id);
+            if (newName.equals("")) {
+                st.setString(1, newAddress);
+                st.setInt(2, id);
+            } else if (newAddress.equals("")){
+                st.setString(1, newName);
+                st.setInt(2, id);
+            } else {
+                st.setString(1, newName);
+                st.setString(2, newAddress);
+                st.setInt(3, id);
+            }
 
             int update = st.executeUpdate();
 
@@ -176,5 +203,105 @@ public class HouseholdDAO {
         } finally {
             dbc.disconnect();
         }
+    }
+
+    /**
+     * Used to add new users to the household.
+     * @param house the id of the house.
+     * @param user the id of the user
+     */
+    public static void addUserToHousehold(int house, int user){
+        String query = "INSERT INTO House_user (houseId,userId) VALUES (?,?)";
+
+        DBConnector dbc = new DBConnector();
+
+        try {
+            Connection conn = dbc.getConn();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, house);
+            st.setInt(2,user);
+
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+    }
+
+    /**
+     * Used to send and invite email to a user.
+     * @param email the email of the house.
+     */
+    public static void inviteUser(int houseId, String email) {
+        Household house = getHousehold(houseId);
+
+        if (house!=null) {
+            SecureRandom random = new SecureRandom();
+            byte randomBytes[] = new byte[32];
+            random.nextBytes(randomBytes);
+            String token = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+
+            String query = "INSERT INTO Invite_token (token,houseId,email) VALUES (?,?,?)";
+
+            DBConnector dbc = new DBConnector();
+
+            try {
+                Connection conn = dbc.getConn();
+                PreparedStatement st = conn.prepareStatement(query);
+                st.setString(1, token);
+                st.setInt(2, houseId);
+                st.setString(3, email);
+
+                st.executeUpdate();
+                st.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                dbc.disconnect();
+            }
+
+            String[] to = {email};
+            Email.sendMail(to, "Household Manager Invitation",
+                    "You have been invited to " + house.getName() + "!\n" +
+                            "Click here to accept:\n" +
+                            "http://localhost:8080/hhapp/login.html?token=" + token);
+        }
+    }
+
+    public static int[] getAdmins(int houseId) {
+        String query = "SELECT House_user.userId, House_user.isAdmin FROM House_user WHERE houseId = ?";
+        int counter = 0;
+        int[] admins = null;
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, houseId);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt("isAdmin") > 0) {
+                    counter++;
+                }
+            }
+
+            rs = st.executeQuery();
+            admins = new int[counter];
+            counter = 0;
+            while (rs.next()) {
+                if (rs.getInt("isAdmin") > 0) {
+                    admins[counter] = rs.getInt("userId");
+                    counter++;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return admins;
     }
 }

@@ -28,6 +28,25 @@
     <version>4.12</version>
   </dependency>
 
+  <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+  </dependency>
+  <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.6.2</version>
+      <scope>test</scope>
+  </dependency>
+  <dependency>
+      <groupId>com.jayway.restassured</groupId>
+      <artifactId>rest-assured</artifactId>
+      <version>2.9.0</version>
+      <scope>test</scope>
+  </dependency>
+
   <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
   <dependency>
     <groupId>com.h2database</groupId>
@@ -75,7 +94,26 @@
       <artifactId>jbcrypt</artifactId>
       <version>0.4</version>
     </dependency>
-</dependencies>
+    <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
+    <dependency>
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client</artifactId>
+      <version>1.23.0</version>
+    </dependency>
+  </dependencies>
+
 
 <properties>
   <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -133,6 +171,7 @@
             <excludes>
                 <exclude>**/database/UserDAOTest.java</exclude>
                 <exclude>**/database/HouseholdDAOTest.java</exclude>
+                <exclude>**/services/UserServiceTest.java</exclude>
             </excludes>
         </configuration>
     </plugin>

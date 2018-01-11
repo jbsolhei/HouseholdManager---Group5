@@ -5,11 +5,11 @@ $(document).ready(function() {
 var sessionToken = "validforever";
 var dashboard = "dashboard.html";
 var household = "HouseholdOverview.html";
-var shoppinglists = "";
-var shoppingtrips = "";
-var todo = "";
-var statistics = "";
-var news = "";
+var shoppinglists = "shoppinglist.html";
+var shoppingtrips = "shoppingtrip.html";
+var todo = "dashboard.html";
+var statistics = "dashboard.html";
+var news = "dashboard.html";
 var profile = "profile.html";
 
 function callModal(modalContent) {

@@ -1,4 +1,11 @@
-/*Spesifications for profile.css:*/
+#profile_pic_img{
+    max-width:10vw;
+}
+
+.long-scroll-panel{
+    max-height: 75vh;
+    overflow-y: scroll;
+}
 
 .navbar {
     border-radius: 0;!important;
@@ -26,11 +33,6 @@
     border: none;!important;
 }
 
-.btn-sidebar:active {
-
-}
-
-
 .page-wrapper{
     margin-top: 1%;
     margin-left: 14%;
@@ -41,4 +43,12 @@
         margin-top: 1%;
         margin-left: 1%;
     }
+    .long-scroll-panel{
+        max-height: 20vh;
+        overflow-y: scroll;
+    }
 }
+
+
+
+

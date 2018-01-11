@@ -1,5 +1,6 @@
 package database;
 
+import classes.HashHandler;
 import classes.User;
 import org.junit.After;
 import org.junit.Before;
@@ -30,11 +31,11 @@ public class UserDAOTest {
         user.setEmail("Ole@gmail.com");
         user.setName("Ole");
         user.setPassword("123456");
-        user.setPhone("11223344");
+        user.setTelephone("33445566");
 
         UserDAO.addNewUser(user);
 
-        String query = "SELECT * FROM Person WHERE name='Ole' and email='Ole@gmail.com' and password='123456' and telephone='11223344'";
+        String query = "SELECT * FROM Person WHERE email='Ole@gmail.com'";
         ResultSet rs = st.executeQuery(query);
 
         String email = "";
@@ -51,29 +52,29 @@ public class UserDAOTest {
 
         assertEquals("Ole@gmail.com", email);
         assertEquals("Ole", name);
-        assertEquals("123456", password);
-        assertEquals("11223344", telephone);
+        assertEquals(HashHandler.passwordMatchesHash("123456", password), true);
+        assertEquals("33445566", telephone);
     }
 
     @Test
     public void getUser() throws Exception {
-        String existingEmail = "trym@gmail.com";
-        String nonExistingEmail = "frederic@gmail.com";
 
-        String[] info1 = {"Trym", "11223344"};
-        String[] info2 = null;
+        User user1 = new User();
+        user1.setName("Frank");
+        user1.setTelephone("22334455");
+        user1.setEmail("Frank@gmail.com");
 
-        assertArrayEquals(info1, UserDAO.getUser(existingEmail));
-        assertArrayEquals(info2, UserDAO.getUser(nonExistingEmail));
+        assertEquals("Frank", UserDAO.getUser(2).getName());
+        assertEquals("22334455", UserDAO.getUser(2).getTelephone());
+        assertEquals("Frank@gmail.com", UserDAO.getUser(2).getEmail());
     }
 
     @Test
     public void updateUser() throws Exception {
         String newName = "Frederic";
-        String email = "Ole@gmail.com";
-        UserDAO.updateUser(email,"Ole@gmail.com", "11223344", newName);
+        UserDAO.updateUser(1,"Ole@gmail.com", "11223344", newName);
 
-        String query = "SELECT * FROM Person WHERE email='Ole@gmail.com'";
+        String query = "SELECT * FROM Person WHERE userId=1";
         ResultSet rs = st.executeQuery(query);
 
         String name = "";
@@ -88,29 +89,27 @@ public class UserDAOTest {
 
     @Test
     public void updatePassword() throws Exception {
-        String newPassword = "654321";
-        String email = "Ole@gmail.com";
+        String np = "ost";
 
-        UserDAO.updatePassword(email, newPassword);
+        UserDAO.updatePassword(5, np);
 
-        String query = "SELECT * FROM Person WHERE email='Ole@gmail.com'";
+        String query = "SELECT * FROM Person WHERE userId = 5";
+
         ResultSet rs = st.executeQuery(query);
 
-        String password = "";
 
-        while (rs.next()){
-            password = rs.getString("password");
+        String npHashed = "";
+        while (rs.next()) {
+            npHashed = rs.getString("password");
         }
 
-        assertNotEquals("123456", password);
-        assertEquals(newPassword, password);
+        HashHandler.passwordMatchesHash(np, npHashed);
     }
 
     @Test
     public void deleteUser() throws Exception {
-        String email = "Frank@gmail.com";
         boolean deleteExecuted = true;
-        UserDAO.deleteUser(email);
+        UserDAO.deleteUser(2);
 
         String query = "SELECT * FROM Person WHERE email='Frank@gmail.com'";
         ResultSet rs = st.executeQuery(query);

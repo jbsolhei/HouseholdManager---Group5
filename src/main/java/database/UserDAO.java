@@ -1,29 +1,31 @@
 package database;
 
-import classes.User;
+import classes.*;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.ws.rs.Consumes;
+import java.security.SecureRandom;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Base64;
+
 
 public class UserDAO {
 
     /**
      * Used to create a new user in the database from a User object.
-     * @param newUser
+     * @param newUser a User object
+     * @return Returns false if the new user's email or telephone number already exists in the database, if else true
      */
-    public static void addNewUser(User newUser) {
+    public static boolean addNewUser(User newUser) {
         String email = newUser.getEmail();
         String name = newUser.getName();
         String password = newUser.getPassword();
-        String telephone = newUser.getPhone();
+        String telephone = newUser.getTelephone();
 
-        /*
-        Fiks passordhashing til passordet!!!!!!!!!!!!!!!!
-         */
+        if (userExist(email, telephone)) return false;
 
-        String hashedPassword = "";
+        String hashedPassword = HashHandler.makeHashFromPassword(password);
 
         String query = "INSERT INTO Person (email, name, password, telephone) VALUES (?,?,?,?)";
 
@@ -34,7 +36,7 @@ public class UserDAO {
             PreparedStatement st = conn.prepareStatement(query);
             st.setString(1, email);
             st.setString(2, name);
-            st.setString(3, password);
+            st.setString(3, hashedPassword);
             st.setString(4, telephone);
 
             st.executeUpdate();
@@ -44,6 +46,28 @@ public class UserDAO {
         } finally {
             dbc.disconnect();
         }
+
+        return true;
+    }
+
+    public static boolean userExist(String email, String telephone) {
+
+        String query = "SELECT * FROM Person WHERE email=+'"+email+"' or telephone='"+telephone+"'";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             Statement st = conn.createStatement()) {
+
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     /**
@@ -66,7 +90,7 @@ public class UserDAO {
                 user.setEmail(rs.getString("email"));
                 user.setName(rs.getString("name"));
                 user.setPassword(rs.getString("password"));
-                user.setPhone(rs.getString("telephone"));
+                user.setTelephone(rs.getString("telephone"));
                 return user;
             }
 
@@ -78,60 +102,16 @@ public class UserDAO {
     }
 
     /**
-     * Used to get user info (name and telephone) from database based on the users email.
-     * Returns an array of Strings with the name on index 0 and the telephone number on
-     * index 1.
-     * Returns null if the email does not exist in the database.
-     * @param email
-     * @return String[]
-     */
-    public static String[] getUser(String email) {
-        String name = "";
-        String telephone = "";
-        String[] userInfo = new String[2];
-        boolean userExists = false;
-
-
-        String query = "SELECT name, telephone FROM Person WHERE email = ?";
-        DBConnector dbc = new DBConnector();
-        PreparedStatement st;
-
-        try {
-            Connection conn = dbc.getConn();
-            st = conn.prepareStatement(query);
-            st.setString(1, email);
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                name = rs.getString("name");
-                telephone = rs.getString("telephone");
-                userExists = true;
-            }
-
-            userInfo[0] = name;
-            userInfo[1] = telephone;
-            st.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            dbc.disconnect();
-        }
-        if (userExists) return userInfo;
-        return null;
-    }
-
-    /**
      * Used to update email, name and the telephone of a user based on email.
      * Returns false if the user does not exist and true if the update was successful.
-     * @param email
-     * @param newEmail
-     * @param newTelephone
-     * @param newName
-     * @return
+     * @param id The user's id in the database
+     * @param newEmail New email
+     * @param newTelephone new Telephone number
+     * @param newName new Name
+     * @return True or false depending on success.
      */
-    public static boolean updateUser(String email, String newEmail, String newTelephone, String newName) {
-        String query = "UPDATE Person SET email = ?, telephone = ?, name = ? WHERE email = ?";
+    public static boolean updateUser(int id, String newEmail, String newTelephone, String newName) {
+        String query = "UPDATE Person SET email = ?, telephone = ?, name = ? WHERE userId = ?";
         boolean userInfoUpdated = false;
         DBConnector dbc = new DBConnector();
 
@@ -141,7 +121,7 @@ public class UserDAO {
             st.setString(1, newEmail);
             st.setString(2, newTelephone);
             st.setString(3, newName);
-            st.setString(4, email);
+            st.setInt(4, id);
 
             int update = st.executeUpdate();
 
@@ -162,17 +142,16 @@ public class UserDAO {
 
     /**
      * Used to delete users from the database based on the users email.
-     * @param email
+     * @param id The user's id
      */
-    public static void deleteUser(String email) {
-        String query = "DELETE FROM Person WHERE email = ?";
-
+    public static void deleteUser(int id) {
+        String query = "DELETE FROM Person WHERE userId = ?";
         DBConnector dbc = new DBConnector();
 
         try {
             Connection conn = dbc.getConn();
             PreparedStatement st = conn.prepareStatement(query);
-            st.setString(1, email);
+            st.setInt(1, id);
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
@@ -183,22 +162,64 @@ public class UserDAO {
     }
 
     /**
-     * Used to update a user's password based on the his/hers email.
-     * Returns false if the user does not exist and true if successful.
-     * @param email
-     * @param newPassword
-     * @return
+     * Used to reset a user's password when forgot. Takes the user's email, and generates a
+     * random password that gets sent to the user's email. A hashed version of the new
+     * password is inserted to the database.
+     * @param email The email of the user who's password is going to be reset.
+     * @return Returns true if the password was successfully reset. Returns false if the email is non existent. in
+     * the database.
      */
-    public static boolean updatePassword(String email, String newPassword) {
+    public static boolean resetPassword(String email) {
+
+        SecureRandom random = new SecureRandom();
+        byte randomBytes[] = new byte[8];
+        random.nextBytes(randomBytes);
+        String newPassword = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+        String newHashedPassword = HashHandler.makeHashFromPassword(newPassword);
+
         String query = "UPDATE Person SET password = ? WHERE email = ?";
+        int resetSuccessful = 0;
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setString(1, newHashedPassword);
+            st.setString(2, email);
+
+            resetSuccessful = st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (resetSuccessful == 0) return false;
+
+        String[] to = {email};
+        Email.sendMail(to, "Forgot Password","Here is your new randomly generated password: " + newPassword + "\n" +
+                 "Please log in to your Household Manager account and change your password as soon as possible.\n");
+        return true;
+    }
+
+    /**
+     * Used to update a user's password based on the his/hers email.
+     * @param id The user's id
+     * @param newPassword The new password that the user wants
+     * @return False if the user does not exist and true if successful.
+     */
+    public static boolean updatePassword(int id, String newPassword) {
+        String query = "UPDATE Person SET password = ? WHERE userId = ?";
+
         boolean passwordUpdated = false;
         DBConnector dbc = new DBConnector();
+
+        newPassword = HashHandler.makeHashFromPassword(newPassword);
 
         try {
             Connection conn = dbc.getConn();
             PreparedStatement st = conn.prepareStatement(query);
             st.setString(1, newPassword);
-            st.setString(2, email);
+            st.setInt(2, id);
 
             int update = st.executeUpdate();
 
@@ -215,5 +236,81 @@ public class UserDAO {
         }
 
         return passwordUpdated;
+    }
+
+    /**
+     * Used to get all the users from a house
+     * @param userId The id of the house where you want to find users
+     * @return Returns null if the house does not exist
+     */
+    public static ArrayList getHouseholds(int userId) {
+        ArrayList<Household> households = new ArrayList<>();
+        boolean userExists = false;
+        String query = "SELECT Household.houseId, house_name, house_address, House_user.isAdmin FROM Household\n" +
+                "INNER JOIN House_user ON Household.houseId = House_user.houseId\n" +
+                "INNER JOIN Person ON House_user.userId = Person.userId\n" +
+                "WHERE Person.userId = ?;";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, userId);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                userExists = true;
+                Household household = new Household();
+                household.setName(rs.getString("house_name"));
+                household.setAdress(rs.getString("house_address"));
+                household.setHouseId(rs.getInt("houseId"));
+                int[] adminIDs = HouseholdDAO.getAdmins(rs.getInt("houseId"));
+                User[] admins = new User[adminIDs.length];
+
+                for (int i = 0; i < adminIDs.length; i++) {
+                    admins[i] = UserDAO.getUser(adminIDs[i]);
+                }
+
+                household.setAdmins(admins);
+                households.add(household);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (userExists) return households;
+        return null;
+    }
+
+    public static ArrayList<Todo> getTasks(int userId) {
+        String query = "SELECT * FROM Task WHERE userId = ?";
+        ArrayList<Todo> todos = new ArrayList<>();
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, userId);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Todo todo = new Todo();
+                todo.setDate(rs.getDate("date"));
+                todo.setdescription(rs.getString("description"));
+                todo.setHouseId(rs.getInt("houseId"));
+                todo.setUserId(rs.getInt("userId"));
+                todo.setTaskId(rs.getInt("taskId"));
+
+                todos.add(todo);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return todos;
     }
 }
