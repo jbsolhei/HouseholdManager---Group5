@@ -32,6 +32,13 @@ public class HouseHoldService {
         HouseholdDAO.addUserToHousehold(house,Integer.parseInt(user));
     }
 
+    @POST
+    @Path("/{id}/users/invite")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public void inviteUserToHousehold(@PathParam("id") int house, String email){
+        HouseholdDAO.inviteUser(house,email);
+    }
+
     @GET
     @Path("/{id}/users")
     @Consumes(MediaType.APPLICATION_JSON)
