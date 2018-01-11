@@ -1,9 +1,6 @@
 package database;
 
-import classes.Email;
-import classes.HashHandler;
-import classes.Household;
-import classes.User;
+import classes.*;
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 import javax.ws.rs.Consumes;
@@ -249,7 +246,7 @@ public class UserDAO {
     public static ArrayList getHouseholds(int userId) {
         ArrayList<Household> households = new ArrayList<>();
         boolean userExists = false;
-        String query = "SELECT Household.houseId, house_name, house_address FROM Household\n" +
+        String query = "SELECT Household.houseId, house_name, house_address, House_user.isAdmin FROM Household\n" +
                 "INNER JOIN House_user ON Household.houseId = House_user.houseId\n" +
                 "INNER JOIN Person ON House_user.userId = Person.userId\n" +
                 "WHERE Person.userId = ?;";
@@ -259,7 +256,6 @@ public class UserDAO {
              PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, userId);
-
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -268,6 +264,14 @@ public class UserDAO {
                 household.setName(rs.getString("house_name"));
                 household.setAdress(rs.getString("house_address"));
                 household.setHouseId(rs.getInt("houseId"));
+                int[] adminIDs = HouseholdDAO.getAdmins(rs.getInt("houseId"));
+                User[] admins = new User[adminIDs.length];
+
+                for (int i = 0; i < adminIDs.length; i++) {
+                    admins[i] = UserDAO.getUser(adminIDs[i]);
+                }
+
+                household.setAdmins(admins);
                 households.add(household);
             }
 
@@ -279,13 +283,34 @@ public class UserDAO {
         return null;
     }
 
-    public static void main(String[] args) {
-        ArrayList<Household> households = getHouseholds(5);
-        for (int i = 0; i < households.size(); i++) {
-            System.out.println(households.get(i).getName());
-            System.out.println(households.get(i).getHouseId());
+    public static ArrayList<Todo> getTasks(int userId) {
+        String query = "SELECT * FROM Task WHERE userId = ?";
+        ArrayList<Todo> todos = new ArrayList<>();
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, userId);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Todo todo = new Todo();
+                todo.setDate(rs.getDate("date"));
+                todo.setdescription(rs.getString("description"));
+                todo.setHouseId(rs.getInt("houseId"));
+                todo.setUserId(rs.getInt("userId"));
+                todo.setTaskId(rs.getInt("taskId"));
+
+                todos.add(todo);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-
+        return todos;
     }
 }
