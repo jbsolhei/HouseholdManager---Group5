@@ -6,6 +6,11 @@
     font-family: Calibri;
 }
 
+.long-scroll-panel{
+    max-height: 75vh;
+    overflow-y: scroll;
+}
+
 .navbar {
     border-radius: 0;!important;
     margin-bottom: 0;!important;
@@ -45,7 +50,12 @@
         margin-top: 1%;
         margin-left: 1%;
     }
+    .long-scroll-panel{
+        max-height: 20vh;
+        overflow-y: scroll;
+    }
 }
+
 
 
 

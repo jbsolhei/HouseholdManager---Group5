@@ -36,7 +36,11 @@ div {
     padding-bottom: 0;
 }
 
-.footer, form{
+#submit {
+    width: 150px;
+}
+
+.footer, #mainpage{
     text-align: center;
 }
 
