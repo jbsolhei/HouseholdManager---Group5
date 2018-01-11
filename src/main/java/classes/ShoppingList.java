@@ -2,11 +2,16 @@ package classes;
 
 
 public class ShoppingList {
+    private int shoppingListId;
     private String name;
     private User[] participants;
     private boolean isPrivate;
 
     public ShoppingList(){}
+
+    public int getShoppingListId() {
+        return shoppingListId;
+    }
 
     public String getName() {
         return name;
@@ -18,6 +23,10 @@ public class ShoppingList {
 
     public boolean isPrivate() {
         return isPrivate;
+    }
+
+    public void setShoppingListId(int shoppingListId) {
+        this.shoppingListId = shoppingListId;
     }
 
     public void setName(String name) {
