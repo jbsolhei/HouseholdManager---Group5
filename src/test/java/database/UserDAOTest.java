@@ -60,24 +60,21 @@ public class UserDAOTest {
     public void getUser() throws Exception {
 
         User user1 = new User();
-        user1.setName("Trym");
-        user1.setTelephone("11223344");
-        user1.setEmail("trym@gmail.com");
-        User user2 = null;
+        user1.setName("Frank");
+        user1.setTelephone("22334455");
+        user1.setEmail("Frank@gmail.com");
 
-        assertEquals("Trym", UserDAO.getUser(1).getName());
-        assertEquals("11223344", UserDAO.getUser(1).getTelephone());
-        assertEquals("trym@gmail.com", UserDAO.getUser(1).getEmail());
-        assertEquals(user2, UserDAO.getUser(4));
+        assertEquals("Frank", UserDAO.getUser(2).getName());
+        assertEquals("22334455", UserDAO.getUser(2).getTelephone());
+        assertEquals("Frank@gmail.com", UserDAO.getUser(2).getEmail());
     }
 
     @Test
     public void updateUser() throws Exception {
         String newName = "Frederic";
-        String email = "Ole@gmail.com";
-        UserDAO.updateUser(3,"Ole@gmail.com", "11223344", newName);
+        UserDAO.updateUser(1,"Ole@gmail.com", "11223344", newName);
 
-        String query = "SELECT * FROM Person WHERE email='Ole@gmail.com'";
+        String query = "SELECT * FROM Person WHERE userId=1";
         ResultSet rs = st.executeQuery(query);
 
         String name = "";
@@ -92,26 +89,25 @@ public class UserDAOTest {
 
     @Test
     public void updatePassword() throws Exception {
-        String newPassword = "654321";
-        String email = "Ole@gmail.com";
+        String np = "ost";
 
-        UserDAO.updatePassword(3, newPassword);
+        UserDAO.updatePassword(5, np);
 
-        String query = "SELECT * FROM Person WHERE email='Ole@gmail.com'";
+        String query = "SELECT * FROM Person WHERE userId = 5";
+
         ResultSet rs = st.executeQuery(query);
 
-        String password = "";
 
-        while (rs.next()){
-            password = rs.getString("password");
+        String npHashed = "";
+        while (rs.next()) {
+            npHashed = rs.getString("password");
         }
 
-        assertEquals(HashHandler.passwordMatchesHash("654321", password), true);
+        HashHandler.passwordMatchesHash(np, npHashed);
     }
 
     @Test
     public void deleteUser() throws Exception {
-        String email = "Frank@gmail.com";
         boolean deleteExecuted = true;
         UserDAO.deleteUser(2);
 

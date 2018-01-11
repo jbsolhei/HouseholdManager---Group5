@@ -1,9 +1,16 @@
 package database;
 
+import classes.Email;
 import classes.HashHandler;
+import classes.Household;
 import classes.User;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
+import javax.ws.rs.Consumes;
+import java.security.SecureRandom;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Base64;
 
 public class UserDAO {
 
@@ -157,8 +164,47 @@ public class UserDAO {
     }
 
     /**
+     * Used to reset a user's password when forgot. Takes the user's email, and generates a
+     * random password that gets sent to the user's email. A hashed version of the new
+     * password is inserted to the database.
+     * @param email The email of the user who's password is going to be reset.
+     * @return Returns true if the password was successfully reset. Returns false if the email is non existent. in
+     * the database.
+     */
+    public static boolean resetPassword(String email) {
+
+        SecureRandom random = new SecureRandom();
+        byte randomBytes[] = new byte[8];
+        random.nextBytes(randomBytes);
+        String newPassword = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+        String newHashedPassword = HashHandler.makeHashFromPassword(newPassword);
+
+        String query = "UPDATE Person SET password = ? WHERE email = ?";
+        int resetSuccessful = 0;
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setString(1, newHashedPassword);
+            st.setString(2, email);
+
+            resetSuccessful = st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (resetSuccessful == 0) return false;
+
+        String[] to = {email};
+        Email.sendMail(to, "Forgot Password","Here is your new randomly generated password: " + newPassword + "\n" +
+                 "Please log in to your Household Manager account and change your password as soon as possible.\n");
+        return true;
+    }
+
+    /**
      * Used to update a user's password based on the his/hers email.
-     *
      * @param id The user's id
      * @param newPassword The new password that the user wants
      * @return False if the user does not exist and true if successful.
@@ -192,5 +238,53 @@ public class UserDAO {
         }
 
         return passwordUpdated;
+    }
+
+    /**
+     * Used to get all the users from a house
+     * @param userId The id of the house where you want to find users
+     * @return Returns null if the house does not exist
+     */
+    public static ArrayList getHouseholds(int userId) {
+        ArrayList<Household> households = new ArrayList<>();
+        boolean userExists = false;
+        String query = "SELECT Household.houseId, house_name, house_address FROM Household\n" +
+                "INNER JOIN House_user ON Household.houseId = House_user.houseId\n" +
+                "INNER JOIN Person ON House_user.userId = Person.userId\n" +
+                "WHERE Person.userId = ?;";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, userId);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                userExists = true;
+                Household household = new Household();
+                household.setName(rs.getString("house_name"));
+                household.setAdress(rs.getString("house_address"));
+                household.setHouseId(rs.getInt("houseId"));
+                households.add(household);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (userExists) return households;
+        return null;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Household> households = getHouseholds(5);
+        for (int i = 0; i < households.size(); i++) {
+            System.out.println(households.get(i).getName());
+            System.out.println(households.get(i).getHouseId());
+        }
+
+
     }
 }
