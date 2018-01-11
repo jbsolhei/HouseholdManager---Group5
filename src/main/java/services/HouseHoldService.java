@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 public class HouseHoldService {
 
     @GET
-    @Produces("text/plain")
+    @Produces(MediaType.APPLICATION_JSON)
     public String getTest(){
         return "Household service says hello!";
     }
