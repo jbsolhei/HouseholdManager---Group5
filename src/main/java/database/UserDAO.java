@@ -3,22 +3,22 @@ package database;
 import classes.HashHandler;
 import classes.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserDAO {
 
     /**
      * Used to create a new user in the database from a User object.
      * @param newUser a User object
+     * @return Returns false if the new user's email or telephone number already exists in the database, if else true
      */
-    public static void addNewUser(User newUser) {
+    public static boolean addNewUser(User newUser) {
         String email = newUser.getEmail();
         String name = newUser.getName();
         String password = newUser.getPassword();
-        String telephone = newUser.getPhone();
+        String telephone = newUser.getTelephone();
+
+        if (userExist(email, telephone)) return false;
 
         String hashedPassword = HashHandler.makeHashFromPassword(password);
 
@@ -41,6 +41,28 @@ public class UserDAO {
         } finally {
             dbc.disconnect();
         }
+
+        return true;
+    }
+
+    public static boolean userExist(String email, String telephone) {
+
+        String query = "SELECT * FROM Person WHERE email=+'"+email+"' or telephone='"+telephone+"'";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             Statement st = conn.createStatement()) {
+
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     /**
@@ -63,7 +85,7 @@ public class UserDAO {
                 user.setEmail(rs.getString("email"));
                 user.setName(rs.getString("name"));
                 user.setPassword(rs.getString("password"));
-                user.setPhone(rs.getString("telephone"));
+                user.setTelephone(rs.getString("telephone"));
                 return user;
             }
 

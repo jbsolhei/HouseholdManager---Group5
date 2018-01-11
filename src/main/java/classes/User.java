@@ -6,7 +6,7 @@ public class User {
     private int userId;
     private String name;
     private String email;
-    private String phone;
+    private String telephone;
     private String password;
     private ArrayList<Debt> debts;
     private ArrayList<Household> associatedHouseholds;
@@ -61,8 +61,8 @@ public class User {
         return email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTelephone() {
+        return telephone;
     }
 
     public String getPassword() {
@@ -81,8 +81,8 @@ public class User {
         this.email = email;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public void setPassword(String password) {

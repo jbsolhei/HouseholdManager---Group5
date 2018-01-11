@@ -36,6 +36,13 @@ public class UserService {
         return user;
     }
 
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean updateUser(@PathParam("id") int id, User user) {
+        return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName());
+    }
+
     @GET
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)

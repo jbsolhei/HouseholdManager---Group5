@@ -31,9 +31,7 @@ public class UserDAOTest {
         user.setEmail("Ole@gmail.com");
         user.setName("Ole");
         user.setPassword("123456");
-        user.setPhone("11223344");
-
-        String hashedPassword = HashHandler.makeHashFromPassword("123456");
+        user.setTelephone("33445566");
 
         UserDAO.addNewUser(user);
 
@@ -55,7 +53,7 @@ public class UserDAOTest {
         assertEquals("Ole@gmail.com", email);
         assertEquals("Ole", name);
         assertEquals(HashHandler.passwordMatchesHash("123456", password), true);
-        assertEquals("11223344", telephone);
+        assertEquals("33445566", telephone);
     }
 
     @Test
@@ -63,12 +61,12 @@ public class UserDAOTest {
 
         User user1 = new User();
         user1.setName("Trym");
-        user1.setPhone("11223344");
+        user1.setTelephone("11223344");
         user1.setEmail("trym@gmail.com");
         User user2 = null;
 
         assertEquals("Trym", UserDAO.getUser(1).getName());
-        assertEquals("11223344", UserDAO.getUser(1).getPhone());
+        assertEquals("11223344", UserDAO.getUser(1).getTelephone());
         assertEquals("trym@gmail.com", UserDAO.getUser(1).getEmail());
         assertEquals(user2, UserDAO.getUser(4));
     }
