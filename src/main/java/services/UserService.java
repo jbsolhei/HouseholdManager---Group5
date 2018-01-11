@@ -1,5 +1,6 @@
 package services;
 
+import classes.Household;
 import classes.Session;
 import classes.User;
 import classes.UserAuth;
@@ -8,6 +9,7 @@ import database.UserDAO;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.QueryParam;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,8 +26,8 @@ public class UserService {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addUser(User newUser) {
-        UserDAO.addNewUser(newUser);
+    public boolean addUser(User newUser) {
+        return UserDAO.addNewUser(newUser);
     }
 
     @GET
@@ -35,6 +37,21 @@ public class UserService {
         User user = UserDAO.getUser(id);
         return user;
     }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean updateUser(@PathParam("id") int id, User user) {
+        return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName());
+    }
+
+    @GET
+    @Path("/hh/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Household> getHousehold(@PathParam("id") int id) {
+        return UserDAO.getHouseholds(id);
+    }
+
 
     @GET
     @Path("/login")
@@ -52,4 +69,10 @@ public class UserService {
         return session.getToken();
     }
 
+    @PUT
+    @Path("/pwReset/{email}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean resetPassword(@PathParam("email") String email) {
+        return UserDAO.resetPassword(email);
+    }
 }

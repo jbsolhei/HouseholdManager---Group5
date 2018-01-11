@@ -43,7 +43,7 @@ public class ShoppingListDAO {
                 user.setUserId(userId);
                 user.setName(personName);
                 user.setEmail(email);
-                user.setPhone(telephone);
+                user.setTelephone(telephone);
 
                 users.add(user);
 
@@ -68,7 +68,7 @@ public class ShoppingListDAO {
                     user.setUserId(userId);
                     user.setName(personName);
                     user.setEmail(email);
-                    user.setPhone(telephone);
+                    user.setTelephone(telephone);
 
                     users.add(user);
                 }
