@@ -74,7 +74,6 @@ public class UserDAO {
         return null;
     }
 
-
     /**
      * Used to update email, name and the telephone of a user based on email.
      * Returns false if the user does not exist and true if the update was successful.
