@@ -10,6 +10,10 @@ public class Household {
     private ShoppingList shoppingList;
     private TodoList todoList;
 
+
+
+    private int houseId;
+
     public Household(){}
 
     public String getName() {
@@ -58,5 +62,13 @@ public class Household {
 
     public void setTodoList(TodoList todoList) {
         this.todoList = todoList;
+    }
+
+    public int getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(int houseId) {
+        this.houseId = houseId;
     }
 }
