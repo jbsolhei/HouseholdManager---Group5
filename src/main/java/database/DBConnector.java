@@ -12,7 +12,6 @@ public class DBConnector implements AutoCloseable {
     public DBConnector () {
         try {
             conn = DriverManager.getConnection(url);
-            System.out.println("Connection created");
         } catch (Exception e) {
             CleanUp.writeMessage(e, "DBConnector constructor");
         }
@@ -25,7 +24,6 @@ public class DBConnector implements AutoCloseable {
     public void disconnect () {
         try {
             conn.close();
-            System.out.println("Connection disconnected");
         } catch (SQLException e) {
             e.printStackTrace();
         }
