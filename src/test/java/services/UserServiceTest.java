@@ -8,11 +8,7 @@ import org.junit.Test;
 import static org.hamcrest.Matchers.*;
 import static com.jayway.restassured.RestAssured.given;
 
-
-
 public class UserServiceTest {
-
-
     @BeforeClass
     public static void setUp() throws Exception {
 
