@@ -1,2 +1,2 @@
 INSERT INTO Person (email, name, password, telephone) VALUES ('trym@gmail.com', 'Trym', '123456', '11223344');
-INSERT INTO Person (email, name, password, telephone) VALUES ('Frank@gmail.com', 'Frank', '123456', '11223344');
+INSERT INTO Person (email, name, password, telephone) VALUES ('Frank@gmail.com', 'Frank', '123456', '22334455');
