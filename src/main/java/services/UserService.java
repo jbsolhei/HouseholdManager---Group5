@@ -32,6 +32,7 @@ public class UserService {
 
 
     @GET
+    @Auth
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public User getUser(@PathParam("id") int id) {
@@ -40,6 +41,7 @@ public class UserService {
     }
 
     @PUT
+    @Auth
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean updateUser(@PathParam("id") int id, User user) {
@@ -47,6 +49,7 @@ public class UserService {
     }
 
     @GET
+    @Auth
     @Path("/{id}/hh")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Household> getHousehold(@PathParam("id") int id) {

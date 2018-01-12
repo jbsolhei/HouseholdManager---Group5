@@ -1,9 +1,6 @@
 package database;
 
-import classes.Email;
-import classes.Household;
-import classes.ShoppingList;
-import classes.User;
+import classes.*;
 
 import java.security.SecureRandom;
 import java.sql.Connection;
@@ -239,8 +236,21 @@ public class HouseholdDAO {
     }
 
     /**
+     * Used to add new users to the household from an invite link.
+     * @param token the invite token
+     * @param userId the id of the user
+     */
+    public static void addUserFromInvite(String token, int userId){
+        int tokenResult = InviteHandler.verifyToken(token);
+        if (tokenResult!=0){
+            addUserToHousehold(tokenResult,userId);
+        }
+    }
+
+    /**
      * Used to send and invite email to a user.
-     * @param email the email of the house.
+     * @param houseId the id of the house
+     * @param email the email of the user.
      */
     public static void inviteUser(int houseId, String email) {
         Household house = getHousehold(houseId);
@@ -274,7 +284,7 @@ public class HouseholdDAO {
             Email.sendMail(to, "Household Manager Invitation",
                     "You have been invited to " + house.getName() + "!\n" +
                             "Click here to accept:\n" +
-                            "http://localhost:8080/hhapp/login.html?token=" + token);
+                            "http://localhost:8080/hhapp/login.html?invite=" + token);
         }
     }
 

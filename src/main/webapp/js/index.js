@@ -18,32 +18,22 @@ var news = "dashboard.html";
 var profile = "profile.html";
 
 function ajaxAuth(attr){
-    attr["headers"]["Authorization"] = "Bearer " + sessionToken;
-    attr["error"] = function (jqXHR, exception) {
+    attr.headers = {
+        Authorization: "Bearer "+sessionToken
+    };
+    attr.error = function (jqXHR, exception) {
         var msg = '';
-        if (jqXHR.status === 0) {
-            msg = 'Not connect.\n Verify Network.';
-        } else if (jqXHR.status == 404) {
-            msg = 'Requested page not found. [404]';
-        } else if (jqXHR.status == 500) {
-            msg = 'Internal Server Error [500].';
-        } else if (exception === 'parsererror') {
-            msg = 'Requested JSON parse failed.';
-        } else if (exception === 'timeout') {
-            msg = 'Time out error.';
-        } else if (exception === 'abort') {
-            msg = 'Ajax request aborted.';
+        if (jqXHR.status == 401) {
+            window.location.replace("login.html")
         } else {
-            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+            $("html").html(jqXHR.responseText);
         }
-        alert(msg)
-
     };
     return $.ajax(attr);
 }
 
 function setCurrentUser(id) {
-    $.ajax({
+    ajaxAuth({
         url: "res/user/"+id,
         type: "GET",
         contentType: 'application/json; charset=utf-8',
@@ -56,7 +46,7 @@ function setCurrentUser(id) {
 }
 
 function setCurrentHousehold() {
-    $.ajax({
+    ajaxAuth({
         url: "res/user/"+currentUser.userId+"/hh",
         type: "GET",
         contentType: 'application/json; charset=utf-8',
@@ -79,6 +69,11 @@ function getHouseholdFromId(id,handleData){
 }
 
 function inviteCheck() {
+    var urlParams = window.location.search;
+    var token = urlParams.split("invite=")[1];
+    if (token!==undefined){
+
+    }
 }
 
 function callModal(modalContent) {
