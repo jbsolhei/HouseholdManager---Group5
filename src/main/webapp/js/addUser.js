@@ -40,6 +40,7 @@ function confirm() {
         addUser();
     }
 }
+
 function addUser() {
     $.ajax({
         url: "res/user/",
