@@ -93,10 +93,10 @@ public class UserService {
         return Response.ok("Du klarte det! Du kom deg inn på en side som krever autentisering!").build();
     }
 
+    @GET
     @Path("/{id}/tasks")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Todo> todos(@PathParam("id") int id) {
-        System.out.println("test");
         return UserDAO.getTasks(id);
     }
 

@@ -33,10 +33,12 @@ $(document).ready(function(){
     }
     function printTasksToWall(id){
         getTasksForUser(id, function (data) {
-            $.each(data, function(){
-                var inputString =
-                $("#profile_todos_body").append();
-            });
+            if(data.length!==0){
+                $.each(data, function(i,val){
+                    var inputString = "<tr><td>" + val.description + "</td><td>" + val.date + "</td><td>"+getHouseholdFromId(houseId,function(data){return data.name})+"</td></tr>"
+                    $("#profile_todos_body").append();
+                });
+            }else{$("#profile_todos_body").append("No todos for you!");}
         })
     }
     function getTasksForUser(userId, handleData){
@@ -45,22 +47,16 @@ $(document).ready(function(){
             type: "GET",
             contentType: "application/json; charser=utf-8",
             success: function(data){
+                console.log("getTasksForUser(), profile.html");
                 handleData(data);
             },
+            error: console.log("Error in getTasksForUser"),
             dataType: "json"
         });
     }
-    function getUsersInHousehold(id,handleData) {
-        $.ajax({
-            url: "res/household/"+householdId+"/users",
-            type: "GET",
-            contentType: 'application/json; charset=utf-8',
-            success: function(data){
-                handleData(data);
-            },
-            dataType: "json"
-        });
-    }
+
+
     printInfoToWall();
     printHouseholdsToWall(currentUser.userId);
+    printTasksToWall(currentUser.userId);
 });

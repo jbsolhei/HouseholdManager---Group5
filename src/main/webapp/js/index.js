@@ -66,12 +66,19 @@ function setCurrentHousehold() {
         dataType: "json"
     });
 }
+function getHouseholdFromId(id,handleData){
+    $.ajaxAuth({
+        url: "res/household/"+id,
+        type: "GET",
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            handleData(data);
+        },
+        dataType: "json"
+    });
+}
 
 function inviteCheck() {
-    var urlParams = window.location.search;
-    alert(urlParams);
-    var invite_token = urlParams.match(/\?(?:invite)\=([\S\s]*?)\&/)[0];
-    alert(invite_token);
 }
 
 function callModal(modalContent) {
