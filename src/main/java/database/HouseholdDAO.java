@@ -269,4 +269,39 @@ public class HouseholdDAO {
                             "http://localhost:8080/hhapp/login.html?token=" + token);
         }
     }
+
+    public static int[] getAdmins(int houseId) {
+        String query = "SELECT House_user.userId, House_user.isAdmin FROM House_user WHERE houseId = ?";
+        int counter = 0;
+        int[] admins = null;
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, houseId);
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt("isAdmin") > 0) {
+                    counter++;
+                }
+            }
+
+            rs = st.executeQuery();
+            admins = new int[counter];
+            counter = 0;
+            while (rs.next()) {
+                if (rs.getInt("isAdmin") > 0) {
+                    admins[counter] = rs.getInt("userId");
+                    counter++;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return admins;
+    }
 }

@@ -10,3 +10,5 @@ INSERT INTO House_user (houseId,userId) VALUES (1,33);
 INSERT INTO House_user (houseId,userId) VALUES (1,34);
 INSERT INTO Household (houseId,house_name,house_address) VALUES (2,'Updatehouse','Updateaddress');
 INSERT INTO Household (houseId,house_name,house_address) VALUES (3,'Deletehouse','Deleteaddress');
+
+INSERT INTO Person (email, name, password, telephone) VALUES ('test@testesen.no', 'Test Testesen', '$2a$12$ZyzEIbrC.0Q2.SfWhkOIGO36NHzDvUkNzvx8qV.mZFBHyZFrrCnum', 90807060);
