@@ -2,36 +2,20 @@
  * Created by Simen Moen Storvik on 11.01.2018.
  */
 $(document).ready(function(){
-    function printInfoToWall(id){
-        getUserFromRest(id,function (data){
-            $("#profile_information_list_name").html(data.name);
-            $("#profile_information_list_email").html(data.email);
-            $("#profile_information_list_phone").html(data.telephone);
-        })
-    }
-    function getUserFromRest(id,handleData) {
-        $.ajax({
-            url: "res/user/"+id,
-            type: "GET",
-            contentType: 'application/json; charset=utf-8',
-            success: function(data){
-                console.log("getUserFromRest(), profile.html");
-                handleData(data);
-            },
-            error: console.log("Error in getUserFromRest(), profile.html"),
-            dataType: "json"
-        });
+    function printInfoToWall(){
+        $("#profile_information_list_name").html(currentUser.name);
+        $("#profile_information_list_email").html(currentUser.email);
+        $("#profile_information_list_phone").html(currentUser.telephone);
     }
     function printHouseholdsToWall(id) {
         getHouseholdsForUser(id, function(data){
-            var inputString;
-            $.each(data,function () {
-                var admins = data.admins;
-                var isAdmin = false;
-                $.each(admins, function(){
-                    if(id===admins.userId){isAdmin=true}
+            $.each(data,function (i, val) {
+                var admins = val.admins;
+                var isAdmin = "No";
+                $.each(admins, function(j, adm){
+                    if(currentUser.userId===adm.userId){isAdmin="Yes"}
                 });
-                inputString = "<tr><td>" + data.name + "</td><td>" + data.adress + "</td><td>"+isAdmin?"Yes":"No"+"</td></tr>";
+                var inputString = "<tr><td>" + val.name + "</td><td>" + val.adress + "</td><td>"+isAdmin+"</td></tr>";
                 $("#profile_households_table_body").append(inputString);
             });
         });
@@ -48,7 +32,12 @@ $(document).ready(function(){
         });
     }
     function printTasksToWall(id){
-
+        getTasksForUser(id, function (data) {
+            $.each(data, function(){
+                var inputString =
+                $("#profile_todos_body").append();
+            });
+        })
     }
     function getTasksForUser(userId, handleData){
         $.ajax({
@@ -61,7 +50,7 @@ $(document).ready(function(){
             dataType: "json"
         });
     }
-    function getHouseholdFromRest(id,handleData) {
+    function getUsersInHousehold(id,handleData) {
         $.ajax({
             url: "res/household/"+householdId+"/users",
             type: "GET",
@@ -72,6 +61,6 @@ $(document).ready(function(){
             dataType: "json"
         });
     }
-    printInfoToWall(1);
-    printHouseholdsToWall(1);
+    printInfoToWall();
+    printHouseholdsToWall(currentUser.userId);
 });
