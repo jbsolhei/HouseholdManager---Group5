@@ -8,29 +8,22 @@ $(document).ready(function () {
         var password = $("#password").val();
         console.log(email + " pass " + password);
 
-        //fungerer ikke!!
+        var loginPerson = {"name": "", "email": email, "telephone": "", "password": password};
+        console.log(JSON.stringify(loginPerson));
         $.ajax({
             url: "res/user/login",
-            type: 'GET',
+            type: 'post',
+            data: JSON.stringify(loginPerson),
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
-            data: {
-                email: email,
-                password: password
-            },
             success: function(response) {
-                if(response == "") {
-                    console("tomt");
+                if(response.success === true) {
+                    sessionToken = response.sessionToken;
                 }
-                console.log("gikk nbr");
             },
             error: function(result) {
-                //Do Something to handle error
-                if(result.responseText === "") {
-                    alert("Wrong")
-                } else{
-                    //Hva som skjer ved riktig passord
-                }
+                console.log(result);
+                alert("Wrong email or password");
             }
         });
 
