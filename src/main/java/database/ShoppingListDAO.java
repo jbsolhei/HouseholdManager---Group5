@@ -17,13 +17,14 @@ public class ShoppingListDAO {
         ArrayList<ShoppingList> shoppingLists = new ArrayList<>();
         ArrayList<User> users = new ArrayList<>();
         int shoppingListId = 0;
+        int shoppingListId2 = 0;
         String shoppingListName = "";
         int userId = 0;
         String personName = "";
         String email = "";
         String telephone = "";
 
-        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, User_Shopping_list.userId, Person.name, Person.email, Person.telephone FROM Shopping_list RIGHT JOIN User_Shopping_list ON Shopping_list.shopping_listId = User_Shopping_list.shopping_listId RIGHT JOIN Person ON User_Shopping_list.userId = Person.userId WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
+        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, User_Shopping_list.userId, Person.name, Person.email, Person.telephone FROM Shopping_list LEFT JOIN User_Shopping_list ON Shopping_list.shopping_listId = User_Shopping_list.shopping_listId LEFT JOIN Person ON User_Shopping_list.userId = Person.userId WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
@@ -31,40 +32,27 @@ public class ShoppingListDAO {
             st.setInt(1, houseId);
             ResultSet rs = st.executeQuery();
 
-            if (rs.next()) {
+
+            while(rs.next()) {
                 shoppingListId = rs.getInt("shopping_listId");
-                shoppingListName = rs.getString("Shopping_list.name");
-                userId = rs.getInt("userId");
-                personName = rs.getString("Person.name");
-                email = rs.getString("email");
-                telephone = rs.getString("telephone");
 
-                User user = new User();
-                user.setUserId(userId);
-                user.setName(personName);
-                user.setEmail(email);
-                user.setTelephone(telephone);
+                if (shoppingListId != shoppingListId2 && shoppingListId2 != 0) {
+                    ShoppingList sl = new ShoppingList();
+                    sl.setName(shoppingListName);
+                    sl.setParticipants(toUserArray(users));
+                    sl.setShoppingListId(shoppingListId2);
+                    shoppingLists.add(sl);
+                    users.clear();
+                }
+                shoppingListName = rs.getString("shopping_list.name");
 
-                users.add(user);
-
-                while (rs.next()) {
-                    int newShoppingListId = rs.getInt("shopping_listId");
-                    shoppingListName = rs.getString("Shopping_list.name");
+                if (userId != 0) {
                     userId = rs.getInt("userId");
                     personName = rs.getString("Person.name");
                     email = rs.getString("email");
                     telephone = rs.getString("telephone");
 
-                    if (newShoppingListId != shoppingListId) {
-                        ShoppingList sl = new ShoppingList();
-                        sl.setName(shoppingListName);
-                        sl.setParticipants(toUserArray(users));
-                        sl.setShoppingListId(shoppingListId);
-                        shoppingLists.add(sl);
-                        users.clear();
-                    }
-
-                    user = new User();
+                    User user = new User();
                     user.setUserId(userId);
                     user.setName(personName);
                     user.setEmail(email);
@@ -73,23 +61,23 @@ public class ShoppingListDAO {
                     users.add(user);
                 }
 
-                ShoppingList sl = new ShoppingList();
-                sl.setShoppingListId(shoppingListId);
-                sl.setParticipants(toUserArray(users));
-                sl.setName(shoppingListName);
-
-                shoppingLists.add(sl);
-
-                for (ShoppingList shoppingList: shoppingLists) {
-                    Item[] items = getItems(shoppingList.getShoppingListId());
-                    shoppingList.setItems(items);
-                }
-
-                return toShoppingListArray(shoppingLists);
-
-            } else {
-                return null;
+                shoppingListId2 = shoppingListId;
             }
+
+            ShoppingList sl = new ShoppingList();
+            sl.setName(shoppingListName);
+            sl.setParticipants(toUserArray(users));
+            sl.setShoppingListId(shoppingListId2);
+            shoppingLists.add(sl);
+            users.clear();
+
+            for (ShoppingList shoppingList: shoppingLists) {
+                Item[] items = getItems(shoppingList.getShoppingListId());
+                shoppingList.setItems(items);
+            }
+
+            return toShoppingListArray(shoppingLists);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -147,21 +135,28 @@ public class ShoppingListDAO {
         return null;
     }
 
-    public static void createShoppingList(String name, int houseId, int[] userIds) {
-        String query_sl = "INSERT INTO Shopping_list (name, houseId) VALUES (?, ?);";
-        String query_user_sl = "";
-        try (DBConnector dbc = new DBConnector();
-             Connection conn = dbc.getConn();
-             PreparedStatement st_sl = conn.prepareStatement(query_sl)) {
+    public static void createShoppingList(ShoppingList shoppingList, int houseId){
+        String name = shoppingList.getName();
 
-            st_sl.setInt(1, houseId);
-            ResultSet rs_sl = st_sl.executeQuery();
-            ResultSet pk_sl = st_sl.getGeneratedKeys();
+        String query = "INSERT INTO Shopping_list (name, houseId) VALUES (?,?)";
 
+        DBConnector dbc = new DBConnector();
+
+        try {
+            Connection conn = dbc.getConn();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, name);
+            st.setInt(2,houseId);
+
+            st.executeUpdate();
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            dbc.disconnect();
         }
     }
+
 
     private static User[] toUserArray(ArrayList<User> users) {
         User[] userArray = new User[users.size()];
