@@ -1,13 +1,11 @@
 package classes;
 
-import java.util.ArrayList;
-
 public class Household {
     private String name;
     private String adress;
     private User[] residents;
     private User[] admins;
-    private ShoppingList shoppingList;
+    private ShoppingList[] shoppingLists;
     private TodoList todoList;
 
     private int houseId;
@@ -26,8 +24,8 @@ public class Household {
         return residents;
     }
 
-    public ShoppingList getShoppingList() {
-        return shoppingList;
+    public ShoppingList[] getShoppingLists() {
+        return shoppingLists;
     }
 
     public TodoList getTodoList() {
@@ -54,8 +52,8 @@ public class Household {
         this.admins = admins;
     }
 
-    public void setShoppingList(ShoppingList shoppingList) {
-        this.shoppingList = shoppingList;
+    public void setShoppingLists(ShoppingList[] shoppingLists) {
+        this.shoppingLists = shoppingLists;
     }
 
     public void setTodoList(TodoList todoList) {

@@ -15,7 +15,6 @@ $(document).ready(function () {
         email = $("#email1").val();
         password = $("#pwd").val();
         testPassword = $("#pwd2").val();
-        console.log(name + phone + email + password + testPassword +"");
 
         confirm();
 
@@ -38,26 +37,33 @@ function confirm() {
 
         //success!
     } else {
-        document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
-            '<strong>Success!</strong> You have now created a user.</div>';
-        person = {"name": name, "email": email, "phone": phone, "password": password};
 
+
+        /*document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
+            '<strong>Success!</strong> You have now created a user.</div>';*/
+        person = {"name": name, "email": email, "telephone": phone, "password": password};
         addUser();
-
-        $('#modal').modal('hide');
     }
 }
 function addUser() {
     $.ajax({
-        url: "res/user",
+        url: "res/user/",
         type: "POST",
         data: JSON.stringify(person),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
             console.log(result);
+            if(result === true) {
+                document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
+                    '<strong>Success!</strong> You have now created a user.</div>';
+            } else {
+                document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                    '<strong>The email or phone number already exist</strong></div>';
+            }
         },
         error: function (e) {
+            console.log("error");
             console.log(e);
         }
     })
