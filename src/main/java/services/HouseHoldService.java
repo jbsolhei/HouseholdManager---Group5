@@ -38,9 +38,9 @@ public class HouseHoldService {
     @POST
     @Auth
     @Path("/invited/{token}")
-    @Consumes(MediaType.TEXT_PLAIN)
-    public void addUserFromInvite(@PathParam("token") String token, String userId){
-        HouseholdDAO.addUserFromInvite(token,Integer.parseInt(userId));
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void addUserFromInvite(@PathParam("token") String token, User user){
+        HouseholdDAO.addUserFromInvite(token, user.getUserId());
     }
 
     @POST
