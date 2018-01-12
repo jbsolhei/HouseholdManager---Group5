@@ -85,6 +85,11 @@ public class ShoppingListDAO {
         return null;
     }
 
+    /**
+     * Get all the items in one spesific shopping list
+     * @param shopping_listId
+     * @return an array of items
+     */
     public static Item[] getItems(int shopping_listId) {
         ArrayList<Item> items = new ArrayList<>();
         int itemId;
@@ -135,7 +140,12 @@ public class ShoppingListDAO {
         return null;
     }
 
-    public static void createShoppingList(ShoppingList shoppingList, int houseId){
+    /**
+     * Creates a new shopping list with no items
+     * @param shoppingList
+     * @param houseId
+     */
+  public static void createShoppingList(ShoppingList shoppingList, int houseId){
         String name = shoppingList.getName();
 
         String query = "INSERT INTO Shopping_list (name, houseId) VALUES (?,?)";
@@ -150,6 +160,60 @@ public class ShoppingListDAO {
 
             st.executeUpdate();
             st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+    }
+
+
+    public static void deleteShoppingList(int houseId, int shopping_list_id){
+
+        String query = "DELETE FROM Shopping_list WHERE houseId = ? AND shopping_listId = ?";
+
+        DBConnector dbc = new DBConnector();
+
+        try {
+            Connection conn = dbc.getConn();
+            PreparedStatement st = conn.prepareStatement(query);
+
+            st.setInt(2, shopping_list_id);
+            st.setInt(1,houseId);
+
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+    }
+
+
+    public static void updateItems(Item[] items, int shopping_list_id){
+        Item[] oldItems = getItems(shopping_list_id);
+
+        DBConnector dbc = new DBConnector();
+        String query = "";
+        int teller = 1;
+        try {
+            Connection conn = dbc.getConn();
+            PreparedStatement st;
+            for(int i = 0; i < items.length; i++){
+                if(items[i] != null){
+                    query = "INSERT INTO Item(name, checkedBy, shopping_listId) VALUES (?, ?, ?) WHERE shopping_listId = ?;";
+
+                    st = conn.prepareStatement(query);
+                    st.setString(1, items[i].getName());
+                    st.setInt(2, 0);
+                    st.setInt(3, shopping_list_id);
+                    st.executeUpdate();
+                    st.close();
+                }
+            }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

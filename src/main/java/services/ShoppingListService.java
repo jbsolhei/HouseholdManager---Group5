@@ -31,8 +31,23 @@ public class ShoppingListService {
 
     @POST
     @Path("/{id}/shopping_lists/")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public void createShoppingList(@PathParam("id") int houseId, ShoppingList shoppingList){
         ShoppingListDAO.createShoppingList(shoppingList, houseId);
     }
+
+    @DELETE
+    @Path("/{id}/shopping_lists/{shopping_list_id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteShoppingList(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id){
+        ShoppingListDAO.deleteShoppingList(houseId, shopping_list_id);
+    }
+
+    @PUT
+    @Path("/{id}/shopping_lists/{shopping_list_id}/items")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void updateItems(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, Item[] items){
+        ShoppingListDAO.updateItems(items, shopping_list_id);
+    }
+
 }

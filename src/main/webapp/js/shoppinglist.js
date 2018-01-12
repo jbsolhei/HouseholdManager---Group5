@@ -5,16 +5,15 @@ var numberOfItems = 0;
 var activeTab = 0;
 var householdId = 1;
 var shoppingLists = [];
-var items = [[]]; // [shoppinglist[item]]
+var newItems = []; // [shoppinglist[item]]
+var deleteItems = [];
 var numberOfLists = 0;
+var itemsTab = [];
 
 $(document).ready(function(){
     $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
-        console.log("ant shopping lists: " + SL.length);
         numberOfLists = SL.length;
-        console.log("første liste: " + SL[0].name);
         for(var i = 0; i < SL.length; i++){
-            console.log("første liste: " + SL[i].name + ", " + i);
             shoppingLists[i] = SL[i];
             insertShoppingLists(i, shoppingLists[i].name)
         }
@@ -33,7 +32,7 @@ function additem() {
     var newItem = document.getElementById("item").value;
     if(newItem != "" && newItem != null) {
         numberOfItems += 1;
-        items[numberOfItems] = newItem;
+        newItems[numberOfItems] = newItem;
         $("#emptyListText").addClass("hide");
         $("#newItem").append('<tr id="item' + numberOfItems + '"><td><span onclick="check(' + numberOfItems + ')" id="unchecked' + numberOfItems + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + newItem + '</td><td><span onclick="deleteItem(' + numberOfItems + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
         document.getElementById("item").value = "";
@@ -54,6 +53,10 @@ function deleteItem(itemNumber){
 }
 
 function showList(SLIndex){
+    if(newItems.length != 0 || deleteItems.length != 0) {
+        saveChanges();
+
+    }
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
     $.get("res/household/" + householdId + "/shopping_lists/" + shoppingLists[SLIndex].shoppingListId + "/items", function (items) {
 
@@ -61,6 +64,7 @@ function showList(SLIndex){
             $("#emptyListText").removeClass("hide");
         } else {
             for (var i = 0; i < items.length; i++) {
+                itemsTab[i] = items[i];
                 $("#newItem").append('<tr id="item' + i + '"><td><span onclick="check(' + i + ')" id="unchecked' + i + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + items[i].name + '</td><td><span onclick="deleteItem(' + i + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
             }
         }
@@ -84,8 +88,26 @@ function createNewList(name){
     $("#" + activeTab).removeClass("active");
 }
 
-function deleteList(listName){
+function deleteList(){
+    $.ajax({
+        type: 'DELETE',
+        url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId,
 
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function () {
+            console.log("List successfully deleted from database")
+
+            shoppingLists[activeTab] = null;
+            $("#" + activeTab).remove();
+            for(var i = 0; i < shoppingLists.length; i++){
+                if(shoppingLists[i] != null){
+                    showList(i);
+                    i = shoppingLists.length +1;
+                }
+            }
+        }
+    });
 }
 
 function okButton(){
@@ -114,9 +136,27 @@ function addNewList(name){
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            alert("success!");
+            console.log("List successfully added to database")
         }
     });
+}
+
+function saveChanges(){
+    console.log(newItems.length);
+    console.log(newItems[0].name);
+    $.ajax({
+        type: 'PUT',
+        url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items",
+        data: JSON.stringify({"items": newItems}),
+
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function () {
+            console.log("List successfully saved in database");
+        }
+    });
+
+    newItems = [];
 }
 
 /* Make it so that you can use the 'enter'-key to add items*/
