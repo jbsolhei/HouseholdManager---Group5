@@ -1,6 +1,10 @@
 #profile_pic_img{
     max-width:10vw;
 }
+.profile_panel_heading{
+    font-size: x-large;
+    font-family: Calibri;
+}
 
 .long-scroll-panel{
     max-height: 75vh;
@@ -32,6 +36,9 @@
     outline: none;!important;
     border: none;!important;
 }
+
+.btn-sidebar:active {}
+
 
 .page-wrapper{
     margin-top: 1%;
