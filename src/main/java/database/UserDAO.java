@@ -195,7 +195,6 @@ public class UserDAO {
             st.setString(2, email);
 
             resetSuccessful = st.executeUpdate();
-            System.out.println(resetSuccessful);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -270,7 +269,7 @@ public class UserDAO {
                 userExists = true;
                 Household household = new Household();
                 household.setName(rs.getString("house_name"));
-                household.setAdress(rs.getString("house_address"));
+                household.setAddress(rs.getString("house_address"));
                 household.setHouseId(rs.getInt("houseId"));
                 int[] adminIDs = HouseholdDAO.getAdmins(rs.getInt("houseId"));
                 User[] admins = new User[adminIDs.length];
