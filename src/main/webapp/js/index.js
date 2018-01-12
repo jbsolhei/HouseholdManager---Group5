@@ -1,7 +1,7 @@
 
 function ajaxAuth(attr){
     attr.headers = {
-        Authorization: "Bearer "+sessionToken
+        Authorization: "Bearer "+window.sessionStorage.getItem("sessionToken")
     };
     attr.error = function (jqXHR, exception) {
         var msg = '';
