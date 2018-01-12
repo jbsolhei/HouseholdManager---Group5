@@ -73,6 +73,7 @@ public class UserService {
             HashMap<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("sessionToken", session.getToken());
+            response.put("userId",session.getUserId());
             return Response.ok(response).build();
         }
     }

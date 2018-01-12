@@ -13,6 +13,13 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/index.js"></script>
         <script src="js/invite.js"></script>
+        <script src="js/variables.js"></script>
+        <script>
+            $(document).ready(function() {
+                setCurrentUser(window.sessionStorage.getItem("userId")); // TODO: grab data from session
+                swapContent("dashboard.html")
+            });
+        </script>
     </head>
     <body>
     <div class="top-and-sidebar">
