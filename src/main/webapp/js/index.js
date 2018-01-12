@@ -1,20 +1,3 @@
-var currentUser;
-var currentHousehold;
-
-$(document).ready(function() {
-    setCurrentUser(1);
-    swapContent("dashboard.html")
-});
-
-var sessionToken = "validforever";
-var dashboard = "dashboard.html";
-var household = "HouseholdOverview.html";
-var shoppinglists = "shoppinglist.html";
-var shoppingtrips = "shoppingtrip.html";
-var todo = "dashboard.html";
-var statistics = "dashboard.html";
-var news = "dashboard.html";
-var profile = "profile.html";
 
 function ajaxAuth(attr){
     attr.headers = {
@@ -38,8 +21,6 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             currentUser = data;
-            inviteCheck();
-            setCurrentHousehold();
         },
         dataType: "json"
     });
@@ -51,14 +32,15 @@ function setCurrentHousehold() {
         type: "GET",
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
-            currentHousehold = data[0];
+            window.location.replace("index.html");
         },
         error: function (data) {
-            window.location.replace("login.html")
+            window.location.replace("login.html");
         },
         dataType: "json"
     });
 }
+
 function getHouseholdFromId(id,handleData){
     ajaxAuth({
         url: "res/household/"+id,

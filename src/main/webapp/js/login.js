@@ -18,7 +18,9 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             success: function(response) {
                 if(response.success === true) {
-                    sessionToken = response.sessionToken;
+                    window.sessionStorage.setItem("sessionToken",response.sessionToken);
+                    window.sessionStorage.setItem("userId",response.userId);
+                    window.location.replace("index.html")
                 }
             },
             error: function(result) {
