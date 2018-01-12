@@ -240,10 +240,13 @@ public class HouseholdDAO {
      * @param token the invite token
      * @param userId the id of the user
      */
-    public static void addUserFromInvite(String token, int userId){
+    public static int addUserFromInvite(String token, int userId){
         int tokenResult = InviteHandler.verifyToken(token);
         if (tokenResult!=0){
             addUserToHousehold(tokenResult,userId);
+            return 1;
+        } else {
+            return -1;
         }
     }
 

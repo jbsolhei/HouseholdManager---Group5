@@ -8,19 +8,15 @@ var password;
 var testPassword;
 var person;
 
-$(document).ready(function () {
-    $("#submitBtn").click(function () {
-        name = $("#name").val();
-        phone = $("#telephone").val();
-        email = $("#email1").val();
-        password = $("#pwd").val();
-        testPassword = $("#pwd2").val();
-
-        confirm();
-
-    });
-
-});
+function submitNewUser() {
+    name = $("#name").val();
+    phone = $("#telephone").val();
+    email = $("#email1").val();
+    password = $("#pwd").val();
+    testPassword = $("#pwd2").val();
+    print("test");
+    confirm();
+}
 
 function confirm() {
     //some of the forms is not filled in

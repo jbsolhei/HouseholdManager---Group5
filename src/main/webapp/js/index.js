@@ -3,7 +3,6 @@ var currentHousehold;
 
 $(document).ready(function() {
     setCurrentUser(1);
-    inviteCheck();
     swapContent("dashboard.html")
 });
 
@@ -39,6 +38,7 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             currentUser = data;
+            inviteCheck();
             setCurrentHousehold();
         },
         dataType: "json"
@@ -53,11 +53,14 @@ function setCurrentHousehold() {
         success: function (data) {
             currentHousehold = data[0];
         },
+        error: function (data) {
+            window.location.replace("login.html")
+        },
         dataType: "json"
     });
 }
 function getHouseholdFromId(id,handleData){
-    $.ajaxAuth({
+    ajaxAuth({
         url: "res/household/"+id,
         type: "GET",
         contentType: 'application/json; charset=utf-8',
@@ -66,14 +69,6 @@ function getHouseholdFromId(id,handleData){
         },
         dataType: "json"
     });
-}
-
-function inviteCheck() {
-    var urlParams = window.location.search;
-    var token = urlParams.split("invite=")[1];
-    if (token!==undefined){
-
-    }
 }
 
 function callModal(modalContent) {
