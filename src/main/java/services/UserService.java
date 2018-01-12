@@ -54,7 +54,7 @@ public class UserService {
     }
 
 
-    @GET
+    @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -101,7 +101,6 @@ public class UserService {
 
     @PUT
     @Path("/pwReset/{email}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public boolean resetPassword(@PathParam("email") String email) {
         return UserDAO.resetPassword(email);
     }
