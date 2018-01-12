@@ -47,7 +47,7 @@ public class UserService {
     }
 
     @GET
-    @Path("/hh/{id}")
+    @Path("/{id}/hh")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Household> getHousehold(@PathParam("id") int id) {
         return UserDAO.getHouseholds(id);
@@ -93,14 +93,15 @@ public class UserService {
         return Response.ok("Du klarte det! Du kom deg inn på en side som krever autentisering!").build();
     }
 
-    @Path("/tasks/{id}")
+    @Path("/{id}/tasks")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Todo> todos(@PathParam("id") int id) {
+        System.out.println("test");
         return UserDAO.getTasks(id);
     }
 
     @PUT
-    @Path("/pwReset/{email}")
+    @Path("/{email}/pwReset")
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean resetPassword(@PathParam("email") String email) {
         return UserDAO.resetPassword(email);
