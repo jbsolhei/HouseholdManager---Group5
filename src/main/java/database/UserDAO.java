@@ -1,9 +1,7 @@
 package database;
 
 import classes.*;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
-import javax.ws.rs.Consumes;
 import java.security.SecureRandom;
 import java.sql.*;
 import java.util.ArrayList;
@@ -246,10 +244,7 @@ public class UserDAO {
     public static ArrayList getHouseholds(int userId) {
         ArrayList<Household> households = new ArrayList<>();
         boolean userExists = false;
-        String query = "SELECT Household.houseId, house_name, house_address, House_user.isAdmin FROM Household\n" +
-                "INNER JOIN House_user ON Household.houseId = House_user.houseId\n" +
-                "INNER JOIN Person ON House_user.userId = Person.userId\n" +
-                "WHERE Person.userId = ?;";
+        String query = "SELECT houseId FROM House_user WHERE userId=?";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -260,19 +255,7 @@ public class UserDAO {
 
             while (rs.next()) {
                 userExists = true;
-                Household household = new Household();
-                household.setName(rs.getString("house_name"));
-                household.setAdress(rs.getString("house_address"));
-                household.setHouseId(rs.getInt("houseId"));
-                int[] adminIDs = HouseholdDAO.getAdmins(rs.getInt("houseId"));
-                User[] admins = new User[adminIDs.length];
-
-                for (int i = 0; i < adminIDs.length; i++) {
-                    admins[i] = UserDAO.getUser(adminIDs[i]);
-                }
-
-                household.setAdmins(admins);
-                households.add(household);
+                households.add(HouseholdDAO.getHousehold(rs.getInt("houseId")));
             }
 
         } catch (SQLException e) {
