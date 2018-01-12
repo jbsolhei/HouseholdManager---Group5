@@ -14,7 +14,6 @@ function submitNewUser() {
     email = $("#email1").val();
     password = $("#pwd").val();
     testPassword = $("#pwd2").val();
-    print("test");
     confirm();
 }
 
