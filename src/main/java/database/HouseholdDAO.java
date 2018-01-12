@@ -2,6 +2,7 @@ package database;
 
 import classes.Email;
 import classes.Household;
+import classes.ShoppingList;
 import classes.User;
 
 import java.security.SecureRandom;
@@ -52,7 +53,14 @@ public class HouseholdDAO {
     public static Household getHousehold(int id) { // TODO: more data
         String name = "";
         String address = "";
+        User[] members = getMembers(id);
+        User[] admins = getAdmins(id);
+        ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(id);
+
         Household household = new Household();
+        household.setAdmins(admins);
+        household.setResidents(members);
+        household.setShoppingLists(shoppingLists);
         boolean householdExists = false;
 
 
@@ -270,10 +278,10 @@ public class HouseholdDAO {
         }
     }
 
-    public static int[] getAdmins(int houseId) {
+    public static User[] getAdmins(int houseId) {
         String query = "SELECT House_user.userId, House_user.isAdmin FROM House_user WHERE houseId = ?";
         int counter = 0;
-        int[] admins = null;
+        ArrayList<User> admins = new ArrayList<>();
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -282,19 +290,10 @@ public class HouseholdDAO {
             st.setInt(1, houseId);
 
             ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                if (rs.getInt("isAdmin") > 0) {
-                    counter++;
-                }
-            }
 
-            rs = st.executeQuery();
-            admins = new int[counter];
-            counter = 0;
             while (rs.next()) {
                 if (rs.getInt("isAdmin") > 0) {
-                    admins[counter] = rs.getInt("userId");
-                    counter++;
+                    admins.add(UserDAO.getUser(rs.getInt("userId")));
                 }
             }
 
@@ -302,6 +301,8 @@ public class HouseholdDAO {
             e.printStackTrace();
         }
 
-        return admins;
+        User[] list = (User[]) admins.toArray();
+
+        return list;
     }
 }
