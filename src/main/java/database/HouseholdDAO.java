@@ -30,7 +30,7 @@ public class HouseholdDAO {
             Connection conn = dbc.getConn();
             PreparedStatement st = conn.prepareStatement(query);
             st.setString(1, name);
-            st.setString(2,address);
+            st.setString(2, address);
 
             st.executeUpdate();
             st.close();

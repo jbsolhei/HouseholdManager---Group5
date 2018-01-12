@@ -1,9 +1,10 @@
 package database;
 
 import classes.*;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
-
-import javax.ws.rs.Consumes;
+import classes.Email;
+import classes.HashHandler;
+import classes.Household;
+import classes.User;
 import java.security.SecureRandom;
 import java.sql.*;
 import java.util.ArrayList;
@@ -50,6 +51,12 @@ public class UserDAO {
         return true;
     }
 
+    /**
+     * Checks if a an email or a telephone number already exists in the database.
+     * @param email The email that you want to check if exists
+     * @param telephone The telephone number that you want to check if exists
+     * @return Returns true if the telephone number or the email already exists and false if not
+     */
     public static boolean userExist(String email, String telephone) {
 
         String query = "SELECT * FROM Person WHERE email=+'"+email+"' or telephone='"+telephone+"'";
@@ -283,6 +290,11 @@ public class UserDAO {
         return null;
     }
 
+    /**
+     * Used to get a user's tasks based on the user's id
+     * @param userId The id of the user
+     * @return Returns an ArrayList of todo objects
+     */
     public static ArrayList<Todo> getTasks(int userId) {
         String query = "SELECT * FROM Task WHERE userId = ?";
         ArrayList<Todo> todos = new ArrayList<>();
