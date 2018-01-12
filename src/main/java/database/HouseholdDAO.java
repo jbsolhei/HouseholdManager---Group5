@@ -304,4 +304,8 @@ public class HouseholdDAO {
 
         return admins;
     }
+
+    public static boolean addAdminToHousehold(int houseId, int userId) {
+        String query = "INSERT "
+    }
 }
