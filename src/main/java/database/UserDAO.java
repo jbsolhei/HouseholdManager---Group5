@@ -59,7 +59,7 @@ public class UserDAO {
      */
     public static boolean userExist(String email, String telephone) {
 
-        String query = "SELECT * FROM Person WHERE email=+'"+email+"' or telephone='"+telephone+"'";
+        String query = "SELECT * FROM Person WHERE email='"+email+"' or telephone='"+telephone+"'";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -195,6 +195,7 @@ public class UserDAO {
             st.setString(2, email);
 
             resetSuccessful = st.executeUpdate();
+            System.out.println(resetSuccessful);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -246,11 +247,11 @@ public class UserDAO {
     }
 
     /**
-     * Used to get all the users from a house
-     * @param userId The id of the house where you want to find users
-     * @return Returns null if the house does not exist
+     * Used to get all the Households that a user is connected to
+     * @param userId The id of the user
+     * @return An ArrayList of Household objects
      */
-    public static ArrayList getHouseholds(int userId) {
+    public static ArrayList<Household> getHouseholds(int userId) {
         ArrayList<Household> households = new ArrayList<>();
         boolean userExists = false;
         String query = "SELECT Household.houseId, house_name, house_address, House_user.isAdmin FROM Household\n" +
@@ -317,7 +318,6 @@ public class UserDAO {
 
                 todos.add(todo);
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();

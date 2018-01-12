@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Household {
     private String name;
-    private String adress;
+    private String address;
     private User[] residents;
     private User[] admins;
     private ShoppingList shoppingList;
@@ -19,7 +19,7 @@ public class Household {
     }
 
     public String getAdress() {
-        return adress;
+        return address;
     }
 
     public User[] getResidents() {
@@ -42,8 +42,8 @@ public class Household {
         this.name = name;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAdress(String address) {
+        this.address = address;
     }
 
     public void setResidents(User[] residents) {
