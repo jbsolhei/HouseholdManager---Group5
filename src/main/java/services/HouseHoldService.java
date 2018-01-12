@@ -21,12 +21,14 @@ public class HouseHoldService {
     }
 
     @POST
+    @Auth
     @Consumes(MediaType.APPLICATION_JSON)
     public void addHouseHold(Household newHousehold) {
         HouseholdDAO.addNewHouseHold(newHousehold);
     }
 
     @POST
+    @Auth
     @Path("/{id}/users")
     @Consumes(MediaType.TEXT_PLAIN)
     public void addUserToHousehold(@PathParam("id") int house, String user){
@@ -34,6 +36,15 @@ public class HouseHoldService {
     }
 
     @POST
+    @Auth
+    @Path("/invited/{token}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public void addUserFromInvite(@PathParam("token") String token, String userId){
+        HouseholdDAO.addUserFromInvite(token,Integer.parseInt(userId));
+    }
+
+    @POST
+    @Auth
     @Path("/{id}/users/invite")
     @Consumes(MediaType.TEXT_PLAIN)
     public void inviteUserToHousehold(@PathParam("id") int house, String email){
@@ -41,6 +52,7 @@ public class HouseHoldService {
     }
 
     @GET
+    @Auth
     @Path("/{id}/users")
     @Consumes(MediaType.APPLICATION_JSON)
     public User[] getMembers(@PathParam("id") int id) {
@@ -48,6 +60,7 @@ public class HouseHoldService {
     }
 
     @GET
+    @Auth
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Household getHousehold(@PathParam("id") int id) {
@@ -55,6 +68,7 @@ public class HouseHoldService {
     }
 
     @PUT
+    @Auth
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateHousehold(@PathParam("id") int id, Household newHouse){
@@ -62,6 +76,7 @@ public class HouseHoldService {
     }
 
     @DELETE
+    @Auth
     @Path("/{id}")
     public void deleteHousehold(@PathParam("id") int id){
         HouseholdDAO.deleteHousehold(id);
