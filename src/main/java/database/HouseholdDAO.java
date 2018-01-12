@@ -374,4 +374,8 @@ public class HouseholdDAO {
         if(householdExists) return data;
         return null;
     }
+
+    public static boolean addAdminToHousehold(int houseId, int userId) {
+        String query = "INSERT "
+    }
 }

@@ -24,3 +24,4 @@ INSERT INTO Item (itemId, name, checkedBy, shopping_listId) VALUES (3, 'Taco', n
 INSERT INTO Task (description, taskId, houseId, userId) VALUES ('Get som milk at the store', 1, 1, 5);
 INSERT INTO Task (description, taskId, houseId, userId) VALUES ('Fix the fridge', 2, 1, 5);
 INSERT INTO Task (description, taskId, houseId, userId) VALUES ('Masturbate', 3, 1, 1);
+

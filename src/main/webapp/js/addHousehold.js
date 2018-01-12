@@ -7,13 +7,15 @@ $(document).ready(function () {
     $("#submitHHBBtn").click(function () {
         house_address = $("#householdName").val();
         house_address = $("#householdAddress").val();
+        adminId = currentUser.userId;
+
         confirm();
     });
 });
 
 function confirm() {
     //some of the forms is not filled in
-    if(house_name == "" || house_address == "") {
+    if (house_name == "" || house_address == "") {
         document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
             '<strong>Failed to create Household.</strong> Please fill in all the forms. </div>';
 
@@ -26,6 +28,10 @@ function confirm() {
 
         $('#modal').modal('hide');
     }
+}
+
+function addAdminToHousehold(adminId) {
+
 }
 
 function addHousehold(household) {
