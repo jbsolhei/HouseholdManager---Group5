@@ -57,7 +57,7 @@ function setCurrentHousehold() {
     });
 }
 function getHouseholdFromId(id,handleData){
-    $.ajaxAuth({
+    ajaxAuth({
         url: "res/household/"+id,
         type: "GET",
         contentType: 'application/json; charset=utf-8',
@@ -66,6 +66,17 @@ function getHouseholdFromId(id,handleData){
         },
         dataType: "json"
     });
+}
+function getShoppingListsInHousehold(id, handleData){
+    ajaxAuth({
+        url: "res/household/"+id+"/shopping_lists",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            handleData(data);
+        },
+        dataType: "json"
+    })
 }
 
 function inviteCheck() {
