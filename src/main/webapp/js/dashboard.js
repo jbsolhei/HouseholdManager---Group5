@@ -2,10 +2,8 @@
  * Created by Simen Moen Storvik on 12.01.2018.
  */
 
-$(document).on("load",function(){
+$(document).ready(function() {
     printShoppingListsToDashboard(1);
-}).("ready",function(){
-
 });
 function printShoppingListsToDashboard(householdId){
     getShoppingListsInHousehold(householdId, function(data){
@@ -19,5 +17,3 @@ function printShoppingListsToDashboard(householdId){
         })
     })
 }
-
-console.log("Dashboard ready");
