@@ -301,7 +301,10 @@ public class HouseholdDAO {
             e.printStackTrace();
         }
 
-        User[] list = (User[]) admins.toArray();
+        User[] list = new User[admins.size()];
+        for (int i = 0; i < admins.size(); i++) {
+            list[i] = admins.get(i);
+        }
 
         return list;
     }
