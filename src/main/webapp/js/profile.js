@@ -2,40 +2,43 @@
  * Created by Simen Moen Storvik on 11.01.2018.
  */
 $(document).ready(function(){
-    function getInfo(id){
+    function printInfoToWall(id){
         getUserFromRest(1,function (data){
             $("#profile_information_list_name").html(data.name);
             $("#profile_information_list_email").html(data.email);
             $("#profile_information_list_phone").html(data.telephone);
         })
     }
-    function getUserHouseholds(userId){
+    function getUserFromRest(id,handleData) {
         $.ajax({
-            url: "res/user/hh/" + userId,
+            url: "res/user/"+id,
             type: "GET",
-            contentType: "application/json; charset = utf-8",
+            contentType: 'application/json; charset=utf-8',
             success: function(data){
-                console.log("getUserHouseholds()");
-                printHouseholds(data);
+                console.log("getUserFromRest(), profile.html");
+                handleData(data);
             },
-            error: function(){
-                console.log("Kukskalle, getUserHouseholds()");
-                printHouseholds(data);
-            },
-            dataType:"json"
+            error: console.log("Error in getUserFromRest(), profile.html"),
+            dataType: "json"
         });
-        function printHouseholds(data){
-            var inputString = "";
-            $.each(data, function(val){
-               /* var householdName = val.name;
-                var householdAdress = val.adress;
-                inputString += "<tr><td>" + householdName + "</td><td>" + householdAdress + "</td><td>isAdmin?</td></tr>"*/
-            });
-            $("#profile_households_table_body").html(inputString);
-        }
     }
-    getInfo(1);
-    getUserHouseholds(1);
+    function getHouseholdFromRest(id,handleData) {
+        $.ajax({
+            url: "res/household/"+householdId+"/users",
+            type: "GET",
+            contentType: 'application/json; charset=utf-8',
+            success: function(data){
+                handleData(data);
+            },
+            dataType: "json"
+        });
+    }
+
+    function printHouseholdsToWall(id){
+        getHouseholdsForUser()
+        inputString += "<tr><td>" + householdName + "</td><td>" + householdAdress + "</td><td>isAdmin?</td></tr>";
+        $("#profile_households_table_body").html(inputString);
+    }
+
+    printInfoToWall(1);
 });
-
-
