@@ -23,6 +23,7 @@ function addNewUserToList() {
 function confirm() {
 //some of the forms is not filled in
     if (house_name == "" || house_address == "") {
+
         document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
             '<strong>Failed to create Household.</strong> Please fill in all the forms. </div>';
 
@@ -35,7 +36,6 @@ function confirm() {
         addHousehold(household);
 
         //$('#modal').modal('hide');
-
     }
 }
 
@@ -54,3 +54,4 @@ function addHousehold(household) {
         }
     })
 }
+
