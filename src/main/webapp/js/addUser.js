@@ -47,6 +47,7 @@ function confirm() {
         $('#modal').modal('hide');
     }
 }
+
 function addUser() {
     $.ajax({
         url: "res/user",

@@ -2,7 +2,6 @@ package services;
 
 import classes.*;
 import database.UserDAO;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.QueryParam;
