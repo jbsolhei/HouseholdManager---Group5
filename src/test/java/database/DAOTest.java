@@ -22,7 +22,6 @@ public class DAOTest {
     public static void setUp() throws Exception {
         DBConnector.url = "jdbc:h2:mem:test";
         DriverManager.getConnection("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:scripts/databasescript.sql'\\;RUNSCRIPT FROM 'classpath:scripts/testInserts.sql';DB_CLOSE_DELAY=-1;");
-        System.out.println("DAOTest runs!");
     }
 
     @AfterClass
@@ -33,7 +32,9 @@ public class DAOTest {
         String query = "SHUTDOWN";
         Statement st = conn.createStatement();
         st.executeUpdate(query);
-
+        st.close();
+        conn.close();
+        dbc.close();
     }
 
 }
