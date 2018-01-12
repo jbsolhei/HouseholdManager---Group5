@@ -55,7 +55,6 @@ function deleteItem(itemNumber){
 function showList(SLIndex){
     if(newItems.length != 0 || deleteItems.length != 0) {
         saveChanges();
-
     }
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
     $.get("res/household/" + householdId + "/shopping_lists/" + shoppingLists[SLIndex].shoppingListId + "/items", function (items) {
@@ -75,6 +74,13 @@ function showList(SLIndex){
         $("#" + SLIndex).addClass("active");
         activeTab = SLIndex;
     });
+}
+function showShoppingListById(listId){
+    for(var i = 0; i<shoppingLists.length;i++){
+        if(shoppingLists[i].shoppingListId===listId){
+            showList(i);
+        }
+    }
 }
 
 function createNewList(name){

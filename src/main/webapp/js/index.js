@@ -52,6 +52,17 @@ function getHouseholdFromId(id,handleData){
         dataType: "json"
     });
 }
+function getShoppingListsInHousehold(id, handleData){
+    ajaxAuth({
+        url: "res/household/"+id+"/shopping_lists",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            handleData(data);
+        },
+        dataType: "json"
+    })
+}
 
 function callModal(modalContent) {
     $("#modal").load(modalContent)
@@ -59,4 +70,8 @@ function callModal(modalContent) {
 
 function swapContent(bodyContent) {
     $(".page-wrapper").load(bodyContent);
+}
+function navToShoppingList(shoppingListId){
+    swapContent("shoppinglist.html");
+    showShoppingListById(shoppingListId);
 }
