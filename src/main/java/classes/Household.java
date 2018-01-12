@@ -16,7 +16,7 @@ public class Household {
         return name;
     }
 
-    public String getAdress() {
+    public String getAddress() {
         return address;
     }
 
@@ -40,7 +40,7 @@ public class Household {
         this.name = name;
     }
 
-    public void setAdress(String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

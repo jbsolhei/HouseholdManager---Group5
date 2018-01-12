@@ -52,7 +52,7 @@ public class HouseholdDAOTest {
     public void addNewHouseHold() throws Exception {
         Household household = new Household();
         household.setName("Kollektivet");
-        household.setAdress("Bananvegen 27");
+        household.setAddress("Bananvegen 27");
 
         HouseholdDAO.addNewHouseHold(household);
 
@@ -75,14 +75,14 @@ public class HouseholdDAOTest {
     public void getHousehold() throws Exception {
         Household temp = HouseholdDAO.getHousehold(1);
         assertEquals("Testhouse",temp.getName());
-        assertEquals("Testaddress 22",temp.getAdress());
+        assertEquals("Testaddress 22",temp.getAddress());
     }
 
     @Test
     public void updateHousehold() throws Exception {
         Household newHouse = new Household();
         newHouse.setName("Newname");
-        newHouse.setAdress("Newaddress");
+        newHouse.setAddress("Newaddress");
         HouseholdDAO.updateHousehold(2, newHouse);
 
         String query = "SELECT * FROM Household WHERE houseId=2";

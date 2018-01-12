@@ -1,17 +1,27 @@
 <style>
-    span.glyphicon-plus{
-        font-size: 30px;
-        color: #0f0f0f;
-    }
+
     .addHouseInput {
         width: 100%;
     }
+
+    #addedUserList {
+        max-height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        padding: 0%;
+        margin-bottom: 1em;
+    }
+
+    .addmembers {
+        height: 30em;
+    }
+
 </style>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     <h4 class="modal-title">New household</h4>
 </div>
-<div class="modal-body">
+<div id="modalBodyID" class="modal-body">
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-4">
@@ -25,17 +35,31 @@
             <input class="addHouseInput" id="householdAddress">
             <br>
         </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-4">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
             <label style="float: left">Invite members</label>
             <div class="addmembers">
-                <input class="addHouseInput" id="add1">
-                <br>
-                <input class="addHouseInput" id="add2">
+                <div id="addedUserList" class="panel-body addHouseInput">
+                    <ul id="newUsersList" class="nav nav-pills nav-stacked addHouseInput">
+                        <li><a>tvgb@outlook.com</a></li>
+                        <li><a>mordi@outlook.com</a></li>
+                        <li><a>fardin@outlook.com</a></li>
+                        <li><a>ole@outlook.com</a></li>
+                        <li><a>ole@outlook.com</a></li>
+                        <li><a>ole@outlook.com</a></li>
+                        <li><a>ole@outlook.com</a></li>
+                        <li><a>ole@outlook.com</a></li>
+                    </ul>
+                </div>
+                <div id="addUserInputGroup" class="input-group">
+                    <input id="addUserInput" type="text" class="form-control" placeholder="OlaNormann@mail.no">
+                    <div class="input-group-btn">
+                        <button id="addUsersSubmitButton" onclick="addNewUserToList()" class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-plus"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <a href="#" style="float: right">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
         </div>
         <div class="col-md-1"></div>
     </div>
@@ -46,5 +70,5 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button id="submitHHBBtn" type="button" class="btn btn-default" data-dismiss="modal">Create household</button>
+    <button id="submitHHBtn" type="button" class="btn btn-default" data-dismiss="modal" onclick="addNewHoushold()">Create household</button>
 </div>

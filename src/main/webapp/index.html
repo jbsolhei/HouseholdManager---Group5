@@ -11,12 +11,14 @@
 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/addHousehold.js"></script>
         <script src="js/index.js"></script>
 
         <script src="js/dashboard.js"></script>
         <script src="js/shoppinglist.js"></script>
         <script src="js/profile.js"></script>
         <script src="js/invite.js"></script>
+
     </head>
     <body>
     <div class="top-and-sidebar">
@@ -46,7 +48,7 @@
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Other household</a></li>
-                                <li><a href="#">New Household</a></li>
+                                <li data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#">New Household</a></li>
                             </ul>
                         </li>
                         <li><a href="login.html">Logout</a></li>

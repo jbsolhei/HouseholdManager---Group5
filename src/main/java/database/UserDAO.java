@@ -195,7 +195,6 @@ public class UserDAO {
             st.setString(2, email);
 
             resetSuccessful = st.executeUpdate();
-            System.out.println(resetSuccessful);
 
         } catch (SQLException e) {
             e.printStackTrace();
