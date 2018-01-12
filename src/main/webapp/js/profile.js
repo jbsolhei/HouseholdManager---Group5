@@ -21,7 +21,7 @@ $(document).ready(function(){
         });
     }
     function getHouseholdsForUser(userId, handleData){
-        $.ajax({
+        ajaxAuth({
             url:"res/user/"+userId+"/hh",
             type: "GET",
             contentType: "application/json; charser=utf-8",
@@ -42,7 +42,7 @@ $(document).ready(function(){
         })
     }
     function getTasksForUser(userId, handleData){
-        $.ajax({
+        ajaxAuth({
             url:"res/user/"+userId+"/tasks",
             type: "GET",
             contentType: "application/json; charser=utf-8",
