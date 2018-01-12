@@ -11,7 +11,8 @@ import java.sql.Statement;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         UserDAOTest.class,
-        HouseholdDAOTest.class
+        HouseholdDAOTest.class,
+        ShoppingListDAOTest.class
 })
 
 public class DAOTest {
