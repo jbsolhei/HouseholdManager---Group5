@@ -1,5 +1,6 @@
-package classes;
+package auth;
 
+import classes.HashHandler;
 import database.DBConnector;
 
 import java.sql.Connection;

@@ -1,6 +1,5 @@
 package services;
 
-import classes.Auth;
 import classes.Household;
 import classes.User;
 import database.HouseholdDAO;

@@ -1,5 +1,6 @@
 package classes;
 
+import auth.UserAuth;
 import database.DAOTest;
 import org.junit.After;
 import org.junit.Before;

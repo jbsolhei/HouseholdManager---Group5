@@ -1,5 +1,6 @@
 package services;
 
+import auth.*;
 import classes.*;
 import database.UserDAO;
 
@@ -54,7 +55,7 @@ public class UserService {
     }
 
 
-    @GET
+    @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -87,7 +88,7 @@ public class UserService {
     }
 
     @GET
-    @Auth
+    @Auth(AuthLevel.DEFAULT)
     @Path("/test")
     public Response authTest() {
         return Response.ok("Du klarte det! Du kom deg inn på en side som krever autentisering!").build();

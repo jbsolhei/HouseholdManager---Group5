@@ -1,4 +1,4 @@
-package classes;
+package auth;
 
 import javax.ws.rs.NameBinding;
 import java.lang.annotation.Retention;
@@ -11,4 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @NameBinding
 @Retention(RUNTIME)
 @Target({TYPE, METHOD})
-public @interface Auth { }
+public @interface Auth {
+    AuthLevel value() default AuthLevel.DEFAULT;
+}
