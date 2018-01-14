@@ -1,6 +1,6 @@
 package auth;
 
-import javax.enterprise.context.RequestScoped;
+import org.glassfish.jersey.process.internal.RequestScoped;
 
 @RequestScoped
 @AuthenticatedUser
@@ -25,3 +25,5 @@ public class AuthenticatedUserData {
         this.sessionToken = sessionToken;
     }
 }
+
+

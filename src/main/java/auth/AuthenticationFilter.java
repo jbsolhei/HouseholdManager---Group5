@@ -1,10 +1,6 @@
 package auth;
 
 import javax.annotation.Priority;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.event.Event;
-import javax.enterprise.event.Observes;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -47,6 +43,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             //authenticatedUser = new AuthenticatedUserData();
             authenticatedUser.setUserId(session.getUserId());
             authenticatedUser.setSessionToken(session.getToken());
+            System.out.println("AuthenticationFilter wrote to authenticatedUser object! Id: " + authenticatedUser.getUserId());
         }
     }
 
