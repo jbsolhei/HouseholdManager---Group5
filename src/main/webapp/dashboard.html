@@ -1,16 +1,23 @@
 <div class="container-fluid">
     <div class="row equal" style="min-height: 280px">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="panel panel-info">
-                <div class="panel-heading">Your to do, today</div>
+                <div class="panel-heading">Household todos</div>
                 <div class="panel-body">
                     Modal testing:<br>
                     <a data-toggle="modal" onclick='callModal("modals/welcome.html")' data-target="#theModal">Welcome</a>
                     <a data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal">New household</a>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Initiator</th>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div class="panel panel-info">
                 <div class="panel-heading">Shoppinglists</div>
                 <div class="panel-body">
