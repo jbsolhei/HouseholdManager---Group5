@@ -1,7 +1,6 @@
 package database;
 
 import classes.HashHandler;
-import classes.Household;
 import classes.Todo;
 import classes.User;
 import org.junit.After;
@@ -130,8 +129,8 @@ public class UserDAOTest {
         todos = UserDAO.getTasks(5);
 
         assertEquals(todos.size(), 2);
-        assertEquals(todos.get(0).getdescription(), "Get som milk at the store");
-        assertNotEquals(todos.get(1).getdescription(), "Masturbate");
+        assertEquals(todos.get(0).getDescription(), "Get som milk at the store");
+        assertNotEquals(todos.get(1).getDescription(), "Masturbate");
     }
 
     @Test

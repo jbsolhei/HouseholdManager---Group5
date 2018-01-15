@@ -2,6 +2,7 @@ package services;
 
 import classes.Item;
 import classes.ShoppingList;
+import classes.User;
 import database.ShoppingListDAO;
 
 import javax.ws.rs.*;
@@ -24,8 +25,8 @@ public class ShoppingListService {
     @GET
     @Path("/{id}/shopping_lists/{shopping_list_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ShoppingList[] getShoppingLists(@PathParam("id") String id, @PathParam("shopping_list_id") int shoppingListId) {
-        return ShoppingListDAO.getShoppingLists(Integer.parseInt(id));
+    public User[] getShoppingLists(@PathParam("id") String id, @PathParam("shopping_list_id") String shoppingListId) {
+        return ShoppingListDAO.getShoppingList(Integer.parseInt(shoppingListId));
     }
 
     @GET

@@ -208,8 +208,20 @@ function updateUsers(users) {
     });
 }
 
-function getUsers(shoppingListId) {
-
+function getUsers() {
+    var hh = getCurrentHousehold();
+    ajaxAuth({
+        url: 'res/household/' + hh.houseId + 'shopping_lists/' + activeTab,
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(users){
+            for (var i = 0; i<users.length; i++) {
+                $("#inList").append('<li>' + users[i].name + '</li>');
+            }
+        },
+        error: console.log("Error in getUsers"),
+        dataType: "json"
+    });
 }
 
 function editUsers() {
