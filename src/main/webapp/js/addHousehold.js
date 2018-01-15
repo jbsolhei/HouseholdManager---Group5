@@ -18,7 +18,7 @@ $(document).on('shown.bs.modal', function (e) {
 function addNewHoushold() {
     house_name = $("#householdName").val();
     house_address = $("#householdAddress").val();
-    admin = currentUser;
+    admin = getCurrentUser();
     admins.push(admin);
     confirm();
 };
@@ -56,7 +56,7 @@ function addNewUserToList() {
 
 //Checks if some fields are empty.
 function confirm() {
-//some of the forms is not filled in
+//if some of the forms are not filled in
     if (house_name == "" || house_address == "") {
         document.getElementById("alertbox").innerHTML = '<div style="text-align: left" class="alert alert-danger">' +
             '<strong>Failed to create Household.</strong> Please fill in all the forms. </div>';
@@ -71,8 +71,9 @@ function confirm() {
         document.getElementById("alertbox").innerHTML = '<div style="text-align: left" class="alert alert-success">' +
             '<strong>Success!</strong> You have now created a Household.</div>';
 
-        $(".alert-success").fadeTo(5000, 500).slideUp(500, function(){
-            $(".alert-danger").slideUp(500, function () {
+        $(".alert-success").fadeTo(3000, 500).slideUp(500, function(){
+            $(".alert-danger").slideUp(500);
+            $(function () {
                 $('#theModal').modal('toggle');
             });
         });
@@ -85,8 +86,6 @@ function confirm() {
             var text = $(this).text();
             newUserEmails.push(text);
         });
-        //$('#modal').modal('hide');
-
     }
 }
 
@@ -99,7 +98,7 @@ function addHousehold(household) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
-            //sendInviteToUsers(result, newUserEmails)
+            sendInviteToUsers(result, newUserEmails)
         },
         error: function (e) {
             console.log(e);
@@ -108,7 +107,7 @@ function addHousehold(household) {
 }
 
 //Sends invites with ajax
-function sendInviteToUsers(emails, houseId) {
+function sendInviteToUsers(houseId, emails) {
     ajaxAuth({
         url: "res/household/" + houseId + "/users/invite",
         type: "POST",
@@ -116,7 +115,7 @@ function sendInviteToUsers(emails, houseId) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
-            console.log(result);
+            //console.log(result);
         },
         error: function (e) {
             console.log(e);

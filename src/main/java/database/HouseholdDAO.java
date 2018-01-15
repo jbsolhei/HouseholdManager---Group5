@@ -365,7 +365,7 @@ public class HouseholdDAO {
         ArrayList<Todo> todos = new ArrayList<>();
         boolean householdExists = false;
 
-        String query = "SELECT taskId FROM Task WHERE houseId = ?";
+        String query = "SELECT * FROM Task WHERE houseId = ?";
         DBConnector dbc = new DBConnector();
         PreparedStatement st;
 
@@ -421,14 +421,5 @@ public class HouseholdDAO {
 
         if (insertDone == 0) return false;
         return true;
-    }
-
-
-    public static void main(String[] args) {
-        Household hh = new Household();
-        hh.setAddress("Arne Bergsgårds veg 20");
-        hh.setName("THE BEST CRIB");
-        addNewHouseHold(hh);
-
     }
 }
