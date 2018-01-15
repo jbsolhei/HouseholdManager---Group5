@@ -19,7 +19,6 @@ $(document).ready(function () {
                 if(response.success === true) {
                     window.localStorage.setItem("sessionToken",response.sessionToken);
                     window.localStorage.setItem("userId",response.userId);
-                    setCurrentUser(window.localStorage.getItem("userID"));
                     inviteCheck()
                 }
             },

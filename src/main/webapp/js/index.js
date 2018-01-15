@@ -7,14 +7,28 @@ var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
 
-function ajaxAuth(attr){
+function ajaxAuth(attr) {
     attr.headers = {
-        Authorization: "Bearer "+window.localStorage.getItem("sessionToken")
+        Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
     };
-    attr.error = function (jqXHR, exception) {
-        console.log("Error: "+jqXHR.status);
-    };
+    if (attr.error === undefined) {
+        attr.error = function (jqXHR, exception) {
+            console.log("Error: " + jqXHR.status);
+        };
+    }
     return $.ajax(attr);
+}
+
+function checkSession(){
+    ajaxAuth({
+        url: "res/user/checkSession",
+        type: "GET",
+        error: function (e) {
+            if (e.status == 401){
+                window.location.replace("login.html")
+            }
+        }
+    })
 }
 
 function setCurrentUser(id) {
@@ -45,6 +59,7 @@ function setCurrentHousehold() {
         type: "GET",
         contentType: "application/json; charser=utf-8",
         success: function(data) {
+            console.log(data);
             if (data.length > 0) {
                 window.localStorage.setItem("house", JSON.stringify(data[0]));
                 console.log("User has "+data.length+" households")

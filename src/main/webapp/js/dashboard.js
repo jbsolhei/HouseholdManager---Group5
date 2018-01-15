@@ -6,6 +6,7 @@
 
 function loadDashboard(){
     var houseId = getCurrentHousehold().houseId;
+    console.log(houseId);
     printShoppingListsToDashboard(houseId);
     printHouseholdTodosToDashboard(houseId);
 }
