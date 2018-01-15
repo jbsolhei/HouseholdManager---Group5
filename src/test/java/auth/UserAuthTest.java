@@ -50,8 +50,8 @@ public class UserAuthTest {
     @Ignore
     @Test
     public void canUserAccessShoppingList() {
-        assertTrue(UserAuth.canUserAccessShoppingList(50, 1));
-        assertFalse(UserAuth.canUserAccessShoppingList(50, 2));
+        assertTrue(UserAuth.canUserAccessShoppingList(50, 10));
+        assertFalse(UserAuth.canUserAccessShoppingList(50, 11));
     }
 
     @Ignore

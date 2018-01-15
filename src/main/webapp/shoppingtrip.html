@@ -15,39 +15,7 @@
                     </div>
                 </div>
                 <div class="panel-body long-scroll-panel">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
-                        <li><a>-trip 1-</a></li>
-                        <li><a>-trip 2-</a></li>
+                    <ul class="nav nav-pills nav-stacked" id="shoppingtrips">
                         <li><a>-trip 1-</a></li>
                         <li><a>-trip 2-</a></li>
                     </ul>
@@ -66,28 +34,45 @@
         </div>
 
         <div class="col-sm-9">
-            <div class="panel panel-info" style="height: 40vh;">
-                <div class="panel-heading"><h4>Registered by: Name/info</h4><small>-date-</small></div>
+            <div class="panel panel-info" style="height: 80vh;">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-sm-8" id="heading">
+                            <h4>Registered by: Name/info</h4><small>-date-</small>
+                        </div>
+                        <div class="col-sm-4" id="sum">
+                            <h4>Sum:</h4>
+                        </div>
+                    </div>
+                </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-6">
-                            Comments osv
+                            <div id="comments" style="height: 25vh;"></div>
+                            <div id="shoppinglist" style="height: 15vh"></div>
                         </div>
                         <div class="col-xs-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">Shared with</div>
-                                <div class="panel-body">
-                                    list
+                                <div class="panel-body" id="listPanel" style="height: 50vh">
+                                    <ul id="list">
+
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="panel panel-info" style="height: 40vh;">
+           <!-- <div class="panel panel-info" style="height: 40vh;">
                 <div class="panel-heading"><h4>Name/info</h4><small>-date-</small></div>
                 <div class="panel-body">Stuff</div>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
+<style>
+    #listPanel {
+        overflow-y: scroll;
+    }
+</style>

@@ -17,13 +17,14 @@ public class ShoppingListDAO {
         ArrayList<ShoppingList> shoppingLists = new ArrayList<>();
         ArrayList<User> users = new ArrayList<>();
         int shoppingListId = 0;
+        int shoppingListId2 = 0;
         String shoppingListName = "";
         int userId = 0;
         String personName = "";
         String email = "";
         String telephone = "";
 
-        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, User_Shopping_list.userId, Person.name, Person.email, Person.telephone FROM Shopping_list RIGHT JOIN User_Shopping_list ON Shopping_list.shopping_listId = User_Shopping_list.shopping_listId RIGHT JOIN Person ON User_Shopping_list.userId = Person.userId WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
+        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, User_Shopping_list.userId, Person.name, Person.email, Person.telephone FROM Shopping_list LEFT JOIN User_Shopping_list ON Shopping_list.shopping_listId = User_Shopping_list.shopping_listId LEFT JOIN Person ON User_Shopping_list.userId = Person.userId WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
@@ -31,40 +32,27 @@ public class ShoppingListDAO {
             st.setInt(1, houseId);
             ResultSet rs = st.executeQuery();
 
-            if (rs.next()) {
+
+            while(rs.next()) {
                 shoppingListId = rs.getInt("shopping_listId");
-                shoppingListName = rs.getString("Shopping_list.name");
-                userId = rs.getInt("userId");
-                personName = rs.getString("Person.name");
-                email = rs.getString("email");
-                telephone = rs.getString("telephone");
 
-                User user = new User();
-                user.setUserId(userId);
-                user.setName(personName);
-                user.setEmail(email);
-                user.setTelephone(telephone);
+                if (shoppingListId != shoppingListId2 && shoppingListId2 != 0) {
+                    ShoppingList sl = new ShoppingList();
+                    sl.setName(shoppingListName);
+                    sl.setParticipants(toUserArray(users));
+                    sl.setShoppingListId(shoppingListId2);
+                    shoppingLists.add(sl);
+                    users.clear();
+                }
+                shoppingListName = rs.getString("shopping_list.name");
 
-                users.add(user);
-
-                while (rs.next()) {
-                    int newShoppingListId = rs.getInt("shopping_listId");
-                    shoppingListName = rs.getString("Shopping_list.name");
+                if (userId != 0) {
                     userId = rs.getInt("userId");
                     personName = rs.getString("Person.name");
                     email = rs.getString("email");
                     telephone = rs.getString("telephone");
 
-                    if (newShoppingListId != shoppingListId) {
-                        ShoppingList sl = new ShoppingList();
-                        sl.setName(shoppingListName);
-                        sl.setParticipants(toUserArray(users));
-                        sl.setShoppingListId(shoppingListId);
-                        shoppingLists.add(sl);
-                        users.clear();
-                    }
-
-                    user = new User();
+                    User user = new User();
                     user.setUserId(userId);
                     user.setName(personName);
                     user.setEmail(email);
@@ -73,23 +61,23 @@ public class ShoppingListDAO {
                     users.add(user);
                 }
 
-                ShoppingList sl = new ShoppingList();
-                sl.setShoppingListId(shoppingListId);
-                sl.setParticipants(toUserArray(users));
-                sl.setName(shoppingListName);
-
-                shoppingLists.add(sl);
-
-                for (ShoppingList shoppingList: shoppingLists) {
-                    Item[] items = getItems(shoppingList.getShoppingListId());
-                    shoppingList.setItems(items);
-                }
-
-                return toShoppingListArray(shoppingLists);
-
-            } else {
-                return null;
+                shoppingListId2 = shoppingListId;
             }
+
+            ShoppingList sl = new ShoppingList();
+            sl.setName(shoppingListName);
+            sl.setParticipants(toUserArray(users));
+            sl.setShoppingListId(shoppingListId2);
+            shoppingLists.add(sl);
+            users.clear();
+
+            for (ShoppingList shoppingList: shoppingLists) {
+                Item[] items = getItems(shoppingList.getShoppingListId());
+                shoppingList.setItems(items);
+            }
+
+            return toShoppingListArray(shoppingLists);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -97,6 +85,11 @@ public class ShoppingListDAO {
         return null;
     }
 
+    /**
+     * Get all the items in one spesific shopping list
+     * @param shopping_listId
+     * @return an array of items
+     */
     public static Item[] getItems(int shopping_listId) {
         ArrayList<Item> items = new ArrayList<>();
         int itemId;
@@ -129,6 +122,9 @@ public class ShoppingListDAO {
                     email = rs.getString("email");
                     personName = rs.getString("Person.name");
                     telephone = rs.getString("telephone");
+                    user.setEmail(email);
+                    user.setName(personName);
+                    user.setTelephone(telephone);
                 }
 
                 item.setItemId(itemId);
@@ -147,21 +143,157 @@ public class ShoppingListDAO {
         return null;
     }
 
-    public static void createShoppingList(String name, int houseId, int[] userIds) {
-        String query_sl = "INSERT INTO Shopping_list (name, houseId) VALUES (?, ?);";
-        String query_user_sl = "";
+    /**
+     * Creates a new shopping list with no items
+     * @param shoppingList
+     * @param houseId
+     */
+  public static void createShoppingList(ShoppingList shoppingList, int houseId){
+        String name = shoppingList.getName();
+
+        String query = "INSERT INTO Shopping_list (name, houseId) VALUES (?,?)";
+
+        DBConnector dbc = new DBConnector();
+
+        try {
+            Connection conn = dbc.getConn();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, name);
+            st.setInt(2,houseId);
+
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+    }
+
+
+    public static void deleteShoppingList(int houseId, int shopping_list_id){
+
+        String query = "DELETE FROM Shopping_list WHERE houseId = ? AND shopping_listId = ?";
+
+        DBConnector dbc = new DBConnector();
+
+        try {
+            Connection conn = dbc.getConn();
+            PreparedStatement st = conn.prepareStatement(query);
+
+            st.setInt(2, shopping_list_id);
+            st.setInt(1,houseId);
+
+            st.executeUpdate();
+            st.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+    }
+
+
+    /*public static void addItems(Item[] items, int shopping_list_id){
+        DBConnector dbc = new DBConnector();
+        String query = "";
+
+        try {
+            Connection conn = dbc.getConn();
+
+            for(int i = 0; i < items.length; i++){
+                if(items[i] != null){
+                    query = "INSERT INTO Item(name, checkedBy, shopping_listId) VALUES (?, ?, ?) WHERE shopping_listId = ?;";
+
+                    PreparedStatement st = conn.prepareStatement(query);
+                    st.setString(1, items[i].getName());
+                    st.setInt(2, 0);
+                    st.setInt(3, shopping_list_id);
+                    st.executeUpdate();
+                    st.close();
+                }
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+    }*/
+
+    public static void addItem(Item items, int shopping_list_id){
+        DBConnector dbc = new DBConnector();
+        String query = "";
+
+        try {
+            Connection conn = dbc.getConn();
+
+            query = "INSERT INTO Item(name, shopping_listId) VALUES (?, ?);";
+
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, items.getName());
+            //st.setInt(2, 0);
+            st.setInt(2, shopping_list_id);
+            st.executeUpdate();
+            st.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+    }
+
+    public static void deleteItem(int shopping_list_id, int itemId){
+        DBConnector dbc = new DBConnector();
+        String query = "";
+
+        try {
+            Connection conn = dbc.getConn();
+
+            query = "DELETE FROM Item WHERE shopping_listId = ? AND itemId = ?;";
+
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, shopping_list_id);
+            //st.setInt(2, 0);
+            st.setInt(2, itemId);
+            st.executeUpdate();
+            st.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+    }
+
+    public static void updateUsers(int[] userIds, int shoppingListId) {
+        String delete = "DELETE FROM User_Shopping_list WHERE shopping_listId = ?";
+        String query = "INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (?, ?);";
+
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
-             PreparedStatement st_sl = conn.prepareStatement(query_sl)) {
+             PreparedStatement del_st = conn.prepareStatement(delete);
+             PreparedStatement st = conn.prepareStatement(query)) {
 
-            st_sl.setInt(1, houseId);
-            ResultSet rs_sl = st_sl.executeQuery();
-            ResultSet pk_sl = st_sl.getGeneratedKeys();
+            del_st.setInt(1, shoppingListId);
+            int dels = del_st.executeUpdate();
+            System.out.println("deleted " + dels + " rows");
+
+            for (int i = 0; i < userIds.length; i++) {
+                st.setInt(1, userIds[i]);
+                st.setInt(2, shoppingListId);
+                int rtn = st.executeUpdate();
+                if (rtn < 0) System.err.println("Could not update: " + userIds[i] + " into shoppinglist where shoppinglistid = " + shoppingListId);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     private static User[] toUserArray(ArrayList<User> users) {
         User[] userArray = new User[users.size()];
@@ -238,7 +370,8 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        Item[] items = ShoppingListDAO.getItems(3);
+        int[] userIds = {1, 2};
+        ShoppingListDAO.updateUsers(userIds, 3);
         System.out.println("stop");
     }
 }

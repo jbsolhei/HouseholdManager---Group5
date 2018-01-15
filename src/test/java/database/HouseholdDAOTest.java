@@ -33,7 +33,7 @@ public class HouseholdDAOTest {
 
     @Test
     public void addUserToHousehold() throws Exception {
-        HouseholdDAO.addUserToHousehold(2,35);
+        HouseholdDAO.addUserToHousehold(2,35,0);
 
         String query = "SELECT * FROM House_user WHERE houseId=2";
         ResultSet rs = st.executeQuery(query);
@@ -50,9 +50,17 @@ public class HouseholdDAOTest {
 
     @Test
     public void addNewHouseHold() throws Exception {
+
         Household household = new Household();
         household.setName("Kollektivet");
-        household.setAdress("Bananvegen 27");
+        household.setAddress("Bananvegen 27");
+        User[] admins = new User[1];
+        User u1 = new User();
+        u1.setUserId(1);
+        u1.setName("OLE");
+        admins[0] = u1;
+
+        household.setAdmins(admins);
 
         HouseholdDAO.addNewHouseHold(household);
 
@@ -69,20 +77,21 @@ public class HouseholdDAOTest {
 
         assertEquals("Kollektivet", name);
         assertEquals("Bananvegen 27", address);
+
     }
 
     @Test
     public void getHousehold() throws Exception {
         Household temp = HouseholdDAO.getHousehold(1);
         assertEquals("Testhouse",temp.getName());
-        assertEquals("Testaddress 22",temp.getAdress());
+        assertEquals("Testaddress 22",temp.getAddress());
     }
 
     @Test
     public void updateHousehold() throws Exception {
         Household newHouse = new Household();
         newHouse.setName("Newname");
-        newHouse.setAdress("Newaddress");
+        newHouse.setAddress("Newaddress");
         HouseholdDAO.updateHousehold(2, newHouse);
 
         String query = "SELECT * FROM Household WHERE houseId=2";

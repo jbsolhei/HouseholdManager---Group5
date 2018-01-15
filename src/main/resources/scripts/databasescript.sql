@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Item;
 DROP TABLE IF EXISTS Invite_token;
 DROP TABLE IF EXISTS Finance;
 DROP TABLE IF EXISTS Shopping_tour;
@@ -67,7 +68,7 @@ houseId INTEGER NOT NULL,
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 CONSTRAINT shopping_listId PRIMARY KEY (shopping_listId));
 
-/*CREATE TABLE Item (
+CREATE TABLE Item (
 itemId INTEGER AUTO_INCREMENT,
 name VARCHAR(45),
 checked BOOLEAN,
@@ -75,7 +76,7 @@ checkedBy INTEGER,
   shopping_listId INTEGER,
 FOREIGN KEY (checkedBy) REFERENCES Person(UserId),
 FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId),
-CONSTRAINT item_pk PRIMARY KEY (itemId));*/
+CONSTRAINT item_pk PRIMARY KEY (itemId));
 
 CREATE TABLE Shopping_tour (
 expence INTEGER,
@@ -93,3 +94,10 @@ value DOUBLE,
 CONSTRAINT finance_pk PRIMARY KEY(fromPerson, toPerson),
 FOREIGN KEY (fromPerson) REFERENCES Person(userId),
 FOREIGN KEY (toPerson) REFERENCES Person(userId));
+
+CREATE TABLE User_Shopping_list(
+userId INTEGER NOT NULL,
+shopping_listId INTEGER NOT NULL,
+CONSTRAINT user_shopping_list_pk PRIMARY KEY(userId, shopping_listId),
+FOREIGN KEY (userId) REFERENCES Person(userId),
+FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId));

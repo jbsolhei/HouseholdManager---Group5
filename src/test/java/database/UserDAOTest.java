@@ -1,6 +1,8 @@
 package database;
 
 import classes.HashHandler;
+import classes.Household;
+import classes.Todo;
 import classes.User;
 import org.junit.After;
 import org.junit.Before;
@@ -9,6 +11,7 @@ import org.junit.Test;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -43,7 +46,7 @@ public class UserDAOTest {
         String password = "";
         String telephone = "";
 
-        while (rs.next()){
+        while (rs.next()) {
             email = rs.getString("email");
             name = rs.getString("name");
             password = rs.getString("password");
@@ -72,14 +75,14 @@ public class UserDAOTest {
     @Test
     public void updateUser() throws Exception {
         String newName = "Frederic";
-        UserDAO.updateUser(1,"Ole@gmail.com", "11223344", newName);
+        UserDAO.updateUser(1, "Ole@gmail.com", "11223344", newName);
 
         String query = "SELECT * FROM Person WHERE userId=1";
         ResultSet rs = st.executeQuery(query);
 
         String name = "";
 
-        while (rs.next()){
+        while (rs.next()) {
             name = rs.getString("name");
         }
 
@@ -119,6 +122,36 @@ public class UserDAOTest {
         }
 
         assertEquals(true, deleteExecuted);
+    }
+
+    @Test
+    public void getTasks() throws Exception {
+        ArrayList<Todo> todos;
+        todos = UserDAO.getTasks(5);
+
+        assertEquals(todos.size(), 2);
+        assertEquals(todos.get(0).getDescription(), "Get som milk at the store");
+        assertNotEquals(todos.get(1).getDescription(), "Masturbate");
+    }
+
+    @Test
+    public void resetPassword() throws Exception {
+        assertEquals(1, 1);
+        assertNotEquals(1, 2);
+    }
+
+    @Test
+    public void userExists() throws Exception {
+        assertTrue(UserDAO.userExist("trym@live.com", "11223344"));
+        assertTrue(UserDAO.userExist("Frank@gmail.com", "90909090"));
+        assertFalse(UserDAO.userExist("lol", "123"));
+    }
+
+    @Test
+    public void getHouseholds() throws Exception {
+            assertEquals(1, UserDAO.getHouseholds(34).size());
+            assertEquals(null, UserDAO.getHouseholds(1));
+            assertEquals("Testhouse", UserDAO.getHouseholds(34).get(0).getName());
     }
 
     @After

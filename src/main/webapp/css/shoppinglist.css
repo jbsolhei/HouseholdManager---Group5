@@ -2,16 +2,16 @@
 
 
 /* Set gray background color and 100% height */
-.sidenav {
+/*.sidenav {
     background-color: #f1f1f1;
     height: 88vh;
 
 
-}
+}*/
 
 
 /* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and (max-width: 767px) {
+/*@media screen and (max-width: 767px) {
     .sidenav {
         height: auto;
         padding: 15px;
@@ -36,16 +36,33 @@
     color: white;
 }
 
-#buttonDiv {
-    position: absolute;
-    right:    30px;
-    bottom:   15px;
-}
-
 #searchField {
     position: absolute;
     text-align: center;
     bottom:   10px;
     width: 90%;
 
+}
+
+#headlineInput {
+    background-color: #f1f1f1;
+}
+*/
+
+#buttonDiv {
+    text-align: right;
+
+}
+#head {
+    overflow: auto;
+}
+
+#headline {
+    float: left;
+}
+
+#edit_shopping_list_btn {
+    float: right;
+    padding-right: 40px;
+    margin: 10px 0;
 }

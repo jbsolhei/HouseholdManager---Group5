@@ -5,12 +5,16 @@
     <title>Household Manager</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/logon.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
 
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/forgotPassword.js"></script>
     <script src="js/test-hash.js"></script>
     <script src="js/login.js"></script>
     <script src="js/addUser.js"></script>
+    <script src="js/invite.js"></script>
+    <script src="js/index.js"></script>
 </head>
 <body>
     <div class="page">
@@ -34,10 +38,9 @@
         </div>
         <div class="footer">
             <p>
-                <a data-toggle="modal" onclick='callModal("forgotten.html")' data-target="#theModal">Forgotten password?</a>
+                <a data-toggle="modal" onclick='callModal("modals/forgotten.html")' data-target="#theModal">Forgotten password?</a>
             </p>
-
-            <button data-toggle="modal" onclick='callModal("createuser.html")' data-target="#theModal">Register new user</button>
+            <button data-toggle="modal" onclick='callModal("modals/createuser.html")' data-target="#theModal">Register new user</button>
 
         </div>
     </div>

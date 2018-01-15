@@ -5,7 +5,6 @@ import classes.Household;
 import classes.Todo;
 import classes.User;
 import database.UserDAO;
-
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
@@ -75,6 +74,7 @@ public class UserService {
             HashMap<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("sessionToken", session.getToken());
+            response.put("userId",session.getUserId());
             return Response.ok(response).build();
         }
     }
@@ -99,6 +99,7 @@ public class UserService {
         return Response.ok("Session is valid").build();
     }
 
+    @GET
     @Auth(AuthType.USER_READ)
     @Path("/{id}/tasks")
     @Produces(MediaType.APPLICATION_JSON)
@@ -108,7 +109,6 @@ public class UserService {
 
     @PUT
     @Path("/{email}/pwReset")
-    @Consumes(MediaType.APPLICATION_JSON)
     public boolean resetPassword(@PathParam("email") String email) {
         return UserDAO.resetPassword(email);
     }

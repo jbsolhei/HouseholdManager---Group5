@@ -1,22 +1,41 @@
 <div class="container-fluid">
     <div class="row equal" style="min-height: 280px">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="panel panel-info">
-                <div class="panel-heading">Your to do, today</div>
+                <div class="panel-heading">Household todos</div>
                 <div class="panel-body">
                     Modal testing:<br>
                     <a data-toggle="modal" onclick='callModal("modals/welcome.html")' data-target="#theModal">Welcome</a>
                     <a data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal">New household</a>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Initiator</th>
+                        </tr>
+                        </thead>
+                        <tbody id="dashboard_todos_table_body"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="panel panel-info">
                 <div class="panel-heading">Shoppinglists</div>
-                <div class="panel-body">Panel Content
-                    <a onclick='alert(getUser(1))'>alert user</a>
-                    <button onclick='getUserFromRest(1,function (user){alert(user.name)})'> alert user </button>
-                    <button onclick='getHouseholdFromRest(1,function (house){alert(house.name)})'> alert house </button>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Num of items</th>
+                            <th>Num of users</th>
+                        </tr>
+                        </thead>
+                        <tbody id="dashboard_shopping_list_table_body">
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -30,7 +49,7 @@
     <div class="row equal">
         <div class="col-md-4">
             <div class="panel panel-info">
-                <div class="panel-heading">Your to do, today</div>
+                <div class="panel-heading">Household Information</div>
                 <div class="panel-body">Panel Content</div>
             </div>
         </div>
