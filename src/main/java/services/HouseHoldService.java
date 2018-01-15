@@ -23,8 +23,8 @@ public class HouseHoldService {
     @POST
     @Auth
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addHouseHold(Household newHousehold) {
-        HouseholdDAO.addNewHouseHold(newHousehold);
+    public int addHouseHold(Household newHousehold) {
+        return HouseholdDAO.addNewHouseHold(newHousehold);
     }
 
     @POST
@@ -57,6 +57,13 @@ public class HouseHoldService {
     @Consumes(MediaType.APPLICATION_JSON)
     public void inviteUsersToHousehold(@PathParam("id") int house, String[] email){
         HouseholdDAO.inviteUser(house,email);
+    }
+
+    @POST
+    @Path("/{id}/admin/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean addAdmin(@PathParam("id") int id, User user) {
+        return HouseholdDAO.addAdminToHousehold(id, user.getUserId());
     }
 
     @GET
