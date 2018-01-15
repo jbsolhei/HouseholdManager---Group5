@@ -7,12 +7,6 @@ var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
 
-$(document).ready(function() {
-    setCurrentUser(window.localStorage.getItem("userId"));
-    setCurrentHousehold(window.localStorage.getItem("userId"));
-    swapContent("dashboard.html");
-});
-
 function ajaxAuth(attr){
     attr.headers = {
         Authorization: "Bearer "+window.localStorage.getItem("sessionToken")
@@ -30,6 +24,7 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
+            setCurrentHousehold()
         },
         dataType: "json"
     });
@@ -43,7 +38,8 @@ function getCurrentHousehold() {
     return JSON.parse(window.localStorage.getItem("house"));
 }
 
-function setCurrentHousehold(id) {
+function setCurrentHousehold() {
+    var id = window.localStorage.getItem("userId");
     ajaxAuth({
         url:"res/user/"+id+"/hh",
         type: "GET",
@@ -55,6 +51,7 @@ function setCurrentHousehold(id) {
             } else {
                 console.log("User has no household")
             }
+            window.location.replace("index.html")
         },
         error: function () {
             console.log("Error in sethh")
