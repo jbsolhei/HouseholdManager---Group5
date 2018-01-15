@@ -8,7 +8,6 @@ function loadDashboard(){
     var houseId = getCurrentHousehold().houseId;
     printShoppingListsToDashboard(houseId);
     printHouseholdTodosToDashboard(houseId);
-    console.log(getCurrentUser().userId);
 }
 
 function printHouseholdTodosToDashboard(householdId){
