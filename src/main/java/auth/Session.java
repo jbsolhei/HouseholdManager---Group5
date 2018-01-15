@@ -1,4 +1,5 @@
-package classes;
+package auth;
+
 
 public class Session {
 
