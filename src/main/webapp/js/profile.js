@@ -15,7 +15,6 @@ function printInfoToWall(current_user){
     $("#profile_information_list_phone").html(current_user.telephone);
 }
 function printHouseholdsToWall(id) {
-    console.log("printHouseholdsToWall()");
     getHouseholdsForUser(id, function(data){
         $.each(data,function (i, val) {
             var admins = val.admins;
@@ -32,7 +31,6 @@ function printHouseholdsToWall(id) {
 }
 
 function printTasksToWall(id){
-    console.log("printTasksToWall()");
     getTasksForUser(id, function (data) {
         if (data.length !== 0) {
             $.each(data, function (i, val) {

@@ -36,6 +36,7 @@ function printShoppingListsToDashboard(householdId){
                 "<td>"+val.items.length+"</td>\n" +
                 "<td>"+val.participants.length+"</td>\n" +
                 "</tr>";
+            //TODO: the onClick() navigates to the shoppingList body, but doesn't load the selected shoppingList.
             $("#dashboard_shopping_list_table_body").append(inputString);
         })
     })
