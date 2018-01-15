@@ -51,7 +51,7 @@ function setCurrentHousehold(id) {
     ajaxAuth({
         url:"res/user/"+id+"/hh",
         type: "GET",
-        contentType: "application/json; charser=utf-8",
+        contentType: "application/json; charset=utf-8",
         success: function(data){
             if (data == undefined){
                 console.log("aaaa");
@@ -65,6 +65,30 @@ function setCurrentHousehold(id) {
             currentHousehold = hh;
         });
     }*/
+}
+
+function getUserFromId(id, handleData){
+    ajaxAuth({
+        url: "res/user/"+id,
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            handleData(data);
+        },
+        dataType:"json"
+    })
+}
+
+function getHouseholdsForUser(userId, handleData){
+    ajaxAuth({
+        url:"res/user/"+userId+"/hh",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            handleData(data);
+        },
+        dataType: "json"
+    });
 }
 
 function getHouseholdFromId(id,handleData){
@@ -90,6 +114,31 @@ function getShoppingListsInHousehold(id, handleData){
     })
 }
 
+function getTaskinHousehold(id, handleData){
+    ajaxAuth({
+        url: "res/household/" + id + "/tasks",
+        type: "GET",
+        contentType: "application/json; charset=utf8",
+        success: function(data){
+            handleData(data);
+        },
+        dataType: "json"
+    })
+}
+function getTasksForUser(userId, handleData){
+    ajaxAuth({
+        url:"res/user/"+userId+"/tasks",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            console.log("getTasksForUser(), profile.html");
+            handleData(data);
+        },
+        error: console.log("Error in getTasksForUser"),
+        dataType: "json"
+    });
+}
+
 function callModal(modalContent) {
     $("#modal").load(modalContent);
 }
@@ -97,10 +146,14 @@ function callModal(modalContent) {
 function swapContent(bodyContent) {
     $(".page-wrapper").load(bodyContent);
 }
-function swapContentReload(bodyContent) {
+
+function swapContentRun(bodyContent,functions) {
     $(".page-wrapper").load(bodyContent);
-    loadDashboard();
+    for (var i = 0;i<functions.length;i++){
+        functions[i]();
+    }
 }
+
 function navToShoppingList(shoppingListId){
     swapContent("shoppinglist.html");
     showShoppingListById(shoppingListId);

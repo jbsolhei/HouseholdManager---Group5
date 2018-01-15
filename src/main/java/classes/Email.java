@@ -6,10 +6,8 @@ package classes;
  */
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
@@ -32,7 +30,7 @@ public class Email {
      * @param subject subject of the mail (that thing that is bold when you look at your mail inbox
      * @param body body of the mail (what you want to write in the mail)
      */
-    public static void sendMail(String[] to, String subject, String body) {
+    public static void sendMail(String to, String subject, String body) {
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
@@ -47,30 +45,20 @@ public class Email {
 
         try {
             message.setFrom(new InternetAddress(USER_NAME));
-            InternetAddress[] toAddress = new InternetAddress[to.length];
+            InternetAddress toAddress = new InternetAddress(to);
 
-            // To get the array of addresses
-            for( int i = 0; i < to.length; i++ ) {
-                toAddress[i] = new InternetAddress(to[i]);
-            }
-
-            for( int i = 0; i < toAddress.length; i++) {
-                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
-            }
+            message.addRecipient(Message.RecipientType.TO, toAddress);
 
             message.setSubject(subject);
             message.setText(body);
             Transport transport = session.getTransport("smtp");
             transport.connect(host, USER_NAME, PASSWORD);
             transport.sendMessage(message, message.getAllRecipients());
-            System.out.println("Mail sent");
+            System.out.println("Mail sent to "+to);
             transport.close();
         }
-        catch (AddressException ae) {
+        catch (Exception ae) {
             ae.printStackTrace();
-        }
-        catch (MessagingException me) {
-            me.printStackTrace();
         }
     }
 }
