@@ -172,6 +172,7 @@
                 <exclude>**/database/UserDAOTest.java</exclude>
                 <exclude>**/database/HouseholdDAOTest.java</exclude>
                 <exclude>**/services/UserServiceTest.java</exclude>
+              <exclude>**/database/ShoppingListDAOTest.java</exclude>
             </excludes>
         </configuration>
     </plugin>
