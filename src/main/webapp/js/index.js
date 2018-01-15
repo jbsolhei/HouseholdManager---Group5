@@ -51,7 +51,7 @@ function setCurrentHousehold(id) {
     ajaxAuth({
         url:"res/user/"+id+"/hh",
         type: "GET",
-        contentType: "application/json; charser=utf-8",
+        contentType: "application/json; charset=utf-8",
         success: function(data){
             if (data == undefined){
                 console.log("aaaa");
@@ -77,6 +77,18 @@ function getUserFromId(id, handleData){
         },
         dataType:"json"
     })
+}
+
+function getHouseholdsForUser(userId, handleData){
+    ajaxAuth({
+        url:"res/user/"+userId+"/hh",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            handleData(data);
+        },
+        dataType: "json"
+    });
 }
 
 function getHouseholdFromId(id,handleData){
@@ -112,6 +124,19 @@ function getTaskinHousehold(id, handleData){
         },
         dataType: "json"
     })
+}
+function getTasksForUser(userId, handleData){
+    ajaxAuth({
+        url:"res/user/"+userId+"/tasks",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            console.log("getTasksForUser(), profile.html");
+            handleData(data);
+        },
+        error: console.log("Error in getTasksForUser"),
+        dataType: "json"
+    });
 }
 
 function callModal(modalContent) {

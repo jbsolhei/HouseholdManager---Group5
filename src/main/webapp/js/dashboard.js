@@ -12,6 +12,7 @@ $(document).ready(function() {
 function loadDashboard(){
     printShoppingListsToDashboard(houseId);
     printHouseholdTodosToDashboard(houseId);
+    console.log(getCurrentUser().userId);
 }
 
 function printHouseholdTodosToDashboard(householdId){
