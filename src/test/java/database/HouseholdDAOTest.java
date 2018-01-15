@@ -50,10 +50,17 @@ public class HouseholdDAOTest {
 
     @Test
     public void addNewHouseHold() throws Exception {
+
         Household household = new Household();
         household.setName("Kollektivet");
         household.setAddress("Bananvegen 27");
+        User[] admins = new User[1];
+        User u1 = new User();
+        u1.setUserId(1);
+        u1.setName("OLE");
+        admins[0] = u1;
 
+        household.setAdmins(admins);
         HouseholdDAO.addNewHouseHold(household);
 
         String query = "SELECT * FROM Household WHERE house_name='Kollektivet' and house_address='Bananvegen 27'";
@@ -69,6 +76,7 @@ public class HouseholdDAOTest {
 
         assertEquals("Kollektivet", name);
         assertEquals("Bananvegen 27", address);
+
     }
 
     @Test
