@@ -209,7 +209,9 @@ function updateUsers(users) {
 }
 
 function getUsers() {
+    console.log("yay!");
     var hh = getCurrentHousehold();
+    console.log(hh);
     ajaxAuth({
         url: 'res/household/' + hh.houseId + 'shopping_lists/' + activeTab,
         type: "GET",

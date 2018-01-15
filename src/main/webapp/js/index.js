@@ -140,6 +140,7 @@ function callModal(modalContent) {
 }
 
 function callModalRun(modalContent, functions) {
+    console.log(modalContent);
     $("#modal").load(modalContent);
     for (var i = 0; i<functions.length; i++) {
         functions[i]();
