@@ -15,15 +15,8 @@
 
         <script src="js/dashboard.js"></script>
         <script src="js/shoppinglist.js"></script>
+        <script src="js/profile.js"></script>
         <script src="js/invite.js"></script>
-        <script src="js/variables.js"></script>
-        <script>
-            $(document).ready(function() {
-                setCurrentUser(window.sessionStorage.getItem("userId"));
-                setCurrentHousehold(window.sessionStorage.getItem("houseId"));
-                swapContent("dashboard.html")
-            });
-        </script>
     </head>
     <body>
     <div class="top-and-sidebar">
@@ -41,7 +34,7 @@
                 </div>
                 <div class="navbar-collapse collapse" id="mobileNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="visible-xs" onclick="swapContent(dashboard)">Dashboard</a></li>
+                        <li><a class="visible-xs" onclick="swapContentReload(dashboard)">Dashboard</a></li>
                         <li><a class="visible-xs" onclick="swapContent(household)">Household</a></li>
                         <li><a class="visible-xs" onclick="swapContent(shoppinglists)">Shopping lists</a></li>
                         <li><a class="visible-xs" onclick="swapContent(shoppingtrips)">Shopping trip</a></li>
@@ -65,7 +58,7 @@
         <!-- sidebar -->
         <nav class="sidebar hidden-xs">
             <ul class="list-unstyled components">
-                <li><a onclick="swapContent(dashboard)" class="btn btn-default btn-sidebar">Dashboard</a></li>
+                <li><a onclick="swapContentReload(dashboard)" class="btn btn-default btn-sidebar">Dashboard</a></li>
                 <li><a onclick="swapContent(household)" class="btn btn-default btn-sidebar">Household</a></li>
                 <li><a onclick="swapContent(shoppinglists)" class="btn btn-default btn-sidebar">Shopping lists</a></li>
                 <li><a onclick="swapContent(shoppingtrips)" class="btn btn-default btn-sidebar">Shopping trip</a></li>

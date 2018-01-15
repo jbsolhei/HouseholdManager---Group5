@@ -195,20 +195,18 @@ public class ShoppingListDAO {
     }
 
 
-    public static void updateItems(Item[] items, int shopping_list_id){
-        Item[] oldItems = getItems(shopping_list_id);
-
+    /*public static void addItems(Item[] items, int shopping_list_id){
         DBConnector dbc = new DBConnector();
         String query = "";
-        int teller = 1;
+
         try {
             Connection conn = dbc.getConn();
-            PreparedStatement st;
+
             for(int i = 0; i < items.length; i++){
                 if(items[i] != null){
                     query = "INSERT INTO Item(name, checkedBy, shopping_listId) VALUES (?, ?, ?) WHERE shopping_listId = ?;";
 
-                    st = conn.prepareStatement(query);
+                    PreparedStatement st = conn.prepareStatement(query);
                     st.setString(1, items[i].getName());
                     st.setInt(2, 0);
                     st.setInt(3, shopping_list_id);
@@ -217,6 +215,52 @@ public class ShoppingListDAO {
                 }
             }
 
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+    }*/
+
+    public static void addItem(Item items, int shopping_list_id){
+        DBConnector dbc = new DBConnector();
+        String query = "";
+
+        try {
+            Connection conn = dbc.getConn();
+
+            query = "INSERT INTO Item(name, shopping_listId) VALUES (?, ?);";
+
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, items.getName());
+            //st.setInt(2, 0);
+            st.setInt(2, shopping_list_id);
+            st.executeUpdate();
+            st.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+    }
+
+    public static void deleteItem(int shopping_list_id, int itemId){
+        DBConnector dbc = new DBConnector();
+        String query = "";
+
+        try {
+            Connection conn = dbc.getConn();
+
+            query = "DELETE FROM Item WHERE shopping_listId = ? AND itemId = ?;";
+
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, shopping_list_id);
+            //st.setInt(2, 0);
+            st.setInt(2, itemId);
+            st.executeUpdate();
+            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
