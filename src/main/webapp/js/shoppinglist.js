@@ -181,6 +181,20 @@ function saveChanges(){
     deleteItems = [];
 }
 
+function updateUsers(users) {
+    $.ajax({
+        type: 'POST',
+        url: 'res/household/' + 1 + '/shopping_lists/' + activeTab +'/users',
+        data: JSON.stringify({"name": name}),
+
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function () {
+            console.log("List successfully added to database")
+        }
+    });
+}
+
 /* Make it so that you can use the 'enter'-key to add items*/
 $("#item").keyup(function(event) {
     if (event.keyCode === 13) {
