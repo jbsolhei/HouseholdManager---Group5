@@ -95,6 +95,7 @@ public class HouseholdDAO {
             while (rs.next()) {
                 name = rs.getString("house_name");
                 address = rs.getString("house_address");
+                household.setHouseId(id);
                 household.setName(name);
                 household.setAddress(address);
                 householdExists = true;
