@@ -193,7 +193,7 @@ public class UserDAO {
 
         if (resetSuccessful == 0) return false;
 
-        String[] to = {email};
+        String to = email;
         Email.sendMail(to, "Forgot Password","Here is your new randomly generated password: " + newPassword + "\n" +
                  "Please log in to your Household Manager account and change your password as soon as possible.\n");
         return true;

@@ -54,8 +54,8 @@ public class HouseHoldService {
     @POST
     @Auth
     @Path("/{id}/users/invite")
-    @Consumes(MediaType.TEXT_PLAIN)
-    public void inviteUserToHousehold(@PathParam("id") int house, String email){
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void inviteUsersToHousehold(@PathParam("id") int house, String[] email){
         HouseholdDAO.inviteUser(house,email);
     }
 

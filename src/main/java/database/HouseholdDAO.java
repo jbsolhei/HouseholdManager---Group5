@@ -257,39 +257,47 @@ public class HouseholdDAO {
      * @param houseId the id of the house
      * @param email the email of the user.
      */
-    public static void inviteUser(int houseId, String email) {
+    public static void inviteUser(int houseId, String[] email) {
         Household house = getHousehold(houseId);
 
         if (house!=null) {
             SecureRandom random = new SecureRandom();
-            byte randomBytes[] = new byte[32];
-            random.nextBytes(randomBytes);
-            String token = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+            String query = "";
+            ArrayList<String> tokens = new ArrayList<>();
+            ArrayList<String> emails = new ArrayList<>();
 
-            String query = "INSERT INTO Invite_token (token,houseId,email) VALUES (?,?,?)";
+            for (int i = 0; i < email.length; i++) {
+                byte randomBytes[] = new byte[32];
+                random.nextBytes(randomBytes);
+                String token = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+                emails.add(email[i]);
+                tokens.add(token);
 
-            DBConnector dbc = new DBConnector();
+                query = "INSERT INTO Invite_token (token,houseId,email) VALUES (?,?,?);";
+                DBConnector dbc = new DBConnector();
 
-            try {
-                Connection conn = dbc.getConn();
-                PreparedStatement st = conn.prepareStatement(query);
-                st.setString(1, token);
-                st.setInt(2, houseId);
-                st.setString(3, email);
-
-                st.executeUpdate();
-                st.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                dbc.disconnect();
+                try {
+                    Connection conn = dbc.getConn();
+                    PreparedStatement st = conn.prepareStatement(query);
+                    st.setString(1, token);
+                    st.setInt(2, houseId);
+                    st.setString(3, email[i]);
+                    st.executeUpdate();
+                    st.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    dbc.disconnect();
+                }
             }
 
-            String[] to = {email};
-            Email.sendMail(to, "Household Manager Invitation",
-                    "You have been invited to " + house.getName() + "!\n" +
-                            "Click here to accept:\n" +
-                            "http://localhost:8080/hhapp/login.html?invite=" + token);
+            for (int i = 0; i < email.length; i++) {
+                String to = emails.get(i);
+                Email.sendMail(to, "Household Manager Invitation",
+                        "You have been invited to " + house.getName() + "!\n" +
+                                "Click here to accept:\n" +
+                                "http://localhost:8080/hhapp/login.html?invite=" + tokens.get(i));
+            }
         }
     }
 

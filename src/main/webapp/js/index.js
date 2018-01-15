@@ -146,10 +146,14 @@ function callModal(modalContent) {
 function swapContent(bodyContent) {
     $(".page-wrapper").load(bodyContent);
 }
-function swapContentReload(bodyContent) {
+
+function swapContentRun(bodyContent,functions) {
     $(".page-wrapper").load(bodyContent);
-    loadDashboard();
+    for (var i = 0;i<functions.length;i++){
+        functions[i]();
+    }
 }
+
 function navToShoppingList(shoppingListId){
     swapContent("shoppinglist.html");
     showShoppingListById(shoppingListId);
