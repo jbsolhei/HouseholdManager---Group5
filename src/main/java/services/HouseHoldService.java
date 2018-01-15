@@ -7,6 +7,8 @@ import database.HouseholdDAO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.HashMap;
 
 /**
  * @author team5
@@ -38,9 +40,17 @@ public class HouseHoldService {
     @POST
     @Auth
     @Path("/invited/{token}")
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addUserFromInvite(@PathParam("token") String token, User user){
-        HouseholdDAO.addUserFromInvite(token, user.getUserId());
+    public Response addUserFromInvite(@PathParam("token") String token, User user){
+        int result = HouseholdDAO.addUserFromInvite(token, user.getUserId());
+        if (result==-1){
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("houseId", result);
+        return Response.ok(response).build();
     }
 
     @POST

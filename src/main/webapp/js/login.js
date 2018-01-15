@@ -20,7 +20,7 @@ $(document).ready(function () {
                 if(response.success === true) {
                     window.sessionStorage.setItem("sessionToken",response.sessionToken);
                     window.sessionStorage.setItem("userId",response.userId);
-                    window.location.replace("index.html")
+                    inviteCheck()
                 }
             },
             error: function(result) {

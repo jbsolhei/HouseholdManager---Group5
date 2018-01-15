@@ -1,15 +1,10 @@
 
 function ajaxAuth(attr){
     attr.headers = {
-        Authorization: "Bearer "+sessionToken
+        Authorization: "Bearer "+window.sessionStorage.getItem("sessionToken")
     };
     attr.error = function (jqXHR, exception) {
-        var msg = '';
-        if (jqXHR.status == 401) {
-            window.location.replace("login.html")
-        } else {
-            $("html").html(jqXHR.responseText);
-        }
+        console.log("Error: "+jqXHR.status);
     };
     return $.ajax(attr);
 }
@@ -26,19 +21,12 @@ function setCurrentUser(id) {
     });
 }
 
-function setCurrentHousehold() {
-    ajaxAuth({
-        url: "res/user/"+currentUser.userId+"/hh",
-        type: "GET",
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-            window.location.replace("index.html");
-        },
-        error: function (data) {
-            window.location.replace("login.html");
-        },
-        dataType: "json"
-    });
+function setCurrentHousehold(id) {
+    if (id!==0&&id!==undefined&&id!==null){
+        getHouseholdFromId(id, function (hh) {
+            currentHousehold = hh;
+        });
+    }
 }
 
 function getHouseholdFromId(id,handleData){

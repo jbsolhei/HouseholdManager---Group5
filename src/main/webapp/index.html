@@ -19,7 +19,8 @@
         <script src="js/variables.js"></script>
         <script>
             $(document).ready(function() {
-                setCurrentUser(window.sessionStorage.getItem("userId")); // TODO: grab data from session
+                setCurrentUser(window.sessionStorage.getItem("userId"));
+                setCurrentHousehold(window.sessionStorage.getItem("houseId"));
                 swapContent("dashboard.html")
             });
         </script>

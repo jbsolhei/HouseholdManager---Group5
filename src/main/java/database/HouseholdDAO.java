@@ -244,10 +244,10 @@ public class HouseholdDAO {
         int tokenResult = InviteHandler.verifyToken(token);
         if (tokenResult!=0){
             addUserToHousehold(tokenResult,userId);
-            return 1;
-        } else {
-            return -1;
+            InviteHandler.removeToken(token);
+            return tokenResult;
         }
+        return -1;
     }
 
     /**
