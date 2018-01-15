@@ -7,8 +7,23 @@ $(document).ready(function() {
     loadDashboard();
 });
 
+//TODO: Vurdere bruken av lokalt lagrede brukere under opplisting av todos og handlelister mtp på autoriseringsproblemer.
+
 function loadDashboard(){
     printShoppingListsToDashboard(houseId);
+    printHouseholdTodosToDashboard(houseId);
+}
+
+function printHouseholdTodosToDashboard(householdId){
+    console.log("printHouseholdTodosToDashboard()");
+    getTaskinHousehold(householdId, function(data){
+        $.each(data, function(i,val){
+            var inputString = "<tr>\n" +
+                "<td>" + val.description + "</td>" +
+                "<td>" + val.date + "</td>" +
+                "<td>" + getUserFromId(val.userId).name + "</td>";
+        })
+    })
 }
 
 function printShoppingListsToDashboard(householdId){

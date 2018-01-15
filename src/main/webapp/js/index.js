@@ -29,6 +29,18 @@ function setCurrentHousehold(id) {
     }
 }
 
+function getUserFromId(id, handleData){
+    ajaxAuth({
+        url: "res/user/"+id,
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            handleData(data);
+        },
+        dataType:"json"
+    })
+}
+
 function getHouseholdFromId(id,handleData){
     ajaxAuth({
         url: "res/household/"+id,
@@ -45,6 +57,18 @@ function getShoppingListsInHousehold(id, handleData){
         url: "res/household/"+id+"/shopping_lists",
         type: "GET",
         contentType: "application/json; charset=utf-8",
+        success: function(data){
+            handleData(data);
+        },
+        dataType: "json"
+    })
+}
+
+function getTaskinHousehold(id, handleData){
+    ajaxAuth({
+        url: "res/household/" + id + "/tasks",
+        type: "GET",
+        contentType: "application/json; charset=utf8",
         success: function(data){
             handleData(data);
         },
