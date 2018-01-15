@@ -34,9 +34,9 @@
                 </div>
                 <div class="navbar-collapse collapse" id="mobileNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="visible-xs" onclick="swapContentRun(dashboard, [loadDashboard()])">Dashboard</a></li>
+                        <li><a class="visible-xs" onclick="swapContentRun(dashboard,[loadDashboard])">Dashboard</a></li>
                         <li><a class="visible-xs" onclick="swapContent(household)">Household</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(shoppinglists)">Shopping lists</a></li>
+                        <li><a class="visible-xs" onclick="swapContentRun(shoppinglists,[ready()])">Shopping lists</a></li>
                         <li><a class="visible-xs" onclick="swapContent(shoppingtrips)">Shopping trip</a></li>
                         <li><a class="visible-xs" onclick="swapContent(todo)">To Do</a></li>
                         <li><a class="visible-xs" onclick="swapContent(statistics)">Statistics</a></li>
@@ -58,9 +58,9 @@
         <!-- sidebar -->
         <nav class="sidebar hidden-xs">
             <ul class="list-unstyled components">
-                <li><a onclick="swapContentRun(dashboard, [loadDashboard])" class="btn btn-default btn-sidebar">Dashboard</a></li>
+                <li><a onclick="swapContentRun(dashboard,[loadDashboard])" class="btn btn-default btn-sidebar">Dashboard</a></li>
                 <li><a onclick="swapContent(household)" class="btn btn-default btn-sidebar">Household</a></li>
-                <li><a onclick="swapContent(shoppinglists)" class="btn btn-default btn-sidebar">Shopping lists</a></li>
+                <li><a onclick="swapContentRun(shoppinglists, [ready()])" class="btn btn-default btn-sidebar">Shopping lists</a></li>
                 <li><a onclick="swapContent(shoppingtrips)" class="btn btn-default btn-sidebar">Shopping trip</a></li>
                 <li><a onclick="swapContent(todo)" class="btn btn-default btn-sidebar">To Do</a></li>
                 <li><a onclick="swapContent(statistics)" class="btn btn-default btn-sidebar">Statistics</a></li>
