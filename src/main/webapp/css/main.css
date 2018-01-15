@@ -1,5 +1,19 @@
 #profile_pic_img{
     max-width:10vw;
+    position: center;
+    margin-bottom: 15px;
+}
+
+.profile_panel_heading{
+    font-size: x-large;
+    font-family: Calibri;
+}
+
+.long-scroll-panel{
+    min-height: 65vh;
+    max-height: 65vh;
+    overflow-y: scroll;
+
 }
 
 .navbar {
@@ -28,9 +42,7 @@
     border: none;!important;
 }
 
-.btn-sidebar:active {
-
-}
+.btn-sidebar:active {}
 
 
 .page-wrapper{
@@ -42,6 +54,11 @@
     .page-wrapper {
         margin-top: 1%;
         margin-left: 1%;
+    }
+    .long-scroll-panel{
+        max-height: 20vh;
+        min-height: 20vh;
+        overflow-y: scroll;
     }
 }
 

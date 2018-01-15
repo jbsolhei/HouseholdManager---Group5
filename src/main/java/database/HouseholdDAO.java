@@ -1,8 +1,6 @@
 package database;
 
-import classes.Email;
-import classes.Household;
-import classes.User;
+import classes.*;
 
 import java.security.SecureRandom;
 import java.sql.Connection;
@@ -52,7 +50,14 @@ public class HouseholdDAO {
     public static Household getHousehold(int id) { // TODO: more data
         String name = "";
         String address = "";
+        User[] members = getMembers(id);
+        User[] admins = getAdmins(id);
+        ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(id);
+
         Household household = new Household();
+        household.setAdmins(admins);
+        household.setResidents(members);
+        household.setShoppingLists(shoppingLists);
         boolean householdExists = false;
 
 
@@ -231,8 +236,24 @@ public class HouseholdDAO {
     }
 
     /**
+     * Used to add new users to the household from an invite link.
+     * @param token the invite token
+     * @param userId the id of the user
+     */
+    public static int addUserFromInvite(String token, int userId){
+        int tokenResult = InviteHandler.verifyToken(token);
+        if (tokenResult!=0){
+            addUserToHousehold(tokenResult,userId);
+            InviteHandler.removeToken(token);
+            return tokenResult;
+        }
+        return -1;
+    }
+
+    /**
      * Used to send and invite email to a user.
-     * @param email the email of the house.
+     * @param houseId the id of the house
+     * @param email the email of the user.
      */
     public static void inviteUser(int houseId, String email) {
         Household house = getHousehold(houseId);
@@ -266,7 +287,38 @@ public class HouseholdDAO {
             Email.sendMail(to, "Household Manager Invitation",
                     "You have been invited to " + house.getName() + "!\n" +
                             "Click here to accept:\n" +
-                            "http://localhost:8080/hhapp/login.html?token=" + token);
+                            "http://localhost:8080/hhapp/login.html?invite=" + token);
         }
+    }
+
+    public static User[] getAdmins(int houseId) {
+        String query = "SELECT House_user.userId, House_user.isAdmin FROM House_user WHERE houseId = ?";
+        int counter = 0;
+        ArrayList<User> admins = new ArrayList<>();
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, houseId);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getInt("isAdmin") > 0) {
+                    admins.add(UserDAO.getUser(rs.getInt("userId")));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        User[] list = new User[admins.size()];
+        for (int i = 0; i < admins.size(); i++) {
+            list[i] = admins.get(i);
+        }
+
+        return list;
     }
 }

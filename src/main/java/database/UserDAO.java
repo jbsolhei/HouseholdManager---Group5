@@ -1,24 +1,27 @@
 package database;
 
-import classes.HashHandler;
-import classes.User;
+import classes.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.security.SecureRandom;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Base64;
+
 
 public class UserDAO {
 
     /**
      * Used to create a new user in the database from a User object.
      * @param newUser a User object
+     * @return Returns false if the new user's email or telephone number already exists in the database, if else true
      */
-    public static void addNewUser(User newUser) {
+    public static boolean addNewUser(User newUser) {
         String email = newUser.getEmail();
         String name = newUser.getName();
         String password = newUser.getPassword();
-        String telephone = newUser.getPhone();
+        String telephone = newUser.getTelephone();
+
+        if (userExist(email, telephone)) return false;
 
         String hashedPassword = HashHandler.makeHashFromPassword(password);
 
@@ -41,6 +44,28 @@ public class UserDAO {
         } finally {
             dbc.disconnect();
         }
+
+        return true;
+    }
+
+    public static boolean userExist(String email, String telephone) {
+
+        String query = "SELECT * FROM Person WHERE email=+'"+email+"' or telephone='"+telephone+"'";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             Statement st = conn.createStatement()) {
+
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     /**
@@ -63,7 +88,7 @@ public class UserDAO {
                 user.setEmail(rs.getString("email"));
                 user.setName(rs.getString("name"));
                 user.setPassword(rs.getString("password"));
-                user.setPhone(rs.getString("telephone"));
+                user.setTelephone(rs.getString("telephone"));
                 return user;
             }
 
@@ -135,8 +160,47 @@ public class UserDAO {
     }
 
     /**
+     * Used to reset a user's password when forgot. Takes the user's email, and generates a
+     * random password that gets sent to the user's email. A hashed version of the new
+     * password is inserted to the database.
+     * @param email The email of the user who's password is going to be reset.
+     * @return Returns true if the password was successfully reset. Returns false if the email is non existent. in
+     * the database.
+     */
+    public static boolean resetPassword(String email) {
+
+        SecureRandom random = new SecureRandom();
+        byte randomBytes[] = new byte[8];
+        random.nextBytes(randomBytes);
+        String newPassword = Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+        String newHashedPassword = HashHandler.makeHashFromPassword(newPassword);
+
+        String query = "UPDATE Person SET password = ? WHERE email = ?";
+        int resetSuccessful = 0;
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setString(1, newHashedPassword);
+            st.setString(2, email);
+
+            resetSuccessful = st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (resetSuccessful == 0) return false;
+
+        String[] to = {email};
+        Email.sendMail(to, "Forgot Password","Here is your new randomly generated password: " + newPassword + "\n" +
+                 "Please log in to your Household Manager account and change your password as soon as possible.\n");
+        return true;
+    }
+
+    /**
      * Used to update a user's password based on the his/hers email.
-     *
      * @param id The user's id
      * @param newPassword The new password that the user wants
      * @return False if the user does not exist and true if successful.
@@ -170,5 +234,66 @@ public class UserDAO {
         }
 
         return passwordUpdated;
+    }
+
+    /**
+     * Used to get all the users from a house
+     * @param userId The id of the house where you want to find users
+     * @return Returns null if the house does not exist
+     */
+    public static ArrayList getHouseholds(int userId) {
+        ArrayList<Household> households = new ArrayList<>();
+        boolean userExists = false;
+        String query = "SELECT houseId FROM House_user WHERE userId=?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, userId);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                userExists = true;
+                households.add(HouseholdDAO.getHousehold(rs.getInt("houseId")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (userExists) return households;
+        return null;
+    }
+
+    public static ArrayList<Todo> getTasks(int userId) {
+        String query = "SELECT * FROM Task WHERE userId = ?";
+        ArrayList<Todo> todos = new ArrayList<>();
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, userId);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Todo todo = new Todo();
+                todo.setDate(rs.getDate("date"));
+                todo.setdescription(rs.getString("description"));
+                todo.setHouseId(rs.getInt("houseId"));
+                todo.setUserId(rs.getInt("userId"));
+                todo.setTaskId(rs.getInt("taskId"));
+
+                todos.add(todo);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return todos;
     }
 }

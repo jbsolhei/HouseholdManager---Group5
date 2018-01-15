@@ -12,6 +12,18 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/index.js"></script>
+
+        <script src="js/dashboard.js"></script>
+        <script src="js/shoppinglist.js"></script>
+        <script src="js/invite.js"></script>
+        <script src="js/variables.js"></script>
+        <script>
+            $(document).ready(function() {
+                setCurrentUser(window.sessionStorage.getItem("userId"));
+                setCurrentHousehold(window.sessionStorage.getItem("houseId"));
+                swapContent("dashboard.html")
+            });
+        </script>
     </head>
     <body>
     <div class="top-and-sidebar">
@@ -47,7 +59,6 @@
                         <li><a href="login.html">Logout</a></li>
                     </ul>
                 </div>
-
             </div>
         </nav>
         <!-- navbar end -->
