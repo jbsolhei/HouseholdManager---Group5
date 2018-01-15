@@ -225,6 +225,31 @@ public class ShoppingListDAO {
         }
     }
 
+    public static void updateUsers(int[] userIds, int shoppingListId) {
+        String delete = "DELETE FROM User_Shopping_list WHERE shopping_listId = ?";
+        String query = "INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (?, ?);";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement del_st = conn.prepareStatement(delete);
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            del_st.setInt(1, shoppingListId);
+            int dels = del_st.executeUpdate();
+            System.out.println("deleted " + dels + " rows");
+
+            for (int i = 0; i < userIds.length; i++) {
+                st.setInt(1, userIds[i]);
+                st.setInt(2, shoppingListId);
+                int rtn = st.executeUpdate();
+                if (rtn < 0) System.err.println("Could not update: " + userIds[i] + " into shoppinglist where shoppinglistid = " + shoppingListId);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private static User[] toUserArray(ArrayList<User> users) {
         User[] userArray = new User[users.size()];
@@ -301,7 +326,8 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        int[] userIds = {1, 2, 3};
+        int[] userIds = {1, 2};
+        ShoppingListDAO.updateUsers(userIds, 3);
         System.out.println("stop");
     }
 }

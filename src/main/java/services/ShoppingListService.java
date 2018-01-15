@@ -2,7 +2,6 @@ package services;
 
 import classes.Item;
 import classes.ShoppingList;
-import classes.User;
 import database.ShoppingListDAO;
 
 import javax.ws.rs.*;
@@ -50,4 +49,10 @@ public class ShoppingListService {
         ShoppingListDAO.updateItems(items, shopping_list_id);
     }
 
+    @POST
+    @Path("/{id}/shopping_list/{shopping_list_id}/users")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void updateUsers(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, int[] userIds) {
+        ShoppingListDAO.updateUsers(userIds, shopping_list_id);
+    }
 }
