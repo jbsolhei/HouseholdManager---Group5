@@ -16,10 +16,7 @@ function loadDashboard(){
 }
 
 function printHouseholdTodosToDashboard(householdId){
-    console.log("printHouseholdTodosToDashboard()");
     getTaskinHousehold(householdId, function(data){
-        console.log(data);
-        console.log(JSON.stringify(data));
         $.each(data, function(i,val){
             var inputString = "<tr>\n" +
                 "<td>" + val.description + "</td>" +
@@ -32,7 +29,6 @@ function printHouseholdTodosToDashboard(householdId){
 }
 
 function printShoppingListsToDashboard(householdId){
-    console.log("PrintShoppingListsToDashboard()")
     getShoppingListsInHousehold(householdId, function(data){
         $.each(data, function(i,val){
             var inputString = "<tr>\n" +
