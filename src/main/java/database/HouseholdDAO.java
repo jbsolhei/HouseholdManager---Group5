@@ -321,4 +321,47 @@ public class HouseholdDAO {
 
         return list;
     }
+
+
+    //TODO: getTodosForHouseHold need some more pimping to include a timestamp in the date, as well as a "checked" or "done" attribute.
+    public static Todo[] getTodosForHousehold(int houseId){
+        ArrayList<Todo> todos = new ArrayList<>();
+        boolean householdExists = false;
+
+        String query = "SELECT taskId FROM Task WHERE houseId = ?";
+        DBConnector dbc = new DBConnector();
+        PreparedStatement st;
+
+        try {
+            Connection conn = dbc.getConn();
+            st = conn.prepareStatement(query);
+            st.setInt(1, houseId);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Todo todo = new Todo();
+                todo.setdescription(rs.getString("description"));
+                todo.setHouseId(houseId);
+                todo.setTaskId(rs.getInt("taskId"));
+                todo.setUserId(rs.getInt("userId"));
+                todo.setDate(rs.getDate("date"));
+                todos.add(todo);
+                householdExists = true;
+            }
+
+            st.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+
+        Todo[] data = new Todo[todos.size()];
+        for (int i = 0; i < todos.size(); i++) {
+            data[i] = todos.get(i);
+        }
+        if(householdExists) return data;
+        return null;
+    }
 }
