@@ -1,6 +1,3 @@
-var sessionToken;
-var inviteToken;
-
 var dashboard = "dashboard.html";
 var household = "HouseholdOverview.html";
 var shoppinglists = "shoppinglist.html";
@@ -12,7 +9,7 @@ var profile = "profile.html";
 
 $(document).ready(function() {
     setCurrentUser(window.localStorage.getItem("userId"));
-    setCurrentHousehold(window.localStorage.getItem("userId"));
+    setCurrentHousehold(0);
     swapContent("dashboard.html");
 });
 
@@ -33,7 +30,6 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
-            console.log(getCurrentUser())
         },
         dataType: "json"
     });
@@ -48,23 +44,19 @@ function getCurrentHousehold() {
 }
 
 function setCurrentHousehold(id) {
+    if (id==0||id==undefined){
+        id = 1;
+    }
     ajaxAuth({
         url:"res/user/"+id+"/hh",
         type: "GET",
         contentType: "application/json; charser=utf-8",
         success: function(data){
-            if (data == undefined){
-                console.log("aaaa");
-                callModal("modals/addHousehold.html");
-            }
+            window.localStorage.setItem("house",JSON.stringify(data));
+            console.log(getCurrentHousehold())
         },
         dataType: "json"
     });
-    /*if (id!==0&&id!==undefined&&id!==null){
-        getHouseholdFromId(id, function (hh) {
-            currentHousehold = hh;
-        });
-    }*/
 }
 
 function getHouseholdFromId(id,handleData){
