@@ -129,6 +129,9 @@ public class ShoppingListDAO {
                     email = rs.getString("email");
                     personName = rs.getString("Person.name");
                     telephone = rs.getString("telephone");
+                    user.setEmail(email);
+                    user.setName(personName);
+                    user.setPhone(telephone);
                 }
 
                 item.setItemId(itemId);
@@ -147,18 +150,31 @@ public class ShoppingListDAO {
         return null;
     }
 
-    public static void createShoppingList(String name, int houseId, int[] userIds) {
+    public static int createShoppingList(String name, int houseId, int[] userIds) {
         String query_sl = "INSERT INTO Shopping_list (name, houseId) VALUES (?, ?);";
-        String query_user_sl = "";
+        String query_user_sl = "INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (?, ?);";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
-             PreparedStatement st_sl = conn.prepareStatement(query_sl)) {
+             PreparedStatement st_user_sl = conn.prepareStatement(query_user_sl);
+             PreparedStatement st_sl = conn.prepareStatement(query_sl, Statement.RETURN_GENERATED_KEYS)) {
 
-            st_sl.setInt(1, houseId);
-            int key = st_sl.executeUpdate(query_sl, Statement.RETURN_GENERATED_KEYS);
+            st_sl.setString(1, name);
+            st_sl.setInt(2, houseId);
+
+            int res = st_sl.executeUpdate();
+            ResultSet rs = st_sl.getGeneratedKeys();
+
+            for (int i = 0; i < userIds.length; i++) {
+                st_user_sl.setInt(1, userIds[i]);
+                st_user_sl.setInt(2, 8);
+                st_user_sl.executeUpdate(query_user_sl);
+            }
+
+            return 8;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
     private static User[] toUserArray(ArrayList<User> users) {
@@ -236,7 +252,8 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        Item[] items = ShoppingListDAO.getItems(3);
+        int[] userIds = {1, 2, 3};
+        int key = ShoppingListDAO.createShoppingList("Innflyttingsfest", 1, userIds);
         System.out.println("stop");
     }
 }
