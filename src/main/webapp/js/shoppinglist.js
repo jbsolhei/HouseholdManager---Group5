@@ -2,6 +2,7 @@
  * Created by camhl on 1/11/2018.
  */
 var numberOfItems = 0;
+var numberOfDeleteItems = 0;
 var activeTab = 0;
 var householdId = 1;
 var shoppingLists = [];
@@ -17,10 +18,8 @@ $(document).ready(function(){
             shoppingLists[i] = SL[i];
             insertShoppingLists(i, shoppingLists[i].name)
         }
-
         $("#" + activeTab).addClass("active");
         showList(0);
-
     });
 });
 
@@ -31,8 +30,8 @@ function insertShoppingLists(shoppingListIndex, shoppingListName){
 function additem() {
     var newItem = document.getElementById("item").value;
     if(newItem != "" && newItem != null) {
-        numberOfItems += 1;
         newItems[numberOfItems] = newItem;
+        numberOfItems += 1;
         $("#emptyListText").addClass("hide");
         $("#newItem").append('<tr id="item' + numberOfItems + '"><td><span onclick="check(' + numberOfItems + ')" id="unchecked' + numberOfItems + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + newItem + '</td><td><span onclick="deleteItem(' + numberOfItems + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
         document.getElementById("item").value = "";
@@ -50,6 +49,9 @@ function unCheck(itemNumber){
 
 function deleteItem(itemNumber){
     $("#item" + itemNumber).remove();
+    console.log(itemNumber);
+    deleteItems[numberOfDeleteItems] = itemNumber;
+    numberOfDeleteItems += 1;
 }
 
 function showList(SLIndex){
@@ -62,12 +64,12 @@ function showList(SLIndex){
         if(items.length == 0){
             $("#emptyListText").removeClass("hide");
         } else {
+            $("#emptyListText").addClass("hide");
             for (var i = 0; i < items.length; i++) {
-                itemsTab[i] = items[i];
-                $("#newItem").append('<tr id="item' + i + '"><td><span onclick="check(' + i + ')" id="unchecked' + i + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + items[i].name + '</td><td><span onclick="deleteItem(' + i + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                itemsTab[i] = items[i].itemId;
+                $("#newItem").append('<tr id="item' + items[i].itemId + '"><td><span onclick="check(' + items[i].itemId + ')" id="unchecked' + items[i].itemId + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + items[i].name + '</td><td><span onclick="deleteItem(' + items[i].itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
             }
         }
-
         $("#headline").replaceWith('<h4 id="headline">' + shoppingLists[SLIndex].name + '</h4>');
         $("#item").focus();
         $("#" + activeTab).removeClass("active");
@@ -98,7 +100,6 @@ function deleteList(){
     $.ajax({
         type: 'DELETE',
         url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId,
-
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
@@ -148,21 +149,37 @@ function addNewList(name){
 }
 
 function saveChanges(){
-    console.log(newItems.length);
-    console.log(newItems[0].name);
-    $.ajax({
-        type: 'PUT',
-        url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items",
-        data: JSON.stringify({"items": newItems}),
+    if(newItems.length > 0) {
+        for (var i = 0; i < newItems.length; i++) {
 
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function () {
-            console.log("List successfully saved in database");
+            $.ajax({
+                type: 'POST',
+                url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items",
+                data: JSON.stringify({'name': newItems[i], 'checkedBy': null}),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function () {
+                    console.log("Items successfully saved in database");
+                }
+            });
         }
-    });
+    }
+    if(deleteItems.length > 0){
+        for (var i = 0; i < deleteItems.length; i++) {
+            $.ajax({
+                type: 'DELETE',
+                url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items/" + deleteItems[i],
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function () {
+                    console.log("Items successfully deleted in database");
+                }
+            });
+        }
+    }
 
     newItems = [];
+    deleteItems = [];
 }
 
 /* Make it so that you can use the 'enter'-key to add items*/

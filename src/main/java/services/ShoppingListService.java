@@ -43,11 +43,18 @@ public class ShoppingListService {
         ShoppingListDAO.deleteShoppingList(houseId, shopping_list_id);
     }
 
-    @PUT
+    @POST
     @Path("/{id}/shopping_lists/{shopping_list_id}/items")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateItems(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, Item[] items){
-        ShoppingListDAO.updateItems(items, shopping_list_id);
+    public void addItems(@PathParam("shopping_list_id") int shopping_list_id, Item item){
+        ShoppingListDAO.addItem(item, shopping_list_id);
+    }
+
+    @DELETE
+    @Path("/{id}/shopping_lists/{shopping_list_id}/items/{itemId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteItem(@PathParam("shopping_list_id") int shopping_list_id, @PathParam("itemId") int itemId){
+        ShoppingListDAO.deleteItem(shopping_list_id, itemId);
     }
 
 }
