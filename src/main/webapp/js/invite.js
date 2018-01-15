@@ -10,8 +10,9 @@ function inviteCheck() {
             contentType: 'text/plain',
             success: function (response) {
                 if (response.success){
-                    console.log(response.houseId);
+                    setCurrentUser();
                     window.localStorage.setItem("houseId", response.houseId);
+                    setCurrentHousehold(response.houseId);
                     window.location.replace("index.html")
                 } else {
                     alert("Invalid or expired invite token");
