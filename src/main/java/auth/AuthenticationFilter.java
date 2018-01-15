@@ -1,7 +1,6 @@
 package auth;
 
 import javax.annotation.Priority;
-import javax.inject.Inject;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -23,43 +22,45 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     //@Produces
     //@RequestScoped
+    /*
     @Inject
     @AuthenticatedUser
     private AuthenticatedUserData authenticatedUser;
+    */
 
     @Override
     public void filter(ContainerRequestContext context) throws IOException {
         String authHeader = context.getHeaderString(HttpHeaders.AUTHORIZATION);
 
-        String providedToken = retrieveTokenFromHeader(authHeader);
-        Session session = Sessions.getSession(providedToken);
-
-        if (session == null) {
+        if (authHeader == null || !authHeader.toLowerCase().trim().startsWith("bearer")) {
             unauthenticated(context);
         }
         else {
-            //userAuthenticatedEvent.fire(session);
+            String providedToken = authHeader.substring(6).trim();
+            Session session = Sessions.getSession(providedToken);
 
-            //authenticatedUser = new AuthenticatedUserData();
-            authenticatedUser.setUserId(session.getUserId());
-            authenticatedUser.setSessionToken(session.getToken());
-            System.out.println("AuthenticationFilter wrote to authenticatedUser object! Id: " + authenticatedUser.getUserId());
+            if (session == null) {
+                unauthenticated(context);
+            }
+            else {
+                /*
+                authenticatedUser = new AuthenticatedUserData();
+                authenticatedUser.setUserId(session.getUserId());
+                authenticatedUser.setSessionToken(session.getToken());
+                System.out.println("AuthenticationFilter wrote to authenticatedUser object! Id: " + authenticatedUser.getUserId());
+                */
+
+                context.setProperty("session.token", session.getToken());
+                context.setProperty("session.userId", session.getUserId());
+            }
         }
-    }
-
-    public static String retrieveTokenFromHeader(String authHeader) {
-        if (authHeader == null || !authHeader.toLowerCase().trim().startsWith("bearer")) {
-            return null;
-        }
-
-        return authHeader.substring(6).trim();
     }
 
     private void unauthenticated(ContainerRequestContext context) {
         context.abortWith(
-            Response.status(Response.Status.UNAUTHORIZED)
-                    .header(HttpHeaders.WWW_AUTHENTICATE, "Bearer realm=\"HouseholdManager\"")
-                    .build()
+                Response.status(Response.Status.UNAUTHORIZED)
+                        .header(HttpHeaders.WWW_AUTHENTICATE, "Bearer realm=\"HouseholdManager\"")
+                        .build()
         );
     }
 }

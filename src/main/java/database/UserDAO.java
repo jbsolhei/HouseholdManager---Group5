@@ -89,7 +89,7 @@ public class UserDAO {
                 user.setUserId(rs.getInt("userId"));
                 user.setEmail(rs.getString("email"));
                 user.setName(rs.getString("name"));
-                user.setPassword(rs.getString("password"));
+                // user.setPassword(rs.getString("password"));
                 user.setTelephone(rs.getString("telephone"));
                 return user;
             }
@@ -243,7 +243,7 @@ public class UserDAO {
      * @param userId The id of the house where you want to find users
      * @return Returns null if the house does not exist
      */
-    public static ArrayList getHouseholds(int userId) {
+    public static ArrayList<Household> getHouseholds(int userId) {
         ArrayList<Household> households = new ArrayList<>();
         boolean userExists = false;
         String query = "SELECT Household.houseId, house_name, house_address, House_user.isAdmin FROM Household\n" +

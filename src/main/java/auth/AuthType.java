@@ -1,8 +1,9 @@
 package auth;
 
-public enum AuthLevel {
+public enum AuthType {
     DEFAULT,
-    USER,
+    USER_READ,
+    USER_MODIFY,
     TASK,
     SHOPPING_LIST,
     HOUSEHOLD,

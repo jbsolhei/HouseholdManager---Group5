@@ -10,7 +10,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @NameBinding
 @Retention(RUNTIME)
-@Target({TYPE, METHOD})
+@Target({METHOD, TYPE})
 public @interface Auth {
-    AuthLevel value() default AuthLevel.DEFAULT;
+    AuthType value() default AuthType.DEFAULT;
 }
