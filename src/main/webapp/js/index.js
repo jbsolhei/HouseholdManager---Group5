@@ -135,6 +135,11 @@ function getTasksForUser(userId, handleData){
     });
 }
 
+function logout() {
+    window.localStorage.clear();
+    window.location.replace("login.html")
+}
+
 function callModal(modalContent) {
     $("#modal").load(modalContent);
 }
