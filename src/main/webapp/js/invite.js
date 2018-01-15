@@ -11,19 +11,19 @@ function inviteCheck() {
             dataType: 'json',
             success: function (response) {
                 if (response.success){
-                    window.sessionStorage.setItem("houseId", response.houseId);
-                    window.location("index.html")
+                    window.localStorage.setItem("houseId", response.houseId);
+                    window.location.replace("index.html")
                 } else {
                     alert("Invalid or expired invite token");
-                    window.location("index.html");
+                    window.location.replace("index.html");
                 }
             },
             error: function () {
-                alert("Invalid or expired invite token")
-                window.location("index.html");
+                alert("Invalid or expired invite token");
+                window.location.replace("index.html");
             }
         });
     } else {
-        window.location("index.html");
+        window.location.replace("index.html");
     }
 }
