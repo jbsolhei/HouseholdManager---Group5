@@ -9,6 +9,15 @@ var profile = "profile.html";
 
 var activeSHL = 0;
 
+
+
+$(document).ready(function() {
+    //setCurrentUser(window.localStorage.getItem("userId"));
+    //setCurrentHousehold(window.localStorage.getItem("userId"));
+    addHouseholdsToList(getCurrentUser().userId);
+    //swapContent("dashboard.html");
+});
+
 function ajaxAuth(attr) {
     attr.headers = {
         Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
@@ -180,7 +189,26 @@ function getTasksForUser(userId, handleData){
 
 function logout() {
     window.localStorage.clear();
-    window.location.replace("login.html")
+    window.location.replace("login.html");
+}
+
+//Adds the user's households to the dropdown
+function addHouseholdsToList(userId) {
+    var households;
+
+    ajaxAuth({
+        url:"res/user/"+userId+"/hh",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            households = data;
+            households = $.map(data, function(el) { return el });
+            for (var i = 0; i < households.length; i++) {
+                $("#listOfHouseholds").prepend("<li class='householdElement'><a>" + households[i].name + "</a></li>");
+            }
+        },
+        dataType: "json"
+    });
 }
 
 function callModal(modalContent) {
