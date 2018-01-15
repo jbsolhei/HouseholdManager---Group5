@@ -11,7 +11,7 @@ var deleteItems = [];
 var numberOfLists = 0;
 var itemsTab = [];
 
-$(document).ready(function(){
+function ready(){
     $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
         numberOfLists = SL.length;
         for(var i = 0; i < SL.length; i++){
@@ -21,7 +21,20 @@ $(document).ready(function(){
         $("#" + activeTab).addClass("active");
         showList(0);
     });
-});
+}
+
+/*$(document).ready(function(){
+    console.log("current household: " + 1);
+    $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
+        numberOfLists = SL.length;
+        for(var i = 0; i < SL.length; i++){
+            shoppingLists[i] = SL[i];
+            insertShoppingLists(i, shoppingLists[i].name)
+        }
+        $("#" + activeTab).addClass("active");
+        showList(0);
+    });
+});*/
 
 function insertShoppingLists(shoppingListIndex, shoppingListName){
     $("#sideMenu").append('<li onclick="showList(' + shoppingListIndex + ')" id="' + shoppingListIndex + '"><a>' + shoppingListName + '</a></li>');
