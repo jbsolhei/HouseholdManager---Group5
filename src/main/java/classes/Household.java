@@ -2,7 +2,7 @@ package classes;
 
 public class Household {
     private String name;
-    private String adress;
+    private String address;
     private User[] residents;
     private User[] admins;
     private ShoppingList[] shoppingLists;
@@ -16,8 +16,8 @@ public class Household {
         return name;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
     public User[] getResidents() {
@@ -40,8 +40,8 @@ public class Household {
         this.name = name;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public void setResidents(User[] residents) {
