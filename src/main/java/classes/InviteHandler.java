@@ -33,4 +33,23 @@ public class InviteHandler {
 
         return house;
     }
+
+    public static int removeToken(String token){
+        String query = "DELETE FROM Invite_token WHERE token = ?";
+        int result = 0;
+        DBConnector dbc = new DBConnector();
+
+        try {
+            Connection conn = dbc.getConn();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, token);
+            result = st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbc.disconnect();
+        }
+        return result;
+    }
 }
