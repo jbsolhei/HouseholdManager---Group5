@@ -3,9 +3,9 @@
  */
 $(document).ready(function(){
     function printInfoToWall(){
-        $("#profile_information_list_name").html(currentUser.name);
-        $("#profile_information_list_email").html(currentUser.email);
-        $("#profile_information_list_phone").html(currentUser.telephone);
+        $("#profile_information_list_name").html(getCurrentUser().name);
+        $("#profile_information_list_email").html(getCurrentUser().email);
+        $("#profile_information_list_phone").html(getCurrentUser().telephone);
     }
     function printHouseholdsToWall(id) {
         getHouseholdsForUser(id, function(data){
@@ -13,7 +13,7 @@ $(document).ready(function(){
                 var admins = val.admins;
                 var isAdmin = "No";
                 $.each(admins, function(j, adm){
-                    if(currentUser.userId===adm.userId){isAdmin="Yes"}
+                    if(getCurrentUser().userId===adm.userId){isAdmin="Yes"}
                 });
                 var inputString = "<tr><td>" + val.name + "</td><td>" + val.adress + "</td><td>"+isAdmin+"</td></tr>";
                 $("#profile_households_table_body").append(inputString);
@@ -57,6 +57,6 @@ $(document).ready(function(){
 
 
     printInfoToWall();
-    printHouseholdsToWall(currentUser.userId);
-    printTasksToWall(currentUser.userId);
+    printHouseholdsToWall(getCurrentUser().userId);
+    printTasksToWall(getCurrentUser().userId);
 });

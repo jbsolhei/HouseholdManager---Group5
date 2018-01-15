@@ -9,7 +9,7 @@ var profile = "profile.html";
 
 $(document).ready(function() {
     setCurrentUser(window.localStorage.getItem("userId"));
-    setCurrentHousehold(0);
+    setCurrentHousehold(window.localStorage.getItem("userId"));
     swapContent("dashboard.html");
 });
 
@@ -44,16 +44,21 @@ function getCurrentHousehold() {
 }
 
 function setCurrentHousehold(id) {
-    if (id==0||id==undefined){
-        id = 1;
-    }
+    console.log(id);
     ajaxAuth({
         url:"res/user/"+id+"/hh",
         type: "GET",
         contentType: "application/json; charser=utf-8",
-        success: function(data){
-            window.localStorage.setItem("house",JSON.stringify(data));
-            console.log(getCurrentHousehold())
+        success: function(data) {
+            if (data.length > 0) {
+                window.localStorage.setItem("house", JSON.stringify(data[0]));
+                console.log("User has "+data.length+" households")
+            } else {
+                console.log("User has no household")
+            }
+        },
+        error: function () {
+            console.log("Error in sethh")
         },
         dataType: "json"
     });
