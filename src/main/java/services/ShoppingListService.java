@@ -22,6 +22,13 @@ public class ShoppingListService {
     }
 
     @GET
+    @Path("/{id}/shopping_lists/{shopping_list_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ShoppingList[] getShoppingLists(@PathParam("id") String id, @PathParam("shopping_list_id") int shoppingListId) {
+        return ShoppingListDAO.getShoppingLists(Integer.parseInt(id));
+    }
+
+    @GET
     @Path("/{id}/shopping_lists/{shopping_list_id}/items")
     @Produces(MediaType.APPLICATION_JSON)
     public Item[] getItems(@PathParam("id") String id, @PathParam("shopping_list_id") String shopping_list_id){

@@ -85,6 +85,45 @@ public class ShoppingListDAO {
         return null;
     }
 
+    public static User[] getShoppingList(int shoppingListId) {
+        ArrayList<User> users = new ArrayList<>();
+        int userId;
+        String email;
+        String name;
+        String telephone;
+
+        String query = "SELECT usl.userId, p.* FROM User_Shopping_list AS usl INNER JOIN Person AS p ON usl.userId = p.userId WHERE shopping_listId = ?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, shoppingListId);
+            ResultSet rs = st.executeQuery();
+
+
+            while (rs.next()) {
+                User user = new User();
+                userId = rs.getInt("p.userId");
+                email = rs.getString("email");
+                name = rs.getString("name");
+                telephone = rs.getString("telephone");
+
+                user.setUserId(userId);
+                user.setEmail(email);
+                user.setName(name);
+                user.setTelephone(telephone);
+
+                users.add(user);
+            }
+            return toUserArray(users);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Get all the items in one spesific shopping list
      * @param shopping_listId
@@ -370,8 +409,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        int[] userIds = {1, 2};
-        ShoppingListDAO.updateUsers(userIds, 3);
+        User[] users = ShoppingListDAO.getShoppingList(3);
         System.out.println("stop");
     }
 }

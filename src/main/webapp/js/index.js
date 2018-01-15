@@ -143,6 +143,13 @@ function callModal(modalContent) {
     $("#modal").load(modalContent);
 }
 
+function callModalRun(modalContent, functions) {
+    $("#modal").load(modalContent);
+    for (var i = 0; i<functions.length; i++) {
+        functions[i]();
+    }
+}
+
 function swapContent(bodyContent) {
     $(".page-wrapper").load(bodyContent);
 }
