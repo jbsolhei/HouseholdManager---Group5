@@ -47,7 +47,7 @@ public class HouseholdDAO {
      * @param id the id of the house.
      * @return String[]
      */
-    public static Household getHousehold(int id) { // TODO: more data
+    public static Household getHousehold(int id) {
         String name = "";
         String address = "";
         User[] members = getMembers(id);
@@ -214,9 +214,10 @@ public class HouseholdDAO {
      * Used to add new users to the household.
      * @param house the id of the house.
      * @param user the id of the user
+     * @param isAdmin 1/0 is user is admin
      */
-    public static void addUserToHousehold(int house, int user){
-        String query = "INSERT INTO House_user (houseId,userId) VALUES (?,?)";
+    public static void addUserToHousehold(int house, int user, int isAdmin){
+        String query = "INSERT INTO House_user (houseId,userId,isAdmin) VALUES (?,?,?)";
 
         DBConnector dbc = new DBConnector();
 
@@ -225,6 +226,7 @@ public class HouseholdDAO {
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, house);
             st.setInt(2,user);
+            st.setInt(3,isAdmin);
 
             st.executeUpdate();
             st.close();
@@ -243,7 +245,7 @@ public class HouseholdDAO {
     public static int addUserFromInvite(String token, int userId){
         int tokenResult = InviteHandler.verifyToken(token);
         if (tokenResult!=0){
-            addUserToHousehold(tokenResult,userId);
+            addUserToHousehold(tokenResult,userId,0);
             InviteHandler.removeToken(token);
             return tokenResult;
         }

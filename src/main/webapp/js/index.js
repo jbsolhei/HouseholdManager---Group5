@@ -33,6 +33,7 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
+            console.log(getCurrentUser())
         },
         dataType: "json"
     });
