@@ -1,7 +1,24 @@
+var sessionToken;
+var inviteToken;
+
+var dashboard = "dashboard.html";
+var household = "HouseholdOverview.html";
+var shoppinglists = "shoppinglist.html";
+var shoppingtrips = "shoppingtrip.html";
+var todo = "dashboard.html";
+var statistics = "dashboard.html";
+var news = "dashboard.html";
+var profile = "profile.html";
+
+$(document).ready(function() {
+    setCurrentUser(window.localStorage.getItem("userId"));
+    setCurrentHousehold(window.localStorage.getItem("userId"));
+    swapContent("dashboard.html");
+});
 
 function ajaxAuth(attr){
     attr.headers = {
-        Authorization: "Bearer "+window.sessionStorage.getItem("sessionToken")
+        Authorization: "Bearer "+window.localStorage.getItem("sessionToken")
     };
     attr.error = function (jqXHR, exception) {
         console.log("Error: "+jqXHR.status);
@@ -15,18 +32,38 @@ function setCurrentUser(id) {
         type: "GET",
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
-            currentUser = data;
+            window.localStorage.setItem("user",JSON.stringify(data));
         },
         dataType: "json"
     });
 }
 
+function getCurrentUser() {
+    return JSON.parse(window.localStorage.getItem("user"));
+}
+
+function getCurrentHousehold() {
+    return JSON.parse(window.localStorage.getItem("house"));
+}
+
 function setCurrentHousehold(id) {
-    if (id!==0&&id!==undefined&&id!==null){
+    ajaxAuth({
+        url:"res/user/"+id+"/hh",
+        type: "GET",
+        contentType: "application/json; charser=utf-8",
+        success: function(data){
+            if (data == undefined){
+                console.log("aaaa");
+                callModal("modals/addHousehold.html");
+            }
+        },
+        dataType: "json"
+    });
+    /*if (id!==0&&id!==undefined&&id!==null){
         getHouseholdFromId(id, function (hh) {
             currentHousehold = hh;
         });
-    }
+    }*/
 }
 
 function getHouseholdFromId(id,handleData){
@@ -53,7 +90,7 @@ function getShoppingListsInHousehold(id, handleData){
 }
 
 function callModal(modalContent) {
-    $("#modal").load(modalContent)
+    $("#modal").load(modalContent);
 }
 
 function swapContent(bodyContent) {
