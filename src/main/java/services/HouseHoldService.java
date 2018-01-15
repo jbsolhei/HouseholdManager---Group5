@@ -32,16 +32,16 @@ public class HouseHoldService {
     @Path("/{id}/users")
     @Consumes(MediaType.TEXT_PLAIN)
     public void addUserToHousehold(@PathParam("id") int house, String user){
-        HouseholdDAO.addUserToHousehold(house,Integer.parseInt(user));
+        HouseholdDAO.addUserToHousehold(house,Integer.parseInt(user),0);
     }
 
     @POST
     @Auth
     @Path("/invited/{token}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addUserFromInvite(@PathParam("token") String token, User user){
-        int result = HouseholdDAO.addUserFromInvite(token, user.getUserId());
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response addUserFromInvite(@PathParam("token") String token, String user){
+        int result = HouseholdDAO.addUserFromInvite(token, Integer.parseInt(user));
         if (result==-1){
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }

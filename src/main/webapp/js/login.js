@@ -2,7 +2,6 @@
  * Created by Camilla Velvin on 11.01.2018.
  */
 $(document).ready(function () {
-
     $("#submit").click(function () {
         var email = $("#email").val();
         var password = $("#password").val();
@@ -18,8 +17,8 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             success: function(response) {
                 if(response.success === true) {
-                    window.sessionStorage.setItem("sessionToken",response.sessionToken);
-                    window.sessionStorage.setItem("userId",response.userId);
+                    window.localStorage.setItem("sessionToken",response.sessionToken);
+                    window.localStorage.setItem("userId",response.userId);
                     inviteCheck()
                 }
             },

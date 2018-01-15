@@ -33,7 +33,7 @@ public class HouseholdDAOTest {
 
     @Test
     public void addUserToHousehold() throws Exception {
-        HouseholdDAO.addUserToHousehold(2,35);
+        HouseholdDAO.addUserToHousehold(2,35,0);
 
         String query = "SELECT * FROM House_user WHERE houseId=2";
         ResultSet rs = st.executeQuery(query);

@@ -149,35 +149,31 @@ function addNewList(name){
 }
 
 function saveChanges(){
-    if(newItems.length > 0) {
-        for (var i = 0; i < newItems.length; i++) {
-            if(newItems[i] != null) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items",
-                    data: JSON.stringify({'name': newItems[i], 'checkedBy': null}),
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function () {
-                        console.log("Items successfully saved in database");
-                    }
-                });
-            }
+    for (var i = 0; i < newItems.length; i++) {
+        if(newItems[i] != null) {
+            $.ajax({
+                type: 'POST',
+                url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items",
+                data: JSON.stringify({'name': newItems[i], 'checkedBy': null}),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function () {
+                    console.log("Items successfully saved in database");
+                }
+            });
         }
     }
-    if(deleteItems.length > 0){
-        for (var i = 0; i < deleteItems.length; i++) {
-            if(deleteItems[i] != null) {
-                $.ajax({
-                    type: 'DELETE',
-                    url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items/" + deleteItems[i],
-                    dataType: 'json',
-                    contentType: 'application/json; charset=utf-8',
-                    success: function () {
-                        console.log("Items successfully deleted in database");
-                    }
-                });
-            }
+    for (var i = 0; i < deleteItems.length; i++) {
+        if(deleteItems[i] != null) {
+            $.ajax({
+                type: 'DELETE',
+                url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items/" + deleteItems[i],
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function () {
+                    console.log("Items successfully deleted in database");
+                }
+            });
         }
     }
 
