@@ -12,7 +12,7 @@ public class Todo {
 
     public Todo(){}
 
-    public String getdescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -24,7 +24,7 @@ public class Todo {
         return done;
     }
 
-    public void setdescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
