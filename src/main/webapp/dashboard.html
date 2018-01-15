@@ -8,11 +8,14 @@
                     <a data-toggle="modal" onclick='callModal("modals/welcome.html")' data-target="#theModal">Welcome</a>
                     <a data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal">New household</a>
                     <table class="table table-striped">
+                        <thead>
                         <tr>
                             <th>Description</th>
                             <th>Date</th>
                             <th>Initiator</th>
                         </tr>
+                        </thead>
+                        <tbody id="dashboard_todos_table_body"></tbody>
                     </table>
                 </div>
             </div>

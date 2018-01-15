@@ -53,7 +53,7 @@ function setCurrentHousehold(id) {
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function(data){
-            if (data == undefined){
+            if (data === undefined){
                 console.log("aaaa");
                 callModal("modals/addHousehold.html");
             }
@@ -121,6 +121,9 @@ function getTaskinHousehold(id, handleData){
         contentType: "application/json; charset=utf8",
         success: function(data){
             handleData(data);
+        },
+        error: function(data){
+            errorHandling(data);
         },
         dataType: "json"
     })
