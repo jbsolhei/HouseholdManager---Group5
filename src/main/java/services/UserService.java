@@ -1,20 +1,23 @@
 package services;
 
-import classes.*;
+import auth.*;
+import classes.Household;
+import classes.Todo;
+import classes.User;
 import database.UserDAO;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author team5
  */
-@Path("user")
+@Path("/user")
 public class UserService {
 
     @GET
@@ -31,16 +34,15 @@ public class UserService {
 
 
     @GET
-    @Auth
+    @Auth(AuthType.USER_READ)
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public User getUser(@PathParam("id") int id) {
-        User user = UserDAO.getUser(id);
-        return user;
+        return UserDAO.getUser(id);
     }
 
     @PUT
-    @Auth
+    @Auth(AuthType.USER_MODIFY)
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean updateUser(@PathParam("id") int id, User user) {
@@ -48,7 +50,7 @@ public class UserService {
     }
 
     @GET
-    @Auth
+    @Auth(AuthType.USER_READ)
     @Path("/{id}/hh")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Household> getHousehold(@PathParam("id") int id) {
@@ -81,8 +83,8 @@ public class UserService {
     @Auth
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response logout(@Context HttpHeaders request) {
-        Sessions.invalidateSession(AuthenticationFilter.retrieveTokenFromHeader(request.getHeaderString("Authorization")));
+    public Response logout(@Context ContainerRequestContext context) {
+        Sessions.invalidateSession((String) context.getProperty("session.token"));
 
         HashMap<String, Object> response = new HashMap<>();
         response.put("success", true);
@@ -91,12 +93,14 @@ public class UserService {
 
     @GET
     @Auth
-    @Path("/test")
-    public Response authTest() {
-        return Response.ok("Du klarte det! Du kom deg inn på en side som krever autentisering!").build();
+    @Path("/checkSession")
+    public Response checkSession() {
+        // @Auth checks session validity, so if we reach this statement the session is valid
+        return Response.ok("Session is valid").build();
     }
 
     @GET
+    @Auth(AuthType.USER_READ)
     @Path("/{id}/tasks")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Todo> todos(@PathParam("id") int id) {
