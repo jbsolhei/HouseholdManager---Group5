@@ -297,7 +297,7 @@ public class UserDAO {
             while (rs.next()) {
                 Todo todo = new Todo();
                 todo.setDate(rs.getDate("date"));
-                todo.setdescription(rs.getString("description"));
+                todo.setDescription(rs.getString("description"));
                 todo.setHouseId(rs.getInt("houseId"));
                 todo.setUserId(rs.getInt("userId"));
                 todo.setTaskId(rs.getInt("taskId"));

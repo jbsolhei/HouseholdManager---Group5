@@ -377,7 +377,7 @@ public class HouseholdDAO {
 
             while (rs.next()) {
                 Todo todo = new Todo();
-                todo.setdescription(rs.getString("description"));
+                todo.setDescription(rs.getString("description"));
                 todo.setHouseId(houseId);
                 todo.setTaskId(rs.getInt("taskId"));
                 todo.setUserId(rs.getInt("userId"));
