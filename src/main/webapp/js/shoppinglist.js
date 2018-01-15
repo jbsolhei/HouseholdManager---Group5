@@ -213,7 +213,7 @@ function getUsers() {
     var hh = getCurrentHousehold();
     console.log(hh);
     ajaxAuth({
-        url: 'res/household/' + hh.houseId + 'shopping_lists/' + activeTab,
+        url: 'res/household/1/shopping_lists/3',
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function(users){
@@ -221,7 +221,10 @@ function getUsers() {
                 $("#inList").append('<li>' + users[i].name + '</li>');
             }
         },
-        error: console.log("Error in getUsers"),
+        error: function(data) {
+            console.log("Error in getUsers");
+            console.log(data);
+        },
         dataType: "json"
     });
 }
