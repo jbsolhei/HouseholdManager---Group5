@@ -1,6 +1,9 @@
 package services;
 
-import classes.*;
+import auth.Auth;
+import classes.Household;
+import classes.Todo;
+import classes.User;
 import database.HouseholdDAO;
 
 import javax.ws.rs.*;
