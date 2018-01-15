@@ -2,10 +2,17 @@
  * Created by Simen Moen Storvik on 12.01.2018.
  */
 
+var houseId = 1;
 $(document).ready(function() {
-    printShoppingListsToDashboard(1);
+    loadDashboard();
 });
+
+function loadDashboard(){
+    printShoppingListsToDashboard(houseId);
+}
+
 function printShoppingListsToDashboard(householdId){
+    console.log("PrintShoppingListsToDashboard()")
     getShoppingListsInHousehold(householdId, function(data){
         $.each(data, function(i,val){
             var inputString = "<tr>\n" +
