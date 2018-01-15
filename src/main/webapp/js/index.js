@@ -71,6 +71,10 @@ function callModal(modalContent) {
 function swapContent(bodyContent) {
     $(".page-wrapper").load(bodyContent);
 }
+function swapContentReload(bodyContent) {
+    $(".page-wrapper").load(bodyContent);
+    loadDashboard();
+}
 function navToShoppingList(shoppingListId){
     swapContent("shoppinglist.html");
     showShoppingListById(shoppingListId);

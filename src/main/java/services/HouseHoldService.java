@@ -1,8 +1,6 @@
 package services;
 
-import classes.Auth;
-import classes.Household;
-import classes.User;
+import classes.*;
 import database.HouseholdDAO;
 
 import javax.ws.rs.*;
@@ -57,6 +55,14 @@ public class HouseHoldService {
     @Consumes(MediaType.APPLICATION_JSON)
     public User[] getMembers(@PathParam("id") int id) {
         return HouseholdDAO.getMembers(id);
+    }
+
+    @GET
+    @Auth
+    @Path("/{id}/tasks")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Todo[] getTodosForHousehold(@PathParam("id") int id){
+        return HouseholdDAO.getTodosForHousehold(id);
     }
 
     @GET
