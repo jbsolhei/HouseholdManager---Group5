@@ -61,6 +61,7 @@ public class HouseholdDAOTest {
         admins[0] = u1;
 
         household.setAdmins(admins);
+
         HouseholdDAO.addNewHouseHold(household);
 
         String query = "SELECT * FROM Household WHERE house_name='Kollektivet' and house_address='Bananvegen 27'";

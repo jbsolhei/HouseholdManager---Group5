@@ -195,6 +195,7 @@ public class UserDAO {
             st.setString(2, email);
 
             resetSuccessful = st.executeUpdate();
+            System.out.println(resetSuccessful);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -265,6 +266,7 @@ public class UserDAO {
             while (rs.next()) {
                 userExists = true;
                 households.add(HouseholdDAO.getHousehold(rs.getInt("houseId")));
+
             }
 
         } catch (SQLException e) {

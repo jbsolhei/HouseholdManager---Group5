@@ -11,6 +11,7 @@ public class HouseholdDAO {
 
     /**
      * Used to create a new user in the database from a User object.
+     *
      * @param newHouseHold the household object
      * @return The id of the new Household. -1 If something went wrong.
      */
@@ -38,7 +39,7 @@ public class HouseholdDAO {
             }
             st.close();
 
-            if (houseId > 0 ) {
+            if (houseId > 0) {
 
                 query = "INSERT INTO House_user (houseId, userId, isAdmin) VALUES (?, ?, 1)";
                 st = conn.prepareStatement(query);
@@ -63,6 +64,7 @@ public class HouseholdDAO {
      * Returns an array of Strings with the name on index 0 and the address number on
      * index 1.
      * Returns null if the id does not exist in the database.
+     *
      * @param id the id of the house.
      * @return String[]
      */
@@ -113,6 +115,7 @@ public class HouseholdDAO {
      * Used to get all members of a household from database based on the households id.
      * Returns an array of users.
      * Returns null if the id does not exist in the database or no members are found.
+     *
      * @param id the id of the house.
      * @return User[]
      */
@@ -155,7 +158,8 @@ public class HouseholdDAO {
     /**
      * Used to update name and/or address of a household based on id.
      * Returns false if the household does not exist and true if the update was successful.
-     * @param id the id of the house.
+     *
+     * @param id       the id of the house.
      * @param newHouse the new data to update
      */
     public static boolean updateHousehold(int id, Household newHouse) {
@@ -164,9 +168,9 @@ public class HouseholdDAO {
         String newName = newHouse.getName();
         String newAddress = newHouse.getAddress();
 
-        if (newName.equals("")){
+        if (newName.equals("")) {
             query = "UPDATE Household SET house_address = ? WHERE houseId = ?";
-        } else if (newAddress.equals("")){
+        } else if (newAddress.equals("")) {
             query = "UPDATE Household SET house_name = ? WHERE houseId = ?";
         } else {
             query = "UPDATE Household SET house_name = ?, house_address = ? WHERE houseId = ?";
@@ -181,7 +185,7 @@ public class HouseholdDAO {
             if (newName.equals("")) {
                 st.setString(1, newAddress);
                 st.setInt(2, id);
-            } else if (newAddress.equals("")){
+            } else if (newAddress.equals("")) {
                 st.setString(1, newName);
                 st.setInt(2, id);
             } else {
@@ -209,6 +213,7 @@ public class HouseholdDAO {
 
     /**
      * Used to delete household from the database based on the household id.
+     *
      * @param id the id of the household
      */
     public static void deleteHousehold(int id) {
@@ -231,11 +236,12 @@ public class HouseholdDAO {
 
     /**
      * Used to add new users to the household.
-     * @param house the id of the house.
-     * @param user the id of the user
+     *
+     * @param house   the id of the house.
+     * @param user    the id of the user
      * @param isAdmin 1/0 is user is admin
      */
-    public static void addUserToHousehold(int house, int user, int isAdmin){
+    public static void addUserToHousehold(int house, int user, int isAdmin) {
         String query = "INSERT INTO House_user (houseId,userId,isAdmin) VALUES (?,?,?)";
 
         DBConnector dbc = new DBConnector();
@@ -244,8 +250,8 @@ public class HouseholdDAO {
             Connection conn = dbc.getConn();
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, house);
-            st.setInt(2,user);
-            st.setInt(3,isAdmin);
+            st.setInt(2, user);
+            st.setInt(3, isAdmin);
 
             st.executeUpdate();
             st.close();
@@ -258,13 +264,14 @@ public class HouseholdDAO {
 
     /**
      * Used to add new users to the household from an invite link.
-     * @param token the invite token
+     *
+     * @param token  the invite token
      * @param userId the id of the user
      */
-    public static int addUserFromInvite(String token, int userId){
+    public static int addUserFromInvite(String token, int userId) {
         int tokenResult = InviteHandler.verifyToken(token);
-        if (tokenResult!=0){
-            addUserToHousehold(tokenResult,userId,0);
+        if (tokenResult != 0) {
+            addUserToHousehold(tokenResult, userId, 0);
             InviteHandler.removeToken(token);
             return tokenResult;
         }
@@ -273,13 +280,14 @@ public class HouseholdDAO {
 
     /**
      * Used to send and invite email to a user.
+     *
      * @param houseId the id of the house
-     * @param email the email of the user.
+     * @param email   the email of the user.
      */
     public static void inviteUser(int houseId, String[] email) {
         Household house = getHousehold(houseId);
 
-        if (house!=null) {
+        if (house != null) {
             SecureRandom random = new SecureRandom();
             String query = "";
             ArrayList<String> tokens = new ArrayList<>();
@@ -353,7 +361,7 @@ public class HouseholdDAO {
 
 
     //TODO: getTodosForHouseHold need some more pimping to include a timestamp in the date, as well as a "checked" or "done" attribute.
-    public static Todo[] getTodosForHousehold(int houseId){
+    public static Todo[] getTodosForHousehold(int houseId) {
         ArrayList<Todo> todos = new ArrayList<>();
         boolean householdExists = false;
 
@@ -390,29 +398,29 @@ public class HouseholdDAO {
         for (int i = 0; i < todos.size(); i++) {
             data[i] = todos.get(i);
         }
-        if(householdExists) return data;
+        if (householdExists) return data;
         return null;
     }
 
     public static boolean addAdminToHousehold(int houseId, int userId) {
-       String query = "INSERT INTO House_user (houseId, userId, isAdmin) VALUES (?, ?, 1)";
-       int insertDone = 0;
+        String query = "INSERT INTO House_user (houseId, userId, isAdmin) VALUES (?, ?, 1)";
+        int insertDone = 0;
 
-       try (DBConnector dbc = new DBConnector();
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query)) {
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
-           st.setInt(1, houseId);
-           st.setInt(2, userId);
+            st.setInt(1, houseId);
+            st.setInt(2, userId);
 
-           insertDone = st.executeUpdate();
+            insertDone = st.executeUpdate();
 
-       } catch (SQLException e) {
-           e.printStackTrace();
-       }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-       if(insertDone == 0) return false;
-       return true;
+        if (insertDone == 0) return false;
+        return true;
     }
 
 
