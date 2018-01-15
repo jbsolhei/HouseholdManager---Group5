@@ -23,8 +23,8 @@ public class HouseHoldService {
     @POST
     @Auth
     @Consumes(MediaType.APPLICATION_JSON)
-    public void addHouseHold(Household newHousehold) {
-        int houseId = HouseholdDAO.addNewHouseHold(newHousehold);
+    public int addHouseHold(Household newHousehold) {
+        return HouseholdDAO.addNewHouseHold(newHousehold);
     }
 
     @POST
