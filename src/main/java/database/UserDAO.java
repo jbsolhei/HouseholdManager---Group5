@@ -1,7 +1,10 @@
 package database;
 
 import classes.*;
-
+import classes.Email;
+import classes.HashHandler;
+import classes.Household;
+import classes.User;
 import java.security.SecureRandom;
 import java.sql.*;
 import java.util.ArrayList;
@@ -48,9 +51,15 @@ public class UserDAO {
         return true;
     }
 
+    /**
+     * Checks if a an email or a telephone number already exists in the database.
+     * @param email The email that you want to check if exists
+     * @param telephone The telephone number that you want to check if exists
+     * @return Returns true if the telephone number or the email already exists and false if not
+     */
     public static boolean userExist(String email, String telephone) {
 
-        String query = "SELECT * FROM Person WHERE email=+'"+email+"' or telephone='"+telephone+"'";
+        String query = "SELECT * FROM Person WHERE email='"+email+"' or telephone='"+telephone+"'";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -186,6 +195,7 @@ public class UserDAO {
             st.setString(2, email);
 
             resetSuccessful = st.executeUpdate();
+            System.out.println(resetSuccessful);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -237,11 +247,11 @@ public class UserDAO {
     }
 
     /**
-     * Used to get all the users from a house
-     * @param userId The id of the house where you want to find users
-     * @return Returns null if the house does not exist
+     * Used to get all the Households that a user is connected to
+     * @param userId The id of the user
+     * @return An ArrayList of Household objects
      */
-    public static ArrayList getHouseholds(int userId) {
+    public static ArrayList<Household> getHouseholds(int userId) {
         ArrayList<Household> households = new ArrayList<>();
         boolean userExists = false;
         String query = "SELECT houseId FROM House_user WHERE userId=?";
@@ -256,6 +266,7 @@ public class UserDAO {
             while (rs.next()) {
                 userExists = true;
                 households.add(HouseholdDAO.getHousehold(rs.getInt("houseId")));
+
             }
 
         } catch (SQLException e) {
@@ -266,6 +277,11 @@ public class UserDAO {
         return null;
     }
 
+    /**
+     * Used to get a user's tasks based on the user's id
+     * @param userId The id of the user
+     * @return Returns an ArrayList of todo objects
+     */
     public static ArrayList<Todo> getTasks(int userId) {
         String query = "SELECT * FROM Task WHERE userId = ?";
         ArrayList<Todo> todos = new ArrayList<>();
@@ -281,14 +297,13 @@ public class UserDAO {
             while (rs.next()) {
                 Todo todo = new Todo();
                 todo.setDate(rs.getDate("date"));
-                todo.setdescription(rs.getString("description"));
+                todo.setDescription(rs.getString("description"));
                 todo.setHouseId(rs.getInt("houseId"));
                 todo.setUserId(rs.getInt("userId"));
                 todo.setTaskId(rs.getInt("taskId"));
 
                 todos.add(todo);
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();

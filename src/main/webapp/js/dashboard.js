@@ -18,11 +18,15 @@ function loadDashboard(){
 function printHouseholdTodosToDashboard(householdId){
     console.log("printHouseholdTodosToDashboard()");
     getTaskinHousehold(householdId, function(data){
+        console.log(data);
+        console.log(JSON.stringify(data));
         $.each(data, function(i,val){
             var inputString = "<tr>\n" +
                 "<td>" + val.description + "</td>" +
                 "<td>" + val.date + "</td>" +
-                "<td>" + getUserFromId(val.userId).name + "</td>";
+                "<td>" + getUserFromId(val.userId, function(data){return data.name}) + "</td>"+
+                "</tr>";
+            $("#dashboard_todos_table_body").append(inputString);
         })
     })
 }
