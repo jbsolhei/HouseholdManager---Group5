@@ -180,16 +180,19 @@ function updateUsers() {
         id = id.replace('uniqueUserId_', '');
         usersIds.push(id);
     });
-    console.log(usersIds);
+    console.log(JSON.stringify({'userids': usersIds}));
 
     $.ajax({
         type: 'POST',
-        url: 'res/household/' + 1 + '/shopping_lists/' + activeTab +'/users',
+        url: 'res/household/' + 1 + '/shopping_list/' + 3 +'/users',
         data: JSON.stringify(usersIds),
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("List successfully added to database")
+        },
+        error: function (result) {
+            console.log(result);
         }
     });
 }

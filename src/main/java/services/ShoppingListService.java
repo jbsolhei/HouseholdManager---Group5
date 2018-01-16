@@ -67,7 +67,7 @@ public class ShoppingListService {
     @POST
     @Path("/{id}/shopping_list/{shopping_list_id}/users")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateUsers(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, int[] userIds) {
+    public void updateUsers(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, String[] userIds) {
         ShoppingListDAO.updateUsers(userIds, shopping_list_id);
     }
 }
