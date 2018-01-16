@@ -15,31 +15,29 @@ public class ShoppingTripDAO {
 
         List<ShoppingTrip> shoppingTripList = new ArrayList<>();
 
-        DBConnector dbc = new DBConnector();
-        try (Connection conn = dbc.getConn();
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, houseId);
-            ResultSet rs = st.executeQuery();
+            try (ResultSet rs = st.executeQuery()) {
 
-            while (rs.next()) {
-                ShoppingTrip shoppingTrip = new ShoppingTrip();
-                shoppingTrip.setShoppingTripId(rs.getInt("shopping_tripId"));
-                shoppingTrip.setExpence(rs.getDouble("expence"));
-                shoppingTrip.setShoppingDate(rs.getDate("shopping_tripDate").toLocalDate());
-                shoppingTrip.setName(rs.getString("shopping_tripName"));
-                shoppingTrip.setComment(rs.getString("comment"));
-                shoppingTrip.setUserId(rs.getInt("userId"));
-                shoppingTripList.add(shoppingTrip);
+                while (rs.next()) {
+                    ShoppingTrip shoppingTrip = new ShoppingTrip();
+                    shoppingTrip.setShoppingTripId(rs.getInt("shopping_tripId"));
+                    shoppingTrip.setExpence(rs.getDouble("expence"));
+                    shoppingTrip.setShoppingDate(rs.getDate("shopping_tripDate").toLocalDate());
+                    shoppingTrip.setName(rs.getString("shopping_tripName"));
+                    shoppingTrip.setComment(rs.getString("comment"));
+                    shoppingTrip.setUserId(rs.getInt("userId"));
+                    shoppingTripList.add(shoppingTrip);
+                }
             }
 
             return shoppingTripList;
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
-            dbc.disconnect();
         }
         return null;
     }
@@ -52,12 +50,12 @@ public class ShoppingTripDAO {
         if(shoppingTrip.getContributors() == null) {
             return false;
         }
-        DBConnector dbc = new DBConnector();
 
         int id = 0;
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
             st.setDouble(1, shoppingTrip.getExpence());
             st.setString(2, shoppingTrip.getName());
             Date date = Date.valueOf(shoppingTrip.getShoppingDate());
@@ -68,27 +66,26 @@ public class ShoppingTripDAO {
             st.setInt(7, shoppingTrip.getShopping_listId());
             st.executeUpdate();
 
-            ResultSet resultSet = st.getGeneratedKeys();
-            while (resultSet.next()) {
-                id = resultSet.getInt(1);
+            try (ResultSet resultSet = st.getGeneratedKeys()) {
+                while (resultSet.next()) {
+                    id = resultSet.getInt(1);
+                }
+
             }
 
-            st.close();
-
             String query2 = "INSERT INTO User_Shopping_trip (userId, shopping_tripId) VALUES (?,?)";
-            for(User user : shoppingTrip.getContributors()) {
-                PreparedStatement preparedStatement = conn.prepareStatement(query2);
-                preparedStatement.setInt(1, user.getUserId());
-                preparedStatement.setInt(2, id);
-                preparedStatement.executeUpdate();
-                preparedStatement.close();
+            for (User user : shoppingTrip.getContributors()) {
+                try (PreparedStatement preparedStatement = conn.prepareStatement(query2)) {
+                    preparedStatement.setInt(1, user.getUserId());
+                    preparedStatement.setInt(2, id);
+                    preparedStatement.executeUpdate();
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        } finally {
-            dbc.disconnect();
         }
+
         return true;
     }
 
@@ -100,49 +97,54 @@ public class ShoppingTripDAO {
         List<User> users = new ArrayList<>();
         ShoppingTrip shoppingTrip = new ShoppingTrip();
 
-        DBConnector dbConnector = new DBConnector();
-        try {
-            Connection connection = dbConnector.getConn();
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, shopping_tripId);
-            ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()) {
-                User user = new User();
-                user.setUserId(resultSet.getInt("userId"));
-                user.setName(resultSet.getString("name"));
-                user.setEmail(resultSet.getString("email"));
-                user.setTelephone(resultSet.getString("telephone"));
-                users.add(user);
-            }
-            ps.close();
-            PreparedStatement ps2 = connection.prepareStatement(query2);
-            ps2.setInt(1, shopping_tripId);
-            ResultSet rs = ps2.executeQuery();
-            while (rs.next()) {
-                shoppingTrip.setName(rs.getString("shopping_tripName"));
-                shoppingTrip.setExpence(rs.getDouble("expence"));
-                shoppingTrip.setComment(rs.getString("comment"));
-                shoppingTrip.setUserId(rs.getInt("userId"));
-                shoppingTrip.setUserName(rs.getString("p.name"));
-                shoppingTrip.setShoppingDate(rs.getDate("shopping_tripDate").toLocalDate());
-                shoppingTrip.setShopping_listId(rs.getInt("shopping_listId"));
-            }
-            shoppingTrip.setContributors(users);
-            ps2.close();
-            if(shoppingTrip.getShopping_listId() != 0) {
-                PreparedStatement ps3 = connection.prepareStatement(query3);
-                ps3.setInt(1, shoppingTrip.getShopping_listId());
-                ResultSet rs1 = ps3.executeQuery();
-                while (rs1.next()) {
-                    shoppingTrip.setShopping_listName(rs1.getString("name"));
+        try (DBConnector dbConnector = new DBConnector();
+             Connection connection = dbConnector.getConn()) {
+
+            try (PreparedStatement ps = connection.prepareStatement(query)) {
+                ps.setInt(1, shopping_tripId);
+
+                try (ResultSet resultSet = ps.executeQuery()) {
+                    while (resultSet.next()) {
+                        User user = new User();
+                        user.setUserId(resultSet.getInt("userId"));
+                        user.setName(resultSet.getString("name"));
+                        user.setEmail(resultSet.getString("email"));
+                        user.setTelephone(resultSet.getString("telephone"));
+                        users.add(user);
+                    }
                 }
-                ps3.close();
             }
 
+            try (PreparedStatement ps2 = connection.prepareStatement(query2)) {
+                ps2.setInt(1, shopping_tripId);
+
+                try (ResultSet rs = ps2.executeQuery()) {
+                    while (rs.next()) {
+                        shoppingTrip.setName(rs.getString("shopping_tripName"));
+                        shoppingTrip.setExpence(rs.getDouble("expence"));
+                        shoppingTrip.setComment(rs.getString("comment"));
+                        shoppingTrip.setUserId(rs.getInt("userId"));
+                        shoppingTrip.setUserName(rs.getString("p.name"));
+                        shoppingTrip.setShoppingDate(rs.getDate("shopping_tripDate").toLocalDate());
+                        shoppingTrip.setShopping_listId(rs.getInt("shopping_listId"));
+                    }
+                    shoppingTrip.setContributors(users);
+                }
+            }
+
+            if (shoppingTrip.getShopping_listId() != 0) {
+                try (PreparedStatement ps3 = connection.prepareStatement(query3)) {
+                    ps3.setInt(1, shoppingTrip.getShopping_listId());
+
+                    try (ResultSet rs1 = ps3.executeQuery()) {
+                        while (rs1.next()) {
+                            shoppingTrip.setShopping_listName(rs1.getString("name"));
+                        }
+                    }
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbConnector.disconnect();
         }
         return shoppingTrip;
     }
