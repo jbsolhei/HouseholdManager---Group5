@@ -154,3 +154,8 @@ function navToShoppingList(shoppingListId){
     swapContentRun(shoppinglists,[readyShoppingList]);
     showShoppingListById(shoppingListId);
 }
+
+function swapContentShopping(){
+    swapContentRun(shoppinglists,[readyShoppingList]);
+    showList(0);
+}

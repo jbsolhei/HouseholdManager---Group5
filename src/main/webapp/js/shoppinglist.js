@@ -14,15 +14,17 @@ var itemsTab = [];
 function readyShoppingList(){
     $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
         numberOfLists = SL.length;
+        /*$.each(SL, function(i,val){
+            shoppingLists[i] = val;
+            insertShoppingLists(i,shoppingLists[i]);
+        });*/
         for(var i = 0; i < SL.length; i++){
             shoppingLists[i] = SL[i];
-            insertShoppingLists(i, shoppingLists[i].name)
+            insertShoppingLists(i, shoppingLists[i].name);
         }
         $("#" + activeTab).addClass("active");
-        showList(0);
     });
 }
-
 /*$(document).ready(function(){
     console.log("current household: " + getCurrentHousehold().houseId);
     $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
