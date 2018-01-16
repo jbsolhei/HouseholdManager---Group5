@@ -65,10 +65,18 @@ public class HouseHoldService {
 
     @POST
     @Auth(AuthType.HOUSEHOLD_ADMIN)
-    @Path("/{id}/admin/")
+    @Path("/{id}/admin")
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean addAdmin(@PathParam("id") int id, User user) {
         return HouseholdDAO.addAdminToHousehold(id, user.getUserId());
+    }
+
+    @PUT
+    @Auth(AuthType.HOUSEHOLD_ADMIN)
+    @Path("/{id}/admin")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public boolean makeAdmin(@PathParam("id") int id, int userId) {
+        return HouseholdDAO.makeUserAdmin(id, userId);
     }
 
     @GET
@@ -100,7 +108,7 @@ public class HouseHoldService {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateHousehold(@PathParam("id") int id, Household newHouse){
-        HouseholdDAO.updateHousehold(id,newHouse);
+        int result = HouseholdDAO.updateHousehold(id,newHouse);
     }
 
     @DELETE

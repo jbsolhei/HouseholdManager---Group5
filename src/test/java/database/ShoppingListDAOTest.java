@@ -1,9 +1,7 @@
 package database;
 
-import classes.Household;
 import classes.Item;
 import classes.ShoppingList;
-import classes.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * Created by camhl on 1/12/2018.
@@ -63,21 +60,15 @@ public class ShoppingListDAOTest {
 
     @Test
     public void deleteShoppingList() throws Exception{
-        ShoppingList shoppingList = new ShoppingList();
-        shoppingList.setName("Tacofredag!");
-
         ShoppingListDAO.deleteShoppingList(1, 4);
-        String query = "SELECT * FROM Shopping_list WHERE name='Tacofredag!' and houseId='1'";
+        String query = "SELECT * FROM Shopping_list WHERE shopping_listId='4' and houseId='1'";
         ResultSet rs = st.executeQuery(query);
 
-        String name = "";
-        int houseId = 0;
-
-        if(rs.next()){
-            assert false;
-        } else {
-            assert true;
+        boolean result = true;
+        while(rs.next()){
+            result = false;
         }
+        assert result;
     }
 
     @Test
@@ -92,7 +83,7 @@ public class ShoppingListDAOTest {
         ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(1);
         assert shoppingLists != null;
 
-        assertEquals(3,shoppingLists.length);
+        assertEquals(5,shoppingLists.length);
     }
 
     @Test
