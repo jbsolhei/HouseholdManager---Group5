@@ -63,7 +63,7 @@ public class UserDAO {
             st.setString(1, email);
             st.setString(2, telephone);
 
-            try (ResultSet rs = st.executeQuery(query)) {
+            try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
                     return true;
                 }
