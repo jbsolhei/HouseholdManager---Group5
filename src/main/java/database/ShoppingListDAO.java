@@ -46,8 +46,9 @@ public class ShoppingListDAO {
                 }
                 shoppingListName = rs.getString("shopping_list.name");
 
+                userId = rs.getInt("userId");
+
                 if (userId != 0) {
-                    userId = rs.getInt("userId");
                     personName = rs.getString("Person.name");
                     email = rs.getString("email");
                     telephone = rs.getString("telephone");
