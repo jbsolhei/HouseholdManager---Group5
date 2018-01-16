@@ -13,6 +13,6 @@
 
 #edit_shopping_list_btn {
     float: right;
-    padding-right: 40px;
     margin: 10px 0;
+    box-sizing: border-box;
 }

@@ -9,6 +9,12 @@ var profile = "profile.html";
 
 var activeSHL = 0;
 
+
+
+$(document).ready(function() {
+    addHouseholdsToList(getCurrentUser().userId);
+});
+
 function ajaxAuth(attr) {
     attr.headers = {
         Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
@@ -66,6 +72,7 @@ function updateCurrentHousehold(bodyContent){
             console.log("Household updated. Current number of lists: " + getCurrentHousehold().shoppingLists.length);
             if (bodyContent!==undefined){
                 $(".page-wrapper").load(bodyContent);
+
             }
         },
         dataType: "json"
@@ -179,17 +186,53 @@ function getTasksForUser(userId, handleData){
 }
 
 function logout() {
+    console.log("clicked")
     window.localStorage.clear();
-    window.location.replace("login.html")
+    window.location.replace("login.html");
 }
+
+//Adds the user's households to the dropdown
+function addHouseholdsToList(userId) {
+    var households;
+
+    ajaxAuth({
+        url:"res/user/"+userId+"/hh",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            households = data;
+            households = $.map(data, function(el) { return el });
+            for (var i = 0; i < households.length; i++) {
+                $("#listOfHouseholds").prepend("<li><a class='householdElement' id='"+households[i].houseId+"'>" + households[i].name + "</a></li>");
+            }
+            console.log("DATA LOADET");
+            $('#coverScreen').css('display', "none");
+        },
+        dataType: "json"
+    });
+}
+
+//Sets the chosen household to current household.
+$(document).on('click', '.householdElement', function () {
+    var houseId = $(this).attr('id');
+    setCurrentHousehold(houseId);
+    $("#currentHouseholdId").text($(this).text());
+});
 
 function callModal(modalContent) {
     $("#modal").load(modalContent);
 }
 
+function callModalRun(modalContent, functions) {
+    console.log(modalContent);
+    $("#modal").load(modalContent);
+    for (var i = 0; i<functions.length; i++) {
+        functions[i]();
+    }
+}
+
 function swapContent(bodyContent) {
     updateCurrentHousehold(bodyContent);
-
 }
 
 function navToShoppingList(shoppingListId){
