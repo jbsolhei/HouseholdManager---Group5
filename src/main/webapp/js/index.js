@@ -69,7 +69,6 @@ function updateCurrentHousehold(bodyContent){
         contentType: "application/json; charser=utf-8",
         success: function(data) {
             window.localStorage.setItem("house", JSON.stringify(data));
-            console.log("Household updated. Current number of lists: " + getCurrentHousehold().shoppingLists.length);
             if (bodyContent!==undefined){
                 $(".page-wrapper").load(bodyContent);
 
@@ -113,18 +112,6 @@ function setCurrentHousehold(hid) {
     }
 }
 
-function getUserFromId(id, handleData){
-    ajaxAuth({
-        url: "res/user/"+id,
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            handleData(data);
-        },
-        dataType:"json"
-    })
-}
-
 function getHouseholdsForUser(userId, handleData){
     ajaxAuth({
         url:"res/user/"+userId+"/hh",
@@ -148,29 +135,7 @@ function getHouseholdFromId(id,handleData){
         dataType: "json"
     });
 }
-function getShoppingListsInHousehold(id, handleData){
-    ajaxAuth({
-        url: "res/household/"+id+"/shopping_lists",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            handleData(data);
-        },
-        dataType: "json"
-    })
-}
 
-function getTaskinHousehold(id, handleData){
-    ajaxAuth({
-        url: "res/household/" + id + "/tasks",
-        type: "GET",
-        contentType: "application/json; charset=utf8",
-        success: function(data){
-            handleData(data);
-        },
-        dataType: "json"
-    })
-}
 function getTasksForUser(userId, handleData){
     ajaxAuth({
         url:"res/user/"+userId+"/tasks",
