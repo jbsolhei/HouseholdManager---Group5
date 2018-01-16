@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <script>
+            if (window.localStorage.getItem("sessionToken")==undefined||window.localStorage.getItem("sessionToken")==""){
+                window.localStorage.clear();
+                window.location.replace("login.html")
+            } else {
+                $.ajax({
+                    url: "res/user/checkSession",
+                    headers: {
+                        Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
+                    },
+                    type: "GET",
+                    error: function (e) {
+                        if (e.status == 401) {
+                            window.localStorage.clear();
+                            window.location.replace("login.html")
+                        }
+                    }
+                });
+            }
+        </script>
         <link rel='shortcut icon' type='image/x-icon' href='img/favico.ico' />
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -88,7 +108,6 @@
     </body>
     <script>
         $(function() {
-            checkSession();
             setInterval(checkSession, 20000);
             swapContent(dashboard);
         });
