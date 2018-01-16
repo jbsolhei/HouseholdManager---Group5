@@ -79,6 +79,7 @@ function addShoppingTrip() {
         contentType: "application/json; charset=utf-8",
         success: function (response) {
             console.log(response);
+            getShoppingTrips();
         },
         error: function (response) {
             console.log("error");
