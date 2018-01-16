@@ -48,6 +48,7 @@ public class UserService {
         return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName());
     }
 
+
     @GET
     @Auth(AuthType.USER_MODIFY)
     @Path("/{id}/hh")
@@ -60,6 +61,7 @@ public class UserService {
         return households;
     }
 
+    /*
     @GET
     @Auth(AuthType.USER_READ)
     @Path("/{id}/hhs/onlyUserAndName")
@@ -67,6 +69,7 @@ public class UserService {
     public ArrayList<Household> getHousehold(@PathParam("id") int id) {
         return UserDAO.getHHOnlyNameAndId(id);
     }
+    */
 
 
     @POST
