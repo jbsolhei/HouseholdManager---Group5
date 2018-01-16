@@ -1,18 +1,16 @@
+<link href="css/main.css" rel="stylesheet">
 
 
 <div class="container-fluid">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div class="panel panel-default">
-                    <div class="panel-body">
-                        <h2>'Household name'</h2>
-                        <br>
-                        <h6>'household address'</h6>
-                    </div>
+                    <div class="panel-heading"><h4>*Household name*</h4></div>
+                    <div class="panel-body">*house adress*</div>
                 </div>
-                <div class="panel panel-default scrollable" style="max-height: 180px">
-                    <div class="panel-body">
-                        <h4>Administrators</h4>
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4>Administrators</h4></div>
+                    <div class="panel-body long-scroll-panel-3">
                         <table class="membertable">
                             <tr>
                                 <th></th>
@@ -47,21 +45,11 @@
                         </table>
                     </div>
                 </div>
-                <div class="panel panel-default scrollable" style="max-height: 135px">
-                    <div class="panel-body">
-                        <h4>Other information</h4>
-                        <ul>
-                            <li>Her skriver man informasjon om kollektivet</li>
-                            <li>bla bla bla bla</li>
-                            <li>slfhrkdgnlke</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
-            <div class="col-md-5">
-                <div class="panel panel-default scrollable">
-                    <div class="panel-body" id="membersheight">
-                        <h4>Members</h4>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4>Members</h4></div>
+                    <div class="panel-body long-scroll-panel" id="membersheight">
                         <table class="membertable">
                             <tr>
                                 <th></th>
@@ -93,32 +81,15 @@
                 </div>
             </div>
        </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>Other Information</h4></div>
+        <div class="panel-body long-scroll-panel-3">
+            <ul>
+                <li>Her skriver man informasjon om kollektivet</li>
+                <li>bla bla bla bla</li>
+                <li>slfhrkdgnlke</li>
+            </ul>
+        </div>
+    </div>
 </div>
-
-<style type="text/css">
-    .scrollable {
-        overflow-y: scroll;
-    }
-    .img-circle {
-        height: 40px;
-        width: 40px;
-        overflow: hidden;
-        border-radius: 20px;
-    }
-    .img-pic {
-        min-height: 40px;
-        min-width: 100%;
-    }
-    th, td {
-        border-bottom: 1px solid #ddd;
-        height: 50px;
-        padding: 10px;
-    }
-    .membertable {
-        width: 100%;
-    }
-    #membersheight {
-        min-height: 500px;
-    }
-</style>
 

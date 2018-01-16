@@ -8,6 +8,7 @@ var password;
 var testPassword;
 var person;
 
+
 function submitNewUser() {
     name = $("#name").val();
     phone = $("#telephone").val();
@@ -64,3 +65,10 @@ function addUser() {
         }
     })
 }
+
+
+$("#pwd2").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#confirmCreateUserButton").click();
+    }
+});
