@@ -63,6 +63,7 @@ function updateCurrentHousehold(bodyContent){
         contentType: "application/json; charser=utf-8",
         success: function(data) {
             window.localStorage.setItem("house", JSON.stringify(data));
+            console.log("Household updated. Current number of lists: " + getCurrentHousehold().shoppingLists.length);
             if (bodyContent!==undefined){
                 $(".page-wrapper").load(bodyContent);
             }

@@ -1,52 +1,47 @@
 <div class="container-fluid">
-    <div class="panel panel-default">
-        <div class="panel-heading">*Name*</div>
-        <div class="panel-body">
-            <div class="row" id="profile_row_1">
-                <div class="col-md-2" id="profile_pic_container">
-                    <img id="profile_pic_img" class="img-responsive" src="https://s3-eu-west-1.amazonaws.com/apps.o5.no/apdm/lifeloop/helgeland-arbeiderblad/birthday/20130504040655-1333-wrdv/700.jpg">
-                </div>
-                <div class="col-md-5" id="profile_info_container">
-                    <div class="panel panel-info">
-                        <div class="panel-heading profile_panel_heading" id="profile_information_list_name"></div>
-                        <div class="panel-body">
-                            <dl id="profile_information_descriptive_list">
-                                <dd id="profile_information_list_phone"></dd>
-                                <dd id="profile_information_list_email"></dd>
-                            </dl>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading styled-heading"><h4>Profile</h4></div>
+            <div class="panel-body">
+                <div class="row" id="profile_row_1">
+                    <div class="col-md-2" id="profile_pic_container">
+                        <img id="profile_pic_img" class="img-responsive" src="https://worldarts2015.s3-us-west-2.amazonaws.com/images/default-profile-picture.jpg?cache=1473463677">
+                    </div>
+                    <div class="col-md-5" id="profile_info_container">
+                        <div class="panel panel-info">
+                            <div class="panel-heading styled-heading" id="profile_information_list_name"></div>
+                            <div class="panel-body long-scroll-panel-2">
+                                <dl id="profile_information_descriptive_list">
+                                    <dd id="profile_information_list_phone"></dd>
+                                    <dd id="profile_information_list_email"></dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5" id="profile_households_container">
+                        <div class="panel panel-info">
+                            <div class="panel-heading styled-heading">Your households</div>
+                            <div class="panel-body long-scroll-panel-2">
+                                <table class="table table-striped" id="profile_households_table">
+                                    <thead>
+                                    <tr>
+                                        <th>Household name</th>
+                                        <th>Adress</th>
+                                        <th>Admin</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="profile_households_table_body"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5" id="profile_households_container">
-                    <div class="panel panel-info">
-                        <div class="panel-heading profile_panel_heading">Your households</div>
-                        <div class="panel-body">
-                            <table class="table table-striped" id="profile_households_table">
-                                <thead>
-                                <tr>
-                                    <th>Household name</th>
-                                    <th>Adress</th>
-                                    <th>Admin</th>
-                                </tr>
-                                </thead>
-                                <tbody id="profile_households_table_body"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-info">
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-3" id="profile_todos_container">
-                    <div class="panel panel-info">
-                        <div class="panel-heading profile_panel_heading">Todos</div>
-                    </div>
-                    <div class="panel-body" id="profile_todos_body">
+        <div class="row">
+            <div class="col-md-4" id="profile_todos_container">
+                <div class="panel panel-info">
+                    <div class="panel-heading styled-heading">Todos</div>
+                    <div class="panel-body long-scroll-panel-2" id="profile_todos_body">
                         <table class="table table-striped" id="profile_todos_table">
-                            <thead>
                             <tr>
                                 <th>Task name</th>
                                 <th>Date</th>
@@ -57,11 +52,19 @@
                         </table>
                     </div>
                 </div>
-                <div class="col-md-4" id="profile_economics_container">
-                    <div class="panel panel-info">
-                        <div class="panel-heading profile_panel_heading">Economics</div>
+            </div>
+            <div class="col-md-3" id="profile_statistics">
+                <div class="panel panel-info">
+                    <div class="panel-heading styled-heading">Statistics</div>
+                    <div class="panel-body long-scroll-panel-2" id="profile_statistics_container">
+                        Dette er en tekst.
                     </div>
-                    <div class="panel-body">
+                </div>
+            </div>
+            <div class="col-md-5" id="profile_economics_container">
+                <div class="panel panel-info">
+                    <div class="panel-heading styled-heading">Economics</div>
+                    <div class="panel-body long-scroll-panel-2">
                         <table class="table table-bordered" id = "profile_payment_table">
                             <thead>
                             <tr>
@@ -100,20 +103,13 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
 
-                </div>
-                <div class="col-md-3" id="profile_statistics">
-                    <div class="panel panel-info">
-                        <div class="panel-heading profile_panel_heading">Statistics</div>
-                        <div class="panel-body" id="profile_statistics_container">
-                            Dette er en tekst.
-                        </div>
-                    </div>
-                </div>
+        </div>
+
             </div>
         </div>
     </div>
-</div>
 
 <script>
     loadUser();
