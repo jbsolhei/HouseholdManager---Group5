@@ -71,6 +71,16 @@ public class UserService {
     }
     */
 
+    /*
+    @GET
+    @Auth(AuthType.USER_READ)
+    @Path("/{id}/hhs/onlyUserAndName")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Household> getHousehold(@PathParam("id") int id) {
+        return UserDAO.getHHOnlyNameAndId(id);
+    }
+    */
+
 
     @POST
     @Path("/login")

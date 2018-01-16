@@ -72,6 +72,7 @@ function updateCurrentHousehold(bodyContent){
             console.log("Household updated. Current number of lists: " + getCurrentHousehold().shoppingLists.length);
             if (bodyContent!==undefined){
                 $(".page-wrapper").load(bodyContent);
+
             }
         },
         dataType: "json"
@@ -223,7 +224,6 @@ function callModal(modalContent) {
 
 function swapContent(bodyContent) {
     updateCurrentHousehold(bodyContent);
-
 }
 
 function navToShoppingList(shoppingListId){
