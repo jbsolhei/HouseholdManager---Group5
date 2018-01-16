@@ -7,13 +7,17 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
+                <div>
+                    <h4>Name</h4>
+                    <input id="tripname">
+                </div>
+                <br>
                 <div class="container-fluid">
                     <h4>Who's paying?</h4>
                     <div class="panel panel-default">
-                        <div class="checkbox">
-                            <label><input type="checkbox" value="">Option 1</label>
+                        <div class="checkbox" id="members">
+
                         </div>
-                        <!-- TODO: js for generate -->
                     </div>
                 </div>
             </div>
@@ -23,11 +27,7 @@
                     <div class="form-group">
                         <label for="sel1">Select list:</label>
                         <select class="form-control" id="sel1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <!--TODO: js ofr generate-->
+
                         </select>
                     </div>
                     <br>
@@ -39,7 +39,7 @@
                 <div class="col-md-12">
                     <div class="container-fluid" style="padding-top: 2vh;">
                         <label>SUM</label>
-                        <input id="trip-sum" class="input">
+                        <input id="trip-sum" type="number" class="input">
                     </div>
                 </div>
             </div>
@@ -47,5 +47,8 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Register shopping trip</button>
+    <button type="button" onclick="addShoppingTrip()" class="btn btn-default" data-dismiss="modal">Register shopping trip</button>
 </div>
+<script>
+    createPage();
+</script>
