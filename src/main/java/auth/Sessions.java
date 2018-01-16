@@ -1,4 +1,4 @@
-package classes;
+package auth;
 
 import java.security.SecureRandom;
 import java.util.Base64;

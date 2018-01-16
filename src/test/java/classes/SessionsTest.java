@@ -1,5 +1,7 @@
 package classes;
 
+import auth.Session;
+import auth.Sessions;
 import org.junit.Before;
 import org.junit.Test;
 

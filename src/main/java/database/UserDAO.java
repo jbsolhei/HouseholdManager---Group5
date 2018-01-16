@@ -96,7 +96,7 @@ public class UserDAO {
                 user.setUserId(rs.getInt("userId"));
                 user.setEmail(rs.getString("email"));
                 user.setName(rs.getString("name"));
-                user.setPassword(rs.getString("password"));
+                // user.setPassword(rs.getString("password"));
                 user.setTelephone(rs.getString("telephone"));
                 return user;
             }
