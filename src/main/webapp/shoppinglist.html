@@ -38,8 +38,8 @@
         <div class="col-sm-9">
             <div class="panel panel-default">
                 <div id="head" class="panel-heading">
-                    <h4 id="headline">Overskrift </h4>
-                    <div id="edit_shopping_list_btn" class="glyphicon glyphicon-edit"></div>
+                    <h4 id="headline" class="col-sm-11">Overskrift </h4>
+                    <div id="edit_shopping_list_btn" class="glyphicon glyphicon-edit col-sm-1" data-toggle="modal" onclick='callModalRun("modals/editShoppingListUsers.html", [getUsers])' data-target="#theModal"></div>
                     <div class="input-group">
                         <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
                         <span  id="okButton" onclick="okButton()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
@@ -81,4 +81,19 @@
 
 <script>
     readyShoppingList();
+</script>
+
+<!-- Denne må være her, trengs aldri å endres -->
+<div class="modal fade" id="theModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" id="modal">
+        </div>
+    </div>
+</div>
+
+<script>
+    // Ikke rør
+    function callModal(modalContent) {
+        $("#modal").load(modalContent);
+    }
 </script>

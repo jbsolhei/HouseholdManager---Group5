@@ -36,7 +36,7 @@ function printShoppingListsToDashboard(house) {
         var inputString = "<tr>\n" +
             "<td onclick='navToShoppingList(" + i + ")'>" + current.name + "</td>\n" +
             "<td>" + current.items.length + "</td>\n" +
-            "<td>" + current.participants.length + "</td>\n" +
+            "<td>" + current.users.length + "</td>\n" +
             "</tr>";
         //TODO: the onClick() navigates to the shoppingList body, but doesn't load the selected shoppingList.
         $("#dashboard_shopping_list_table_body").append(inputString);
