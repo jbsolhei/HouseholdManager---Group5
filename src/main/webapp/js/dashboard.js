@@ -5,23 +5,29 @@
 //TODO: Vurdere bruken av lokalt lagrede brukere under opplisting av todos og handlelister mtp på autoriseringsproblemer.
 
 function loadDashboard(){
-    var houseId = getCurrentHousehold().houseId;
-    console.log(houseId);
-    printShoppingListsToDashboard(houseId);
-    printHouseholdTodosToDashboard(houseId);
+    var house = getCurrentHousehold();
+    console.log(house);
+    if (house!==undefined) {
+        printShoppingListsToDashboard(house);
+        printHouseholdTodosToDashboard(house);
+    }
 }
 
-function printHouseholdTodosToDashboard(householdId){
-    getTaskinHousehold(householdId, function(data){
-        $.each(data, function(i,val){
-            var inputString = "<tr>\n" +
-                "<td>" + val.description + "</td>" +
-                "<td>" + val.date + "</td>" +
-                "<td>" + getUserFromId(val.userId, function(data){return data.name}) + "</td>"+
-                "</tr>";
-            $("#dashboard_todos_table_body").append(inputString);
-        })
-    })
+function printHouseholdTodosToDashboard(house){
+    for (var i=0;i<house.todoList.length;i++){
+        var current = house.todoList[i];
+        if (current.user===undefined||current.user===null){
+            var name = "None";
+        } else {
+            var name = current.user.name;
+        }
+        var inputString = "<tr>\n" +
+            "<td>" + current.description + "</td>" +
+            "<td>" + current.date + "</td>" +
+            "<td>" + name + "</td>"+
+            "</tr>";
+        $("#dashboard_todos_table_body").append(inputString);
+    }
 }
 
 function printShoppingListsToDashboard(householdId) {
