@@ -40,7 +40,7 @@ function additem() {
     document.getElementById("item").focus();
 }
 
-function check(itemId){
+function check(itemId) {
     $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-check"></span>');
 }
 
@@ -179,6 +179,7 @@ function saveChanges(){
 }
 
 function updateUsers() {
+    var hh = getCurrentHousehold();
     var usersIds = [];
     $('.glyphicon-check').each(function () {
         var id = this.id;
@@ -189,7 +190,7 @@ function updateUsers() {
 
     $.ajax({
         type: 'POST',
-        url: 'res/household/' + 1 + '/shopping_list/' + 3 +'/users',
+        url: 'res/household/' + hh.houseId + '/shopping_list/' + SHL[activeSHL].shoppingListId +'/users',
         data: JSON.stringify(usersIds),
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -203,12 +204,11 @@ function updateUsers() {
 }
 
 function getUsers() {
-    console.log("yay!");
     var hh = getCurrentHousehold();
-    console.log(hh);
     var allUsers = hh.residents;
+    console.log(hh.houseId + " " + SHL[activeSHL].shoppingListId);
     ajaxAuth({
-        url: 'res/household/1/shopping_lists/3',
+        url: 'res/household/' + hh.houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId,
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function(users){
@@ -239,11 +239,6 @@ function checkUser(userId) {
 function uncheckUser(userId) {
     console.log("uncheck user:" + userId);
     $("#uniqueUserId_" + userId).replaceWith('<td id="uniqueUserId_' + userId +'" onclick="checkUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td>')
-}
-
-function editUsers() {
-    console.log("clicked");
-
 }
 
 /* Make it so that you can use the 'enter'-key to add items*/

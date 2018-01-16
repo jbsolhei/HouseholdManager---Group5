@@ -311,6 +311,23 @@ public class ShoppingListDAO {
         }
     }
 
+    public static int updateCheckedBy(int userId, int itemId) {
+        String query = "UPDATE Item SET checkedBy = ? WHERE itemId = ?";
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+            
+            st.setInt(1, userId);
+            st.setInt(2, itemId);
+
+            return st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 
     private static User[] toUserArray(ArrayList<User> users) {
         User[] userArray = new User[users.size()];
@@ -387,7 +404,8 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        User[] users = ShoppingListDAO.getShoppingListUsers(3);
+        int userId = 28; //joakim
+        int itemId = 53; //tacoskjell
         System.out.println("stop");
     }
 }
