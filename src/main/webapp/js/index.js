@@ -168,6 +168,11 @@ function swapContentRun(bodyContent,functions) {
 }
 
 function navToShoppingList(shoppingListId){
-    swapContent("shoppinglist.html");
+    swapContentRun(shoppinglists,[readyShoppingList]);
     showShoppingListById(shoppingListId);
+}
+
+function swapContentShopping(){
+    swapContentRun(shoppinglists,[readyShoppingList]);
+    showList(0);
 }
