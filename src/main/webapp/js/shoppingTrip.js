@@ -18,7 +18,7 @@ function getShoppingTrips() {
         },
         error: function(result) {
         }
-    })
+    });
 }
 
 function viewShoppingTrips(data) {

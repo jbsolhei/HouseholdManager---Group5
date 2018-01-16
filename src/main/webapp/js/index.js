@@ -25,6 +25,7 @@ function checkSession(){
         type: "GET",
         error: function (e) {
             if (e.status == 401){
+                window.localStorage.clear();
                 window.location.replace("login.html")
             }
         }
@@ -185,20 +186,7 @@ function swapContent(bodyContent) {
     $(".page-wrapper").load(bodyContent);
 }
 
-function swapContentRun(bodyContent,functions) {
-    updateCurrentHousehold();
-    $(".page-wrapper").load(bodyContent);
-    for (var i = 0;i<functions.length;i++){
-        functions[i]();
-    }
-}
-
 function navToShoppingList(shoppingListId){
-    swapContentRun(shoppinglists,[readyShoppingList]);
+    swapContent(shoppinglists);
     showShoppingListById(shoppingListId);
-}
-
-function swapContentShopping(){
-    swapContentRun(shoppinglists,[readyShoppingList]);
-    showList(0);
 }
