@@ -135,7 +135,7 @@ function addNewList(name){
     $.ajax({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/',
-        data: JSON.stringify({"name": name}),
+        data: JSON.stringify(name),
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
