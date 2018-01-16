@@ -5,6 +5,7 @@ import classes.Household;
 import classes.Todo;
 import classes.User;
 import database.UserDAO;
+
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
@@ -111,9 +112,10 @@ public class UserService {
         return UserDAO.getTasks(id);
     }
 
-    @PUT
-    @Path("/{email}/pwReset")
-    public boolean resetPassword(@PathParam("email") String email) {
+    @POST
+    @Path("/pwReset")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public boolean resetPassword(String email) {
         return UserDAO.resetPassword(email);
     }
 }

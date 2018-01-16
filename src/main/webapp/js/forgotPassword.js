@@ -11,9 +11,10 @@ function submitForgotPass() {
 
 function sendEmail(email) {
     $.ajax({
-        url: "res/user/pwReset/"+email,
-        type: 'put',
-        contentType: "application/json; charset=utf-8",
+        url: "res/user/pwReset",
+        type: 'POST',
+        data: email,
+        contentType: "text/plain",
         success: function(response) {
             console.log(response);
             changeView()
