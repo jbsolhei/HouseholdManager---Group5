@@ -38,7 +38,7 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
-            setCurrentHousehold()
+            setCurrentHousehold(0)
         },
         dataType: "json"
     });
@@ -66,22 +66,37 @@ function updateCurrentHousehold(){
 }
 
 function setCurrentHousehold(hid) {
-    var id = window.localStorage.getItem("userId");
-    ajaxAuth({
-        url:"res/user/"+id+"/hh",
-        type: "GET",
-        contentType: "application/json; charser=utf-8",
-        success: function(data) {
-            if (data.length > 0) {
-                window.localStorage.setItem("house", JSON.stringify(data[0]));
-            }
-            window.location.replace("index.html")
-        },
-        error: function () {
-            console.log("Error in sethh")
-        },
-        dataType: "json"
-    });
+    if (hid === 0){
+        ajaxAuth({
+            url: "res/user/"+window.localStorage.getItem("userId")+"/hh",
+            type: "GET",
+            contentType: "application/json; charser=utf-8",
+            success: function (data) {
+                if (data.length>0) {
+                    window.localStorage.setItem("house", JSON.stringify(data[0]));
+                }
+                window.location.replace("index.html")
+            },
+            error: function () {
+                console.log("Error in sethh")
+            },
+            dataType: "json"
+        });
+    } else {
+        ajaxAuth({
+            url: "res/household/" + hid,
+            type: "GET",
+            contentType: "application/json; charser=utf-8",
+            success: function (data) {
+                window.localStorage.setItem("house", JSON.stringify(data));
+                window.location.replace("index.html")
+            },
+            error: function () {
+                console.log("Error in sethh")
+            },
+            dataType: "json"
+        });
+    }
 }
 
 function getUserFromId(id, handleData){
