@@ -86,6 +86,7 @@
     </body>
     <script>
         $(function() {
+            checkSession();
             setInterval(checkSession, 20000);
             swapContentRun("dashboard.html",[loadDashboard]);
         });
