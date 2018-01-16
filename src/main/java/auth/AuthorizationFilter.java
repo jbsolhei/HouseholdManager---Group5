@@ -17,19 +17,11 @@ import java.lang.reflect.Method;
 @Priority(Priorities.AUTHORIZATION)
 public class AuthorizationFilter implements ContainerRequestFilter {
 
-    /*
-    @Inject
-    @AuthenticatedUser
-    private AuthenticatedUserData authenticatedUser;
-    */
-
     @Context
     private ResourceInfo resourceInfo;
 
     @Override
     public void filter(ContainerRequestContext context) throws IOException {
-        //System.out.println("AuthorizationFilter reached! Authenticated user: " + authenticatedUser.getUserId());
-
         Method matchedEndpointMethod = resourceInfo.getResourceMethod();
 
         if (matchedEndpointMethod == null || matchedEndpointMethod.getAnnotation(Auth.class) == null) {
