@@ -18,7 +18,6 @@ function printInfoToWall(current_user){
 function printHouseholdsToWall(id) {
     getHouseholdsForUser(id, function(data){
         $.each(data,function (i, val) {
-            console.log(val);
             var admins = val.admins;
             var isAdmin = "No";
             $.each(admins, function(j, adm){

@@ -185,14 +185,6 @@ function swapContent(bodyContent) {
     $(".page-wrapper").load(bodyContent);
 }
 
-function swapContentRun(bodyContent,functions) {
-    updateCurrentHousehold();
-    $(".page-wrapper").load(bodyContent);
-    for (var i = 0;i<functions.length;i++){
-        functions[i]();
-    }
-}
-
 function navToShoppingList(shoppingListId){
     swapContentRun(shoppinglists,[readyShoppingList]);
     showShoppingListById(shoppingListId);
