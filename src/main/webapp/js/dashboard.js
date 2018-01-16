@@ -14,7 +14,7 @@ function loadDashboard(){
 }
 
 function printHouseholdTodosToDashboard(house){
-    if (house.todoList!==undefined) {
+    if (house.todoList!==null) {
         for (var i = 0; i < house.todoList.length; i++) {
             var current = house.todoList[i];
             if (current.user === undefined || current.user === null) {
@@ -33,13 +33,14 @@ function printHouseholdTodosToDashboard(house){
 }
 
 function printShoppingListsToDashboard(house) {
-    if (house.shoppingLists!==undefined) {
+    if (house.shoppingLists!==null) {
+        console.log(house);
         for (var i = 0; i < house.shoppingLists.length; i++) {
             var current = house.shoppingLists[i];
             var inputString = "<tr>\n" +
                 "<td onclick='navToShoppingList(" + i + ")'>" + current.name + "</td>\n" +
                 "<td>" + current.items.length + "</td>\n" +
-                "<td>" + current.participants.length + "</td>\n" +
+                "<td>" + current.users.length + "</td>\n" +
                 "</tr>";
             //TODO: the onClick() navigates to the shoppingList body, but doesn't load the selected shoppingList.
             $("#dashboard_shopping_list_table_body").append(inputString);

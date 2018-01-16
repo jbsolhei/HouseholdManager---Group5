@@ -23,6 +23,7 @@ public class ShoppingListDAO {
         String personName = "";
         String email = "";
         String telephone = "";
+        boolean thereAreLists = false;
 
         String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, User_Shopping_list.userId, Person.name, Person.email, Person.telephone FROM Shopping_list LEFT JOIN User_Shopping_list ON Shopping_list.shopping_listId = User_Shopping_list.shopping_listId LEFT JOIN Person ON User_Shopping_list.userId = Person.userId WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
         try (DBConnector dbc = new DBConnector();
@@ -32,6 +33,7 @@ public class ShoppingListDAO {
             st.setInt(1, houseId);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
+                    thereAreLists = true;
                     shoppingListId = rs.getInt("shopping_listId");
 
                     if (shoppingListId != shoppingListId2 && shoppingListId2 != 0) {
@@ -75,8 +77,11 @@ public class ShoppingListDAO {
                 Item[] items = getItems(shoppingList.getShoppingListId());
                 shoppingList.setItems(items);
             }
-
-            return toShoppingListArray(shoppingLists);
+            if (thereAreLists) {
+                return toShoppingListArray(shoppingLists);
+            } else {
+                return null;
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
