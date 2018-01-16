@@ -30,15 +30,15 @@ function printHouseholdTodosToDashboard(house){
     }
 }
 
-function printShoppingListsToDashboard(householdId) {
-    householdSHL = getCurrentHousehold().shoppingLists;
-    $.each(householdSHL, function (i, val) {
+function printShoppingListsToDashboard(house) {
+    for (var i=0;i<house.shoppingLists.length;i++){
+        var current = house.shoppingLists[i];
         var inputString = "<tr>\n" +
-            "<td onclick='navToShoppingList(" + i + ")'>" + val.name + "</td>\n" +
-            "<td>" + val.items.length + "</td>\n" +
-            "<td>" + val.participants.length + "</td>\n" +
+            "<td onclick='navToShoppingList(" + i + ")'>" + current.name + "</td>\n" +
+            "<td>" + current.items.length + "</td>\n" +
+            "<td>" + current.participants.length + "</td>\n" +
             "</tr>";
         //TODO: the onClick() navigates to the shoppingList body, but doesn't load the selected shoppingList.
         $("#dashboard_shopping_list_table_body").append(inputString);
-    })
+    }
 }
