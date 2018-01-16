@@ -5,6 +5,7 @@ import database.ShoppingTripDAO;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.time.LocalDate;
 import java.util.List;
 
 @Path("shoppingtrip")
@@ -20,6 +21,8 @@ public class ShoppingTripService {
     @POST
     @Consumes (MediaType.APPLICATION_JSON)
     public boolean createShoppingTrip(ShoppingTrip shoppingTrip) {
+        LocalDate date = LocalDate.now();
+        shoppingTrip.setShoppingDate(date);
         return ShoppingTripDAO.createShoppingTrip(shoppingTrip);
     }
 

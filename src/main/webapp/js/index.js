@@ -7,6 +7,8 @@ var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
 
+var activeSHL = 0;
+
 function ajaxAuth(attr) {
     attr.headers = {
         Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
@@ -25,6 +27,7 @@ function checkSession(){
         type: "GET",
         error: function (e) {
             if (e.status == 401){
+                window.localStorage.clear();
                 window.location.replace("login.html")
             }
         }
@@ -194,20 +197,7 @@ function swapContent(bodyContent) {
     $(".page-wrapper").load(bodyContent);
 }
 
-function swapContentRun(bodyContent,functions) {
-    updateCurrentHousehold();
-    $(".page-wrapper").load(bodyContent);
-    for (var i = 0;i<functions.length;i++){
-        functions[i]();
-    }
-}
-
 function navToShoppingList(shoppingListId){
-    swapContentRun(shoppinglists,[readyShoppingList]);
-    showShoppingListById(shoppingListId);
-}
-
-function swapContentShopping(){
-    swapContentRun(shoppinglists,[readyShoppingList]);
-    showList(0);
+    activeSHL = shoppingListId;
+    swapContent(shoppinglists);
 }
