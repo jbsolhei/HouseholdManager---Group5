@@ -12,8 +12,14 @@ var activeSHL = 0;
 
 
 $(document).ready(function() {
+<<<<<<< HEAD
     //setCurrentUser(window.localStorage.getItem("userId"));
     //setCurrentHousehold(window.localStorage.getItem("userId"));
+=======
+    $('#myModal').modal('toggle');
+    setCurrentUser(window.localStorage.getItem("userId"));
+    setCurrentHousehold(window.localStorage.getItem("userId"));
+>>>>>>> Fiks og fiks og fiiiiks
     addHouseholdsToList(getCurrentUser().userId);
     //swapContent("dashboard.html");
 });
@@ -204,12 +210,21 @@ function addHouseholdsToList(userId) {
             households = data;
             households = $.map(data, function(el) { return el });
             for (var i = 0; i < households.length; i++) {
-                $("#listOfHouseholds").prepend("<li class='householdElement'><a>" + households[i].name + "</a></li>");
+                $("#listOfHouseholds").prepend("<li><a class='householdElement' id='"+households[i].houseId+"'>" + households[i].name + "</a></li>");
             }
+            console.log("DATA LOADET");
+            $('#coverScreen').css('display', "none");
         },
         dataType: "json"
     });
 }
+
+//Sets the chosen household to current household.
+$(document).on('click', '.householdElement', function () {
+    var houseId = $(this).attr('id');
+    setCurrentHousehold(houseId);
+    $("#currentHouseholdId").text($(this).text());
+});
 
 function callModal(modalContent) {
     $("#modal").load(modalContent);

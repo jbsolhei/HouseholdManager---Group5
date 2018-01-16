@@ -32,7 +32,6 @@ public class UserService {
         return UserDAO.addNewUser(newUser);
     }
 
-
     @GET
     @Auth(AuthType.USER_READ)
     @Path("/{id}")
@@ -59,6 +58,14 @@ public class UserService {
             return new ArrayList<>();
         }
         return households;
+    }
+
+    @GET
+    @Auth(AuthType.USER_READ)
+    @Path("/{id}/hhs/onlyUserAndName")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Household> getHousehold(@PathParam("id") int id) {
+        return UserDAO.getHHOnlyNameAndId(id);
     }
 
 
