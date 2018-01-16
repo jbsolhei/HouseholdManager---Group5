@@ -132,7 +132,7 @@ function okButton(){
 
     addNewList(name);
     console.log("5: JS updates activeSHL.");
-    activeSHL = SHL[numberOfLists];
+    activeSHL = SHL[numberOfLists-1];
     readyShoppingList();
 }
 
