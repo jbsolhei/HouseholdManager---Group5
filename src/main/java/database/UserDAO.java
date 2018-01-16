@@ -27,25 +27,20 @@ public class UserDAO {
         if (userExist(email, telephone)) return false;
 
         String hashedPassword = HashHandler.makeHashFromPassword(password);
-
         String query = "INSERT INTO Person (email, name, password, telephone) VALUES (?,?,?,?)";
 
-        DBConnector dbc = new DBConnector();
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
             st.setString(1, email);
             st.setString(2, name);
             st.setString(3, hashedPassword);
             st.setString(4, telephone);
 
             st.executeUpdate();
-            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
 
         return true;
@@ -59,15 +54,19 @@ public class UserDAO {
      */
     public static boolean userExist(String email, String telephone) {
 
-        String query = "SELECT * FROM Person WHERE email='"+email+"' or telephone='"+telephone+"'";
+        String query = "SELECT * FROM Person WHERE email=? or telephone=?";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
-             Statement st = conn.createStatement()) {
+             PreparedStatement st = conn.prepareStatement(query)){
 
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                return true;
+            st.setString(1, email);
+            st.setString(2, telephone);
+
+            try (ResultSet rs = st.executeQuery(query)) {
+                if (rs.next()) {
+                    return true;
+                }
             }
 
         } catch (SQLException e) {
@@ -89,16 +88,17 @@ public class UserDAO {
              PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, userId);
-            ResultSet rs = st.executeQuery();
 
-            if (rs.next()) {
-                User user = new User();
-                user.setUserId(rs.getInt("userId"));
-                user.setEmail(rs.getString("email"));
-                user.setName(rs.getString("name"));
-                // user.setPassword(rs.getString("password"));
-                user.setTelephone(rs.getString("telephone"));
-                return user;
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setUserId(rs.getInt("userId"));
+                    user.setEmail(rs.getString("email"));
+                    user.setName(rs.getString("name"));
+                    // user.setPassword(rs.getString("password"));
+                    user.setTelephone(rs.getString("telephone"));
+                    return user;
+                }
             }
 
         } catch (SQLException e) {
@@ -120,11 +120,11 @@ public class UserDAO {
     public static boolean updateUser(int id, String newEmail, String newTelephone, String newName) {
         String query = "UPDATE Person SET email = ?, telephone = ?, name = ? WHERE userId = ?";
         boolean userInfoUpdated = false;
-        DBConnector dbc = new DBConnector();
 
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
             st.setString(1, newEmail);
             st.setString(2, newTelephone);
             st.setString(3, newName);
@@ -136,12 +136,8 @@ public class UserDAO {
                 userInfoUpdated = true;
             }
 
-            st.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
 
         return userInfoUpdated;
@@ -153,18 +149,16 @@ public class UserDAO {
      */
     public static void deleteUser(int id) {
         String query = "DELETE FROM Person WHERE userId = ?";
-        DBConnector dbc = new DBConnector();
 
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
             st.setInt(1, id);
             st.executeUpdate();
-            st.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
     }
 
@@ -219,28 +213,23 @@ public class UserDAO {
         String query = "UPDATE Person SET password = ? WHERE userId = ?";
 
         boolean passwordUpdated = false;
-        DBConnector dbc = new DBConnector();
 
         newPassword = HashHandler.makeHashFromPassword(newPassword);
 
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
             st.setString(1, newPassword);
             st.setInt(2, id);
 
             int update = st.executeUpdate();
-
             if (update != 0) {
                 passwordUpdated = true;
             }
 
-            st.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
 
         return passwordUpdated;
@@ -261,12 +250,13 @@ public class UserDAO {
              PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, userId);
-            ResultSet rs = st.executeQuery();
+            try (ResultSet rs = st.executeQuery()) {
 
-            while (rs.next()) {
-                userExists = true;
-                households.add(HouseholdDAO.getHousehold(rs.getInt("houseId")));
+                while (rs.next()) {
+                    userExists = true;
+                    households.add(HouseholdDAO.getHouseholdIdAndName(rs.getInt("houseId")));
 
+                }
             }
 
         } catch (SQLException e) {
@@ -292,17 +282,17 @@ public class UserDAO {
 
             st.setInt(1, userId);
 
-            ResultSet rs = st.executeQuery();
+            try (ResultSet rs = st.executeQuery()) {
 
-            while (rs.next()) {
-                Todo todo = new Todo();
-                todo.setDate(rs.getDate("date"));
-                todo.setDescription(rs.getString("description"));
-                todo.setHouseId(rs.getInt("houseId"));
-                todo.setUser(getUser(rs.getInt("userId")));
-                todo.setTaskId(rs.getInt("taskId"));
-
-                todos.add(todo);
+                while (rs.next()) {
+                    Todo todo = new Todo();
+                    todo.setDate(rs.getDate("date"));
+                    todo.setDescription(rs.getString("description"));
+                    todo.setHouseId(rs.getInt("houseId"));
+                    todo.setUser(getUser(rs.getInt("userId")));
+                    todo.setTaskId(rs.getInt("taskId"));
+                    todos.add(todo);
+                }
             }
 
         } catch (SQLException e) {

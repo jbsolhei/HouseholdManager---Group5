@@ -50,7 +50,7 @@ public class UserService {
     }
 
     @GET
-    @Auth(AuthType.USER_READ)
+    @Auth(AuthType.USER_MODIFY)
     @Path("/{id}/hh")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Household> getHousehold(@PathParam("id") int id) {
