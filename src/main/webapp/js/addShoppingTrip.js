@@ -70,7 +70,7 @@ function addShoppingTrip() {
         "userName" : getCurrentUser().name, "contributors" : contributors,
         "houseId" : getCurrentHousehold().houseId, "shopping_listId" : id, "shopping_listName" : shoppingList};
 
-
+    console.log(JSON.stringify(data));
     ajaxAuth({
         url: "res/shoppingtrip",
         type: 'post',
