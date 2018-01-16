@@ -3,7 +3,6 @@
  */
 var numberOfItems = 0;
 var numberOfDeleteItems = 0;
-var activeTab;
 var newItems = []; // [shoppinglist[item]]
 var deleteItems = [];
 var numberOfLists;
@@ -12,13 +11,12 @@ var itemsTab = [];
 var SHL;
 
 function readyShoppingList(){
-    updateCurrentHousehold();
     SHL = getCurrentHousehold().shoppingLists;
     numberOfLists = SHL.length;
     console.log("6: JS updates currentHousehold. numOfLists: " + numberOfLists + ". activeSHL: " + activeSHL + ". SHL.length: " + SHL.length);
     console.log("JS insertsShoppingLists");
     insertShoppingLists();
-    $("#shoppingList" + activeTab).addClass("active");
+    $("#shoppingList" + activeSHL).addClass("active");
     showList(activeSHL);
 }
 
@@ -59,6 +57,7 @@ function deleteItem(itemNumber){
 
 function showList(SLIndex){
     console.log("7: showList() for list #"+SLIndex + " started.");
+    console.log(SHL);
     if(newItems.length != 0 || deleteItems.length != 0) {
         saveChanges();
     }
@@ -74,11 +73,9 @@ function showList(SLIndex){
         });
     }$("#headline").replaceWith('<h4 id="headline">' + SHL[SLIndex].name + '</h4>');
     $("#item").focus();
-    $("#shoppingList" + activeTab).removeClass("active");
+    $("#shoppingList" + activeSHL).removeClass("active");
     $("#shoppingList" + SLIndex).addClass("active");
-    activeTab = SLIndex;
     activeSHL = SLIndex;
-    console.log(activeTab);
     console.log("8: showList() for list #"+SLIndex + " ended.");
 }
 
@@ -90,20 +87,20 @@ function createNewList(name){
     $("#headlineInput").focus();
     $("#okButton").removeClass("hide");
     //$("#date").replaceWith('<h5 id="date"><span class="glyphicon glyphicon-time"></span> Post by Camilla Larsen' + date + '</h5>');
-    $("#" + activeTab).removeClass("active");
+    $("#" + activeSHL).removeClass("active");
 }
 
 function deleteList(){
     $.ajax({
         type: 'DELETE',
-        url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeTab].shoppingListId,
+        url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeSHL].shoppingListId,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("List successfully deleted from database")
 
-            SHL[activeTab] = null;
-            $("#" + activeTab).remove();
+            SHL[activeSHL] = null;
+            $("#" + activeSHL).remove();
             for(var i = 0; i < SHL.length; i++){
                 if(SHL[i] != null){
                     showList(i);
@@ -118,22 +115,19 @@ function okButton(){
     console.log("1: okButton pressed, previous numOfLists: " + numberOfLists);
     numberOfLists += 1;
     console.log("2: Current number of lists: " + numberOfLists);
-    var name = document.getElementById("headlineInput").value;
-    document.getElementById("headlineInput").value = "";
+    var name = $("#headlineInput").value;
+    $("#headlineInput").value = "";
     $("#headline").removeClass("hide");
     $("#headline").replaceWith('<h4 id="headline">' + name + '</h4>');
-
     $("#headlineInput").addClass("hide");
     $("#okButton").addClass("hide");
-    $("#sideMenu").append('<li onclick="showList(' + numberOfLists + ')" id="' + numberOfLists + '"><a>' + name + '</a></li>');
+    $("#sideMenu").append('<li onclick="showList(' + numberOfLists + ')" id="shoppingList' + numberOfLists + '"><a>' + name + '</a></li>');
     $("#item").focus();
     $("#" + numberOfLists).addClass("active");
-    activeTab = numberOfLists;
-
     addNewList(name);
     console.log("5: JS updates activeSHL.");
-    activeSHL = SHL[numberOfLists-1];
-    readyShoppingList();
+    activeSHL = numberOfLists-1;
+    navToShoppingList(activeSHL);
 }
 
 function addNewList(name){
@@ -156,7 +150,7 @@ function saveChanges(){
         if(newItems[j] !== null) {
             $.ajax({
                 type: 'POST',
-                url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeTab].shoppingListId + "/items",
+                url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId + "/items",
                 data: JSON.stringify({'name': newItems[j], 'checkedBy': null}),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
@@ -170,7 +164,7 @@ function saveChanges(){
         if(deleteItems[i] != null) {
             $.ajax({
                 type: 'DELETE',
-                url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeTab].shoppingListId + "/items/" + deleteItems[i],
+                url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId + "/items/" + deleteItems[i],
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function () {
