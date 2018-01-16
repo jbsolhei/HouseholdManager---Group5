@@ -12,10 +12,7 @@ function loadDashboard(){
 }
 
 function printHouseholdTodosToDashboard(householdId){
-    console.log("printHouseholdTodosToDashboard()");
     getTaskinHousehold(householdId, function(data){
-        console.log(data);
-        console.log(JSON.stringify(data));
         $.each(data, function(i,val){
             var inputString = "<tr>\n" +
                 "<td>" + val.description + "</td>" +
@@ -28,7 +25,6 @@ function printHouseholdTodosToDashboard(householdId){
 }
 
 function printShoppingListsToDashboard(householdId){
-    console.log("PrintShoppingListsToDashboard()")
     getShoppingListsInHousehold(householdId, function(data){
         $.each(data, function(i,val){
             var inputString = "<tr>\n" +
@@ -36,6 +32,7 @@ function printShoppingListsToDashboard(householdId){
                 "<td>"+val.items.length+"</td>\n" +
                 "<td>"+val.participants.length+"</td>\n" +
                 "</tr>";
+            //TODO: the onClick() navigates to the shoppingList body, but doesn't load the selected shoppingList.
             $("#dashboard_shopping_list_table_body").append(inputString);
         })
     })
