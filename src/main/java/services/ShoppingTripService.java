@@ -21,7 +21,6 @@ public class ShoppingTripService {
     @POST
     @Consumes (MediaType.APPLICATION_JSON)
     public boolean createShoppingTrip(ShoppingTrip shoppingTrip) {
-        System.out.println("TEST");
         LocalDate date = LocalDate.now();
         shoppingTrip.setShoppingDate(date);
         return ShoppingTripDAO.createShoppingTrip(shoppingTrip);
