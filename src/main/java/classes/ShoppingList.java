@@ -4,7 +4,7 @@ package classes;
 public class ShoppingList {
     private int shoppingListId;
     private String name;
-    private User[] participants;
+    private User[] users;
     private Item[] items;
     private boolean isPrivate;
 
@@ -18,8 +18,8 @@ public class ShoppingList {
         return name;
     }
 
-    public User[] getParticipants() {
-        return participants;
+    public User[] getUsers() {
+        return users;
     }
 
     public boolean isPrivate() {
@@ -34,8 +34,8 @@ public class ShoppingList {
         this.name = name;
     }
 
-    public void setParticipants(User[] participants) {
-        this.participants = participants;
+    public void setUsers(User[] users) {
+        this.users = users;
     }
 
     public void setPrivate(boolean aPrivate) {

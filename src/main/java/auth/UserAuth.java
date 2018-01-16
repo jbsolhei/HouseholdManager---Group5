@@ -28,12 +28,12 @@ public class UserAuth {
              PreparedStatement st = conn.prepareStatement(query)){
 
             st.setString(1, email);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                int userId = rs.getInt("userId");
-                if (HashHandler.passwordMatchesHash(password, rs.getString("password"))) {
-                    return Sessions.generateSession(userId);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    int userId = rs.getInt("userId");
+                    if (HashHandler.passwordMatchesHash(password, rs.getString("password"))) {
+                        return Sessions.generateSession(userId);
+                    }
                 }
             }
 
@@ -157,7 +157,9 @@ public class UserAuth {
             st.setInt(1, id1);
             st.setInt(2, id2);
 
-            return st.executeQuery().next();
+            try (ResultSet rs = st.executeQuery()) {
+                return rs.next();
+            }
         }
     }
 }

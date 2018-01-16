@@ -37,8 +37,8 @@ public class DBConnector implements AutoCloseable {
             pool.setJdbcUrl(DB_URL);
 
             pool.setMinPoolSize(0);
-            pool.setMaxPoolSize(30);
-            pool.setAcquireIncrement(5);
+            pool.setMaxPoolSize(10); // Set this to 30+ when deploying
+            pool.setAcquireIncrement(3);
             pool.setMaxStatementsPerConnection(30);
         }
         catch (PropertyVetoException e) {

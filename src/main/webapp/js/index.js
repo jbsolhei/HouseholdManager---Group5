@@ -179,12 +179,21 @@ function getTasksForUser(userId, handleData){
 }
 
 function logout() {
+    console.log("clicked")
     window.localStorage.clear();
     window.location.replace("login.html")
 }
 
 function callModal(modalContent) {
     $("#modal").load(modalContent);
+}
+
+function callModalRun(modalContent, functions) {
+    console.log(modalContent);
+    $("#modal").load(modalContent);
+    for (var i = 0; i<functions.length; i++) {
+        functions[i]();
+    }
 }
 
 function swapContent(bodyContent) {

@@ -30,44 +30,43 @@ public class ShoppingListDAO {
              PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, houseId);
-            ResultSet rs = st.executeQuery();
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    shoppingListId = rs.getInt("shopping_listId");
 
+                    if (shoppingListId != shoppingListId2 && shoppingListId2 != 0) {
+                        ShoppingList sl = new ShoppingList();
+                        sl.setName(shoppingListName);
+                        sl.setUsers(toUserArray(users));
+                        sl.setShoppingListId(shoppingListId2);
+                        shoppingLists.add(sl);
+                        users.clear();
+                    }
+                    shoppingListName = rs.getString("shopping_list.name");
 
-            while(rs.next()) {
-                shoppingListId = rs.getInt("shopping_listId");
+                    userId = rs.getInt("userId");
 
-                if (shoppingListId != shoppingListId2 && shoppingListId2 != 0) {
-                    ShoppingList sl = new ShoppingList();
-                    sl.setName(shoppingListName);
-                    sl.setParticipants(toUserArray(users));
-                    sl.setShoppingListId(shoppingListId2);
-                    shoppingLists.add(sl);
-                    users.clear();
+                    if (userId != 0) {
+                        personName = rs.getString("Person.name");
+                        email = rs.getString("email");
+                        telephone = rs.getString("telephone");
+
+                        User user = new User();
+                        user.setUserId(userId);
+                        user.setName(personName);
+                        user.setEmail(email);
+                        user.setTelephone(telephone);
+
+                        users.add(user);
+                    }
+
+                    shoppingListId2 = shoppingListId;
                 }
-                shoppingListName = rs.getString("shopping_list.name");
-
-                userId = rs.getInt("userId");
-
-                if (userId != 0) {
-                    personName = rs.getString("Person.name");
-                    email = rs.getString("email");
-                    telephone = rs.getString("telephone");
-
-                    User user = new User();
-                    user.setUserId(userId);
-                    user.setName(personName);
-                    user.setEmail(email);
-                    user.setTelephone(telephone);
-
-                    users.add(user);
-                }
-
-                shoppingListId2 = shoppingListId;
             }
 
             ShoppingList sl = new ShoppingList();
             sl.setName(shoppingListName);
-            sl.setParticipants(toUserArray(users));
+            sl.setUsers(toUserArray(users));
             sl.setShoppingListId(shoppingListId2);
             shoppingLists.add(sl);
             users.clear();
@@ -83,6 +82,45 @@ public class ShoppingListDAO {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    public static User[] getShoppingListUsers(int shoppingListId) {
+        ArrayList<User> users = new ArrayList<>();
+        int userId;
+        String email;
+        String name;
+        String telephone;
+
+        String query = "SELECT usl.userId, p.* FROM User_Shopping_list AS usl INNER JOIN Person AS p ON usl.userId = p.userId WHERE shopping_listId = ?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, shoppingListId);
+            ResultSet rs = st.executeQuery();
+
+
+            while (rs.next()) {
+                User user = new User();
+                userId = rs.getInt("p.userId");
+                email = rs.getString("email");
+                name = rs.getString("name");
+                telephone = rs.getString("telephone");
+
+                user.setUserId(userId);
+                user.setEmail(email);
+                user.setName(name);
+                user.setTelephone(telephone);
+
+                users.add(user);
+            }
+            return toUserArray(users);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -107,32 +145,33 @@ public class ShoppingListDAO {
              PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, shopping_listId);
-            ResultSet rs = st.executeQuery();
+            try (ResultSet rs = st.executeQuery()) {
 
-            while (rs.next()) {
-                Item item = new Item();
-                User user = null;
+                while (rs.next()) {
+                    Item item = new Item();
+                    User user = null;
 
-                itemId = rs.getInt("itemId");
-                itemName = rs.getString("Item.name");
-                userId = rs.getInt("checkedBy");
+                    itemId = rs.getInt("itemId");
+                    itemName = rs.getString("Item.name");
+                    userId = rs.getInt("checkedBy");
 
-                if (userId != 0) {
-                    user = new User();
-                    user.setUserId(userId);
-                    email = rs.getString("email");
-                    personName = rs.getString("Person.name");
-                    telephone = rs.getString("telephone");
-                    user.setEmail(email);
-                    user.setName(personName);
-                    user.setTelephone(telephone);
+                    if (userId != 0) {
+                        user = new User();
+                        user.setUserId(userId);
+                        email = rs.getString("email");
+                        personName = rs.getString("Person.name");
+                        telephone = rs.getString("telephone");
+                        user.setEmail(email);
+                        user.setName(personName);
+                        user.setTelephone(telephone);
+                    }
+
+                    item.setItemId(itemId);
+                    item.setName(itemName);
+                    item.setCheckedBy(user);
+
+                    items.add(item);
                 }
-
-                item.setItemId(itemId);
-                item.setName(itemName);
-                item.setCheckedBy(user);
-
-                items.add(item);
             }
 
             return toItemArray(items);
@@ -151,47 +190,36 @@ public class ShoppingListDAO {
      */
   public static void createShoppingList(ShoppingList shoppingList, int houseId){
         String name = shoppingList.getName();
-
         String query = "INSERT INTO Shopping_list (name, houseId) VALUES (?,?)";
 
-        DBConnector dbc = new DBConnector();
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
             st.setString(1, name);
             st.setInt(2,houseId);
-
             st.executeUpdate();
-            st.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
     }
 
 
     public static void deleteShoppingList(int houseId, int shopping_list_id){
-
         String query = "DELETE FROM Shopping_list WHERE houseId = ? AND shopping_listId = ?";
 
-        DBConnector dbc = new DBConnector();
-
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(2, shopping_list_id);
             st.setInt(1,houseId);
 
             st.executeUpdate();
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
     }
 
@@ -225,52 +253,40 @@ public class ShoppingListDAO {
     }*/
 
     public static void addItem(Item items, int shopping_list_id){
-        DBConnector dbc = new DBConnector();
-        String query = "";
+        String query = "INSERT INTO Item(name, shopping_listId) VALUES (?, ?);";
 
-        try {
-            Connection conn = dbc.getConn();
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
-            query = "INSERT INTO Item(name, shopping_listId) VALUES (?, ?);";
-
-            PreparedStatement st = conn.prepareStatement(query);
             st.setString(1, items.getName());
             //st.setInt(2, 0);
             st.setInt(2, shopping_list_id);
             st.executeUpdate();
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
     }
 
     public static void deleteItem(int shopping_list_id, int itemId){
-        DBConnector dbc = new DBConnector();
-        String query = "";
+        String query = "DELETE FROM Item WHERE shopping_listId = ? AND itemId = ?;";
 
-        try {
-            Connection conn = dbc.getConn();
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
-            query = "DELETE FROM Item WHERE shopping_listId = ? AND itemId = ?;";
-
-            PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, shopping_list_id);
             //st.setInt(2, 0);
             st.setInt(2, itemId);
             st.executeUpdate();
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
     }
 
-    public static void updateUsers(int[] userIds, int shoppingListId) {
+    public static void updateUsers(String[] userIds, int shoppingListId) {
         String delete = "DELETE FROM User_Shopping_list WHERE shopping_listId = ?";
         String query = "INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (?, ?);";
 
@@ -284,7 +300,7 @@ public class ShoppingListDAO {
             System.out.println("deleted " + dels + " rows");
 
             for (int i = 0; i < userIds.length; i++) {
-                st.setInt(1, userIds[i]);
+                st.setInt(1, Integer.parseInt(userIds[i]));
                 st.setInt(2, shoppingListId);
                 int rtn = st.executeUpdate();
                 if (rtn < 0) System.err.println("Could not update: " + userIds[i] + " into shoppinglist where shoppinglistid = " + shoppingListId);
@@ -371,8 +387,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        int[] userIds = {1, 2};
-        ShoppingListDAO.updateUsers(userIds, 3);
+        User[] users = ShoppingListDAO.getShoppingListUsers(3);
         System.out.println("stop");
     }
 }
