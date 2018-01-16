@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ShoppingListDAO {
     /**
      * Get all shoppingslists in a household.
-     * @param houseId the user ID
+     * @param houseId the house ID
      * @return an Arraylist of shoppinglists, or null if a user with the given ID doesn't exist.
      */
     public static ShoppingList[] getShoppingLists(int houseId) {

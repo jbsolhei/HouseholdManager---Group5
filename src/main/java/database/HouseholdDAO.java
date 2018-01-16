@@ -79,6 +79,7 @@ public class HouseholdDAO {
         household.setAdmins(admins);
         household.setResidents(members);
         household.setShoppingLists(shoppingLists);
+        household.setHouseId(id);
         boolean householdExists = false;
 
 

@@ -44,11 +44,11 @@
                         <li><a class="visible-xs" onclick="swapContent(statistics)">Statistics</a></li>
                         <li><a class="visible-xs" onclick="swapContent(news)">News</a></li>
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Current household
+                            <a id="currentHouseholdId" class="dropdown-toggle" data-toggle="dropdown" href="#">Current household
                                 <span class="caret"></span>
                             </a>
                             <ul id="listOfHouseholds" class="dropdown-menu">
-                                <li data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#">New Household</a></li>
+                                <li data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#"><strong>New Household</strong></a></li>
                             </ul>
                         </li>
                         <li><a href="login.html">Logout</a></li>
@@ -82,4 +82,51 @@
         </div>
     </div>
     </body>
+
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #coverScreen {
+            left: 0px;
+            top: 0px;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: 999999999999999;
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        #centerDiv {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+    <div id="coverScreen">
+        <div id="centerDiv">
+            <div class="loader"></div>
+        </div>
+    </div>
+
 </html>

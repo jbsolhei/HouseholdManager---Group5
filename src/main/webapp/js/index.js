@@ -11,6 +11,7 @@ var news = "dashboard.html";
 var profile = "profile.html";
 
 $(document).ready(function() {
+    $('#myModal').modal('toggle');
     setCurrentUser(window.localStorage.getItem("userId"));
     setCurrentHousehold(window.localStorage.getItem("userId"));
     addHouseholdsToList(getCurrentUser().userId);
@@ -55,7 +56,6 @@ function setCurrentHousehold(id) {
         contentType: "application/json; charset=utf-8",
         success: function(data){
             if (data == undefined){
-                console.log("aaaa");
                 callModal("modals/addHousehold.html");
             }
         },
@@ -152,12 +152,21 @@ function addHouseholdsToList(userId) {
             households = data;
             households = $.map(data, function(el) { return el });
             for (var i = 0; i < households.length; i++) {
-                $("#listOfHouseholds").prepend("<li class='householdElement'><a>" + households[i].name + "</a></li>");
+                $("#listOfHouseholds").prepend("<li><a class='householdElement' id='"+households[i].houseId+"'>" + households[i].name + "</a></li>");
             }
+            console.log("DATA LOADET");
+            $('#coverScreen').css('display', "none");
         },
         dataType: "json"
     });
 }
+
+//Sets the chosen household to current household.
+$(document).on('click', '.householdElement', function () {
+    var houseId = $(this).attr('id');
+    setCurrentHousehold(houseId);
+    $("#currentHouseholdId").text($(this).text());
+});
 
 function callModal(modalContent) {
     $("#modal").load(modalContent);

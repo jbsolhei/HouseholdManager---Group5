@@ -7,7 +7,6 @@ public class Household {
     private User[] admins;
     private ShoppingList[] shoppingLists;
     private TodoList todoList;
-
     private int houseId;
 
     public Household(){}
