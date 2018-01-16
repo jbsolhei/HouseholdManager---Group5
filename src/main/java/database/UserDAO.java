@@ -289,9 +289,8 @@ public class UserDAO {
                     todo.setDate(rs.getDate("date"));
                     todo.setDescription(rs.getString("description"));
                     todo.setHouseId(rs.getInt("houseId"));
-                    todo.setUserId(rs.getInt("userId"));
+                    todo.setUser(getUser(rs.getInt("userId")));
                     todo.setTaskId(rs.getInt("taskId"));
-
                     todos.add(todo);
                 }
             }

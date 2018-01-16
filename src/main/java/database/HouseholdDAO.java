@@ -94,7 +94,7 @@ public class HouseholdDAO {
      * Returns null if the id does not exist in the database.
      *
      * @param id the id of the house.
-     * @return String[]
+     * @return Household the household object
      */
     public static Household getHousehold(int id) {
         String name;
@@ -102,11 +102,13 @@ public class HouseholdDAO {
         User[] members = getMembers(id);
         User[] admins = getAdmins(id);
         ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(id);
+        Todo[] todo = getTodosForHousehold(id);
 
         Household household = new Household();
         household.setAdmins(admins);
         household.setResidents(members);
         household.setShoppingLists(shoppingLists);
+        household.setTodoList(todo);
 
         String query = "SELECT house_name, house_address FROM Household WHERE houseId = ?";
 
@@ -377,7 +379,6 @@ public class HouseholdDAO {
              PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, houseId);
-
             try (ResultSet rs = st.executeQuery()) {
 
                 while (rs.next()) {
@@ -385,7 +386,7 @@ public class HouseholdDAO {
                     todo.setDescription(rs.getString("description"));
                     todo.setHouseId(houseId);
                     todo.setTaskId(rs.getInt("taskId"));
-                    todo.setUserId(rs.getInt("userId"));
+                    todo.setUser(UserDAO.getUser(rs.getInt("userId")));
                     todo.setDate(rs.getDate("date"));
                     todos.add(todo);
                     householdExists = true;
