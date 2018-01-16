@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading profile_panel_heading"><h4>Profile</h4></div>
+            <div class="panel-heading styled-heading"><h4>Profile</h4></div>
             <div class="panel-body">
                 <div class="row" id="profile_row_1">
                     <div class="col-md-2" id="profile_pic_container">
@@ -9,8 +9,8 @@
                     </div>
                     <div class="col-md-5" id="profile_info_container">
                         <div class="panel panel-info">
-                            <div class="panel-heading profile_panel_heading" id="profile_information_list_name"></div>
-                            <div class="panel-body">
+                            <div class="panel-heading styled-heading" id="profile_information_list_name"></div>
+                            <div class="panel-body long-scroll-panel-2">
                                 <dl id="profile_information_descriptive_list">
                                     <dd id="profile_information_list_phone"></dd>
                                     <dd id="profile_information_list_email"></dd>
@@ -20,8 +20,8 @@
                     </div>
                     <div class="col-md-5" id="profile_households_container">
                         <div class="panel panel-info">
-                            <div class="panel-heading profile_panel_heading">Your households</div>
-                            <div class="panel-body">
+                            <div class="panel-heading styled-heading">Your households</div>
+                            <div class="panel-body long-scroll-panel-2">
                                 <table class="table table-striped" id="profile_households_table">
                                     <thead>
                                     <tr>
@@ -39,7 +39,7 @@
         <div class="row">
             <div class="col-md-4" id="profile_todos_container">
                 <div class="panel panel-info">
-                    <div class="panel-heading profile_panel_heading">Todos</div>
+                    <div class="panel-heading styled-heading">Todos</div>
                     <div class="panel-body long-scroll-panel-2" id="profile_todos_body">
                         <table class="table table-striped" id="profile_todos_table">
                             <tr>
@@ -53,59 +53,58 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4" id="profile_economics_container">
+            <div class="col-md-3" id="profile_statistics">
                 <div class="panel panel-info">
-                    <div class="panel-heading profile_panel_heading">Economics</div>
+                    <div class="panel-heading styled-heading">Statistics</div>
+                    <div class="panel-body long-scroll-panel-2" id="profile_statistics_container">
+                        Dette er en tekst.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5" id="profile_economics_container">
+                <div class="panel panel-info">
+                    <div class="panel-heading styled-heading">Economics</div>
                     <div class="panel-body long-scroll-panel-2">
                         <table class="table table-bordered" id = "profile_payment_table">
                             <thead>
-                                <tr>
-                                    <th>Household</th>
-                                    <th>Payments</th>
-                                </tr>
+                            <tr>
+                                <th>Household</th>
+                                <th>Payments</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>--Household 1--</td>
-                                    <td>
-                                        <table class="table table-striped" id="example_payment_table">
-                                            <thead>
-                                            <tr>
-                                                <th>Person</th>
-                                                <th>Payment</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>Leif</td>
-                                                <td>200,-</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gunnar</td>
-                                                <td>-300,-</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Kåre</td>
-                                                <td>400,-</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                            <tr>
+                                <td>--Household 1--</td>
+                                <td>
+                                    <table class="table table-striped" id="example_payment_table">
+                                        <thead>
+                                        <tr>
+                                            <th>Person</th>
+                                            <th>Payment</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Leif</td>
+                                            <td>200,-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gunnar</td>
+                                            <td>-300,-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kåre</td>
+                                            <td>400,-</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
+                </div>
 
-                    </div>
-                    <div class="col-md-4" id="profile_statistics">
-                        <div class="panel panel-info">
-                            <div class="panel-heading profile_panel_heading">Statistics</div>
-                            <div class="panel-body long-scroll-panel-2" id="profile_statistics_container">
-                                Dette er en tekst.
-                            </div>
-                        </div>
-                    </div>
         </div>
 
             </div>
