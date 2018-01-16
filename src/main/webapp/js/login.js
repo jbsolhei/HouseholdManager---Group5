@@ -17,6 +17,8 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             success: function(response) {
                 if(response.success === true) {
+                    callModal("modals/loading.html");
+                    $("#theModal").modal();
                     window.localStorage.setItem("sessionToken",response.sessionToken);
                     window.localStorage.setItem("userId",response.userId);
                     inviteCheck()
