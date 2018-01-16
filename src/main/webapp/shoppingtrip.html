@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-sm-9">
-            <div class="panel panel-info">
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-sm-8" id="heading">
@@ -52,7 +52,7 @@
                             <div id="shoppinglist" ></div>
                         </div>
                         <div class="col-xs-6">
-                            <div class="panel panel-default">
+                            <div class="panel panel-info">
                                 <div class="panel-heading">Shared with</div>
                                 <div class="panel-body" id="listPanel">
                                     <ul id="list">
@@ -63,6 +63,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="panel-footer">
+                    <div id="buttonDiv">
+                        <a onclick='callModal("modals/regshoppingtrip.html")' class="btn btn-success btn-sm">
+                            <span class="glyphicon glyphicon-plus"></span> Create new list
+                        </a>
+                        <a id="deleteButton" class="btn btn-warning btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span> Delete this list
+                        </a>
+                    </div>
+                </div>
             </div>
            <!-- <div class="panel panel-info" style="height: 40vh;">
                 <div class="panel-heading"><h4>Name/info</h4><small>-date-</small></div>
@@ -71,11 +81,7 @@
         </div>
     </div>
 </div>
-<style>
-    #listPanel {
-        overflow-y: scroll;
-    }
-</style>
+
 <script>
     getShoppingTrips();
 </script>
