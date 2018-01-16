@@ -36,18 +36,18 @@ function additem() {
         newItems[numberOfItems] = newItem;
         numberOfItems += 1;
         $("#emptyListText").addClass("hide");
-        $("#newItem").append('<tr id="item' + numberOfItems + '"><td><span onclick="check(' + numberOfItems + ')" id="unchecked' + numberOfItems + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + newItem + '</td><td><span onclick="deleteItem(' + numberOfItems + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+        $("#newItem").append('<tr id="item' + numberOfItems + '"><td><span onclick="check(' + numberOfItems + ')" id="unchecked' + numberOfItems + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + newItem + '</td><td><span onclick="deleteItem(' + numberOfItems + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
         document.getElementById("item").value = "";
     }
     document.getElementById("item").focus();
 }
 
 function check(itemId){
-    $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-ok"></span>');
+    $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-check"></span>');
 }
 
 function unCheck(itemNumber){
-    $("#checked" + itemNumber).replaceWith('<span onclick="check(' + itemNumber + ')" name="unchecked" id="unchecked' + itemNumber + '" class="glyphicon glyphicon-asterisk"></span>');
+    $("#checked" + itemNumber).replaceWith('<span onclick="check(' + itemNumber + ')" name="unchecked" id="unchecked' + itemNumber + '" class="glyphicon glyphicon-unchecked"></span>');
 }
 
 function deleteItem(itemNumber){
@@ -70,7 +70,7 @@ function showList(SLIndex){
         $("#emptyListText").addClass("hide");
         $.each(listItems,function(i,val){
             itemsTab[i] = val.itemId;
-            $("#newItem").append('<tr id="item' + itemsTab[i] + '"><td><span onclick="check(' + itemsTab[i] + ')" id="unchecked' + itemsTab[i] + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + val.name + '</td><td><span onclick="deleteItem(' + itemsTab[i] + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+            $("#newItem").append('<tr id="item' + itemsTab[i] + '"><td><span onclick="check(' + itemsTab[i] + ')" id="unchecked' + itemsTab[i] + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td><span onclick="deleteItem(' + itemsTab[i] + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
         });
     }$("#headline").replaceWith('<h4 id="headline">' + SHL[SLIndex].name + '</h4>');
     $("#item").focus();
@@ -246,8 +246,6 @@ function uncheckUser(userId) {
     console.log("uncheck user:" + userId);
     $("#uniqueUserId_" + userId).replaceWith('<td id="uniqueUserId_' + userId +'" onclick="checkUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td>')
 }
-
-$("#unchecked" + itemNumber).replaceWith('<span onclick="unCheck(' + itemNumber + ')" name="checked" id="checked' + itemNumber + '" class="glyphicon glyphicon-check"></span>');
 
 function editUsers() {
     console.log("clicked");
