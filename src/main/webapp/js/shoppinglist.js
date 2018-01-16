@@ -11,6 +11,8 @@ var deleteItems = [];
 var numberOfLists = 0;
 var itemsTab = [];
 
+var SHL;
+
 function readyShoppingList(){
     $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
         numberOfLists = SL.length;
@@ -18,11 +20,16 @@ function readyShoppingList(){
             shoppingLists[i] = val;
             insertShoppingLists(i,shoppingLists[i]);
         });*/
-        for(var i = 0; i < SL.length; i++){
+        /*for(var i = 0; i < SL.length; i++){
             shoppingLists[i] = SL[i];
             insertShoppingLists(i, shoppingLists[i].name);
         }
-        $("#" + activeTab).addClass("active");
+        $("#" + activeTab).addClass("active");*/
+        SHL = getCurrentHousehold().shoppingLists;
+        $.each(SHL, function(i,val){
+            insertShoppingLists(i,val.name);
+        })
+        ("#" + activeTab).addClass("active");
     });
 }
 /*$(document).ready(function(){
@@ -74,7 +81,7 @@ function showList(SLIndex){
         saveChanges();
     }
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-    $.get("res/household/" + householdId + "/shopping_lists/" + shoppingLists[SLIndex].shoppingListId + "/items", function (items) {
+    $.get("res/household/" + householdId + "/shopping_lists/" + SHL[SLIndex].shoppingListId + "/items", function (items) {
 
         if(items.length == 0){
             $("#emptyListText").removeClass("hide");
