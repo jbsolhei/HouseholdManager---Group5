@@ -10,9 +10,10 @@ function loadUser(){
 }
 
 function printInfoToWall(current_user){
-    $("#profile_information_list_name").html(getCurrentUser().name);
-    $("#profile_information_list_email").html(getCurrentUser().email);
-    $("#profile_information_list_phone").html(getCurrentUser().telephone);
+    $("#profile_information_list_name").text("Test");
+    $("#profile_information_list_email").html(current_user.email);
+    $("#profile_information_list_phone").html(current_user.telephone);
+    console.log(current_user);
 }
 function printHouseholdsToWall(id) {
     getHouseholdsForUser(id, function(data){
