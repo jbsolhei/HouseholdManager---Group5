@@ -181,8 +181,10 @@ function saveChanges(){
 }
 
 function updateUsers(users) {
-    $('.test').click(function() {
-        alert( this.id );
+    $('.glyphicon-check').each(function () {
+        var id = this.id;
+        id = id.replace('/uniqueUserId_', '/');
+        console.log(id);
     });
     /*
     $.ajax({
