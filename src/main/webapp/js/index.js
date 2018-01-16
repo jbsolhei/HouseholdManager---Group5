@@ -6,9 +6,7 @@ var todo = "dashboard.html";
 var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
-
 var activeSHL = 0;
-
 
 
 $(document).ready(function() {
@@ -175,6 +173,8 @@ function addHouseholdsToList(userId) {
         },
         dataType: "json"
     });
+
+    $("#currentHouseholdId").text(getCurrentHousehold().name);
 }
 
 //Sets the chosen household to current household.
