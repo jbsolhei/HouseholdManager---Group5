@@ -12,16 +12,7 @@ var activeSHL = 0;
 
 
 $(document).ready(function() {
-<<<<<<< HEAD
-    //setCurrentUser(window.localStorage.getItem("userId"));
-    //setCurrentHousehold(window.localStorage.getItem("userId"));
-=======
-    $('#myModal').modal('toggle');
-    setCurrentUser(window.localStorage.getItem("userId"));
-    setCurrentHousehold(window.localStorage.getItem("userId"));
->>>>>>> Fiks og fiks og fiiiiks
     addHouseholdsToList(getCurrentUser().userId);
-    //swapContent("dashboard.html");
 });
 
 function ajaxAuth(attr) {
