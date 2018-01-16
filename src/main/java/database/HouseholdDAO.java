@@ -163,7 +163,7 @@ public class HouseholdDAO {
      * @param id       the id of the house.
      * @param newHouse the new data to update
      */
-    public static boolean updateHousehold(int id, Household newHouse) {
+    public static int updateHousehold(int id, Household newHouse) {
         String query = "";
 
         String newName = newHouse.getName();
@@ -177,7 +177,7 @@ public class HouseholdDAO {
             query = "UPDATE Household SET house_name = ?, house_address = ? WHERE houseId = ?";
         }
 
-        boolean householdInfoUpdated = false;
+        int updateResult = -1;
         DBConnector dbc = new DBConnector();
 
         try {
@@ -195,11 +195,7 @@ public class HouseholdDAO {
                 st.setInt(3, id);
             }
 
-            int update = st.executeUpdate();
-
-            if (update != 0) {
-                householdInfoUpdated = true;
-            }
+            updateResult = st.executeUpdate();
 
             st.close();
 
@@ -209,7 +205,7 @@ public class HouseholdDAO {
             dbc.disconnect();
         }
 
-        return householdInfoUpdated;
+        return updateResult;
     }
 
     /**
@@ -401,6 +397,27 @@ public class HouseholdDAO {
         }
         if (householdExists) return data;
         return null;
+    }
+
+    public static boolean makeUserAdmin(int houseId,int userId){
+        String query = "UPDATE House_user SET isAdmin = 1 WHERE userId = ? AND houseId = ?;";
+        int updateResult = 0;
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, userId);
+            st.setInt(2, houseId);
+
+            updateResult = st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (updateResult == 0) return false;
+        return true;
     }
 
     public static boolean addAdminToHousehold(int houseId, int userId) {
