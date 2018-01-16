@@ -24,11 +24,9 @@ public class HouseholdDAO {
 
         String query = "INSERT INTO Household (house_name, house_address) VALUES (?, ?)";
 
-        DBConnector dbc = new DBConnector();
-
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             st.setString(1, name);
             st.setString(2, address);
@@ -38,25 +36,55 @@ public class HouseholdDAO {
                 houseId = rs.getInt(1);
             }
             st.close();
+            query = "INSERT INTO House_user (houseId, userId, isAdmin) VALUES (?, ?, 1)";
 
-            if (houseId > 0) {
+            try (PreparedStatement st2 = conn.prepareStatement(query)) {
+                st2.setInt(1, houseId);
+                st2.setInt(2, adminId);
+                st2.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-                query = "INSERT INTO House_user (houseId, userId, isAdmin) VALUES (?, ?, 1)";
-                st = conn.prepareStatement(query);
-                st.setInt(1, houseId);
-                st.setInt(2, adminId);
+        return houseId;
+    }
 
-                st.executeUpdate();
-                st.close();
+
+    /**
+     * Used to get household name from database based on the households id.
+     * Returns the household ID and name in a Household-object, with every additional
+     * fields not set / null.
+     *
+     * @param id the id of the house.
+     * @return a Household object, or null if the household doesn't exist in the database
+     */
+    public static Household getHouseholdIdAndName(int id) {
+        String name;
+        Household household = new Household();
+
+        String query = "SELECT house_name FROM Household WHERE houseId = ?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, id);
+            try (ResultSet rs = st.executeQuery()) {
+
+                if (rs.next()) {
+                    name = rs.getString("house_name");
+                    household.setHouseId(id);
+                    household.setName(name);
+                    return household;
+                }
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
 
-        return houseId;
+        return null;
     }
 
     /**
@@ -69,8 +97,8 @@ public class HouseholdDAO {
      * @return String[]
      */
     public static Household getHousehold(int id) {
-        String name = "";
-        String address = "";
+        String name;
+        String address;
         User[] members = getMembers(id);
         User[] admins = getAdmins(id);
         ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(id);
@@ -79,36 +107,31 @@ public class HouseholdDAO {
         household.setAdmins(admins);
         household.setResidents(members);
         household.setShoppingLists(shoppingLists);
-        boolean householdExists = false;
-
 
         String query = "SELECT house_name, house_address FROM Household WHERE houseId = ?";
-        DBConnector dbc = new DBConnector();
-        PreparedStatement st;
 
-        try {
-            Connection conn = dbc.getConn();
-            st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
             st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
+            try (ResultSet rs = st.executeQuery()) {
 
-            while (rs.next()) {
-                name = rs.getString("house_name");
-                address = rs.getString("house_address");
-                household.setHouseId(id);
-                household.setName(name);
-                household.setAddress(address);
-                householdExists = true;
+                if (rs.next()) {
+                    name = rs.getString("house_name");
+                    address = rs.getString("house_address");
+                    household.setHouseId(id);
+                    household.setName(name);
+                    household.setAddress(address);
+
+                    return household;
+                }
             }
-
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
-        if (householdExists) return household;
+
         return null;
     }
 
@@ -125,26 +148,23 @@ public class HouseholdDAO {
         boolean householdExists = false;
 
         String query = "SELECT userId FROM House_user WHERE houseId = ?";
-        DBConnector dbc = new DBConnector();
-        PreparedStatement st;
 
-        try {
-            Connection conn = dbc.getConn();
-            st = conn.prepareStatement(query);
+    try (DBConnector dbc = new DBConnector();
+         Connection conn = dbc.getConn();
+         PreparedStatement st = conn.prepareStatement(query)){
+
             st.setInt(1, id);
-            ResultSet rs = st.executeQuery();
+            try (ResultSet rs = st.executeQuery()) {
 
-            while (rs.next()) {
-                members.add(UserDAO.getUser(rs.getInt("userId")));
-                householdExists = true;
+                while (rs.next()) {
+                    members.add(UserDAO.getUser(rs.getInt("userId")));
+                    householdExists = true;
+                }
+
             }
-
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
 
         User[] data = new User[members.size()];
@@ -164,7 +184,7 @@ public class HouseholdDAO {
      * @param newHouse the new data to update
      */
     public static int updateHousehold(int id, Household newHouse) {
-        String query = "";
+        String query;
 
         String newName = newHouse.getName();
         String newAddress = newHouse.getAddress();
@@ -178,11 +198,11 @@ public class HouseholdDAO {
         }
 
         int updateResult = -1;
-        DBConnector dbc = new DBConnector();
 
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
             if (newName.equals("")) {
                 st.setString(1, newAddress);
                 st.setInt(2, id);
@@ -197,12 +217,8 @@ public class HouseholdDAO {
 
             updateResult = st.executeUpdate();
 
-            st.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
 
         return updateResult;
@@ -216,18 +232,15 @@ public class HouseholdDAO {
     public static void deleteHousehold(int id) {
         String query = "DELETE FROM Household WHERE houseId = ?";
 
-        DBConnector dbc = new DBConnector();
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)){
 
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, id);
             st.executeUpdate();
-            st.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
     }
 
@@ -241,21 +254,18 @@ public class HouseholdDAO {
     public static void addUserToHousehold(int house, int user, int isAdmin) {
         String query = "INSERT INTO House_user (houseId,userId,isAdmin) VALUES (?,?,?)";
 
-        DBConnector dbc = new DBConnector();
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)){
 
-        try {
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, house);
             st.setInt(2, user);
             st.setInt(3, isAdmin);
 
             st.executeUpdate();
-            st.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
     }
 
@@ -298,20 +308,18 @@ public class HouseholdDAO {
                 tokens.add(token);
 
                 query = "INSERT INTO Invite_token (token,houseId,email) VALUES (?,?,?);";
-                DBConnector dbc = new DBConnector();
 
-                try {
-                    Connection conn = dbc.getConn();
-                    PreparedStatement st = conn.prepareStatement(query);
+                try (DBConnector dbc = new DBConnector();
+                     Connection conn = dbc.getConn();
+                     PreparedStatement st = conn.prepareStatement(query)) {
+
                     st.setString(1, token);
                     st.setInt(2, houseId);
                     st.setString(3, email[i]);
                     st.executeUpdate();
-                    st.close();
+
                 } catch (SQLException e) {
                     e.printStackTrace();
-                } finally {
-                    dbc.disconnect();
                 }
             }
 
@@ -336,11 +344,11 @@ public class HouseholdDAO {
 
             st.setInt(1, houseId);
 
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                if (rs.getInt("isAdmin") > 0) {
-                    admins.add(UserDAO.getUser(rs.getInt("userId")));
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    if (rs.getInt("isAdmin") > 0) {
+                        admins.add(UserDAO.getUser(rs.getInt("userId")));
+                    }
                 }
             }
 
@@ -363,32 +371,29 @@ public class HouseholdDAO {
         boolean householdExists = false;
 
         String query = "SELECT * FROM Task WHERE houseId = ?";
-        DBConnector dbc = new DBConnector();
-        PreparedStatement st;
 
-        try {
-            Connection conn = dbc.getConn();
-            st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
             st.setInt(1, houseId);
-            ResultSet rs = st.executeQuery();
 
-            while (rs.next()) {
-                Todo todo = new Todo();
-                todo.setDescription(rs.getString("description"));
-                todo.setHouseId(houseId);
-                todo.setTaskId(rs.getInt("taskId"));
-                todo.setUserId(rs.getInt("userId"));
-                todo.setDate(rs.getDate("date"));
-                todos.add(todo);
-                householdExists = true;
+            try (ResultSet rs = st.executeQuery()) {
+
+                while (rs.next()) {
+                    Todo todo = new Todo();
+                    todo.setDescription(rs.getString("description"));
+                    todo.setHouseId(houseId);
+                    todo.setTaskId(rs.getInt("taskId"));
+                    todo.setUserId(rs.getInt("userId"));
+                    todo.setDate(rs.getDate("date"));
+                    todos.add(todo);
+                    householdExists = true;
+                }
             }
-
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbc.disconnect();
         }
 
         Todo[] data = new Todo[todos.size()];
