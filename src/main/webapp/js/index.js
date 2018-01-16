@@ -7,6 +7,8 @@ var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
 
+var activeSHL = 0;
+
 function ajaxAuth(attr) {
     attr.headers = {
         Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
@@ -186,11 +188,7 @@ function swapContent(bodyContent) {
 }
 
 function navToShoppingList(shoppingListId){
-    swapContentRun(shoppinglists,[readyShoppingList]);
-    showShoppingListById(shoppingListId);
-}
-
-function swapContentShopping(){
-    swapContentRun(shoppinglists,[readyShoppingList]);
-    showList(0);
+    console.log("navToShoppinglist() for " + shoppingListId);
+    activeSHL = shoppingListId;
+    swapContent(shoppinglists);
 }
