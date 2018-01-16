@@ -7,6 +7,7 @@ import java.sql.*;
 
 public class DBConnector implements AutoCloseable {
     static String DB_URL = "jdbc:mysql://mysql.stud.iie.ntnu.no/g_tdat2003_t5?user=g_tdat2003_t5&password=DPiNHSqD&useSSL=true&verifyServerCertificate=false";
+    static boolean USE_CONNECTION_POOLING = true;
     private static ComboPooledDataSource pool = null;
 
     private Connection conn;
@@ -16,11 +17,16 @@ public class DBConnector implements AutoCloseable {
      */
     public DBConnector () {
         try {
-            if (pool == null) {
-                setUpPool();
-            }
+            if (USE_CONNECTION_POOLING) {
+                if (pool == null) {
+                    setUpPool();
+                }
 
-            conn = pool.getConnection();
+                conn = pool.getConnection();
+            }
+            else {
+                conn = DriverManager.getConnection(DB_URL);
+            }
         }
         catch (Exception e) {
             CleanUp.writeMessage(e, "DBConnector constructor");

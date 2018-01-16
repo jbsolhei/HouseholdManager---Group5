@@ -6,8 +6,12 @@ var todo = "dashboard.html";
 var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
-
 var activeSHL = 0;
+
+
+$(document).ready(function() {
+    addHouseholdsToList(getCurrentUser().userId);
+});
 
 function ajaxAuth(attr) {
     attr.headers = {
@@ -63,9 +67,9 @@ function updateCurrentHousehold(bodyContent){
         contentType: "application/json; charser=utf-8",
         success: function(data) {
             window.localStorage.setItem("house", JSON.stringify(data));
-            console.log("Household updated. Current number of lists: " + getCurrentHousehold().shoppingLists.length);
             if (bodyContent!==undefined){
                 $(".page-wrapper").load(bodyContent);
+
             }
         },
         dataType: "json"
@@ -106,18 +110,6 @@ function setCurrentHousehold(hid) {
     }
 }
 
-function getUserFromId(id, handleData){
-    ajaxAuth({
-        url: "res/user/"+id,
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            handleData(data);
-        },
-        dataType:"json"
-    })
-}
-
 function getHouseholdsForUser(userId, handleData){
     ajaxAuth({
         url:"res/user/"+userId+"/hh",
@@ -141,29 +133,7 @@ function getHouseholdFromId(id,handleData){
         dataType: "json"
     });
 }
-function getShoppingListsInHousehold(id, handleData){
-    ajaxAuth({
-        url: "res/household/"+id+"/shopping_lists",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            handleData(data);
-        },
-        dataType: "json"
-    })
-}
 
-function getTaskinHousehold(id, handleData){
-    ajaxAuth({
-        url: "res/household/" + id + "/tasks",
-        type: "GET",
-        contentType: "application/json; charset=utf8",
-        success: function(data){
-            handleData(data);
-        },
-        dataType: "json"
-    })
-}
 function getTasksForUser(userId, handleData){
     ajaxAuth({
         url:"res/user/"+userId+"/tasks",
@@ -181,8 +151,38 @@ function getTasksForUser(userId, handleData){
 function logout() {
     console.log("clicked")
     window.localStorage.clear();
-    window.location.replace("login.html")
+    window.location.replace("login.html");
 }
+
+//Adds the user's households to the dropdown
+function addHouseholdsToList(userId) {
+    var households;
+
+    ajaxAuth({
+        url:"res/user/"+userId+"/hh",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            households = data;
+            households = $.map(data, function(el) { return el });
+            for (var i = 0; i < households.length; i++) {
+                $("#listOfHouseholds").prepend("<li><a class='householdElement' id='"+households[i].houseId+"'>" + households[i].name + "</a></li>");
+            }
+            console.log("DATA LOADET");
+            $('#coverScreen').css('display', "none");
+        },
+        dataType: "json"
+    });
+
+    $("#currentHouseholdId").text(getCurrentHousehold().name);
+}
+
+//Sets the chosen household to current household.
+$(document).on('click', '.householdElement', function () {
+    var houseId = $(this).attr('id');
+    setCurrentHousehold(houseId);
+    $("#currentHouseholdId").text($(this).text());
+});
 
 function callModal(modalContent) {
     $("#modal").load(modalContent);
@@ -198,7 +198,6 @@ function callModalRun(modalContent, functions) {
 
 function swapContent(bodyContent) {
     updateCurrentHousehold(bodyContent);
-
 }
 
 function navToShoppingList(shoppingListId){

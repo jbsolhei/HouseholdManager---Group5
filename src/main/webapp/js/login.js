@@ -17,14 +17,14 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             success: function(response) {
                 if(response.success === true) {
-                    callModal("modals/loading.html");
-                    $("#theModal").modal();
+                    showLoadingScreen(false);
                     window.localStorage.setItem("sessionToken",response.sessionToken);
                     window.localStorage.setItem("userId",response.userId);
                     inviteCheck()
                 }
             },
             error: function(result) {
+                showLoadingScreen(false);
                 console.log(result);
                 alert("Wrong email or password");
             }
@@ -32,3 +32,12 @@ $(document).ready(function () {
 
     });
 });
+
+//Set show to true if you want to show loadingscreen and false if you want to hide it
+function showLoadingScreen(show) {
+    if (show) {
+        $("#coverScreen").css('display', 'block');
+    } else {
+        $("#coverScreen").css('display', 'none');
+    }
+}
