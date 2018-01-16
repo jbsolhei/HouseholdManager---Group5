@@ -66,18 +66,18 @@ public class ShoppingListDAO {
                 }
             }
 
-            ShoppingList sl = new ShoppingList();
-            sl.setName(shoppingListName);
-            sl.setUsers(toUserArray(users));
-            sl.setShoppingListId(shoppingListId2);
-            shoppingLists.add(sl);
-            users.clear();
+            if (thereAreLists){
+                ShoppingList sl = new ShoppingList();
+                sl.setName(shoppingListName);
+                sl.setUsers(toUserArray(users));
+                sl.setShoppingListId(shoppingListId2);
+                shoppingLists.add(sl);
+                users.clear();
 
-            for (ShoppingList shoppingList: shoppingLists) {
-                Item[] items = getItems(shoppingList.getShoppingListId());
-                shoppingList.setItems(items);
-            }
-            if (thereAreLists) {
+                for (ShoppingList shoppingList: shoppingLists) {
+                    Item[] items = getItems(shoppingList.getShoppingListId());
+                    shoppingList.setItems(items);
+                }
                 return toShoppingListArray(shoppingLists);
             } else {
                 return null;
@@ -389,10 +389,5 @@ public class ShoppingListDAO {
         } catch (SQLException e) {
             System.out.println("Error in preparing statement\n\n" + e.getMessage());
         }
-    }
-
-    public static void main (String[] args) {
-        User[] users = ShoppingListDAO.getShoppingListUsers(3);
-        System.out.println("stop");
     }
 }
