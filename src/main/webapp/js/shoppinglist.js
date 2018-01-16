@@ -173,25 +173,25 @@ function saveChanges(){
     deleteItems = [];
 }
 
-function updateUsers(users) {
+function updateUsers() {
+    var usersIds = [];
     $('.glyphicon-check').each(function () {
         var id = this.id;
-        id = id.replace('/uniqueUserId_', '/');
-        console.log(id);
+        id = id.replace('uniqueUserId_', '');
+        usersIds.push(id);
     });
-    /*
+    console.log(usersIds);
+
     $.ajax({
         type: 'POST',
         url: 'res/household/' + 1 + '/shopping_lists/' + activeTab +'/users',
-        data: JSON.stringify({"name": name}),
-
+        data: JSON.stringify(usersIds),
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("List successfully added to database")
         }
     });
-    */
 }
 
 function getUsers() {
@@ -208,7 +208,7 @@ function getUsers() {
             console.log(allUsers);
             for (var i = 0; i<allUsers.length; i++) {
                 var userId = allUsers[i].userId;
-                $("#inList").append('<tr><td id="uniqueUserId_'+ userId +'" onclick="checkUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td><td>"' + allUsers[i].name + '"</td></tr>');
+                $("#inList").append('<tr><td id="uniqueUserId_'+ userId +'" onclick="checkUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td><td>' + allUsers[i].name + '</td></tr>');
             }
             for (var i = 0; i<users.length; i++) {
                 console.log(users[i].userId);
