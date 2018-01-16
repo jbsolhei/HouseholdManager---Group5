@@ -33,7 +33,7 @@
                 <input type="password" id="password" name="password" />
             </div>
             <div class="submit">
-                <input onclick='callModal("modals/loading.html")' data-toggle="modal" type="submit" value="Login" id="submit" data-target="#theModal"/>
+                <input onclick="showLoadingScreen(true)" type="submit" value="Login" id="submit"/>
             </div>
         </div>
         <div class="footer">
@@ -65,5 +65,53 @@
             $("#modal").load(modalContent);
         }
     </script>
+
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #coverScreen {
+            margin: 0px;
+            display: none;
+            left: 0px;
+            top: 0px;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: 999999999999999;
+            background-color: rgba(0,0,0,0.2);
+        }
+
+        #centerDiv {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+    <div id="coverScreen">
+        <div id="centerDiv">
+            <div class="loader"></div>
+        </div>
+    </div>
 </body>
 </html>
