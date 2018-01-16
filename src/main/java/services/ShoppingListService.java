@@ -38,9 +38,9 @@ public class ShoppingListService {
 
     @POST
     @Path("/{id}/shopping_lists/")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void createShoppingList(@PathParam("id") int houseId, ShoppingList shoppingList){
-        ShoppingListDAO.createShoppingList(shoppingList, houseId);
+    @Consumes(MediaType.TEXT_PLAIN)
+    public void createShoppingList(@PathParam("id") int houseId, String shoppingListName){
+        ShoppingListDAO.createShoppingList(shoppingListName, houseId);
     }
 
     @DELETE
