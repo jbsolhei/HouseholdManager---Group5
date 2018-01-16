@@ -33,7 +33,6 @@ public class UserService {
         return UserDAO.addNewUser(newUser);
     }
 
-
     @GET
     @Auth(AuthType.USER_READ)
     @Path("/{id}")
@@ -50,6 +49,7 @@ public class UserService {
         return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName());
     }
 
+
     @GET
     @Auth(AuthType.USER_MODIFY)
     @Path("/{id}/hh")
@@ -61,6 +61,26 @@ public class UserService {
         }
         return households;
     }
+
+    /*
+    @GET
+    @Auth(AuthType.USER_READ)
+    @Path("/{id}/hhs/onlyUserAndName")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Household> getHousehold(@PathParam("id") int id) {
+        return UserDAO.getHHOnlyNameAndId(id);
+    }
+    */
+
+    /*
+    @GET
+    @Auth(AuthType.USER_READ)
+    @Path("/{id}/hhs/onlyUserAndName")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Household> getHousehold(@PathParam("id") int id) {
+        return UserDAO.getHHOnlyNameAndId(id);
+    }
+    */
 
 
     @POST

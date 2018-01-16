@@ -1,7 +1,6 @@
 package database;
 
 import classes.HashHandler;
-import classes.Household;
 import classes.Todo;
 import classes.User;
 import org.junit.After;
