@@ -14,20 +14,6 @@ import java.io.IOException;
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
 
-    /*
-    @Inject
-    @AuthenticatedUser
-    Event<Session> userAuthenticatedEvent;
-    */
-
-    //@Produces
-    //@RequestScoped
-    /*
-    @Inject
-    @AuthenticatedUser
-    private AuthenticatedUserData authenticatedUser;
-    */
-
     @Override
     public void filter(ContainerRequestContext context) throws IOException {
         String authHeader = context.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -43,13 +29,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 unauthenticated(context);
             }
             else {
-                /*
-                authenticatedUser = new AuthenticatedUserData();
-                authenticatedUser.setUserId(session.getUserId());
-                authenticatedUser.setSessionToken(session.getToken());
-                System.out.println("AuthenticationFilter wrote to authenticatedUser object! Id: " + authenticatedUser.getUserId());
-                */
-
                 context.setProperty("session.token", session.getToken());
                 context.setProperty("session.userId", session.getUserId());
             }

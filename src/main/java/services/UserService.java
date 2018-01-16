@@ -54,7 +54,11 @@ public class UserService {
     @Path("/{id}/hh")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Household> getHousehold(@PathParam("id") int id) {
-        return UserDAO.getHouseholds(id);
+        ArrayList<Household> households = UserDAO.getHouseholds(id);
+        if (households == null) {
+            return new ArrayList<>();
+        }
+        return households;
     }
 
 
