@@ -39,7 +39,7 @@ public class ShoppingListDAOTest {
         ShoppingList shoppingList = new ShoppingList();
         shoppingList.setName("Tacofredag!");
 
-        ShoppingListDAO.createShoppingList(shoppingList, 1);
+        ShoppingListDAO.createShoppingList(shoppingList.getName(), 1);
 
         String query = "SELECT * FROM Shopping_list WHERE name='Tacofredag!' and houseId='1'";
         ResultSet rs = st.executeQuery(query);
