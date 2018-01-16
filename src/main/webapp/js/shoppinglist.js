@@ -4,10 +4,9 @@
 var numberOfItems = 0;
 var numberOfDeleteItems = 0;
 var activeTab = 0;
-var householdId = 1;
 var newItems = []; // [shoppinglist[item]]
 var deleteItems = [];
-var numberOfLists = 0;
+var numberOfLists;
 var itemsTab = [];
 
 var SHL;
@@ -15,6 +14,7 @@ var SHL;
 function readyShoppingList(){
     console.log("ReadyShoppingList() started");
     SHL = getCurrentHousehold().shoppingLists;
+    numberOfLists = SHL.length;
     $.each(SHL, function(i,val){
         insertShoppingLists(i,val.name);
     });
@@ -77,13 +77,6 @@ function showList(SLIndex){
     activeSHL = SLIndex;
     console.log(activeTab);
     console.log("showList() for list #"+SLIndex + " ended.");
-}
-function showShoppingListById(listId){
-    for(var i = 0; i<SHL.length;i++){
-        if(SHL[i].shoppingListId===listId){
-            showList(i);
-        }
-    }
 }
 
 function createNewList(name){
