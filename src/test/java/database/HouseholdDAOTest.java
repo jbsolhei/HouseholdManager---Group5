@@ -25,8 +25,60 @@ public class HouseholdDAOTest {
     }
 
     @Test
+    public void getAdmins() throws Exception {
+        HouseholdDAO.getAdmins(10);
+
+        String query = "SELECT * FROM House_user WHERE houseId=10 AND isAdmin=TRUE";
+        ResultSet rs = st.executeQuery(query);
+
+        int count = 0;
+
+        while (rs.next()){
+            count++;
+        }
+
+        assert count==2;
+    }
+
+    @Test
+    public void getTodosForHousehold() throws Exception {
+    }
+
+    @Test
+    public void makeAdmin() throws Exception{
+        HouseholdDAO.makeUserAdmin(1,34);
+
+        String query = "SELECT * FROM House_user WHERE houseId=1 AND userId=34;";
+        ResultSet rs = st.executeQuery(query);
+
+        boolean isAdmin = false;
+
+        while (rs.next()){
+            isAdmin = rs.getBoolean("isAdmin");
+        }
+
+        assert isAdmin;
+    }
+
+    @Test
+    public void addAdminToHousehold() throws Exception {
+        HouseholdDAO.addAdminToHousehold(1,37);
+
+        String query = "SELECT * FROM House_user WHERE houseId=1 AND userId=37;";
+        ResultSet rs = st.executeQuery(query);
+
+        boolean isAdmin = false;
+
+        while (rs.next()){
+            isAdmin = rs.getBoolean("isAdmin");
+        }
+
+        assert isAdmin;
+    }
+
+    @Test
     public void getMembers() throws Exception {
-        User[] members = HouseholdDAO.getMembers(1);
+        User[] members = HouseholdDAO.getMembers(10);
         assert members!=null;
         assertEquals(2,members.length);
     }
@@ -110,7 +162,7 @@ public class HouseholdDAOTest {
     }
 
     @Test
-    public void deleteHouse() throws Exception {
+    public void deleteHousehold() throws Exception {
         HouseholdDAO.deleteHousehold(3);
 
         String query = "SELECT * FROM Household WHERE houseId=3";
