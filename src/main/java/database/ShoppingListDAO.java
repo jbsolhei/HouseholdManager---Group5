@@ -39,7 +39,7 @@ public class ShoppingListDAO {
                 if (shoppingListId != shoppingListId2 && shoppingListId2 != 0) {
                     ShoppingList sl = new ShoppingList();
                     sl.setName(shoppingListName);
-                    sl.setParticipants(toUserArray(users));
+                    sl.setUsers(toUserArray(users));
                     sl.setShoppingListId(shoppingListId2);
                     shoppingLists.add(sl);
                     users.clear();
@@ -66,7 +66,7 @@ public class ShoppingListDAO {
 
             ShoppingList sl = new ShoppingList();
             sl.setName(shoppingListName);
-            sl.setParticipants(toUserArray(users));
+            sl.setUsers(toUserArray(users));
             sl.setShoppingListId(shoppingListId2);
             shoppingLists.add(sl);
             users.clear();
@@ -85,7 +85,7 @@ public class ShoppingListDAO {
         return null;
     }
 
-    public static User[] getShoppingList(int shoppingListId) {
+    public static User[] getShoppingListUsers(int shoppingListId) {
         ArrayList<User> users = new ArrayList<>();
         int userId;
         String email;
@@ -409,7 +409,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        User[] users = ShoppingListDAO.getShoppingList(3);
+        User[] users = ShoppingListDAO.getShoppingListUsers(3);
         System.out.println("stop");
     }
 }

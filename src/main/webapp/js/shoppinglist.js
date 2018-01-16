@@ -212,13 +212,25 @@ function getUsers() {
     console.log("yay!");
     var hh = getCurrentHousehold();
     console.log(hh);
+    var allUsers = hh.residents;
     ajaxAuth({
         url: 'res/household/1/shopping_lists/3',
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function(users){
-            for (var i = 0; i<users.length; i++) {
-                $("#inList").append('<li>' + users[i].name + '</li>');
+            console.log(users);
+            for (var i = 0; i<allUsers.length; i++) {
+                for (var j = 0; j<users.length; j++) {
+                    if (users[i].userId === allUsers[i].userId) {
+                        $("#inList").append('<tr><td class="glyphicon glyphicon-check"></td></tr>');
+                        break;
+                    } else {
+                        $("#inList").append('<tr><td class="glyphicon glyphicon-unchecked"></td></tr>');
+                    }
+                }
+                for (i = 0; i<allUsers.length; i++) {
+                    $("#inList").append('<tr><td id="' + allUsers[i].userId + '">' + allUsers[i].name + '</td></tr>')
+                }
             }
         },
         error: function(data) {

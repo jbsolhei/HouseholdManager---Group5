@@ -148,6 +148,7 @@ function getTasksForUser(userId, handleData){
 }
 
 function logout() {
+    console.log("clicked")
     window.localStorage.clear();
     window.location.replace("login.html")
 }
