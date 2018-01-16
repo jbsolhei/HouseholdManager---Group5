@@ -11,35 +11,31 @@ var deleteItems = [];
 var numberOfLists = 0;
 var itemsTab = [];
 
+var SHL;
+
 function readyShoppingList(){
-    $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
-        numberOfLists = SL.length;
         /*$.each(SL, function(i,val){
             shoppingLists[i] = val;
             insertShoppingLists(i,shoppingLists[i]);
         });*/
-        for(var i = 0; i < SL.length; i++){
+        /*for(var i = 0; i < SL.length; i++){
             shoppingLists[i] = SL[i];
             insertShoppingLists(i, shoppingLists[i].name);
         }
-        $("#" + activeTab).addClass("active");
+        $("#" + activeTab).addClass("active");*/
+    SHL = getCurrentHousehold().shoppingLists;
+    console.log(SHL);
+    $.each(SHL, function(i,val){
+        insertShoppingLists(i,val.name);
+        console.log(val);
     });
+    $("#shoppingList" + activeTab).addClass("active");
+    showList(1);
 }
-/*$(document).ready(function(){
-    console.log("current household: " + getCurrentHousehold().houseId);
-    $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
-        numberOfLists = SL.length;
-        for(var i = 0; i < SL.length; i++){
-            shoppingLists[i] = SL[i];
-            insertShoppingLists(i, shoppingLists[i].name)
-        }
-        $("#" + activeTab).addClass("active");
-        showList(0);
-    });
-});*/
 
-function insertShoppingLists(shoppingListIndex, shoppingListName){
-    $("#sideMenu").append('<li onclick="showList(' + shoppingListIndex + ')" id="' + shoppingListIndex + '"><a>' + shoppingListName + '</a></li>');
+function insertShoppingLists(SHLIndex, shoppingListName){
+    console.log("SHL list name: " + shoppingListName + ", SHLIndex: " + SHLIndex);
+    $("#shoppingSideMenu").append('<li onclick="showList(' + SHLIndex + ')" id="shoppingList' + SHLIndex + '"><a>' + shoppingListName + '</a></li>');
 }
 
 function additem() {
@@ -74,7 +70,7 @@ function showList(SLIndex){
         saveChanges();
     }
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-    $.get("res/household/" + householdId + "/shopping_lists/" + shoppingLists[SLIndex].shoppingListId + "/items", function (items) {
+    $.get("res/household/" + householdId + "/shopping_lists/" + SHL[SLIndex].shoppingListId + "/items", function (items) {
 
         if(items.length == 0){
             $("#emptyListText").removeClass("hide");
@@ -91,10 +87,11 @@ function showList(SLIndex){
         $("#" + SLIndex).addClass("active");
         activeTab = SLIndex;
     });
+    console.log(activeTab);
 }
 function showShoppingListById(listId){
-    for(var i = 0; i<shoppingLists.length;i++){
-        if(shoppingLists[i].shoppingListId===listId){
+    for(var i = 0; i<SHL.length;i++){
+        if(SHL[i].shoppingListId===listId){
             showList(i);
         }
     }
@@ -114,18 +111,18 @@ function createNewList(name){
 function deleteList(){
     $.ajax({
         type: 'DELETE',
-        url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId,
+        url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeTab].shoppingListId,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("List successfully deleted from database")
 
-            shoppingLists[activeTab] = null;
+            SHL[activeTab] = null;
             $("#" + activeTab).remove();
-            for(var i = 0; i < shoppingLists.length; i++){
-                if(shoppingLists[i] != null){
+            for(var i = 0; i < SHL.length; i++){
+                if(SHL[i] != null){
                     showList(i);
-                    i = shoppingLists.length +1;
+                    i = SHL.length +1;
                 }
             }
         }
@@ -152,9 +149,8 @@ function okButton(){
 function addNewList(name){
     $.ajax({
         type: 'POST',
-        url: 'res/household/' + 1 + '/shopping_lists/',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/',
         data: JSON.stringify({"name": name}),
-
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
@@ -164,12 +160,12 @@ function addNewList(name){
 }
 
 function saveChanges(){
-    for (var i = 0; i < newItems.length; i++) {
-        if(newItems[i] != null) {
+    for (var j = 0; j < newItems.length; j++) {
+        if(newItems[j] !== null) {
             $.ajax({
                 type: 'POST',
-                url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items",
-                data: JSON.stringify({'name': newItems[i], 'checkedBy': null}),
+                url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeTab].shoppingListId + "/items",
+                data: JSON.stringify({'name': newItems[j], 'checkedBy': null}),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function () {
@@ -182,7 +178,7 @@ function saveChanges(){
         if(deleteItems[i] != null) {
             $.ajax({
                 type: 'DELETE',
-                url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items/" + deleteItems[i],
+                url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeTab].shoppingListId + "/items/" + deleteItems[i],
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function () {
