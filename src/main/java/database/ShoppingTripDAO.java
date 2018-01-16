@@ -4,6 +4,7 @@ import classes.ShoppingTrip;
 import classes.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,13 +66,13 @@ public class ShoppingTripDAO {
             st.setInt(5, shoppingTrip.getUserId());
             st.setInt(6, shoppingTrip.getHouseId());
             st.setInt(7, shoppingTrip.getShopping_listId());
+            st.executeUpdate();
 
             ResultSet resultSet = st.getGeneratedKeys();
             while (resultSet.next()) {
                 id = resultSet.getInt(1);
             }
 
-            st.executeUpdate();
             st.close();
 
             String query2 = "INSERT INTO User_Shopping_trip (userId, shopping_tripId) VALUES (?,?)";
@@ -145,5 +146,6 @@ public class ShoppingTripDAO {
         }
         return shoppingTrip;
     }
+
 
 }

@@ -5,41 +5,26 @@ var numberOfItems = 0;
 var numberOfDeleteItems = 0;
 var activeTab = 0;
 var householdId = 1;
-var shoppingLists = [];
 var newItems = []; // [shoppinglist[item]]
 var deleteItems = [];
 var numberOfLists = 0;
 var itemsTab = [];
 
-function readyShoppingList(){
-    $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
-        numberOfLists = SL.length;
-        /*$.each(SL, function(i,val){
-            shoppingLists[i] = val;
-            insertShoppingLists(i,shoppingLists[i]);
-        });*/
-        for(var i = 0; i < SL.length; i++){
-            shoppingLists[i] = SL[i];
-            insertShoppingLists(i, shoppingLists[i].name);
-        }
-        $("#" + activeTab).addClass("active");
-    });
-}
-/*$(document).ready(function(){
-    console.log("current household: " + getCurrentHousehold().houseId);
-    $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
-        numberOfLists = SL.length;
-        for(var i = 0; i < SL.length; i++){
-            shoppingLists[i] = SL[i];
-            insertShoppingLists(i, shoppingLists[i].name)
-        }
-        $("#" + activeTab).addClass("active");
-        showList(0);
-    });
-});*/
+var SHL;
 
-function insertShoppingLists(shoppingListIndex, shoppingListName){
-    $("#sideMenu").append('<li onclick="showList(' + shoppingListIndex + ')" id="' + shoppingListIndex + '"><a>' + shoppingListName + '</a></li>');
+function readyShoppingList(){
+    console.log("ReadyShoppingList() started");
+    SHL = getCurrentHousehold().shoppingLists;
+    $.each(SHL, function(i,val){
+        insertShoppingLists(i,val.name);
+    });
+    $("#shoppingList" + activeTab).addClass("active");
+    console.log("readyShoppingList() ended");
+    showList(activeSHL);
+}
+
+function insertShoppingLists(SHLIndex, shoppingListName){
+    $("#shoppingSideMenu").append('<li onclick="showList(' + SHLIndex + ')" id="shoppingList' + SHLIndex + '"><a>' + shoppingListName + '</a></li>');
 }
 
 function additem() {
@@ -54,8 +39,8 @@ function additem() {
     document.getElementById("item").focus();
 }
 
-function check(itemNumber){
-    $("#unchecked" + itemNumber).replaceWith('<span onclick="unCheck(' + itemNumber + ')" name="checked" id="checked' + itemNumber + '" class="glyphicon glyphicon-ok"></span>');
+function check(itemId){
+    $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-ok"></span>');
 }
 
 function unCheck(itemNumber){
@@ -70,31 +55,32 @@ function deleteItem(itemNumber){
 }
 
 function showList(SLIndex){
+    console.log("showList() for list #"+SLIndex + " started.");
     if(newItems.length != 0 || deleteItems.length != 0) {
         saveChanges();
     }
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-    $.get("res/household/" + householdId + "/shopping_lists/" + shoppingLists[SLIndex].shoppingListId + "/items", function (items) {
-
-        if(items.length == 0){
-            $("#emptyListText").removeClass("hide");
-        } else {
-            $("#emptyListText").addClass("hide");
-            for (var i = 0; i < items.length; i++) {
-                itemsTab[i] = items[i].itemId;
-                $("#newItem").append('<tr id="item' + items[i].itemId + '"><td><span onclick="check(' + items[i].itemId + ')" id="unchecked' + items[i].itemId + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + items[i].name + '</td><td><span onclick="deleteItem(' + items[i].itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
-            }
-        }
-        $("#headline").replaceWith('<h4 id="headline">' + getCurrentHousehold().shoppingLists[SLIndex].name + '</h4>');
-        $("#item").focus();
-        $("#" + activeTab).removeClass("active");
-        $("#" + SLIndex).addClass("active");
-        activeTab = SLIndex;
-    });
+    var listItems = SHL[SLIndex].items;
+    if(listItems.length===0){
+        $("#emptyListText").removeClass("hide");
+    }else{
+        $("#emptyListText").addClass("hide");
+        $.each(listItems,function(i,val){
+            itemsTab[i] = val.itemId;
+            $("#newItem").append('<tr id="item' + itemsTab[i] + '"><td><span onclick="check(' + itemsTab[i] + ')" id="unchecked' + itemsTab[i] + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + val.name + '</td><td><span onclick="deleteItem(' + itemsTab[i] + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+        });
+    }$("#headline").replaceWith('<h4 id="headline">' + SHL[SLIndex].name + '</h4>');
+    $("#item").focus();
+    $("#shoppingList" + activeTab).removeClass("active");
+    $("#shoppingList" + SLIndex).addClass("active");
+    activeTab = SLIndex;
+    activeSHL = SLIndex;
+    console.log(activeTab);
+    console.log("showList() for list #"+SLIndex + " ended.");
 }
 function showShoppingListById(listId){
-    for(var i = 0; i<shoppingLists.length;i++){
-        if(shoppingLists[i].shoppingListId===listId){
+    for(var i = 0; i<SHL.length;i++){
+        if(SHL[i].shoppingListId===listId){
             showList(i);
         }
     }
@@ -114,18 +100,18 @@ function createNewList(name){
 function deleteList(){
     $.ajax({
         type: 'DELETE',
-        url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId,
+        url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeTab].shoppingListId,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("List successfully deleted from database")
 
-            shoppingLists[activeTab] = null;
+            SHL[activeTab] = null;
             $("#" + activeTab).remove();
-            for(var i = 0; i < shoppingLists.length; i++){
-                if(shoppingLists[i] != null){
+            for(var i = 0; i < SHL.length; i++){
+                if(SHL[i] != null){
                     showList(i);
-                    i = shoppingLists.length +1;
+                    i = SHL.length +1;
                 }
             }
         }
@@ -152,9 +138,8 @@ function okButton(){
 function addNewList(name){
     $.ajax({
         type: 'POST',
-        url: 'res/household/' + 1 + '/shopping_lists/',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/',
         data: JSON.stringify({"name": name}),
-
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
@@ -164,12 +149,12 @@ function addNewList(name){
 }
 
 function saveChanges(){
-    for (var i = 0; i < newItems.length; i++) {
-        if(newItems[i] != null) {
+    for (var j = 0; j < newItems.length; j++) {
+        if(newItems[j] !== null) {
             $.ajax({
                 type: 'POST',
-                url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items",
-                data: JSON.stringify({'name': newItems[i], 'checkedBy': null}),
+                url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeTab].shoppingListId + "/items",
+                data: JSON.stringify({'name': newItems[j], 'checkedBy': null}),
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function () {
@@ -182,7 +167,7 @@ function saveChanges(){
         if(deleteItems[i] != null) {
             $.ajax({
                 type: 'DELETE',
-                url: 'res/household/' + 1 + '/shopping_lists/' + shoppingLists[activeTab].shoppingListId + "/items/" + deleteItems[i],
+                url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeTab].shoppingListId + "/items/" + deleteItems[i],
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function () {
@@ -208,4 +193,3 @@ $("#headlineInput").keyup(function(event){
         $("#okButton").click();
     }
 });
-

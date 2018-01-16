@@ -24,16 +24,15 @@ function printHouseholdTodosToDashboard(householdId){
     })
 }
 
-function printShoppingListsToDashboard(householdId){
-    getShoppingListsInHousehold(householdId, function(data){
-        $.each(data, function(i,val){
-            var inputString = "<tr>\n" +
-                "<td onclick='navToShoppingList("+val.shoppingListId+")'>"+val.name+"</td>\n" +
-                "<td>"+val.items.length+"</td>\n" +
-                "<td>"+val.participants.length+"</td>\n" +
-                "</tr>";
-            //TODO: the onClick() navigates to the shoppingList body, but doesn't load the selected shoppingList.
-            $("#dashboard_shopping_list_table_body").append(inputString);
-        })
+function printShoppingListsToDashboard(householdId) {
+    householdSHL = getCurrentHousehold().shoppingLists;
+    $.each(householdSHL, function (i, val) {
+        var inputString = "<tr>\n" +
+            "<td onclick='navToShoppingList(" + i + ")'>" + val.name + "</td>\n" +
+            "<td>" + val.items.length + "</td>\n" +
+            "<td>" + val.participants.length + "</td>\n" +
+            "</tr>";
+        //TODO: the onClick() navigates to the shoppingList body, but doesn't load the selected shoppingList.
+        $("#dashboard_shopping_list_table_body").append(inputString);
     })
 }

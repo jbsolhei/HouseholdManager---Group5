@@ -7,6 +7,8 @@ var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
 
+var activeSHL = 0;
+
 function ajaxAuth(attr) {
     attr.headers = {
         Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
@@ -25,6 +27,7 @@ function checkSession(){
         type: "GET",
         error: function (e) {
             if (e.status == 401){
+                window.localStorage.clear();
                 window.location.replace("login.html")
             }
         }
@@ -38,7 +41,7 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
-            setCurrentHousehold()
+            setCurrentHousehold(0)
         },
         dataType: "json"
     });
@@ -52,27 +55,51 @@ function getCurrentHousehold() {
     return JSON.parse(window.localStorage.getItem("house"));
 }
 
-function setCurrentHousehold() {
-    var id = window.localStorage.getItem("userId");
+function updateCurrentHousehold(){
+    var id = getCurrentHousehold().houseId;
     ajaxAuth({
-        url:"res/user/"+id+"/hh",
+        url:"res/household/"+id,
         type: "GET",
         contentType: "application/json; charser=utf-8",
         success: function(data) {
-            console.log(data);
-            if (data.length > 0) {
-                window.localStorage.setItem("house", JSON.stringify(data[0]));
-                console.log("User has "+data.length+" households")
-            } else {
-                console.log("User has no household")
-            }
-            window.location.replace("index.html")
-        },
-        error: function () {
-            console.log("Error in sethh")
+            window.localStorage.setItem("house", JSON.stringify(data));
         },
         dataType: "json"
     });
+}
+
+function setCurrentHousehold(hid) {
+    if (hid === 0){
+        ajaxAuth({
+            url: "res/user/"+window.localStorage.getItem("userId")+"/hh",
+            type: "GET",
+            contentType: "application/json; charser=utf-8",
+            success: function (data) {
+                if (data.length>0) {
+                    window.localStorage.setItem("house", JSON.stringify(data[0]));
+                }
+                window.location.replace("index.html")
+            },
+            error: function () {
+                console.log("Error in sethh")
+            },
+            dataType: "json"
+        });
+    } else {
+        ajaxAuth({
+            url: "res/household/" + hid,
+            type: "GET",
+            contentType: "application/json; charser=utf-8",
+            success: function (data) {
+                window.localStorage.setItem("house", JSON.stringify(data));
+                window.location.replace("index.html")
+            },
+            error: function () {
+                console.log("Error in sethh")
+            },
+            dataType: "json"
+        });
+    }
 }
 
 function getUserFromId(id, handleData){
@@ -157,22 +184,11 @@ function callModal(modalContent) {
 }
 
 function swapContent(bodyContent) {
+    updateCurrentHousehold();
     $(".page-wrapper").load(bodyContent);
-}
-
-function swapContentRun(bodyContent,functions) {
-    $(".page-wrapper").load(bodyContent);
-    for (var i = 0;i<functions.length;i++){
-        functions[i]();
-    }
 }
 
 function navToShoppingList(shoppingListId){
-    swapContentRun(shoppinglists,[readyShoppingList]);
-    showShoppingListById(shoppingListId);
-}
-
-function swapContentShopping(){
-    swapContentRun(shoppinglists,[readyShoppingList]);
-    showList(0);
+    activeSHL = shoppingListId;
+    swapContent(shoppinglists);
 }
