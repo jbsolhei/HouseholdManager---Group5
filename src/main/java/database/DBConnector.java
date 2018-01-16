@@ -1,9 +1,14 @@
 package database;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import java.beans.PropertyVetoException;
 import java.sql.*;
 
 public class DBConnector implements AutoCloseable {
-    static String url = "jdbc:mysql://mysql.stud.iie.ntnu.no/g_tdat2003_t5?user=g_tdat2003_t5&password=DPiNHSqD&useSSL=true&verifyServerCertificate=false";
+    static String DB_URL = "jdbc:mysql://mysql.stud.iie.ntnu.no/g_tdat2003_t5?user=g_tdat2003_t5&password=DPiNHSqD&useSSL=true&verifyServerCertificate=false";
+    private static ComboPooledDataSource pool = null;
+
     private Connection conn;
 
     /**
@@ -11,9 +16,34 @@ public class DBConnector implements AutoCloseable {
      */
     public DBConnector () {
         try {
-            conn = DriverManager.getConnection(url);
-        } catch (Exception e) {
+            if (pool == null) {
+                setUpPool();
+            }
+
+            conn = pool.getConnection();
+        }
+        catch (Exception e) {
             CleanUp.writeMessage(e, "DBConnector constructor");
+        }
+    }
+
+    private static void setUpPool() throws SQLException {
+        try {
+            System.setProperty("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
+            System.setProperty("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "OFF");
+
+            pool = new ComboPooledDataSource();
+            pool.setDriverClass("com.mysql.jdbc.Driver");
+            pool.setJdbcUrl(DB_URL);
+
+            pool.setMinPoolSize(0);
+            pool.setMaxPoolSize(30);
+            pool.setAcquireIncrement(5);
+            pool.setMaxStatementsPerConnection(30);
+        }
+        catch (PropertyVetoException e) {
+            CleanUp.writeMessage(e, "DBConnector.setUpPool()");
+            throw new SQLException("Can't set up ComboPooledDataSource", e);
         }
     }
 
