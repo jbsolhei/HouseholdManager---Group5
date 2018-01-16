@@ -3,7 +3,7 @@
  */
 var numberOfItems = 0;
 var numberOfDeleteItems = 0;
-var activeTab = 0;
+var activeTab;
 var newItems = []; // [shoppinglist[item]]
 var deleteItems = [];
 var numberOfLists;
@@ -12,19 +12,22 @@ var itemsTab = [];
 var SHL;
 
 function readyShoppingList(){
-    console.log("ReadyShoppingList() started");
+    updateCurrentHousehold();
     SHL = getCurrentHousehold().shoppingLists;
     numberOfLists = SHL.length;
-    $.each(SHL, function(i,val){
-        insertShoppingLists(i,val.name);
-    });
+    console.log("6: JS updates currentHousehold. numOfLists: " + numberOfLists + ". activeSHL: " + activeSHL + ". SHL.length: " + SHL.length);
+    console.log("JS insertsShoppingLists");
+    insertShoppingLists();
     $("#shoppingList" + activeTab).addClass("active");
-    console.log("readyShoppingList() ended");
     showList(activeSHL);
 }
 
-function insertShoppingLists(SHLIndex, shoppingListName){
-    $("#shoppingSideMenu").append('<li onclick="showList(' + SHLIndex + ')" id="shoppingList' + SHLIndex + '"><a>' + shoppingListName + '</a></li>');
+function insertShoppingLists(){
+    var inputString;
+    $.each(SHL, function(i,val){
+        inputString += '<li onclick="showList(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
+    });
+    $("#shoppingSideMenu").html(inputString);
 }
 
 function additem() {
@@ -55,7 +58,7 @@ function deleteItem(itemNumber){
 }
 
 function showList(SLIndex){
-    console.log("showList() for list #"+SLIndex + " started.");
+    console.log("7: showList() for list #"+SLIndex + " started.");
     if(newItems.length != 0 || deleteItems.length != 0) {
         saveChanges();
     }
@@ -76,7 +79,7 @@ function showList(SLIndex){
     activeTab = SLIndex;
     activeSHL = SLIndex;
     console.log(activeTab);
-    console.log("showList() for list #"+SLIndex + " ended.");
+    console.log("8: showList() for list #"+SLIndex + " ended.");
 }
 
 function createNewList(name){
@@ -112,7 +115,9 @@ function deleteList(){
 }
 
 function okButton(){
+    console.log("1: okButton pressed, previous numOfLists: " + numberOfLists);
     numberOfLists += 1;
+    console.log("2: Current number of lists: " + numberOfLists);
     var name = document.getElementById("headlineInput").value;
     document.getElementById("headlineInput").value = "";
     $("#headline").removeClass("hide");
@@ -126,9 +131,13 @@ function okButton(){
     activeTab = numberOfLists;
 
     addNewList(name);
+    console.log("5: JS updates activeSHL.");
+    activeSHL = SHL[numberOfLists-1];
+    readyShoppingList();
 }
 
 function addNewList(name){
+    console.log("3: addNewList() starts. Name: " + name);
     $.ajax({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/',
@@ -136,9 +145,10 @@ function addNewList(name){
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("List successfully added to database")
+            console.log("List successfully added to database");
         }
     });
+    console.log("4: addNewList() is done.");
 }
 
 function saveChanges(){
