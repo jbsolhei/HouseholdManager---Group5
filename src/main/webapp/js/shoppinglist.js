@@ -25,18 +25,6 @@ function readyShoppingList(){
         $("#" + activeTab).addClass("active");
     });
 }
-/*$(document).ready(function(){
-    console.log("current household: " + getCurrentHousehold().houseId);
-    $.get("res/household/" + householdId + "/shopping_lists", function (SL) {
-        numberOfLists = SL.length;
-        for(var i = 0; i < SL.length; i++){
-            shoppingLists[i] = SL[i];
-            insertShoppingLists(i, shoppingLists[i].name)
-        }
-        $("#" + activeTab).addClass("active");
-        showList(0);
-    });
-});*/
 
 function insertShoppingLists(shoppingListIndex, shoppingListName){
     $("#sideMenu").append('<li onclick="showList(' + shoppingListIndex + ')" id="' + shoppingListIndex + '"><a>' + shoppingListName + '</a></li>');
@@ -102,7 +90,7 @@ function showShoppingListById(listId){
 
 function createNewList(name){
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-    $("#emptyListText").removeClass("hide");
+    $("#emptyListText").removeClass("hide");email
     $("#headline").addClass("hide");
     $("#headlineInput").removeClass("hide");
     $("#headlineInput").focus();
@@ -197,6 +185,10 @@ function saveChanges(){
 }
 
 function updateUsers(users) {
+    $("td").each(function (index) {
+        console.log( index + ": " + $( this ).text() );
+    })
+    /*
     $.ajax({
         type: 'POST',
         url: 'res/household/' + 1 + '/shopping_lists/' + activeTab +'/users',
@@ -208,6 +200,7 @@ function updateUsers(users) {
             console.log("List successfully added to database")
         }
     });
+    */
 }
 
 function getUsers() {
@@ -221,18 +214,14 @@ function getUsers() {
         contentType: "application/json; charset=utf-8",
         success: function(users){
             console.log(users);
+            console.log(allUsers);
             for (var i = 0; i<allUsers.length; i++) {
-                for (var j = 0; j<users.length; j++) {
-                    if (users[i].userId === allUsers[i].userId) {
-                        $("#inList").append('<tr><td class="glyphicon glyphicon-check"></td></tr>');
-                        break;
-                    } else {
-                        $("#inList").append('<tr><td class="glyphicon glyphicon-unchecked"></td></tr>');
-                    }
-                }
-                for (i = 0; i<allUsers.length; i++) {
-                    $("#inList").append('<tr><td id="' + allUsers[i].userId + '">' + allUsers[i].name + '</td></tr>')
-                }
+                var userId = allUsers[i].userId;
+                $("#inList").append('<tr><td id="uniqueUserId_'+ userId +'" onclick="checkUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td><td>"' + allUsers[i].name + '"</td></tr>');
+            }
+            for (var i = 0; i<users.length; i++) {
+                console.log(users[i].userId);
+                $("#uniqueUserId_" + users[i].userId).replaceWith('<td id="uniqueUserId_' + users[i].userId +'" onclick="uncheckUser('+ users[i].userId +')" class="glyphicon glyphicon-check"></td>')
             }
         },
         error: function(data) {
@@ -242,6 +231,18 @@ function getUsers() {
         dataType: "json"
     });
 }
+
+function checkUser(userId) {
+    console.log("check user:" + userId);
+    $("#uniqueUserId_" + userId).replaceWith('<td id="uniqueUserId_' + userId +'" onclick="uncheckUser('+ userId +')" class="glyphicon glyphicon-check"></td>')
+}
+
+function uncheckUser(userId) {
+    console.log("uncheck user:" + userId);
+    $("#uniqueUserId_" + userId).replaceWith('<td id="uniqueUserId_' + userId +'" onclick="checkUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td>')
+}
+
+$("#unchecked" + itemNumber).replaceWith('<span onclick="unCheck(' + itemNumber + ')" name="checked" id="checked' + itemNumber + '" class="glyphicon glyphicon-check"></span>');
 
 function editUsers() {
     console.log("clicked");
