@@ -5,7 +5,7 @@
 }
 
 .profile_panel_heading{
-    font-size: x-large;
+    font-size: large;
     font-family: Calibri;
 }
 
@@ -15,6 +15,10 @@
     overflow-y: scroll;
     overflow-x: hidden;
 
+}
+
+.membertable{
+    width: 100%;
 }
 
 .long-scroll-panel-2{
@@ -64,7 +68,7 @@
 .page-wrapper{
     margin-top: 1%;
     margin-left: 14%;
-    max-height: 93vh;
+    max-height: 88vh;
 }
 
 @media (max-width: 767px) {
