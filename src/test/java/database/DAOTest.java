@@ -22,6 +22,7 @@ public class DAOTest {
     @BeforeClass
     public static void setUp() throws Exception {
         DBConnector.DB_URL = "jdbc:h2:mem:test";
+        DBConnector.USE_CONNECTION_POOLING = false;
         DriverManager.getConnection("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:scripts/databasescript.sql'\\;RUNSCRIPT FROM 'classpath:scripts/testInserts.sql';DB_CLOSE_DELAY=-1;");
     }
 
@@ -37,5 +38,4 @@ public class DAOTest {
         conn.close();
         dbc.close();
     }
-
 }

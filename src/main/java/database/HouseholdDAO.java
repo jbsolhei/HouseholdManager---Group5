@@ -109,6 +109,8 @@ public class HouseholdDAO {
         household.setResidents(members);
         household.setShoppingLists(shoppingLists);
         household.setTodoList(todo);
+        household.setHouseId(id);
+        boolean householdExists = false;
 
         String query = "SELECT house_name, house_address FROM Household WHERE houseId = ?";
 
