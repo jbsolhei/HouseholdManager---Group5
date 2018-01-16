@@ -12,14 +12,12 @@ var itemsTab = [];
 var SHL;
 
 function readyShoppingList(){
-    console.log("ReadyShoppingList() started");
     SHL = getCurrentHousehold().shoppingLists;
     numberOfLists = SHL.length;
     $.each(SHL, function(i,val){
         insertShoppingLists(i,val.name);
     });
     $("#shoppingList" + activeTab).addClass("active");
-    console.log("readyShoppingList() ended");
     showList(activeSHL);
 }
 
@@ -126,6 +124,7 @@ function okButton(){
     activeTab = numberOfLists;
 
     addNewList(name);
+    readyShoppingList();
 }
 
 function addNewList(name){
