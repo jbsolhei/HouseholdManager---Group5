@@ -2,17 +2,13 @@
  * Created by Simen Moen Storvik on 12.01.2018.
  */
 
-var houseId = 1;
-$(document).ready(function() {
-    loadDashboard();
-});
-
 //TODO: Vurdere bruken av lokalt lagrede brukere under opplisting av todos og handlelister mtp på autoriseringsproblemer.
 
 function loadDashboard(){
+    var houseId = getCurrentHousehold().houseId;
+    console.log(houseId);
     printShoppingListsToDashboard(houseId);
     printHouseholdTodosToDashboard(houseId);
-    console.log(getCurrentUser().userId);
 }
 
 function printHouseholdTodosToDashboard(householdId){

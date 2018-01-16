@@ -1,18 +1,18 @@
 /**
  * Created by Simen Moen Storvik on 11.01.2018.
  */
-$(document).ready(function(){
+
+function loadUser(){
     var leif = getCurrentUser();
     printInfoToWall(leif);
     printHouseholdsToWall(leif.userId);
     printTasksToWall(leif.userId);
-});
-
+}
 
 function printInfoToWall(current_user){
-    $("#profile_information_list_name").html(current_user.name);
-    $("#profile_information_list_email").html(current_user.email);
-    $("#profile_information_list_phone").html(current_user.telephone);
+    $("#profile_information_list_name").html(getCurrentUser().name);
+    $("#profile_information_list_email").html(getCurrentUser().email);
+    $("#profile_information_list_phone").html(getCurrentUser().telephone);
 }
 function printHouseholdsToWall(id) {
     getHouseholdsForUser(id, function(data){
