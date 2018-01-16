@@ -115,7 +115,7 @@ function okButton(){
     console.log("1: okButton pressed, previous numOfLists: " + numberOfLists);
     numberOfLists += 1;
     console.log("2: Current number of lists: " + numberOfLists);
-    var name = $("#headlineInput").value;
+    var name = $("#headlineInput").val();
     $("#headlineInput").value = "";
     $("#headline").removeClass("hide");
     $("#headline").replaceWith('<h4 id="headline">' + name + '</h4>');
@@ -135,9 +135,8 @@ function addNewList(name){
     $.ajax({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/',
-        data: JSON.stringify({"name": name}),
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
+        data: name,
+        contentType: 'text/plain',
         success: function () {
             console.log("List successfully added to database");
         }

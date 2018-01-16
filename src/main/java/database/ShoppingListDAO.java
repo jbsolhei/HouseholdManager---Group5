@@ -193,8 +193,8 @@ public class ShoppingListDAO {
      * @param shoppingList
      * @param houseId
      */
-  public static void createShoppingList(ShoppingList shoppingList, int houseId){
-        String name = shoppingList.getName();
+  public static void createShoppingList(String shoppingList, int houseId){
+        String name = shoppingList;
         String query = "INSERT INTO Shopping_list (name, houseId) VALUES (?,?)";
 
         try (DBConnector dbc = new DBConnector();
