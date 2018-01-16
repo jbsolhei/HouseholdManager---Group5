@@ -7,38 +7,30 @@
     <div class="form-group">
         <div class="form-group row">
             <label class="col-xs-2 control-label" for="name" name="namelabel">Name:</label>
-            <div class="col-xs-10">
-                <input type="text" required="required" class="form-control has-feedback" id="name" placeholder="Full name" name="name">
-            </div>
+            <input type="text" required="required" class="col-xs- form-control has-feedback" id="name" placeholder="Full name" name="name">
         </div>
         <div class="form-group row">
             <label class="col-xs-2 control-label"for="telephone">Telephone:</label>
-            <div class="col-xs-10">
-                <input type="number" class="form-control" id="telephone" placeholder="Telephone number" name="telephone">
-            </div><br>
+            <input type="number" class="col-xs-9 form-control" id="telephone" placeholder="Telephone number" name="telephone">
+            <br>
         </div>
         <div class="form-group row">
             <label class="col-xs-2 control-label" for="email1">Email:</label>
-            <div class="col-xs-10">
-                <input type="email" class="form-control" id="email1" placeholder="Email" name="email">
-            </div>
+            <input type="email" class="col-xs-10 form-control" id="email1" placeholder="Email" name="email">
         </div>
         <div class="form-group row">
             <label class="col-xs-2 control-label" for="pwd">Password:</label>
-            <div class="col-xs-10">
-                <input type="password" class="form-control" id="pwd" placeholder="Password" name="pwd">
-            </div>
+            <input type="password" class="col-xs-10 form-control" id="pwd" placeholder="Password" name="pwd">
         </div>
         <div class="form-group row">
-            <label class="col-xs-2 control-label" for="pwd2">Confirm password:</label>
-            <div class="col-xs-10">
-                <input type="password" class="form-control" id="pwd2" placeholder="Password (again)" name="pwd2">
-            </div>
+            <input type="password" class="col-xs-10 form-control" id="pwd2" placeholder="Password (again)" name="pwd2">
         </div>
     </div>
 </div>
 <div class="modal-footer">
-    <p id="alertbox"></p>
-    <button type="button" onclick="submitNewUser()" class="btn btn-primary">Confirm</button>
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <div class="form-group row">
+        <button id="confirmCreateUserButton" type="button" onclick="submitNewUser()" class="btn btn-primary">Confirm</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <p id="alertbox"></p>
+    </div>
 </div>

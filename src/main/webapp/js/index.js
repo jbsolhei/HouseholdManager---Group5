@@ -27,6 +27,7 @@ function checkSession(){
         type: "GET",
         error: function (e) {
             if (e.status == 401){
+                window.localStorage.clear();
                 window.location.replace("login.html")
             }
         }
@@ -188,7 +189,6 @@ function swapContent(bodyContent) {
 }
 
 function navToShoppingList(shoppingListId){
-    console.log("navToShoppinglist() for " + shoppingListId);
     activeSHL = shoppingListId;
     swapContent(shoppinglists);
 }
