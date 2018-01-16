@@ -7,6 +7,8 @@ var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
 
+var activeSHL = 0;
+
 function ajaxAuth(attr) {
     attr.headers = {
         Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
@@ -53,7 +55,7 @@ function getCurrentHousehold() {
     return JSON.parse(window.localStorage.getItem("house"));
 }
 
-function updateCurrentHousehold(){
+function updateCurrentHousehold(bodyContent){
     var id = getCurrentHousehold().houseId;
     ajaxAuth({
         url:"res/household/"+id,
@@ -61,6 +63,9 @@ function updateCurrentHousehold(){
         contentType: "application/json; charser=utf-8",
         success: function(data) {
             window.localStorage.setItem("house", JSON.stringify(data));
+            if (bodyContent!==undefined){
+                $(".page-wrapper").load(bodyContent);
+            }
         },
         dataType: "json"
     });
@@ -182,11 +187,11 @@ function callModal(modalContent) {
 }
 
 function swapContent(bodyContent) {
-    updateCurrentHousehold();
-    $(".page-wrapper").load(bodyContent);
+    updateCurrentHousehold(bodyContent);
+
 }
 
 function navToShoppingList(shoppingListId){
+    activeSHL = shoppingListId;
     swapContent(shoppinglists);
-    showShoppingListById(shoppingListId);
 }

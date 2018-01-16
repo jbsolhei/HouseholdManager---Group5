@@ -4,37 +4,26 @@
 var numberOfItems = 0;
 var numberOfDeleteItems = 0;
 var activeTab = 0;
-var householdId = 1;
-var shoppingLists = [];
 var newItems = []; // [shoppinglist[item]]
 var deleteItems = [];
-var numberOfLists = 0;
+var numberOfLists;
 var itemsTab = [];
 
 var SHL;
 
 function readyShoppingList(){
-        /*$.each(SL, function(i,val){
-            shoppingLists[i] = val;
-            insertShoppingLists(i,shoppingLists[i]);
-        });*/
-        /*for(var i = 0; i < SL.length; i++){
-            shoppingLists[i] = SL[i];
-            insertShoppingLists(i, shoppingLists[i].name);
-        }
-        $("#" + activeTab).addClass("active");*/
+    console.log("ReadyShoppingList() started");
     SHL = getCurrentHousehold().shoppingLists;
-    console.log(SHL);
+    numberOfLists = SHL.length;
     $.each(SHL, function(i,val){
         insertShoppingLists(i,val.name);
-        console.log(val);
     });
     $("#shoppingList" + activeTab).addClass("active");
-    showList(1);
+    console.log("readyShoppingList() ended");
+    showList(activeSHL);
 }
 
 function insertShoppingLists(SHLIndex, shoppingListName){
-    console.log("SHL list name: " + shoppingListName + ", SHLIndex: " + SHLIndex);
     $("#shoppingSideMenu").append('<li onclick="showList(' + SHLIndex + ')" id="shoppingList' + SHLIndex + '"><a>' + shoppingListName + '</a></li>');
 }
 
@@ -50,8 +39,8 @@ function additem() {
     document.getElementById("item").focus();
 }
 
-function check(itemNumber){
-    $("#unchecked" + itemNumber).replaceWith('<span onclick="unCheck(' + itemNumber + ')" name="checked" id="checked' + itemNumber + '" class="glyphicon glyphicon-ok"></span>');
+function check(itemId){
+    $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-ok"></span>');
 }
 
 function unCheck(itemNumber){
@@ -66,35 +55,28 @@ function deleteItem(itemNumber){
 }
 
 function showList(SLIndex){
+    console.log("showList() for list #"+SLIndex + " started.");
     if(newItems.length != 0 || deleteItems.length != 0) {
         saveChanges();
     }
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-    $.get("res/household/" + householdId + "/shopping_lists/" + SHL[SLIndex].shoppingListId + "/items", function (items) {
-
-        if(items.length == 0){
-            $("#emptyListText").removeClass("hide");
-        } else {
-            $("#emptyListText").addClass("hide");
-            for (var i = 0; i < items.length; i++) {
-                itemsTab[i] = items[i].itemId;
-                $("#newItem").append('<tr id="item' + items[i].itemId + '"><td><span onclick="check(' + items[i].itemId + ')" id="unchecked' + items[i].itemId + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + items[i].name + '</td><td><span onclick="deleteItem(' + items[i].itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
-            }
-        }
-        $("#headline").replaceWith('<h4 id="headline">' + getCurrentHousehold().shoppingLists[SLIndex].name + '</h4>');
-        $("#item").focus();
-        $("#" + activeTab).removeClass("active");
-        $("#" + SLIndex).addClass("active");
-        activeTab = SLIndex;
-    });
+    var listItems = SHL[SLIndex].items;
+    if(listItems.length===0){
+        $("#emptyListText").removeClass("hide");
+    }else{
+        $("#emptyListText").addClass("hide");
+        $.each(listItems,function(i,val){
+            itemsTab[i] = val.itemId;
+            $("#newItem").append('<tr id="item' + itemsTab[i] + '"><td><span onclick="check(' + itemsTab[i] + ')" id="unchecked' + itemsTab[i] + '" class="glyphicon glyphicon-asterisk"></span></td><td>' + val.name + '</td><td><span onclick="deleteItem(' + itemsTab[i] + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+        });
+    }$("#headline").replaceWith('<h4 id="headline">' + SHL[SLIndex].name + '</h4>');
+    $("#item").focus();
+    $("#shoppingList" + activeTab).removeClass("active");
+    $("#shoppingList" + SLIndex).addClass("active");
+    activeTab = SLIndex;
+    activeSHL = SLIndex;
     console.log(activeTab);
-}
-function showShoppingListById(listId){
-    for(var i = 0; i<SHL.length;i++){
-        if(SHL[i].shoppingListId===listId){
-            showList(i);
-        }
-    }
+    console.log("showList() for list #"+SLIndex + " ended.");
 }
 
 function createNewList(name){
@@ -204,4 +186,3 @@ $("#headlineInput").keyup(function(event){
         $("#okButton").click();
     }
 });
-
