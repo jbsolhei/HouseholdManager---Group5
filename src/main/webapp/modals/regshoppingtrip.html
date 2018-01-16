@@ -9,45 +9,45 @@
             <div class="col-md-6">
                 <div>
                     <h4>Name</h4>
-                    <input id="tripname">
+                    <input class="form-control" placeholder="Shopping trip name" id="tripname">
                 </div>
                 <br>
-                <div class="container-fluid">
-                    <h4>Who's paying?</h4>
-                    <div class="panel panel-default">
-                        <div class="checkbox" id="members">
+            </div>
+            <div class="col-md-6">
+                <h4>SUM</h4>
+                <input id="trip-sum" placeholder="$$$" type="number" class="input form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Who's paying?</h4>
+                <div class="panel panel-default">
+                    <div class="checkbox" id="members">
 
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="container-fluid">
-                    <h4>Attatch shopping list?</h4>
-                    <div class="form-group">
-                        <label for="sel1">Select list:</label>
-                        <select class="form-control" id="sel1">
-
-                        </select>
-                    </div>
-                    <br>
-                    <h4>Comments:</h4>
-                    <textarea id="trip-comments" style="width: 100%;height: 10vh;resize: none;"></textarea>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="container-fluid" style="padding-top: 2vh;">
-                        <label>SUM</label>
-                        <input id="trip-sum" type="number" class="input">
+                <div class="row">
+                    <div class="container-fluid">
+                        <h4>Attatch shopping list?</h4>
+                        <div class="form-group">
+                            <select class="form-control" id="sel1"></select>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <h4>Comments:</h4>
+            <textarea id="trip-comments" class="form-control container-fluid" rows="2"></textarea>
+        </div>
     </div>
 </div>
+
 <div class="modal-footer">
-    <button type="button" onclick="addShoppingTrip()" class="btn btn-default" data-dismiss="modal">Register shopping trip</button>
+    <button type="button" onclick="addShoppingTrip()" class="btn btn-primary" data-dismiss="modal">Register shopping trip</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>
 <script>
     createPage();

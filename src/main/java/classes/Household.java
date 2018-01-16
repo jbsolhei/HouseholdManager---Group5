@@ -6,7 +6,7 @@ public class Household {
     private User[] residents;
     private User[] admins;
     private ShoppingList[] shoppingLists;
-    private TodoList todoList;
+    private Todo[] todo;
 
     private int houseId;
 
@@ -28,8 +28,8 @@ public class Household {
         return shoppingLists;
     }
 
-    public TodoList getTodoList() {
-        return todoList;
+    public Todo[] getTodoList() {
+        return todo;
     }
 
     public User[] getAdmins() {
@@ -56,8 +56,8 @@ public class Household {
         this.shoppingLists = shoppingLists;
     }
 
-    public void setTodoList(TodoList todoList) {
-        this.todoList = todoList;
+    public void setTodoList(Todo[] todoList) {
+        this.todo = todoList;
     }
 
     public int getHouseId() {

@@ -5,14 +5,21 @@
     <div class="row content">
         <div class="col-sm-3">
             <div class="panel panel-default">
-                <div class="panel-heading"><h4>Your shopping lists</h4></div>
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <h4>Shopping lists</h4>
+                        </div>
+                        <div class="col-xs-2">
+                            <a data-toggle="modal" onclick="createNewList('ThisIsANewList')" data-target="#theModal" class="btn btn-md pull-right">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <div class="panel-body long-scroll-panel">
                     <ul id="shoppingSideMenu" class="nav nav-pills nav-stacked">
                     </ul>
-                    <a onclick="createNewList('ThisIsANewList')" class="btn btn-md">
-                        <span class="glyphicon glyphicon-plus"></span> Create new list
-                    </a>
-                    <br><br>
 
                 </div>
                 <div class="panel-footer">

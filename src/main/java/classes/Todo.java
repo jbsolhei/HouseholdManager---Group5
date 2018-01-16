@@ -7,7 +7,7 @@ public class Todo {
     private Date date;
     private boolean done;
     private int houseId;
-    private int userId;
+    private User user;
     private int taskId;
 
     public Todo(){}
@@ -52,11 +52,11 @@ public class Todo {
         this.taskId = taskId;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User userId) {
+        this.user = user;
     }
 }
