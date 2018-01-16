@@ -98,15 +98,16 @@ function deleteList(){
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("List successfully deleted from database")
-
-            SHL[activeSHL] = null;
+            if(activeSHL!==0)activeSHL--;
+            navToShoppingList(activeSHL);
+            /*SHL[activeSHL] = null;
             $("#" + activeSHL).remove();
             for(var i = 0; i < SHL.length; i++){
                 if(SHL[i] != null){
                     showList(i);
                     i = SHL.length +1;
                 }
-            }
+            }*/
         }
     });
 }
