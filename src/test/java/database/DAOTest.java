@@ -21,7 +21,7 @@ public class DAOTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        DBConnector.url = "jdbc:h2:mem:test";
+        DBConnector.DB_URL = "jdbc:h2:mem:test";
         DriverManager.getConnection("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:scripts/databasescript.sql'\\;RUNSCRIPT FROM 'classpath:scripts/testInserts.sql';DB_CLOSE_DELAY=-1;");
     }
 
