@@ -36,7 +36,7 @@ public class DBConnector implements AutoCloseable {
             pool.setDriverClass("com.mysql.jdbc.Driver");
             pool.setJdbcUrl(DB_URL);
 
-            pool.setMinPoolSize(3);
+            pool.setMinPoolSize(0);
             pool.setMaxPoolSize(30);
             pool.setAcquireIncrement(5);
             pool.setMaxStatementsPerConnection(30);
