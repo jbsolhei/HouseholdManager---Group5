@@ -17,17 +17,18 @@ function printInfoToWall(current_user){
 }
 function printHouseholdsToWall(id) {
     getHouseholdsForUser(id, function(data){
-        $.each(data,function (i, val) {
+        for (var i=0;i<data.length;i++){
+            var val = data[i];
             var admins = val.admins;
             var isAdmin = "No";
-            $.each(admins, function(j, adm){
-                if(id===adm.userId){
+            for (var j=0;j<admins.length;j++){
+                if(id===admins[j].userId){
                     isAdmin="Yes";
                 }
-            });
+            }
             var inputString = "<tr><td>" + val.name + "</td><td>" + val.address + "</td><td>"+isAdmin+"</td></tr>";
             $("#profile_households_table_body").append(inputString);
-        });
+        }
     });
 }
 

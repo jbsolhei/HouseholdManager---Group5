@@ -6,7 +6,6 @@ jdk:
 
 cache:
   directories:
-  - .autoconf
   - $HOME/.m2
 
 script: "mvn cobertura:cobertura"
