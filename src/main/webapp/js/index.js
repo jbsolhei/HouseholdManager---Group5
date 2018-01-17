@@ -85,8 +85,13 @@ function setCurrentHousehold(hid) {
             success: function (data) {
                 if (data.length>0) {
                     window.localStorage.setItem("house", JSON.stringify(data[0]));
+                    window.location.replace("index.html");
                 }
-                window.location.replace("index.html")
+                else {
+                    callModal("modals/addHousehold.html");
+
+                    $("#theModal").modal();
+                }
             },
             error: function () {
                 console.log("Error in sethh")
@@ -103,7 +108,7 @@ function setCurrentHousehold(hid) {
                 window.location.replace("index.html")
             },
             error: function () {
-                console.log("Error in sethh")
+                console.log("Error in sethh");
             },
             dataType: "json"
         });
