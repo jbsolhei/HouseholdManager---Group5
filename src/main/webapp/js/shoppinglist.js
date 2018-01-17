@@ -40,7 +40,7 @@ function additem() {
     document.getElementById("item").focus();
 }
 
-function check(itemId) {
+function check(itemId){
     $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-check"></span>');
 }
 
@@ -56,8 +56,6 @@ function deleteItem(itemNumber){
 }
 
 function showList(SLIndex){
-    console.log("7: showList() for list #"+SLIndex + " started.");
-    console.log(SHL);
     if(newItems.length != 0 || deleteItems.length != 0) {
         saveChanges();
     }
@@ -68,15 +66,14 @@ function showList(SLIndex){
     }else{
         $("#emptyListText").addClass("hide");
         $.each(listItems,function(i,val){
-            itemsTab[i] = val.itemId;
-            $("#newItem").append('<tr id="item' + itemsTab[i] + '"><td><span onclick="check(' + itemsTab[i] + ')" id="unchecked' + itemsTab[i] + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td><span onclick="deleteItem(' + itemsTab[i] + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+            if(val.checkedBy===null)checkedBy="";
+            $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
         });
     }$("#headline").replaceWith('<h4 id="headline">' + SHL[SLIndex].name + '</h4>');
     $("#item").focus();
     $("#shoppingList" + activeSHL).removeClass("active");
     $("#shoppingList" + SLIndex).addClass("active");
     activeSHL = SLIndex;
-    console.log("8: showList() for list #"+SLIndex + " ended.");
 }
 
 function createNewList(name){
@@ -98,15 +95,8 @@ function deleteList(){
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("List successfully deleted from database")
-
-            SHL[activeSHL] = null;
-            $("#" + activeSHL).remove();
-            for(var i = 0; i < SHL.length; i++){
-                if(SHL[i] != null){
-                    showList(i);
-                    i = SHL.length +1;
-                }
-            }
+            if(activeSHL!==0)activeSHL--;
+            navToShoppingList(activeSHL);
         }
     });
 }
@@ -186,7 +176,6 @@ function updateUsers() {
         usersIds.push(id);
     });
     console.log(JSON.stringify({'userids': usersIds}));
-
     $.ajax({
         type: 'POST',
         url: 'res/household/' + hh.houseId + '/shopping_list/' + SHL[activeSHL].shoppingListId +'/users',
@@ -205,14 +194,11 @@ function updateUsers() {
 function getUsers() {
     var hh = getCurrentHousehold();
     var allUsers = hh.residents;
-    console.log(hh.houseId + " " + SHL[activeSHL].shoppingListId);
     ajaxAuth({
         url: 'res/household/' + hh.houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId,
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function(users){
-            console.log(users);
-            console.log(allUsers);
             for (var i = 0; i<allUsers.length; i++) {
                 var userId = allUsers[i].userId;
                 $("#inList").append('<tr><td id="uniqueUserId_'+ userId +'" onclick="checkUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td><td>' + allUsers[i].name + '</td></tr>');
