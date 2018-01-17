@@ -6,7 +6,7 @@ var numberOfDeleteItems = 0;
 var newItems = []; // [shoppinglist[item]]
 var deleteItems = [];
 var numberOfLists;
-var itemsTab = [];
+var currentItemList;
 
 var SHL;
 
@@ -29,15 +29,25 @@ function insertShoppingLists(){
 }
 
 function additem() {
-    var newItem = document.getElementById("item").value;
-    if(newItem != "" && newItem != null) {
-        newItems[numberOfItems] = newItem;
-        numberOfItems += 1;
+    var newItem = $("#shoppingListItemInput").val();
+    if(newItem !== "" && newItem != null) {
+        /*newItems[numberOfItems] = newItem;
+        numberOfItems += 1;*/
         $("#emptyListText").addClass("hide");
-        $("#newItem").append('<tr id="item' + numberOfItems + '"><td><span onclick="check(' + numberOfItems + ')" id="unchecked' + numberOfItems + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + newItem + '</td><td><span onclick="deleteItem(' + numberOfItems + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
-        document.getElementById("item").value = "";
+        console.log("This item gets the ID: " + currentItemList.length);
+        $("#newItem").append('<tr id="item' + currentItemList.length+ '"><td><span onclick="check(' + currentItemList.length + ')" id="unchecked' + currentItemList.length + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + newItem + '</td><td id="checkedBy'+currentItemList.length+'"></td><td><span onclick="deleteItem(' + currentItemList.length + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+        $("#shoppingListItemInput").text("");
     }
-    document.getElementById("item").focus();
+    /*$.ajax({
+        type: 'POST',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId + "/items",
+        data: JSON.stringify({'name': newItems[j], 'checkedBy': null}),
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function () {
+            console.log("Items successfully saved in database");
+        }
+    });*/
 }
 
 function check(itemId){
@@ -51,26 +61,37 @@ function unCheck(itemNumber){
 function deleteItem(itemNumber){
     $("#item" + itemNumber).remove();
     console.log(itemNumber);
-    deleteItems[numberOfDeleteItems] = itemNumber;
-    numberOfDeleteItems += 1;
+    /*deleteItems[numberOfDeleteItems] = itemNumber;
+    numberOfDeleteItems += 1;*/
+    $.ajax({
+        type: "DELETE",
+        url: "res/household/"+getCurrentHousehold().houseId +"/shopping_lists/"+SHL[activeSHL].shoppingListId+"/items/"+currentItemList[itemNumber].itemId,
+        success: function(){
+            console.log("Item #" + currentItemList[itemNumber].itemId + ", with local number: " + itemNumber + " deleted.");
+        }
+    });
+    navToShoppingList(activeSHL);
 }
 
 function showList(SLIndex){
-    if(newItems.length != 0 || deleteItems.length != 0) {
+    currentItemList = [];
+    if(newItems.length !== 0 || deleteItems.length !== 0) {
         saveChanges();
     }
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-    var listItems = SHL[SLIndex].items;
-    if(listItems.length===0){
+    console.log("SLIndex: " + SLIndex);
+    currentItemList = SHL[SLIndex].items;
+    console.log("Length of current itemlist: " + currentItemList.length);
+    if(currentItemList.length===0){
         $("#emptyListText").removeClass("hide");
     }else{
         $("#emptyListText").addClass("hide");
-        $.each(listItems,function(i,val){
+        $.each(currentItemList,function(i, val){
             if(val.checkedBy===null)checkedBy="";
-            $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+            $("#newItem").append('<tr id="item' + i + '"><td><span onclick="check(' + i + ')" id="unchecked' + i + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td id="checkedBy'+i+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + i + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
         });
     }$("#headline").replaceWith('<h4 id="headline">' + SHL[SLIndex].name + '</h4>');
-    $("#item").focus();
+    $("#shoppingListItemInput").focus();
     $("#shoppingList" + activeSHL).removeClass("active");
     $("#shoppingList" + SLIndex).addClass("active");
     activeSHL = SLIndex;
@@ -90,7 +111,7 @@ function createNewList(name){
 function deleteList(){
     $.ajax({
         type: 'DELETE',
-        url: 'res/household/' + 1 + '/shopping_lists/' + SHL[activeSHL].shoppingListId,
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId,
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
@@ -112,7 +133,7 @@ function okButton(){
     $("#headlineInput").addClass("hide");
     $("#okButton").addClass("hide");
     $("#sideMenu").append('<li onclick="showList(' + numberOfLists + ')" id="shoppingList' + numberOfLists + '"><a>' + name + '</a></li>');
-    $("#item").focus();
+    $("#shoppingListItemInput").focus();
     $("#" + numberOfLists).addClass("active");
     addNewList(name);
     console.log("5: JS updates activeSHL.");
@@ -151,20 +172,12 @@ function saveChanges(){
     }
     for (var i = 0; i < deleteItems.length; i++) {
         if(deleteItems[i] != null) {
-            $.ajax({
-                type: 'DELETE',
-                url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId + "/items/" + deleteItems[i],
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function () {
-                    console.log("Items successfully deleted in database");
-                }
-            });
+
         }
     }
-
     newItems = [];
     deleteItems = [];
+    numberOfDeleteItems = 0;
 }
 
 function updateUsers() {
@@ -232,7 +245,7 @@ function editUsers() {
 }
 
 /* Make it so that you can use the 'enter'-key to add items*/
-$("#item").keyup(function(event) {
+$("#shoppingListItemInput").keyup(function(event) {
     if (event.keyCode === 13) {
         $("#additem").click();
     }
