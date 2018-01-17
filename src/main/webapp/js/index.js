@@ -8,11 +8,6 @@ var news = "dashboard.html";
 var profile = "profile.html";
 var activeSHL = 0;
 
-
-$(document).ready(function() {
-    addHouseholdsToList(getCurrentUser().userId);
-});
-
 function ajaxAuth(attr) {
     attr.headers = {
         Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
@@ -45,7 +40,9 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
-            setCurrentHousehold(0)
+            if (window.localStorage.getItem("welcome")!==null) {
+                setCurrentHousehold(JSON.parse(window.localStorage.getItem("welcome")).houseId)
+            }
         },
         dataType: "json"
     });
@@ -122,8 +119,16 @@ function getHouseholdFromId(id,handleData){
     });
 }
 
+function checkWelcome() {
+    if (window.localStorage.getItem("welcome")!==null){
+        window.localStorage.removeItem("welcome");
+        callModal("modals/welcome.html");
+        $("#theModal").modal();
+    }
+}
+
 function logout() {
-    console.log("clicked")
+    console.log("clicked");
     window.localStorage.clear();
     window.location.replace("OpeningPage.html");
 }
