@@ -19,20 +19,9 @@
         </div>
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Shoppinglists</div>
+                <div class="panel-heading" onclick="navToShoppingList(0)">Shoppinglists</div>
                 <div class="panel-body long-scroll-panel-2">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Num of items</th>
-                            <th>Num of users</th>
-                        </tr>
-                        </thead>
-                        <tbody id="dashboard_shopping_list_table_body">
-
-                        </tbody>
-                    </table>
+                    <ul id="dashboard_shopping_list_unordered_list" class="list-group"></ul>
                 </div>
             </div>
         </div>

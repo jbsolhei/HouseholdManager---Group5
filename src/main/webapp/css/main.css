@@ -99,6 +99,22 @@ th, td {
     padding: 10px;
 }
 
+#add_shopping_list_btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.equal .panel-default>.panel-heading:hover {
+    background-color: #0f0f0f;
+    color: #f7f7f7;
+    cursor: pointer;
+}
+
+#dashboard_shopping_list_unordered_list .list-group-item:hover {
+    background-color: #0f0f0f;
+    color: #f7f7f7;
+    cursor: pointer;
+}
 
 
 

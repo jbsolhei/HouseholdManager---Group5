@@ -59,7 +59,6 @@ public class ShoppingListService {
 
     @DELETE
     @Path("/{id}/shopping_lists/{shopping_list_id}/items/{itemId}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public void deleteItem(@PathParam("shopping_list_id") int shopping_list_id, @PathParam("itemId") int itemId){
         ShoppingListDAO.deleteItem(shopping_list_id, itemId);
     }
@@ -69,5 +68,13 @@ public class ShoppingListService {
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateUsers(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, String[] userIds) {
         ShoppingListDAO.updateUsers(userIds, shopping_list_id);
+    }
+
+    @POST
+    @Path("/shopping_lists/items/{itemId}/user/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean updateCheckedBy(@PathParam("itemId") int itemId , int userId) {
+        int rs = ShoppingListDAO.updateCheckedBy(userId, itemId);
+        return rs >= 0;
     }
 }

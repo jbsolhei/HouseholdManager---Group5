@@ -8,7 +8,7 @@ function loadDashboard(){
     var house = getCurrentHousehold();
     if (house!==undefined) {
         printShoppingListsToDashboard(house.houseId);
-        printHouseholdTodosToDashboard(house.houseId);
+        printHouseholdTodosToDashboard(house);
     }
 }
 
@@ -38,30 +38,21 @@ function printHouseholdTodosToDashboard(id){
     });
 }
 
-function printShoppingListsToDashboard(id) {
-    ajaxAuth({
-        url: "res/household/"+id+"/shopping_lists",
-        type: "GET",
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-            if (data!==null) {
-                var house = JSON.parse(window.localStorage.getItem("house"));
-                house.shoppingLists = data;
-                window.localStorage.setItem("house",JSON.stringify(house));
-                console.log(window.localStorage.getItem("house"));
-                for (var i = 0; i < data.length; i++) {
-                    var current = data[i];
-                    var inputString = "<tr>\n" +
-                        "<td onclick='navToShoppingList(" + i + ")'>" + current.name + "</td>\n" +
-                        "<td>" + current.items.length + "</td>\n" +
-                        "<td>" + current.users.length + "</td>\n" +
-                        "</tr>";
-                    //TODO: the onClick() navigates to the shoppingList body, but doesn't load the selected shoppingList.
-                    $("#dashboard_shopping_list_table_body").append(inputString);
-                }
-            }
-        },
-        dataType: "json"
-    });
-
+function printShoppingListsToDashboard(house) {
+    if (house.shoppingLists!==null) {
+        for (var i = 0; i < house.shoppingLists.length; i++) {
+            var current = house.shoppingLists[i];
+            var inputSting = "<li onclick='navToShoppingList(" + i + ")' class='list-group-item'>" + current.name + "</li>";
+            /*
+            var inputString = "<tr>\n" +
+                "<td onclick='navToShoppingList(" + i + ")'>" + current.name + "</td>\n" +
+                "<td>" + current.items.length + "</td>\n" +
+                "<td>" + current.users.length + "</td>\n" +
+                "</tr>";
+            //TODO: the onClick() navigates to the shoppingList body, but doesn't load the selected shoppingList.
+            $("#dashboard_shopping_list_table_body").append(inputString);
+            */
+            $("#dashboard_shopping_list_unordered_list").append(inputSting);
+        }
+    }
 }
