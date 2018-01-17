@@ -151,7 +151,7 @@ function getTasksForUser(userId, handleData){
 function logout() {
     console.log("clicked")
     window.localStorage.clear();
-    window.location.replace("login.html");
+    window.location.replace("OpeningPage.html");
 }
 
 //Adds the user's households to the dropdown
