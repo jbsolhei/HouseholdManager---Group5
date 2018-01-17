@@ -35,7 +35,7 @@ function printShoppingListsToDashboard(house) {
     if (house.shoppingLists!==null) {
         for (var i = 0; i < house.shoppingLists.length; i++) {
             var current = house.shoppingLists[i];
-            var inputSting = "<li onclick='navToShoppingList(" + i + ")'>" + current.name + "</li>";
+            var inputSting = "<li onclick='navToShoppingList(" + i + ")' class='list-group-item'>" + current.name + "</li>";
             /*
             var inputString = "<tr>\n" +
                 "<td onclick='navToShoppingList(" + i + ")'>" + current.name + "</td>\n" +
