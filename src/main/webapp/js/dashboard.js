@@ -19,7 +19,7 @@ function printHouseholdTodosToDashboard(id){
         type: "GET",
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
-            if (data !== null&&data!==undefined) {
+            if (data !== null && data !==undefined) {
                 for (var i = 0; i < data.length; i++) {
                     var current = data[i];
                     if (current.user === undefined || current.user === null) {
@@ -42,7 +42,7 @@ function printHouseholdTodosToDashboard(id){
 }
 
 function printShoppingListsToDashboard(house) {
-    if (house.shoppingLists!==null) {
+    if (house.shoppingLists!==null&&house.shoppingLists!==undefined) {
         for (var i = 0; i < house.shoppingLists.length; i++) {
             var current = house.shoppingLists[i];
             var inputSting = "<li onclick='navToShoppingList(" + i + ")' class='list-group-item'>" + current.name + "</li>";
