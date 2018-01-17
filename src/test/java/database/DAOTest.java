@@ -12,7 +12,8 @@ import java.sql.Statement;
 @Suite.SuiteClasses({
         UserDAOTest.class,
         HouseholdDAOTest.class,
-        ShoppingListDAOTest.class
+        ShoppingListDAOTest.class,
+        ShoppingTripDAOTest.class
 })
 
 public class DAOTest {
