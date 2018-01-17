@@ -316,6 +316,32 @@ public class ShoppingListDAO {
         }
     }
 
+    public static int updateCheckedBy(int userId, int itemId) {
+        String query;
+        if (userId == 0) {
+            query = "UPDATE Item SET checkedBy = NULL WHERE itemId = ?";
+        } else {
+            query = "UPDATE Item SET checkedBy = ? WHERE itemId = ?";
+        }
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            if (userId == 0) {
+                st.setInt(1, itemId);
+            } else {
+                st.setInt(1, userId);
+                st.setInt(2, itemId);
+            }
+
+            return st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 
     private static User[] toUserArray(ArrayList<User> users) {
         User[] userArray = new User[users.size()];
@@ -389,5 +415,12 @@ public class ShoppingListDAO {
         } catch (SQLException e) {
             System.out.println("Error in preparing statement\n\n" + e.getMessage());
         }
+    }
+
+    public static void main (String[] args) {
+        int userId = 0; //joakim
+        int itemId = 58; //tacoskjell
+        int rowsAffected = ShoppingListDAO.updateCheckedBy(userId, itemId);
+        System.out.println("stop");
     }
 }
