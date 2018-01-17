@@ -40,10 +40,12 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
-            if (window.localStorage.getItem("welcome")!==null) {
-                setCurrentHousehold(JSON.parse(window.localStorage.getItem("welcome")).houseId)
+            var hid = JSON.parse(window.localStorage.getItem("welcome")).houseId;
+            if (hid>0&&hid!==null&&hid!==undefined) {
+                setCurrentHousehold(hid)
+            } else {
+                setCurrentHousehold(0);
             }
-            setCurrentHousehold(0);
         },
         dataType: "json"
     });
