@@ -109,7 +109,12 @@
     cursor: pointer;
 }
 
-#currentHouseholdId:hover, #logoutId:hover, #myPageId:hover, #expandSidebarButtonId:hover {
+#currentHouseholdId:hover, #logoutId:hover, #myPageId:hover {
+    cursor: pointer;
+    background-color: #162B32;
+}
+
+#expandSidebarButtonId:hover {
     cursor: pointer;
 }
 
