@@ -67,6 +67,7 @@
         <link href="css/sidebar.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
+        <link href="css/widgetStyle.css" rel="stylesheet">
         <script src="js/jquery.min.js"></script>
         <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
@@ -89,7 +90,8 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" onclick="swapContent(profile)">Meg</a>
+                    <a id="sideBarBrandId" class="navbar-brand">
+                    </a>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mobileNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -113,26 +115,27 @@
                                 <li data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#"><strong>New Household</strong></a></li>
                             </ul>
                         </li>
-                        <li><a onclick="logout()">Logout</a></li>
+                        <li><a id="logoutId" onclick="logout()">Logout</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- navbar end -->
         <!-- sidebar -->
-        <nav class="sidebar hidden-xs">
+        <nav id="sideBarId" class="sidebar hidden-xs">
             <ul class="list-unstyled components">
-                <li><a onclick="swapContent(dashboard)" class="btn btn-default btn-sidebar">Dashboard</a></li>
-                <li><a onclick="swapContent(household)" class="btn btn-default btn-sidebar">Household</a></li>
-                <li><a onclick="swapContent(shoppinglists)" class="btn btn-default btn-sidebar">Shopping lists</a></li>
-                <li><a onclick="swapContent(shoppingtrips)" class="btn btn-default btn-sidebar">Shopping trip</a></li>
-                <li><a onclick="swapContent(todo)" class="btn btn-default btn-sidebar">To Do</a></li>
-                <li><a onclick="swapContent(statistics)" class="btn btn-default btn-sidebar">Statistics</a></li>
-                <li><a onclick="swapContent(news)" class="btn btn-default btn-sidebar">News</a></li>
+                <li><a onclick="swapContent(dashboard), closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
+                <li><a onclick="swapContent(household, closeNav())" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
+                <li><a onclick="swapContent(shoppinglists), closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
+                <li><a onclick="swapContent(shoppingtrips), closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trip</a></li>
+                <li><a onclick="swapContent(todo),closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
+                <li><a onclick="swapContent(statistics), closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
+                <li><a onclick="swapContent(news), closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
+                <li><a class="navbar-brand" onclick="swapContent(profile)" style="max-width: 50%"><img src="images/HHM_logo.png" style="height:150%; display:inline-block;"></a></li>
             </ul>
         </nav>
     </div>
-    <div class="page-wrapper pre-scrollable"> <!-- Innholdet her byttes ut med js for hver side -->
+    <div class="page-wrapper"> <!-- Innholdet her byttes ut med js for hver side -->
         <!-- innhold -->
         <!-- /innhold -->
     </div>
@@ -145,10 +148,41 @@
     </div>
     </body>
     <script>
+
+        var sideBarOpen = false;
+
         $(function() {
             setInterval(checkSession, 20000);
             swapContent(dashboard);
         });
+
+        if ($(window).width() < 800) {
+            $("#sideBarBrandId").html('<img src="images/HHM_logo.png" style="height:150%; display:inline-block;">');
+        } else {
+            $("#sideBarBrandId").html('<span id="expandSidebarButtonId" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>');
+        }
+
+        function openNav() {
+            sideBarOpen = true;
+            $("#sideBarId").css('width', '250px');
+            $(".page-wrapper").css('margin-left', '250px');
+            $("#sideBarBrandId").html('<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>');
+        }
+
+        function closeNav() {
+            sideBarOpen = false;
+            $("#sideBarId").css('width', '0px');
+            $(".page-wrapper").css('margin-left', '0px');
+            $("#sideBarBrandId").html('<span id="expandSidebarButtonId" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>');
+        }
+
+        $(document).mouseup(function () {
+            if (sideBarOpen) {
+                console.log("MORDI");
+                closeNav();
+            }
+        });
+
     </script>
 
     <style>
