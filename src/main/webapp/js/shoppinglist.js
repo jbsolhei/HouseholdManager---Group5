@@ -36,18 +36,19 @@ function additem() {
         $("#emptyListText").addClass("hide");
         console.log("This item gets the ID: " + currentItemList.length);
         $("#newItem").append('<tr id="item' + currentItemList.length+ '"><td><span onclick="check(' + currentItemList.length + ')" id="unchecked' + currentItemList.length + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + newItem + '</td><td id="checkedBy'+currentItemList.length+'"></td><td><span onclick="deleteItem(' + currentItemList.length + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
-        $("#shoppingListItemInput").text("");
+        $("#shoppingListItemInput").val("");
     }
-    /*$.ajax({
+    $.ajax({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId + "/items",
-        data: JSON.stringify({'name': newItems[j], 'checkedBy': null}),
+        data: JSON.stringify({'name': newItem, 'checkedBy': null}),
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("Items successfully saved in database");
+            navToShoppingList(activeSHL);
         }
-    });*/
+    });
 }
 
 function check(itemId){
@@ -84,14 +85,15 @@ function unCheck(itemId){
 
 function deleteItem(itemNumber){
     $("#item" + itemNumber).remove();
-    console.log(itemNumber);
+    console.log("Item to be deleted: "+itemNumber);
     /*deleteItems[numberOfDeleteItems] = itemNumber;
     numberOfDeleteItems += 1;*/
+    console.log(currentItemList);
     $.ajax({
         type: "DELETE",
-        url: "res/household/"+getCurrentHousehold().houseId +"/shopping_lists/"+SHL[activeSHL].shoppingListId+"/items/"+currentItemList[itemNumber].itemId,
+        url: "res/household/"+getCurrentHousehold().houseId +"/shopping_lists/"+SHL[activeSHL].shoppingListId+"/items/"+itemNumber,
         success: function(){
-            console.log("Item #" + currentItemList[itemNumber].itemId + ", with local number: " + itemNumber + " deleted.");
+            console.log("Item #" + itemNumber + " deleted.");
         }
     });
     navToShoppingList(activeSHL);
@@ -110,7 +112,7 @@ function showList(SLIndex){
         $("#emptyListText").removeClass("hide");
     }else{
         $("#emptyListText").addClass("hide");
-        $.each(listItems,function(i,val){
+        $.each(currentItemList,function(i,val){
             console.log(typeof val.checkedBy);
             var checkedBy;
             if(val.checkedBy === null) {
