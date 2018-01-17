@@ -7,8 +7,8 @@
 function loadDashboard(){
     var house = getCurrentHousehold();
     if (house!==undefined) {
-        printShoppingListsToDashboard(house.houseId);
-        printHouseholdTodosToDashboard(house);
+        printShoppingListsToDashboard(house);
+        printHouseholdTodosToDashboard(house.houseId);
     }
 }
 

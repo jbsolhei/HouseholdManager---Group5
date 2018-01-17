@@ -24,22 +24,8 @@ function printHouseholdsToWall(id) {
             if (data!==null&&data!==undefined){
                 for (var i=0;i<data.length;i++){
                     var val = data[i];
-                    var inputString = "<tr><td>" + val.name + "</td><td>" + val.address + "</td><td>No</td></tr>";
-                    $("#profile_households_table_body").append(inputString);
-                }
-            }
-        },
-        dataType: "json"
-    });
-    ajaxAuth({
-        url: "res/user/"+id+"/hh",
-        type: "GET",
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-            if (data!==null&&data!==undefined){
-                for (var i=0;i<data.length;i++){
-                    var val = data[i];
-                    var inputString = "<tr><td>" + val.name + "</td><td>" + val.address + "</td><td>No</td></tr>";
+                    var isAdmin = "No";
+                    var inputString = "<tr><td>" + val.name + "</td><td>" + val.address + "</td><td>"+isAdmin+"</td></tr>";
                     $("#profile_households_table_body").append(inputString);
                 }
             }
