@@ -78,14 +78,19 @@ FOREIGN KEY (checkedBy) REFERENCES Person(UserId),
 FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId),
 CONSTRAINT item_pk PRIMARY KEY (itemId));
 
-CREATE TABLE Shopping_tour (
-expence INTEGER,
-comment VARCHAR(100),
-shopping_listId INTEGER NOT NULL,
-userId INTEGER NOT NULL,
-CONSTRAINT shopping_tour_pk PRIMARY KEY(shopping_listId, userId),
+CREATE TABLE Shopping_trip (
+shopping_tripId int(11) NOT NULL AUTO_INCREMENT,
+expence varchar(45) NOT NULL,
+shopping_tripName varchar(100) NOT NULL,
+shopping_tripDate date NOT NULL,
+comment varchar(100) NOT NULL,
+userId int(11) NOT NULL,
+houseId int(11) NOT NULL,
+shopping_listId int(11) DEFAULT NULL,
+CONSTRAINT shopping_trip_pk PRIMARY KEY(shopping_tripId),
 FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId),
-FOREIGN KEY (userId) REFERENCES Person(userId));
+FOREIGN KEY (userId) REFERENCES Person(userId),
+FOREIGN KEY (houseId) REFERENCES Household(houseId));
 
 CREATE TABLE Finance(
 fromPerson INTEGER NOT NULL,
@@ -101,3 +106,10 @@ shopping_listId INTEGER NOT NULL,
 CONSTRAINT user_shopping_list_pk PRIMARY KEY(userId, shopping_listId),
 FOREIGN KEY (userId) REFERENCES Person(userId),
 FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId));
+
+CREATE TABLE User_Shopping_trip(
+userId INTEGER NOT NULL,
+shopping_tripId INTEGER NOT NULL,
+CONSTRAINT user_shopping_trip_pk PRIMARY KEY(userId, shopping_tripId),
+FOREIGN KEY (userId) REFERENCES Person(userId),
+FOREIGN KEY (shopping_tripId) REFERENCES Shopping_trip(shopping_tripId));
