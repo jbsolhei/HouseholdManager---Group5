@@ -91,7 +91,7 @@ public class HouseHoldService {
     @GET
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}/users")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public User[] getMembers(@PathParam("id") int id) {
         return HouseholdDAO.getMembers(id);
     }
@@ -99,7 +99,7 @@ public class HouseHoldService {
     @GET
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}/tasks")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Todo[] getTodosForHousehold(@PathParam("id") int id){
         return HouseholdDAO.getTodosForHousehold(id);
     }

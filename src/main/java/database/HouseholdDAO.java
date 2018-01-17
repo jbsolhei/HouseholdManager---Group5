@@ -10,7 +10,7 @@ import java.util.Base64;
 public class HouseholdDAO {
 
     /**
-     * Used to create a new user in the database from a User object.
+     * Used to create a new household in the database from a household object.
      *
      * @param newHouseHold the household object
      * @return The id of the new Household. -1 If something went wrong.
@@ -100,12 +100,12 @@ public class HouseholdDAO {
      * @return Household the household object
      */
     public static Household getHousehold(int id) {
-        String name;
-        String address;
+        ArrayList<User> users = new ArrayList<>();
+        ArrayList<User> admins = new ArrayList<>();
 
         boolean householdExists = false;
 
-        String query = "SELECT house_name, house_address FROM Household WHERE houseId = ?";
+        String query = "SELECT * FROM (House_user NATURAL JOIN Person) NATURAL JOIN Household WHERE Household.houseId = ?";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -113,28 +113,33 @@ public class HouseholdDAO {
 
             st.setInt(1, id);
             try (ResultSet rs = st.executeQuery()) {
-                if (rs.next()) {
-                    User[] members = getMembers(id);
-                    User[] admins = getAdmins(id);
-                    ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(id);
-                    Todo[] todo = getTodosForHousehold(id);
-
-                    Household household = new Household();
-                    household.setAdmins(admins);
-                    household.setResidents(members);
-                    household.setShoppingLists(shoppingLists);
-                    household.setTodoList(todo);
-                    household.setHouseId(id);
-
-                    name = rs.getString("house_name");
-                    address = rs.getString("house_address");
-                    household.setHouseId(id);
-                    household.setName(name);
-                    household.setAddress(address);
-
-
-                    return household;
+                Household household = new Household();
+                while (rs.next()) {
+                    household.setName(rs.getString("house_name"));
+                    household.setAddress(rs.getString("house_address"));
+                    User toAdd = new User();
+                    toAdd.setName(rs.getString("name"));
+                    toAdd.setEmail(rs.getString("email"));
+                    toAdd.setUserId(rs.getInt("userId"));
+                    toAdd.setTelephone(rs.getString("telephone"));
+                    users.add(toAdd);
+                    if (rs.getBoolean("isAdmin")){
+                        admins.add(toAdd);
+                    }
                 }
+                household.setHouseId(id);
+                User[] userList = new User[users.size()];
+                for (int i = 0; i < users.size(); i++) {
+                    userList[i] = users.get(i);
+                }
+                household.setResidents(userList);
+                User[] adminList = new User[admins.size()];
+                for (int i = 0; i < admins.size(); i++) {
+                    adminList[i] = admins.get(i);
+                }
+                household.setAdmins(adminList);
+                household.setShoppingLists(ShoppingListDAO.getShoppingLists(id));
+                return household;
             }
 
         } catch (SQLException e) {
