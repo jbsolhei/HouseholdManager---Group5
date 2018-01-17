@@ -73,7 +73,7 @@ public class ShoppingListService {
 
     @POST
     @Path("/shopping_lists/items/{itemId}/user/")
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
     public boolean updateCheckedBy(@PathParam("itemId") int itemId , int userId) {
         int rs = ShoppingListDAO.updateCheckedBy(userId, itemId);
         return rs >= 0;

@@ -40,7 +40,8 @@ function additem() {
     document.getElementById("item").focus();
 }
 
-function check(itemId){
+function check(itemId, userId){
+    
     $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-check"></span>');
 }
 
