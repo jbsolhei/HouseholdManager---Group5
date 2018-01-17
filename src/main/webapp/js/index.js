@@ -116,7 +116,18 @@ function getHouseholdsForUser(userId, handleData){
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function(data){
-            console.log(data);
+            handleData(data);
+        },
+        dataType: "json"
+    });
+}
+
+function getAdminIds(houseId, handleData){
+    ajaxAuth({
+        url:"res/household/"+houseId+"/admins",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
             handleData(data);
         },
         dataType: "json"
