@@ -10,6 +10,6 @@ CamillaBranch: [![Build Status](https://travis-ci.org/StamosUltra/HouseholdManag
 
 potetBranch: [![Build Status](https://travis-ci.org/StamosUltra/HouseholdManager---Group5.svg?branch=potetBranch)](https://travis-ci.org/StamosUltra/HouseholdManager---Group5)
 
-Ole_work: [![Build Status](https://travis-ci.org/StamosUltra/HouseholdManager---Group5.svg?branch=Ole_work)](https://travis-ci.org/StamosUltra/HouseholdManager---Group5)
+ole_work: [![Build Status](https://travis-ci.org/StamosUltra/HouseholdManager---Group5.svg?branch=ole_work)](https://travis-ci.org/StamosUltra/HouseholdManager---Group5)
 
 Magnus-work: [![Build Status](https://travis-ci.org/StamosUltra/HouseholdManager---Group5.svg?branch=Magnus-work)](https://travis-ci.org/StamosUltra/HouseholdManager---Group5)
