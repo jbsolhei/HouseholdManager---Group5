@@ -2,17 +2,15 @@
  * Created by camhl on 1/11/2018.
  */
 
-var numberOfLists;
+var numberOfLists = 0;
 var currentItemList;
 
 var SHL;
 
 function readyShoppingList(){
     SHL = getCurrentHousehold().shoppingLists;
-    if (SHL!==undefined&&SHL!==null) {
-        numberOfLists = SHL.length;
-        console.log("6: JS updates currentHousehold. numOfLists: " + numberOfLists + ". activeSHL: " + activeSHL + ". SHL.length: " + SHL.length);
-        console.log("JS insertsShoppingLists");
+    if(SHL!==null&&SHL!==undefined)numberOfLists = SHL.length;
+    if(numberOfLists>0){
         insertShoppingLists();
         $("#shoppingList" + activeSHL).addClass("active");
         showList(activeSHL);

@@ -6,6 +6,7 @@
 
 function loadDashboard(){
     var house = getCurrentHousehold();
+    console.log(house);
     if (house!==undefined) {
         printShoppingListsToDashboard(house);
         printHouseholdTodosToDashboard(house.houseId);
@@ -33,6 +34,8 @@ function printHouseholdTodosToDashboard(id){
                         "</tr>";
                     $("#dashboard_todos_table_body").append(inputString);
                 }
+            }else{
+                $("#dashboard_todos_table_body").append("There are no todos for this household.");
             }
         }
     });
