@@ -254,7 +254,7 @@ public class UserDAO {
 
                 while (rs.next()) {
                     userExists = true;
-                    households.add(HouseholdDAO.getHouseholdIdAndName(rs.getInt("houseId")));
+                    households.add(HouseholdDAO.getHousehold(rs.getInt("houseId")));
 
                 }
             }
