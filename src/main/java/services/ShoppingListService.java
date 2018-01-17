@@ -59,7 +59,6 @@ public class ShoppingListService {
 
     @DELETE
     @Path("/{id}/shopping_lists/{shopping_list_id}/items/{itemId}")
-    @Consumes(MediaType.APPLICATION_JSON)
     public void deleteItem(@PathParam("shopping_list_id") int shopping_list_id, @PathParam("itemId") int itemId){
         ShoppingListDAO.deleteItem(shopping_list_id, itemId);
     }
