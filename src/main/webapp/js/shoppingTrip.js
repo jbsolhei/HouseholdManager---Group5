@@ -27,7 +27,7 @@ function getShoppingTrips() {
 function viewShoppingTrips(data) {
     $("#shoppingtrips").html("");
     for(var i=0; i<data.length; i++) {
-        $("#shoppingtrips").append("<li class='' onclick='viewInformation("+data[i].shoppingTripId+", "+i+")' id="+i+"><a>"+data[i].name+"</a></li>");
+        $("#shoppingtrips").append("<li class='' onclick='viewInformation("+data[i].shoppingTripId+", "+i+")' id='tab-"+i+"'><a>"+data[i].name+"</a></li>");
     }
     $("#"+activeTab).addClass("active");
     viewInformation(data[0].shoppingTripId, 0);
@@ -44,9 +44,9 @@ function viewInformation(shoppingTripId, i) {
         error: function (result) {
         }
     });
-    $("#" + activeTab).removeClass("active");
+    $("#tab-" + activeTab).removeClass("active");
     console.log(i);
-    $("#" + i).addClass("active");
+    $("#tab-" + i).addClass("active");
     activeTab = i;
 }
 function updateInformation(result) {
