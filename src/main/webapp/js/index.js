@@ -110,30 +110,6 @@ function setCurrentHousehold(hid) {
     }
 }
 
-function getHouseholdsForUser(userId, handleData){
-    ajaxAuth({
-        url:"res/user/"+userId+"/hh",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            handleData(data);
-        },
-        dataType: "json"
-    });
-}
-
-function getAdminIds(houseId, handleData){
-    ajaxAuth({
-        url:"res/household/"+houseId+"/admins",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            handleData(data);
-        },
-        dataType: "json"
-    });
-}
-
 function getHouseholdFromId(id,handleData){
     ajaxAuth({
         url: "res/household/"+id,
@@ -142,20 +118,6 @@ function getHouseholdFromId(id,handleData){
         success: function (data) {
             handleData(data);
         },
-        dataType: "json"
-    });
-}
-
-function getTasksForUser(userId, handleData){
-    ajaxAuth({
-        url:"res/user/"+userId+"/tasks",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            console.log("getTasksForUser(), profile.html");
-            handleData(data);
-        },
-        error: console.log("Error in getTasksForUser"),
         dataType: "json"
     });
 }
