@@ -6,15 +6,18 @@ var numberOfItems = 0;
 
 function getShoppingTrips() {
     ajaxAuth({
-        url: "res/shoppingtrip/"+1,//Må byttes ut med currentHousehold!!!!
+        url: "res/shoppingtrip/"+getCurrentHousehold().houseId,//Må byttes ut med currentHousehold!!!!
         type: 'get',
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         success: function(data) {
             console.log(data);
-            numberOfItems = data.length;
-            viewShoppingTrips(data);
-
+            if (data!==null&&data!==undefined) {
+                numberOfItems = data.length;
+                if (numberOfItems!==0) {
+                    viewShoppingTrips(data);
+                }
+            }
         },
         error: function(result) {
         }

@@ -9,12 +9,14 @@ var SHL;
 
 function readyShoppingList(){
     SHL = getCurrentHousehold().shoppingLists;
-    numberOfLists = SHL.length;
-    console.log("6: JS updates currentHousehold. numOfLists: " + numberOfLists + ". activeSHL: " + activeSHL + ". SHL.length: " + SHL.length);
-    console.log("JS insertsShoppingLists");
-    insertShoppingLists();
-    $("#shoppingList" + activeSHL).addClass("active");
-    showList(activeSHL);
+    if (SHL!==undefined&&SHL!==null) {
+        numberOfLists = SHL.length;
+        console.log("6: JS updates currentHousehold. numOfLists: " + numberOfLists + ". activeSHL: " + activeSHL + ". SHL.length: " + SHL.length);
+        console.log("JS insertsShoppingLists");
+        insertShoppingLists();
+        $("#shoppingList" + activeSHL).addClass("active");
+        showList(activeSHL);
+    }
 }
 
 function insertShoppingLists(){
