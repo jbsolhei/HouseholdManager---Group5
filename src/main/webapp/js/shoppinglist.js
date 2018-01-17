@@ -2,19 +2,19 @@
  * Created by camhl on 1/11/2018.
  */
 
-var numberOfLists;
+var numberOfLists = 0;
 var currentItemList;
 
 var SHL;
 
 function readyShoppingList(){
     SHL = getCurrentHousehold().shoppingLists;
-    numberOfLists = SHL.length;
-    console.log("6: JS updates currentHousehold. numOfLists: " + numberOfLists + ". activeSHL: " + activeSHL + ". SHL.length: " + SHL.length);
-    console.log("JS insertsShoppingLists");
-    insertShoppingLists();
-    $("#shoppingList" + activeSHL).addClass("active");
-    showList(activeSHL);
+    if(SHL!==null&&SHL!==undefined)numberOfLists = SHL.length;
+    if(numberOfLists>0){
+        insertShoppingLists();
+        $("#shoppingList" + activeSHL).addClass("active");
+        showList(activeSHL);
+    }
 }
 
 function insertShoppingLists(){
