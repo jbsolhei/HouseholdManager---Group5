@@ -93,6 +93,10 @@
     #sideBarBrandId {
         display: none; !important;
     }
+
+    html {
+        font-size: 10px; !important;
+    }
 }
 
 #fancyLogoId420BlazeIt {
@@ -102,6 +106,16 @@
 #currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId {
     color: white;
     font-size: 17px;
+    cursor: pointer;
+}
+
+#currentHouseholdId:hover, #logoutId:hover, #myPageId:hover {
+    cursor: pointer;
+    background-color: #162B32;
+}
+
+#expandSidebarButtonId:hover {
+    cursor: pointer;
 }
 
 .img-circle {
@@ -144,7 +158,13 @@ th, td {
     color: #fff;
 }
 
+.container-fluid {
+    height: 100%;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     background-color: #e9ebee;
+    font-size: 17px;
+    letter-spacing: 1px;
 }
