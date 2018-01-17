@@ -1,36 +1,36 @@
-<div class="modal-header">
+<div class="modal-header divclass">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     <h4 class="modal-title">Create new user</h4>
 </div>
-<div class="modal-body">
+<div class="modal-body divclass">
     <p class="text-primary">Please fill in all the forms to successfully create a new user.</p>
-    <div class="form-group">
-        <div class="form-group row">
+    <div class="form-group divclass">
+        <div class="form-group row ">
             <label class="col-xs-2 control-label" for="name" name="namelabel">Name:</label>
             <input type="text" required="required" class="col-xs- form-control has-feedback" id="name" placeholder="Full name" name="name">
         </div>
-        <div class="form-group row">
+        <div class="form-group row ">
             <label class="col-xs-2 control-label"for="telephone">Telephone:</label>
             <input type="number" class="col-xs-9 form-control" id="telephone" placeholder="Telephone number" name="telephone">
             <br>
         </div>
-        <div class="form-group row">
+        <div class="form-group row ">
             <label class="col-xs-2 control-label" for="email1">Email:</label>
             <input type="email" class="col-xs-10 form-control" id="email1" placeholder="Email" name="email">
         </div>
-        <div class="form-group row">
+        <div class="form-group row ">
             <label class="col-xs-2 control-label" for="pwd">Password:</label>
             <input type="password" class="col-xs-10 form-control" id="pwd" placeholder="Password" name="pwd">
         </div>
-        <div class="form-group row">
+        <div class="form-group row ">
             <input type="password" class="col-xs-10 form-control" id="pwd2" placeholder="Password (again)" name="pwd2">
         </div>
     </div>
 </div>
-<div class="modal-footer">
-    <div class="form-group row">
+<div class="modal-footer divclass">
+    <div class="form-group row divclass">
+        <p id="alertbox"></p>
         <button id="confirmCreateUserButton" type="button" onclick="submitNewUser()" class="btn btn-primary">Confirm</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <p id="alertbox"></p>
     </div>
 </div>
