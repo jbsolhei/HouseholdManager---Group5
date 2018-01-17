@@ -8,27 +8,34 @@ function loadDashboard(){
     var house = getCurrentHousehold();
     if (house!==undefined) {
         printShoppingListsToDashboard(house);
-        printHouseholdTodosToDashboard(house);
+        printHouseholdTodosToDashboard(house.houseId);
     }
 }
 
-function printHouseholdTodosToDashboard(house){
-    if (house.todoList!==null) {
-        for (var i = 0; i < house.todoList.length; i++) {
-            var current = house.todoList[i];
-            if (current.user === undefined || current.user === null) {
-                var name = "None";
-            } else {
-                var name = current.user.name;
+function printHouseholdTodosToDashboard(id){
+    ajaxAuth({
+        url: "res/household/" + id + "/tasks",
+        type: "GET",
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            if (data !== null) {
+                for (var i = 0; i < data.length; i++) {
+                    var current = data[i];
+                    if (current.user === undefined || current.user === null) {
+                        var name = "None";
+                    } else {
+                        var name = current.user.name;
+                    }
+                    var inputString = "<tr>\n" +
+                        "<td>" + current.description + "</td>" +
+                        "<td>" + current.date + "</td>" +
+                        "<td>" + name + "</td>" +
+                        "</tr>";
+                    $("#dashboard_todos_table_body").append(inputString);
+                }
             }
-            var inputString = "<tr>\n" +
-                "<td>" + current.description + "</td>" +
-                "<td>" + current.date + "</td>" +
-                "<td>" + name + "</td>" +
-                "</tr>";
-            $("#dashboard_todos_table_body").append(inputString);
         }
-    }
+    });
 }
 
 function printShoppingListsToDashboard(house) {
