@@ -38,3 +38,6 @@ INSERT INTO Task (date, time, description, taskId, houseId, userId) VALUES ('201
 INSERT INTO Task (date, time, description, taskId, houseId, userId) VALUES ('2018-01-21', '11:00:00', 'Vask gulvet', 110, 1, 1);
 INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (10, 'Dagligvarer', 10);
 INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (11, 'Fredagstaco', 1);
+
+INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test', '2014-10-12', '', 50, 1, NULL );
+INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test2', '2015-10-12', '', 50, 1, NULL );
