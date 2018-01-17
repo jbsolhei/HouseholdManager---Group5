@@ -57,20 +57,24 @@ function getCurrentHousehold() {
 }
 
 function updateCurrentHousehold(bodyContent){
-    var id = getCurrentHousehold().houseId;
-    ajaxAuth({
-        url:"res/household/"+id,
-        type: "GET",
-        contentType: "application/json; charser=utf-8",
-        success: function(data) {
-            window.localStorage.setItem("house", JSON.stringify(data));
-            if (bodyContent!==undefined){
-                $(".page-wrapper").load(bodyContent);
+    if (getCurrentHousehold()!==undefined&&getCurrentHousehold()!==undefined) {
+        var id = getCurrentHousehold().houseId;
+        ajaxAuth({
+            url: "res/household/" + id,
+            type: "GET",
+            contentType: "application/json; charser=utf-8",
+            success: function (data) {
+                window.localStorage.setItem("house", JSON.stringify(data));
+                if (bodyContent !== undefined) {
+                    $(".page-wrapper").load(bodyContent);
 
-            }
-        },
-        dataType: "json"
-    });
+                }
+            },
+            dataType: "json"
+        });
+    } else {
+        setCurrentHousehold(0);
+    }
 }
 
 function setCurrentHousehold(hid) {
