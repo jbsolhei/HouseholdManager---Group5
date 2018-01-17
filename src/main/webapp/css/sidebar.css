@@ -5,10 +5,14 @@
     z-index: 999;
     top: 0;
     left: 0;
-    background-color: #00415a;
+    background-color: #233237;
     overflow-x: hidden;
     transition: 0.2s;
     padding-top: 60px;
+}
+
+#currentHouseholdId:focus {
+    background-color: #337ab7;
 }
 
 .sidebar {
@@ -19,8 +23,7 @@
     color: #9d9d9d;
 }
 
-body {
-    font-family: "Lato", sans-serif;
+html  {
     transition: background-color .2s;
 }
 

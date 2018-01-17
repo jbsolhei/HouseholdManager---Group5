@@ -186,14 +186,14 @@ function addHouseholdsToList(userId) {
         dataType: "json"
     });
 
-    $("#currentHouseholdId").text(getCurrentHousehold().name);
+    $("#currentHouseholdId").html(getCurrentHousehold().name + ' <span class="caret"></span>');
 }
 
 //Sets the chosen household to current household.
 $(document).on('click', '.householdElement', function () {
     var houseId = $(this).attr('id');
     setCurrentHousehold(houseId);
-    $("#currentHouseholdId").text($(this).text());
+    $("#currentHouseholdId").html($(this).text() + ' <span class="caret"></span>');
 });
 
 function callModal(modalContent) {

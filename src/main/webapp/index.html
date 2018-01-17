@@ -67,6 +67,7 @@
         <link href="css/sidebar.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
         <link href="css/widgetStyle.css" rel="stylesheet">
 
         <script src="js/jquery.min.js"></script>
@@ -90,6 +91,7 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a id="sideBarBrandId" class="navbar-brand">
+                        <span id="expandSidebarButtonId" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
                     </a>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mobileNavbar">
                         <span class="icon-bar"></span>
@@ -114,6 +116,7 @@
                                 <li data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#"><strong>New Household</strong></a></li>
                             </ul>
                         </li>
+                        <li><a id="myPageId" onclick="swapContent(profile)">My Page</a></li>
                         <li><a id="logoutId" onclick="logout()">Logout</a></li>
                     </ul>
                 </div>
@@ -154,12 +157,6 @@
             swapContent(dashboard);
         });
 
-        if ($(window).width() < 800) {
-            $("#sideBarBrandId").html('<img src="images/HHM_logo.png" style="height:150%; display:inline-block;">');
-        } else {
-            $("#sideBarBrandId").html('<span id="expandSidebarButtonId" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>');
-        }
-
         function openNav() {
             sideBarOpen = true;
             $("#sideBarId").css('width', '250px');
@@ -175,10 +172,7 @@
         }
 
         $(document).mouseup(function () {
-            if (sideBarOpen) {
-                console.log("MORDI");
-                closeNav();
-            }
+            if (sideBarOpen) closeNav();
         });
 
     </script>

@@ -1,9 +1,9 @@
 .panel-default>.panel-heading{
-    background-color: #ff444f;
+    background-color: #984b43;
     font-size: 17px;
     font-weight: bold;
     color: white;
-    letter-spacing: 1.0px;
+    letter-spacing: 1px;
 }
 
 .widget {

@@ -4,11 +4,6 @@
     margin-bottom: 15px;
 }
 
-.styled-heading{
-    font-size: large;
-    font-family: Calibri;
-}
-
 .long-scroll-panel{
     min-height: 65vh;
     max-height: 65vh;
@@ -40,8 +35,8 @@
 }
 
 .btn-sidebar, .sidebar, .navbar, a.navbar-brand {
-    background-color: #6ad3e8;
-    border-color: #6ad3e8;
+    background-color: #233237;
+    border-color: #233237;
     color: white;
 }
 
@@ -65,7 +60,19 @@
     margin-top: 1%;
     max-height: 88vh;
     transition: 0.2s;
+}
 
+.panel.panel-default{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.long-scroll-panel-2, .long-scroll-panel-3, .long-scroll-panel{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
 }
 
 @media (max-width: 767px) {
@@ -78,9 +85,21 @@
         min-height: 20vh;
         overflow-y: scroll;
     }
+
+    #fancyLogoId420BlazeIt {
+        display: inline-block; !important;
+    }
+
+    #sideBarBrandId {
+        display: none; !important;
+    }
 }
 
-#currentHouseholdId, #logoutId, #expandSidebarButtonId {
+#fancyLogoId420BlazeIt {
+    display: none;
+}
+
+#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId {
     color: white;
     font-size: 17px;
 }
@@ -107,17 +126,16 @@ th, td {
 }
 
 .equal .panel-default>.panel-heading:hover {
-    background-color: #0f0f0f;
-    color: #f7f7f7;
+    background-color: #7D2E26;
     cursor: pointer;
 }
 
 #dashboard_shopping_list_unordered_list .list-group-item:hover {
-    background-color: #0f0f0f;
-    color: #f7f7f7;
+    background-color: #e9ebee;
     cursor: pointer;
 }
 
 body {
-    font-family: Arial;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #e9ebee;
 }
