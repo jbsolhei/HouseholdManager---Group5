@@ -46,22 +46,32 @@ public class HouseHoldService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.TEXT_PLAIN)
     public Response addUserFromInvite(@PathParam("token") String token, String user){
-        int result = HouseholdDAO.addUserFromInvite(token, Integer.parseInt(user));
-        if (result==-1){
+        int invitedHouseId = HouseholdDAO.addUserFromInvite(token, Integer.parseInt(user));
+        HashMap<String, Object> response = new HashMap<>();
+        if (invitedHouseId==-1||invitedHouseId==0){
+            response.put("success", false);
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        HashMap<String, Object> response = new HashMap<>();
         response.put("success", true);
-        response.put("houseId", result);
+        response.put("houseId", invitedHouseId);
         return Response.ok(response).build();
     }
 
     @POST
-    @Auth(AuthType.HOUSEHOLD_ADMIN)
+    @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}/users/invite")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void inviteUsersToHousehold(@PathParam("id") int house, String[] email){
-        HouseholdDAO.inviteUser(house,email);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response inviteUsersToHousehold(@PathParam("id") int house, String[] email){
+        int howManySent = HouseholdDAO.inviteUser(house,email);
+        HashMap<String, Object> response = new HashMap<>();
+        if (howManySent==-1||howManySent==0){
+            response.put("success", false);
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        response.put("success", true);
+        response.put("howManySent", howManySent);
+        return Response.ok(response).build();
     }
 
     @POST
