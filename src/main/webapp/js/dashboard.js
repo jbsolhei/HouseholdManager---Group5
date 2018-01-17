@@ -35,6 +35,8 @@ function printShoppingListsToDashboard(house) {
     if (house.shoppingLists!==null) {
         for (var i = 0; i < house.shoppingLists.length; i++) {
             var current = house.shoppingLists[i];
+            var inputSting = "<li onclick='navToShoppingList(" + i + ")'>" + current.name + "</li>";
+            /*
             var inputString = "<tr>\n" +
                 "<td onclick='navToShoppingList(" + i + ")'>" + current.name + "</td>\n" +
                 "<td>" + current.items.length + "</td>\n" +
@@ -42,6 +44,8 @@ function printShoppingListsToDashboard(house) {
                 "</tr>";
             //TODO: the onClick() navigates to the shoppingList body, but doesn't load the selected shoppingList.
             $("#dashboard_shopping_list_table_body").append(inputString);
+            */
+            $("#dashboard_shopping_list_unordered_list").append(inputSting);
         }
     }
 }
