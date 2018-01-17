@@ -192,22 +192,31 @@ public class ShoppingListDAO {
      * Creates a new shopping list with no items
      * @param shoppingList
      * @param houseId
+     * @return shoppingListId
      */
-  public static void createShoppingList(String shoppingList, int houseId){
+  public static int createShoppingList(String shoppingList, int houseId){
         String name = shoppingList;
         String query = "INSERT INTO Shopping_list (name, houseId) VALUES (?,?)";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
-             PreparedStatement st = conn.prepareStatement(query)) {
+             PreparedStatement st = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             st.setString(1, name);
             st.setInt(2,houseId);
             st.executeUpdate();
 
+            try (ResultSet resultSet = st.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
 
@@ -418,9 +427,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        int userId = 0; //joakim
-        int itemId = 58; //tacoskjell
-        int rowsAffected = ShoppingListDAO.updateCheckedBy(userId, itemId);
+        int rtn = ShoppingListDAO.createShoppingList("BestList", 1);
         System.out.println("stop");
     }
 }

@@ -129,9 +129,22 @@ function createNewList(name){
     $("#headline").addClass("hide");
     $("#headlineInput").removeClass("hide");
     $("#headlineInput").focus();
+    $("#addNewShoppingList").removeClass("hide");
     $("#okButton").removeClass("hide");
+    $("#privateButton").removeClass("hide");
+    $("#edit_shopping_list_btn").addClass("hide");
     //$("#date").replaceWith('<h5 id="date"><span class="glyphicon glyphicon-time"></span> Post by Camilla Larsen' + date + '</h5>');
     $("#" + activeSHL).removeClass("active");
+}
+
+function setPrivate() {
+    var clicked = $("#privateButton").hasClass("has_been_clicked");
+    if (clicked) {
+        $("#privateButton").removeClass("has_been_clicked");
+    }
+    else {
+        $("#privateButton").addClass("has_been_clicked");
+    }
 }
 
 function deleteList(){
@@ -148,34 +161,48 @@ function deleteList(){
     });
 }
 
-function okButton(){
-    console.log("1: okButton pressed, previous numOfLists: " + numberOfLists);
+function addNewShoppingList(){
+    console.log("1: addNewShoppingList pressed, previous numOfLists: " + numberOfLists);
     numberOfLists += 1;
     console.log("2: Current number of lists: " + numberOfLists);
+    console.log('Has been clicked:' + $("#privateButton").hasClass("has_been_clicked"));
     var name = $("#headlineInput").val();
     $("#headlineInput").value = "";
     $("#headline").removeClass("hide");
+    $("#edit_shopping_list_btn").removeClass("hide");
     $("#headline").replaceWith('<h4 id="headline">' + name + '</h4>');
     $("#headlineInput").addClass("hide");
-    $("#okButton").addClass("hide");
+    $("#addNewShoppingList").addClass("hide");
     $("#sideMenu").append('<li onclick="showList(' + numberOfLists + ')" id="shoppingList' + numberOfLists + '"><a>' + name + '</a></li>');
     $("#shoppingListItemInput").focus();
     $("#" + numberOfLists).addClass("active");
-    addNewList(name);
+    var userIds = [];
+    if ($("#privateButton").hasClass("has_been_clicked")) {
+        userIds.push(getCurrentUser().userId);
+        console.log('user: ' + getCurrentUser())
+    } else {
+        users = getCurrentHousehold().residents;
+        for (var i = 0; i<users.length; i++) {
+            userIds.push(users[i].userId)
+        }
+        console.log('user:' + userIds)
+    }
+    addNewList(name, userIds);
     console.log("5: JS updates activeSHL.");
     activeSHL = numberOfLists-1;
     navToShoppingList(activeSHL);
 }
 
-function addNewList(name){
+function addNewList(name, users){
     console.log("3: addNewList() starts. Name: " + name);
     $.ajax({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/',
         data: name,
         contentType: 'text/plain',
-        success: function () {
+        success: function (data) {
             console.log("List successfully added to database");
+            updateUsersAjax(data, users)
         }
     });
     console.log("4: addNewList() is done.");
@@ -203,6 +230,24 @@ function updateUsers() {
             console.log(result);
         }
     });
+}
+
+function updateUsersAjax(shoppingListId, users) {
+    console.log(JSON.stringify({'userids': users}));
+    $.ajax({
+        type: 'POST',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_list/' + shoppingListId + '/users',
+        data: JSON.stringify(users),
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function () {
+            console.log("List successfully added to database")
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    });
+
 }
 
 function getUsers() {
@@ -249,7 +294,7 @@ $("#shoppingListItemInput").keyup(function(event) {
 
 $("#headlineInput").keyup(function(event){
     if(event.keyCode == 13){
-        $("#okButton").click();
+        $("#addNewShoppingList").click();
     }
 });
 
