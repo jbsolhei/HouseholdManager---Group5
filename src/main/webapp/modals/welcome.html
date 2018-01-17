@@ -4,8 +4,11 @@
 </div>
 <div class="modal-body">
     <h3>You have joined</h3>
-    <h1>-Household name-</h1>
+    <h1 id="welcomename"></h1>
 </div>
 <div class="modal-footer">
     <button type="button" class="center-block btn btn-default" data-dismiss="modal">Ok</button>
 </div>
+<script>
+    $("#welcomename").html(getCurrentHousehold().name);
+</script>

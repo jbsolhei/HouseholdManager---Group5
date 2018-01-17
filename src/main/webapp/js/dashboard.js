@@ -11,6 +11,7 @@ function loadDashboard(){
         printShoppingListsToDashboard(house);
         printHouseholdTodosToDashboard(house.houseId);
     }
+    addHouseholdsToList(getCurrentUser().userId);
 }
 
 function printHouseholdTodosToDashboard(id){

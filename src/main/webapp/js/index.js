@@ -8,11 +8,6 @@ var news = "dashboard.html";
 var profile = "profile.html";
 var activeSHL = 0;
 
-
-$(document).ready(function() {
-    addHouseholdsToList(getCurrentUser().userId);
-});
-
 function ajaxAuth(attr) {
     attr.headers = {
         Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
@@ -45,7 +40,10 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
-            setCurrentHousehold(0)
+            if (window.localStorage.getItem("welcome")!==null) {
+                setCurrentHousehold(JSON.parse(window.localStorage.getItem("welcome")).houseId)
+            }
+            setCurrentHousehold(0);
         },
         dataType: "json"
     });
@@ -60,20 +58,24 @@ function getCurrentHousehold() {
 }
 
 function updateCurrentHousehold(bodyContent){
-    var id = getCurrentHousehold().houseId;
-    ajaxAuth({
-        url:"res/household/"+id,
-        type: "GET",
-        contentType: "application/json; charser=utf-8",
-        success: function(data) {
-            window.localStorage.setItem("house", JSON.stringify(data));
-            if (bodyContent!==undefined){
-                $(".page-wrapper").load(bodyContent);
+    if (getCurrentHousehold()!==undefined&&getCurrentHousehold()!==undefined) {
+        var id = getCurrentHousehold().houseId;
+        ajaxAuth({
+            url: "res/household/" + id,
+            type: "GET",
+            contentType: "application/json; charser=utf-8",
+            success: function (data) {
+                window.localStorage.setItem("house", JSON.stringify(data));
+                if (bodyContent !== undefined) {
+                    $(".page-wrapper").load(bodyContent);
 
-            }
-        },
-        dataType: "json"
-    });
+                }
+            },
+            dataType: "json"
+        });
+    } else {
+        setCurrentHousehold(0);
+    }
 }
 
 function setCurrentHousehold(hid) {
@@ -122,8 +124,16 @@ function getHouseholdFromId(id,handleData){
     });
 }
 
+function checkWelcome() {
+    if (window.localStorage.getItem("welcome")!==null){
+        window.localStorage.removeItem("welcome");
+        callModal("modals/welcome.html");
+        $("#theModal").modal();
+    }
+}
+
 function logout() {
-    console.log("clicked")
+    console.log("clicked");
     window.localStorage.clear();
     window.location.replace("OpeningPage.html");
 }
