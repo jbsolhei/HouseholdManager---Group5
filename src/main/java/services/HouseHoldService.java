@@ -10,6 +10,7 @@ import database.HouseholdDAO;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -69,6 +70,14 @@ public class HouseHoldService {
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean addAdmin(@PathParam("id") int id, User user) {
         return HouseholdDAO.addAdminToHousehold(id, user.getUserId());
+    }
+
+    @GET
+    @Auth(AuthType.HOUSEHOLD)
+    @Path("/{id}/admins")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Integer> getAdminIds(@PathParam("id") int id){
+        return HouseholdDAO.getAdminIds(id);
     }
 
     @PUT

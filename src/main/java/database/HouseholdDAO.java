@@ -61,9 +61,10 @@ public class HouseholdDAO {
      */
     public static Household getHouseholdIdAndName(int id) {
         String name;
+        String address;
         Household household = new Household();
 
-        String query = "SELECT house_name FROM Household WHERE houseId = ?";
+        String query = "SELECT house_name,house_address FROM Household WHERE houseId = ?";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -74,8 +75,10 @@ public class HouseholdDAO {
 
                 if (rs.next()) {
                     name = rs.getString("house_name");
+                    address = rs.getString("house_address");
                     household.setHouseId(id);
                     household.setName(name);
+                    household.setAddress(address);
                     return household;
                 }
             }
@@ -99,17 +102,7 @@ public class HouseholdDAO {
     public static Household getHousehold(int id) {
         String name;
         String address;
-        User[] members = getMembers(id);
-        User[] admins = getAdmins(id);
-        ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(id);
-        Todo[] todo = getTodosForHousehold(id);
 
-        Household household = new Household();
-        household.setAdmins(admins);
-        household.setResidents(members);
-        household.setShoppingLists(shoppingLists);
-        household.setTodoList(todo);
-        household.setHouseId(id);
         boolean householdExists = false;
 
         String query = "SELECT house_name, house_address FROM Household WHERE houseId = ?";
@@ -120,13 +113,25 @@ public class HouseholdDAO {
 
             st.setInt(1, id);
             try (ResultSet rs = st.executeQuery()) {
-
                 if (rs.next()) {
+                    User[] members = getMembers(id);
+                    User[] admins = getAdmins(id);
+                    ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(id);
+                    Todo[] todo = getTodosForHousehold(id);
+
+                    Household household = new Household();
+                    household.setAdmins(admins);
+                    household.setResidents(members);
+                    household.setShoppingLists(shoppingLists);
+                    household.setTodoList(todo);
+                    household.setHouseId(id);
+
                     name = rs.getString("house_name");
                     address = rs.getString("house_address");
                     household.setHouseId(id);
                     household.setName(name);
                     household.setAddress(address);
+
 
                     return household;
                 }
@@ -447,5 +452,26 @@ public class HouseholdDAO {
 
         if (insertDone == 0) return false;
         return true;
+    }
+
+    public static ArrayList<Integer> getAdminIds(int id) {
+        String query = "SELECT userId FROM House_user WHERE houseId=? AND isAdmin=1";
+        ArrayList<Integer> adminIds = new ArrayList<>();
+
+        try {
+            DBConnector dbc = new DBConnector();
+            Connection conn = dbc.getConn();
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, id);
+
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    adminIds.add(rs.getInt("userId"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return adminIds;
     }
 }
