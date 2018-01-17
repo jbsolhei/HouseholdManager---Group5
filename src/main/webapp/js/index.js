@@ -7,6 +7,7 @@ var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
 var activeSHL = 0;
+var householdsLoaded = false;
 
 function ajaxAuth(attr) {
     attr.headers = {
@@ -40,9 +41,9 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
-            var hid = JSON.parse(window.localStorage.getItem("welcome")).houseId;
-            if (hid>0&&hid!==null&&hid!==undefined) {
-                setCurrentHousehold(hid)
+            var hid = JSON.parse(window.localStorage.getItem("welcome"));
+            if (hid!==null&&hid!==undefined) {
+                setCurrentHousehold(hid.houseId)
             } else {
                 setCurrentHousehold(0);
             }
@@ -154,6 +155,7 @@ function addHouseholdsToList(userId) {
             for (var i = 0; i < households.length; i++) {
                 $("#listOfHouseholds").prepend("<li><a class='householdElement' id='"+households[i].houseId+"'>" + households[i].name + "</a></li>");
             }
+            householdsLoaded = true;
             console.log("DATA LOADET");
             $('#coverScreen').css('display', "none");
         },
