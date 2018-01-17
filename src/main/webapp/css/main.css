@@ -158,6 +158,10 @@ th, td {
     color: #fff;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .container-fluid {
     height: 100%;
 }

@@ -78,14 +78,14 @@ function confirm() {
             });
         });
 
-
-        household = {"name": house_name, "address": house_address, "admins": admins};
-        addHousehold(household);
-
         $('#newUsersList li').each(function (i) {
             var text = $(this).text();
             newUserEmails.push(text);
         });
+
+        household = {"name": house_name, "address": house_address, "admins": admins};
+        addHousehold(household);
+
     }
 }
 
@@ -98,7 +98,8 @@ function addHousehold(household) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
-            sendInviteToUsers(result, newUserEmails)
+            sendInviteToUsers(result, newUserEmails);
+            setCurrentHousehold(result);
         },
         error: function (e) {
             console.log(e);
