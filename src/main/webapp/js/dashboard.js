@@ -6,7 +6,6 @@
 
 function loadDashboard(){
     var house = getCurrentHousehold();
-    console.log(house);
     if (house!==undefined) {
         printShoppingListsToDashboard(house);
         printHouseholdTodosToDashboard(house);
@@ -34,7 +33,6 @@ function printHouseholdTodosToDashboard(house){
 
 function printShoppingListsToDashboard(house) {
     if (house.shoppingLists!==null) {
-        console.log(house);
         for (var i = 0; i < house.shoppingLists.length; i++) {
             var current = house.shoppingLists[i];
             var inputString = "<tr>\n" +
