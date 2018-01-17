@@ -43,6 +43,7 @@ function setCurrentUser(id) {
             if (window.localStorage.getItem("welcome")!==null) {
                 setCurrentHousehold(JSON.parse(window.localStorage.getItem("welcome")).houseId)
             }
+            setCurrentHousehold(0);
         },
         dataType: "json"
     });
