@@ -1,8 +1,8 @@
-<div class="container-fluid">
+<div id="dashboardId" class="container-fluid">
     <div class="row equal" style="min-height: 280px">
-        <div class="col-md-6">
+        <div id="todoPanelId" class="col col-md-6 widget">
             <div class="panel panel-default">
-                <div class="panel-heading">Household todos</div>
+                <div id="lol" class="panel-heading">Household todos</div>
                 <div class="panel-body long-scroll-panel-2">
                     <table class="table table-striped">
                         <thead>
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div id="shoppinglistPanelId" class="col col-md-6 widget">
             <div class="panel panel-default">
                 <div class="panel-heading" onclick="navToShoppingList(0)">Shoppinglists</div>
                 <div class="panel-body long-scroll-panel-2">
@@ -27,20 +27,20 @@
         </div>
     </div>
     <div class="row equal">
-        <div class="col-md-3">
+        <div id="debtPanelId" class="col-md-3 widget">
             <div class="panel panel-default">
                 <div class="panel-heading">Debt</div>
                 <div class="panel-body long-scroll-panel-3">Panel Content</div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div id="newsPanelId" class="col-md-4 widget">
             <div class="panel panel-default">
                 <div class="panel-heading">Household news</div>
                 <div class="panel-body long-scroll-panel-3">Panel Content</div>
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="panel panel-default">
+        <div id="statisticsPanelId" class="col-md-5 widget">
+            <div  class="panel panel-default">
                 <div class="panel-heading">Statistics</div>
                 <div class="panel-body long-scroll-panel-3">Statistics here</div>
             </div>
@@ -48,5 +48,30 @@
     </div>
 </div>
 <script>
+    /*
+    function makeDraggable(id) {
+        $("#"+ id).draggable({
+            containment: '#dashboardId',
+            opacity: 0.5,
+            snap: '.snapable',
+            snapMode: 'outer',
+            snapTolerance: 20,
+        });
+    }
+
+    makeDraggable('statisticsPanelId');
+    makeDraggable('newsPanelId');
+    makeDraggable('debtPanelId');
+    makeDraggable('shoppinglistPanelId');
+    makeDraggable('todoPanelId');
+*/
+
     loadDashboard();
+    checkWelcome();
 </script>
+<style>
+    .row.equal {
+        width: 100%;
+        margin: 0px;
+    }
+</style>

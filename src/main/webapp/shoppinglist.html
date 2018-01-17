@@ -38,11 +38,19 @@
         <div class="col-sm-9">
             <div class="panel panel-default">
                 <div id="head" class="panel-heading">
-                    <h4 id="headline" class="col-sm-11">Overskrift </h4>
+                    <h4 id="headline" class="col-sm-11"></h4>
                     <div id="edit_shopping_list_btn" class="glyphicon glyphicon-eye-open col-sm-1" data-toggle="modal" onclick='callModalRun("modals/editShoppingListUsers.html", [getUsers])' data-target="#theModal"></div>
                     <div class="input-group">
                         <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
-                        <span  id="okButton" onclick="okButton()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
+                        <!--
+                        <span id="okButton" onclick="addNewShoppingList()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
+                        -->
+                        <span class="input-group-btn">
+                            <button id="okButton" onclick="addNewShoppingList()" class="btn btn-success hide">Ok</button>
+                        </span>
+                        <span class="input-group-btn">
+                            <button id="privateButton" onclick="setPrivate()" class="btn btn-secondary hide" type="button">Private</button>
+                        </span>
                     </div>
                 </div>
                 <div class="panel-body long-scroll-panel">

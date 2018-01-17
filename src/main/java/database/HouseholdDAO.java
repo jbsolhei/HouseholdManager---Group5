@@ -290,11 +290,11 @@ public class HouseholdDAO {
      * @param userId the id of the user
      */
     public static int addUserFromInvite(String token, int userId) {
-        int tokenResult = InviteHandler.verifyToken(token);
-        if (tokenResult != 0) {
-            addUserToHousehold(tokenResult, userId, 0);
+        int invitedHouseId = InviteHandler.verifyToken(token);
+        if (invitedHouseId != 0) {
+            addUserToHousehold(invitedHouseId, userId, 0);
             InviteHandler.removeToken(token);
-            return tokenResult;
+            return invitedHouseId;
         }
         return -1;
     }
