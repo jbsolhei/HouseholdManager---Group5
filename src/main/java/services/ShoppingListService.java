@@ -39,8 +39,8 @@ public class ShoppingListService {
     @POST
     @Path("/{id}/shopping_lists/")
     @Consumes(MediaType.TEXT_PLAIN)
-    public void createShoppingList(@PathParam("id") int houseId, String shoppingListName){
-        ShoppingListDAO.createShoppingList(shoppingListName, houseId);
+    public int createShoppingList(@PathParam("id") int houseId, String shoppingListName){
+        return  ShoppingListDAO.createShoppingList(shoppingListName, houseId);
     }
 
     @DELETE

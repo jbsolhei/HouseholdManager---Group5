@@ -116,6 +116,13 @@ th, td {
     cursor: pointer;
 }
 
+.has_been_clicked {
+    background-color: #d9534f;
+    color: #fff;
+}
 
+.has_been_clicked:focus {
+    color: #fff;
+}
 
 
