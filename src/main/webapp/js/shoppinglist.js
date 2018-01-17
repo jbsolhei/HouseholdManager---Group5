@@ -1,10 +1,7 @@
 /**
  * Created by camhl on 1/11/2018.
  */
-var numberOfItems = 0;
-var numberOfDeleteItems = 0;
-var newItems = []; // [shoppinglist[item]]
-var deleteItems = [];
+
 var numberOfLists;
 var currentItemList;
 
@@ -46,7 +43,6 @@ function additem() {
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("Items successfully saved in database");
-            navToShoppingList(activeSHL);
         }
     });
 }
@@ -79,6 +75,7 @@ function unCheck(itemId){
             console.log(itemId);
             $("#checked" + itemId).replaceWith('<span onclick="check(' + itemId + ')" name="unchecked" id="unchecked' + itemId + '" class="glyphicon glyphicon-unchecked"></span>');
             $("#checkedBy" + itemId).html('');
+            navToShoppingList(activeSHL);
         }
     });
 }
@@ -100,10 +97,6 @@ function deleteItem(itemNumber){
 }
 
 function showList(SLIndex){
-    currentItemList = [];
-    if(newItems.length !== 0 || deleteItems.length !== 0) {
-        saveChanges();
-    }
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
     console.log("SLIndex: " + SLIndex);
     currentItemList = SHL[SLIndex].items;
@@ -120,7 +113,7 @@ function showList(SLIndex){
                 $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
             } else {
                 checkedBy = val.checkedBy.name;
-                $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="unCheck(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
             }
         });
     }$("#headline").replaceWith('<h4 id="headline">' + SHL[SLIndex].name + '</h4>');
@@ -186,31 +179,6 @@ function addNewList(name){
         }
     });
     console.log("4: addNewList() is done.");
-}
-
-function saveChanges(){
-    for (var j = 0; j < newItems.length; j++) {
-        if(newItems[j] !== null) {
-            $.ajax({
-                type: 'POST',
-                url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId + "/items",
-                data: JSON.stringify({'name': newItems[j], 'checkedBy': null}),
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function () {
-                    console.log("Items successfully saved in database");
-                }
-            });
-        }
-    }
-    for (var i = 0; i < deleteItems.length; i++) {
-        if(deleteItems[i] != null) {
-
-        }
-    }
-    newItems = [];
-    deleteItems = [];
-    numberOfDeleteItems = 0;
 }
 
 function updateUsers() {
