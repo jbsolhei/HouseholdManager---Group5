@@ -21,7 +21,7 @@ function readyShoppingList(){
 }
 
 function insertShoppingLists(){
-    var inputString;
+    var inputString = "";
     $.each(SHL, function(i,val){
         inputString += '<li onclick="showList(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
     });

@@ -23,6 +23,7 @@ public class ShoppingListDAO {
         String personName = "";
         String email = "";
         String telephone = "";
+        boolean thereAreLists = false;
 
         String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, User_Shopping_list.userId, Person.name, Person.email, Person.telephone FROM Shopping_list LEFT JOIN User_Shopping_list ON Shopping_list.shopping_listId = User_Shopping_list.shopping_listId LEFT JOIN Person ON User_Shopping_list.userId = Person.userId WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
         try (DBConnector dbc = new DBConnector();
@@ -32,6 +33,7 @@ public class ShoppingListDAO {
             st.setInt(1, houseId);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
+                    thereAreLists = true;
                     shoppingListId = rs.getInt("shopping_listId");
 
                     if (shoppingListId != shoppingListId2 && shoppingListId2 != 0) {
@@ -64,19 +66,22 @@ public class ShoppingListDAO {
                 }
             }
 
-            ShoppingList sl = new ShoppingList();
-            sl.setName(shoppingListName);
-            sl.setUsers(toUserArray(users));
-            sl.setShoppingListId(shoppingListId2);
-            shoppingLists.add(sl);
-            users.clear();
+            if (thereAreLists){
+                ShoppingList sl = new ShoppingList();
+                sl.setName(shoppingListName);
+                sl.setUsers(toUserArray(users));
+                sl.setShoppingListId(shoppingListId2);
+                shoppingLists.add(sl);
+                users.clear();
 
-            for (ShoppingList shoppingList: shoppingLists) {
-                Item[] items = getItems(shoppingList.getShoppingListId());
-                shoppingList.setItems(items);
+                for (ShoppingList shoppingList: shoppingLists) {
+                    Item[] items = getItems(shoppingList.getShoppingListId());
+                    shoppingList.setItems(items);
+                }
+                return toShoppingListArray(shoppingLists);
+            } else {
+                return null;
             }
-
-            return toShoppingListArray(shoppingLists);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -384,10 +389,5 @@ public class ShoppingListDAO {
         } catch (SQLException e) {
             System.out.println("Error in preparing statement\n\n" + e.getMessage());
         }
-    }
-
-    public static void main (String[] args) {
-        User[] users = ShoppingListDAO.getShoppingListUsers(3);
-        System.out.println("stop");
     }
 }
