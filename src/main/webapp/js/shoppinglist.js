@@ -40,13 +40,36 @@ function additem() {
     document.getElementById("item").focus();
 }
 
-function check(itemId, userId){
-    
-    $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-check"></span>');
+function check(itemId){
+    var user = getCurrentUser();
+    $.ajax({
+        type: 'POST',
+        url: 'res/household/shopping_lists/items/'+ itemId +'/user/',
+        data: JSON.stringify(user.userId),
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function () {
+            console.log("List successfully added to database");
+            $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-check"></span>');
+            $("#checkedBy" + itemId).html(user.name);
+        }
+    });
 }
 
-function unCheck(itemNumber){
-    $("#checked" + itemNumber).replaceWith('<span onclick="check(' + itemNumber + ')" name="unchecked" id="unchecked' + itemNumber + '" class="glyphicon glyphicon-unchecked"></span>');
+function unCheck(itemId){
+    $.ajax({
+        type: 'POST',
+        url: 'res/household/shopping_lists/items/'+ itemId +'/user/',
+        data: JSON.stringify(0),
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function () {
+            console.log("Item successfully added to database");
+            console.log(itemId);
+            $("#checked" + itemId).replaceWith('<span onclick="check(' + itemId + ')" name="unchecked" id="unchecked' + itemId + '" class="glyphicon glyphicon-unchecked"></span>');
+            $("#checkedBy" + itemId).html('');
+        }
+    });
 }
 
 function deleteItem(itemNumber){
@@ -67,8 +90,15 @@ function showList(SLIndex){
     }else{
         $("#emptyListText").addClass("hide");
         $.each(listItems,function(i,val){
-            if(val.checkedBy===null)checkedBy="";
-            $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+            console.log(typeof val.checkedBy);
+            var checkedBy;
+            if(val.checkedBy === null) {
+                checkedBy="";
+                $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+            } else {
+                checkedBy = val.checkedBy.name
+                $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+            }
         });
     }$("#headline").replaceWith('<h4 id="headline">' + SHL[SLIndex].name + '</h4>');
     $("#item").focus();
@@ -95,7 +125,7 @@ function deleteList(){
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("List successfully deleted from database")
+            console.log("List successfully deleted from database");
             if(activeSHL!==0)activeSHL--;
             navToShoppingList(activeSHL);
         }
@@ -239,3 +269,28 @@ $("#headlineInput").keyup(function(event){
         $("#okButton").click();
     }
 });
+
+function isEmpty(obj) {
+
+    // null and undefined are "empty"
+    if (obj == null) return true;
+
+    // Assume if it has a length property with a non-zero value
+    // that that property is correct.
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+
+    // If it isn't an object at this point
+    // it is empty, but it can't be anything *but* empty
+    // Is it empty?  Depends on your application.
+    if (typeof obj !== "object") return true;
+
+    // Otherwise, does it have any properties of its own?
+    // Note that this doesn't handle
+    // toString and valueOf enumeration bugs in IE < 9
+    for (var key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+
+    return true;
+}
