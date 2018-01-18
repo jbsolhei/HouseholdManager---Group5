@@ -32,4 +32,10 @@ public class ShoppingTripService {
     public ShoppingTrip getShoppingTrip(@PathParam("id") int shoppingTripid) {
         return ShoppingTripDAO.getShoppingTrip(shoppingTripid);
     }
+
+    @DELETE
+    @Path("/{id}")
+    public void deleteShoppingTrip(@PathParam("id") int shoppingTripId){
+        ShoppingTripDAO.deleteShoppingTrip(shoppingTripId);
+    }
 }

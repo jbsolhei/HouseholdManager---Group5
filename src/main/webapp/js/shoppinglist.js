@@ -28,14 +28,11 @@ function insertShoppingLists(){
 function additem() {
     var newItem = $("#shoppingListItemInput").val();
     if(newItem !== "" && newItem != null) {
-        /*newItems[numberOfItems] = newItem;
-        numberOfItems += 1;*/
         $("#emptyListText").addClass("hide");
-        console.log("This item gets the ID: " + currentItemList.length);
         $("#newItem").append('<tr id="item' + currentItemList.length+ '"><td><span onclick="check(' + currentItemList.length + ')" id="unchecked' + currentItemList.length + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + newItem + '</td><td id="checkedBy'+currentItemList.length+'"></td><td><span onclick="deleteItem(' + currentItemList.length + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
         $("#shoppingListItemInput").val("");
     }
-    $.ajax({
+    ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId + "/items",
         data: JSON.stringify({'name': newItem, 'checkedBy': null}),
@@ -43,15 +40,17 @@ function additem() {
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("Items successfully saved in database");
+            navToShoppingList(activeSHL);
         }
     });
 }
 
 function check(itemId){
+    console.log(itemId);
     var user = getCurrentUser();
-    $.ajax({
+    ajaxAuth({
         type: 'POST',
-        url: 'res/household/shopping_lists/items/'+ itemId +'/user/',
+        url: 'res/household/'+getCurrentHousehold().houseId+'/shopping_lists/items/'+ itemId +'/user/',
         data: JSON.stringify(user.userId),
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -59,14 +58,15 @@ function check(itemId){
             console.log("List successfully added to database");
             $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-check"></span>');
             $("#checkedBy" + itemId).html(user.name);
+            navToShoppingList(activeSHL);
         }
     });
 }
 
 function unCheck(itemId){
-    $.ajax({
+    ajaxAuth({
         type: 'POST',
-        url: 'res/household/shopping_lists/items/'+ itemId +'/user/',
+        url: 'res/household/'+getCurrentHousehold().houseId+'/shopping_lists/items/'+ itemId +'/user/',
         data: JSON.stringify(0),
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -86,7 +86,7 @@ function deleteItem(itemNumber){
     /*deleteItems[numberOfDeleteItems] = itemNumber;
     numberOfDeleteItems += 1;*/
     console.log(currentItemList);
-    $.ajax({
+    ajaxAuth({
         type: "DELETE",
         url: "res/household/"+getCurrentHousehold().houseId +"/shopping_lists/"+SHL[activeSHL].shoppingListId+"/items/"+itemNumber,
         success: function(){
@@ -148,7 +148,7 @@ function setPrivate() {
 }
 
 function deleteList(){
-    $.ajax({
+    ajaxAuth({
         type: 'DELETE',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + SHL[activeSHL].shoppingListId,
         dataType: 'json',
@@ -195,7 +195,7 @@ function addNewShoppingList(){
 
 function addNewList(name, users){
     console.log("3: addNewList() starts. Name: " + name);
-    $.ajax({
+    ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/',
         data: name,
@@ -217,7 +217,7 @@ function updateUsers() {
         usersIds.push(id);
     });
     console.log(JSON.stringify({'userids': usersIds}));
-    $.ajax({
+    ajaxAuth({
         type: 'POST',
         url: 'res/household/' + hh.houseId + '/shopping_list/' + SHL[activeSHL].shoppingListId +'/users',
         data: JSON.stringify(usersIds),
@@ -234,7 +234,7 @@ function updateUsers() {
 
 function updateUsersAjax(shoppingListId, users) {
     console.log(JSON.stringify({'userids': users}));
-    $.ajax({
+    ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_list/' + shoppingListId + '/users',
         data: JSON.stringify(users),

@@ -58,11 +58,20 @@ public class HouseHoldService {
     }
 
     @POST
-    @Auth(AuthType.HOUSEHOLD_ADMIN)
+    @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}/users/invite")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void inviteUsersToHousehold(@PathParam("id") int house, String[] email){
-        HouseholdDAO.inviteUser(house,email);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response inviteUsersToHousehold(@PathParam("id") int house, String[] email){
+        int howManySent = HouseholdDAO.inviteUser(house,email);
+        HashMap<String, Object> response = new HashMap<>();
+        if (howManySent==-1||howManySent==0){
+            response.put("success", false);
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        response.put("success", true);
+        response.put("howManySent", howManySent);
+        return Response.ok(response).build();
     }
 
     @POST
