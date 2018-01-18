@@ -90,6 +90,32 @@ public class ShoppingListDAO {
         return null;
     }
 
+    private static boolean isAdmin(int houseId, int userId) {
+        String query = "SELECT House_user.isAdmin FROM House_user WHERE houseId = ? AND userId = ?;";
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, houseId);
+            st.setInt(2, userId);
+
+            try (ResultSet rs = st.executeQuery()){
+                if (rs.next()) {
+                    if (rs.getInt("isAdmin") == 1){
+                        System.out.println("userId: " + userId + " is Admin at house: " + houseId);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public static ShoppingList[] getShoppingLists(int houseId, int userId) {
         ArrayList<ShoppingList> shoppingLists = new ArrayList<>();
         ArrayList<Item> items = new ArrayList<>();
@@ -100,11 +126,12 @@ public class ShoppingListDAO {
         int itemId = 0;
         String itemName;
         int checkedBy = 0;
-
-        String query = "SELECT usl.userId, hu.isAdmin, sl.* , Item.*, p.* FROM User_Shopping_list AS usl RIGHT JOIN House_user AS hu ON usl.userId = hu.userId RIGHT JOIN Shopping_list AS sl ON usl.shopping_listId = sl.shopping_listId LEFT JOIN Item ON Item.shopping_listId = sl.shopping_listId LEFT JOIN Person AS p ON Item.checkedBy = p.userId WHERE sl.houseId = 1 AND (hu.isAdmin = ? OR usl.userId = ?);";
+        String query = "SELECT usl.userId, sl.*, Item.*, p.* FROM User_Shopping_list AS usl INNER JOIN Shopping_list AS sl ON usl.shopping_listId = sl.shopping_listId INNER JOIN Item ON Item.shopping_listId = sl.shopping_listId LEFT JOIN Person AS p ON Item.checkedBy = p.userId WHERE sl.houseId = ? AND usl.userId = ?;";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
+
+            if (ShoppingListDAO.isAdmin(houseId, userId)) return ShoppingListDAO.getShoppingLists(houseId);
 
             st.setInt(1, houseId);
             st.setInt(2, userId);
@@ -237,7 +264,7 @@ public class ShoppingListDAO {
         String personName;
         String telephone;
 
-        String query = "SELECT Item.*, Person.* FROM Item LEFT JOIN Person ON Item.checkedBy = Person.userId WHERE shopping_listId = ?";
+        String query = "SELECT Item.*, Person.* FROM Item LEFT JOIN Person ON Item.checkedBy = Person.userId WHERE shopping_listId = ?;";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
