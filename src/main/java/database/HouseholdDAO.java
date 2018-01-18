@@ -97,9 +97,10 @@ public class HouseholdDAO {
      * Returns null if the id does not exist in the database.
      *
      * @param id the id of the house.
+     * @param uid the userId (needed for auth)
      * @return Household the household object
      */
-    public static Household getHousehold(int id) {
+    public static Household getHousehold(int id,int uid) {
         ArrayList<User> users = new ArrayList<>();
         ArrayList<User> admins = new ArrayList<>();
 
@@ -138,7 +139,7 @@ public class HouseholdDAO {
                     adminList[i] = admins.get(i);
                 }
                 household.setAdmins(adminList);
-                household.setShoppingLists(ShoppingListDAO.getShoppingLists(id));
+                household.setShoppingLists(ShoppingListDAO.getShoppingLists(id,uid));
                 return household;
             }
 
