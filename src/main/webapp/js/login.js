@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     window.localStorage.setItem("invite",window.location.search);
+
     $("#submit").click(function () {
         var email = $("#email").val();
         var password = $("#password").val();
@@ -18,7 +19,6 @@ $(document).ready(function () {
             contentType: "application/json; charset=utf-8",
             success: function(response) {
                 if(response.success === true) {
-                    showLoadingScreen(false);
                     window.localStorage.setItem("sessionToken",response.sessionToken);
                     window.localStorage.setItem("userId",response.userId);
                     inviteCheck();
@@ -33,6 +33,8 @@ $(document).ready(function () {
 
     });
 });
+
+
 
 //Set show to true if you want to show loadingscreen and false if you want to hide it
 function showLoadingScreen(show) {

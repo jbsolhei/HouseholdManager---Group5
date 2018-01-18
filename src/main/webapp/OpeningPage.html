@@ -4,14 +4,18 @@
     <link rel='shortcut icon' type='image/x-icon' href='img/favico.ico' />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Household manager</title>
+    <title>Household Manager</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/sidebar.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <link href="css/OpeningPage.css" rel="stylesheet">
+    <script src="js/login.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/forgotPassword.js"></script>
+    <script src="js/test-hash.js"></script>
     <script src="js/addUser.js"></script>
-    <link rel="stylesheet" href="css/OpeningPage.css">
+    <script src="js/invite.js"></script>
+    <script src="js/index.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -35,7 +39,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a data-toggle="modal" onclick='callModal("modals/createuser.html")' data-target="#theModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li id="toLoginButton"><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div>
     </div>
@@ -45,35 +49,29 @@
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0"></li>
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="2" ></li>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
 
         <div class="item">
-            <img id="pic" src="images/7-fun-types-of-people-everyone-needs-in-their-friend-group.jpg" alt="Los Angeles">
+            <img id="pic" src="images/7-fun-types-of-people-everyone-needs-in-their-friend-group.jpg" alt="Friends">
             <div class="carousel-caption">
-
             </div>
         </div>
-
         <div class="item active">
-            <img id="pic" src="images/grocery-cart.jpg" alt="Chicago">
+            <img id="pic" src="images/grocery-cart.jpg" alt="Shopping">
             <div class="carousel-caption">
-
             </div>
         </div>
-
         <div class="item">
-            <img id="pic" src="images/how-to-hire-a-cleaning-service.jpg" alt="New York">
+            <img id="pic" src="images/how-to-hire-a-cleaning-service.jpg" alt="Cleaning">
             <div class="carousel-caption">
-
             </div>
         </div>
-
     </div>
 
     <!-- Left and right controls -->
@@ -86,6 +84,8 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+
+<!-- Denne må være her, trengs aldri å endres -->
 <div class="modal fade" id="theModal">
     <div class="modal-dialog modal-md">
         <div class="modal-content" id="modal">
@@ -93,11 +93,68 @@
     </div>
 </div>
 
+<style>
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    #coverScreen {
+        margin: 0px;
+        display: none;
+        left: 0px;
+        top: 0px;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 999999999999999;
+        background-color: rgba(0,0,0,0.2);
+    }
+
+    #centerDiv {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+
+<div id="coverScreen">
+    <div id="centerDiv">
+        <div class="loader"></div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
 </body>
 <script>
     // Ikke rør
     function callModal(modalContent) {
         $("#modal").load(modalContent);
+    }
+
+    function toLoginButton() {
+        $("#toLoginButton").replaceWith('<li>Email : <input type="email" class="boxes" id="email" name="email" style="color: black;"/> Password: <input type="password" class="boxes" id="password" name="password" style="color:black;"/></li><button onclick="showLoadingScreen(true)" id="submit">Login</button>');
     }
 </script>
 </html>
