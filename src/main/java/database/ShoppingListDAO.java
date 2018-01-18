@@ -169,7 +169,8 @@ public class ShoppingListDAO {
                 items.clear();
 
                 for (ShoppingList shoppingList: shoppingLists) {
-                    //TODO: Make method to get all users associated with a shopping list
+                    User[] canView = ShoppingListDAO.getShoppingListUsers(shoppingList.getShoppingListId());
+                    shoppingList.setUsers(canView);
                 }
                 return toShoppingListArray(shoppingLists);
             } else {
@@ -520,7 +521,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        int rtn = ShoppingListDAO.createShoppingList("BestList", 1);
+        ShoppingList[] rtn = ShoppingListDAO.getShoppingLists(1, 28);
         System.out.println("stop");
     }
 }
