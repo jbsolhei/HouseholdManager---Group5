@@ -1,5 +1,28 @@
+body{
+    background-color: #233237;
+
+}
+
 .divclass {
-    margin: 10px;
     padding-bottom: 10px;
     width: auto;
+}
+
+#myCarousel {
+    width: 100%;
+    height: 95vh;
+}
+
+.carousel-inner{
+    width: 100%;
+    height: 95vh;
+}
+
+#pic{
+    margin-top: -20px;
+    width:100%; height: 95vh;
+}
+
+.navbar {
+    margin-bottom: 0px;
 }

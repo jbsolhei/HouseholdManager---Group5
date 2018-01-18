@@ -4,9 +4,10 @@ import classes.ShoppingTrip;
 import classes.User;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.sql.Types.NULL;
 
 public class ShoppingTripDAO {
 
@@ -63,7 +64,11 @@ public class ShoppingTripDAO {
             st.setString(4, shoppingTrip.getComment());
             st.setInt(5, shoppingTrip.getUserId());
             st.setInt(6, shoppingTrip.getHouseId());
-            st.setInt(7, shoppingTrip.getShopping_listId());
+            if (shoppingTrip.getShopping_listId()>0) {
+                st.setInt(7, shoppingTrip.getShopping_listId());
+            } else {
+                st.setNull(7,NULL);
+            }
             st.executeUpdate();
 
             try (ResultSet resultSet = st.getGeneratedKeys()) {
@@ -149,5 +154,21 @@ public class ShoppingTripDAO {
         return shoppingTrip;
     }
 
+    public static void deleteShoppingTrip(int shoppingTripId) {
+        String query = "DELETE FROM Shopping_trip WHERE shopping_tripId = ?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, shoppingTripId);
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

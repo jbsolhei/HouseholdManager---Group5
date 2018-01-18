@@ -39,9 +39,9 @@ function addMembers(data) {
 }
 function addShoppinglists(data) {
     $("#sel1").html("");
+    $("#sel1").append("<option id='trip-0'>-None-</option>");
     for(var i=0; i<data.length; i++) {
-        console.log(data[i].shoppingListId);
-        $("#sel1").append("<option id="+data[i].shoppingListId+">"+data[i].name+"</option>");
+        $("#sel1").append("<option id='trip-"+data[i].shoppingListId+"'>"+data[i].name+"</option>");
     }
 }
 
@@ -50,8 +50,8 @@ function addShoppingTrip() {
     var comment = $("#trip-comments").val();
     var sum = $("#trip-sum").val();
     var contributors = [];
-    var shoppingList = $("#sel1").val();
-    var id = $("#sel1 option:selected").attr('id');
+    var shoppingList = $("#sel1").val()-1;
+    var id = $("#sel1 option:selected").attr('id').split("trip-")[1];
 
     for(var i=0; i<result.length; i++) {
         if($("#check-" + i).is(":checked")) {
@@ -61,30 +61,42 @@ function addShoppingTrip() {
             })
         }
     }
-    console.log(shoppingList + " id " + id);
 
+    if(name === "" || comment == "" || sum == "" ||
+        shoppingList == "" || id == "" ||
+        contributors.length == 0) {
+        document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+            '<strong>Failed to create user.</strong> Please fill in all the forms. </div>';
 
-    var date = new Date();
-    date = date.toLocaleDateString();
-    var data = {"name" : name, "expence" : sum, "comment" : comment, "userId" : getCurrentUser().userId,
-        "userName" : getCurrentUser().name, "contributors" : contributors,
-        "houseId" : getCurrentHousehold().houseId, "shopping_listId" : id, "shopping_listName" : shoppingList};
+    } else {
+        var data = {"name" : name, "expence" : sum, "comment" : comment, "userId" : getCurrentUser().userId,
+            "userName" : getCurrentUser().name, "contributors" : contributors,
+            "houseId" : getCurrentHousehold().houseId, "shopping_listId" : id, "shopping_listName" : shoppingList};
 
-    console.log(JSON.stringify(data));
-    ajaxAuth({
-        url: "res/shoppingtrip",
-        type: 'post',
-        data: JSON.stringify(data),
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function (response) {
-            console.log(response);
-            getShoppingTrips();
-        },
-        error: function (response) {
-            console.log("error");
-            console.log(response);
-        }
+        ajaxAuth({
+            url: "res/shoppingtrip",
+            type: 'post',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                console.log(response);
+                getShoppingTrips();
+                document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
+                    '<strong>Success!</strong> Shoppingtrip added.</div>';
+                $(".alert-success").fadeTo(500, 500).slideUp(500, function(){
+                    $(".alert-danger").slideUp(500);
+                    $(function () {
+                        $('#theModal').modal('toggle');
+                    });
+                });
+            },
+            error: function (response) {
+                console.log("error");
+                console.log(response);
+            }
 
-    });
+        });
+    }
+
 }

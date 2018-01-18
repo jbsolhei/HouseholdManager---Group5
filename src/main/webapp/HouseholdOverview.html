@@ -1,61 +1,42 @@
-<style>
-
-</style>
-
 <div id="householdOverviewId" class="container-fluid">
-        <div class="row hhOverviewRow">
-            <div class="col-md-6 widget">
-                <div id="topRow1Id" class="row hhOverviewRow">
-                    <div class="col-md-12 widget">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Administrators</div>
-                            <div class="panel-body long-scroll-panel-3">
-                                <table class="membertable" id="admins">
-                                    <tr>
-                                        <th></th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+    <div id="hhoMainRow" class="row">
+        <div class="col-sm-8 widgetCol">
+            <div class="panel panel-default widget">
+                <div class="panel-heading styled-heading clearfix">Members  <span class="glyphicon glyphicon-plus pull-right clickable" data-toggle="modal" data-target="#theModal" onclick="callModal('modals/addMemberHousehold.html')"></span></div>
+                <div class="panel-body scrollWhenFull HH">
+                    <table class="membertable" id="members">
+                        <tr>
+                            <th>Admin</th>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                        </tr>
+                    </table>
                 </div>
+            </div>
 
-                <div id="bottomRowId" class="row hhOverviewRow">
-                    <div class="col-md-12 widget">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Other Information</div>
-                            <div class="panel-body long-scroll-panel-3">
-                                <ul>
-                                    <li>Her skriver man informasjon om kollektivet</li>
-                                    <li>bla bla bla bla</li>
-                                    <li>slfhrkdgnlke</li>
-                                </ul>
-                            </div>
-                        </div>
+        </div>
+        <div class="col-sm-4 widgetCol">
+            <div class="panel panel-default widget">
+                <div class="panel-heading">Other Information</div>
+                <div class="panel-body scrollWhenFull HH">
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-5"><b>Address:</b></div>
+                        <div class="col-sm-7" id="householdAddress"></div>
                     </div>
+                    <br>
+                    <ul>
+                        <li>Her skriver man informasjon om kollektivet</li>
+                        <li>bla bla bla bla</li>
+                        <li>asdfghjk</li>
+                    </ul>
                 </div>
             </div>
-            <div class="col-md-6 widget">
-                <div class="panel panel-default">
-                    <div class="panel-heading styled-heading clearfix">
-                        <h4>Members <span class="glyphicon glyphicon-plus pull-right clickable" data-toggle="modal" data-target="#theModal" onclick="callModal('modals/addMemberHousehold.html')"></span></h4>
-                    </div>
-                    <div class="panel-body long-scroll-panel" id="membersheight">
-                        <table class="membertable" id="members">
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-       </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <script>

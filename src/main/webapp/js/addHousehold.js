@@ -98,8 +98,13 @@ function addHousehold(household) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
-            sendInviteToUsers(result, newUserEmails);
-            setCurrentHousehold(result);
+
+            if (result>0) {
+                sendInviteToUsers(result, newUserEmails);
+                setCurrentHousehold(result);
+            } else {
+                alert("Error adding household")
+            }
         },
         error: function (e) {
             console.log(e);
@@ -109,17 +114,21 @@ function addHousehold(household) {
 
 //Sends invites with ajax
 function sendInviteToUsers(houseId, emails) {
-    ajaxAuth({
-        url: "res/household/" + houseId + "/users/invite",
-        type: "POST",
-        data: JSON.stringify(emails),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        success: function (result) {
-            //console.log(result);
-        },
-        error: function (e) {
-            console.log(e);
-        }
-    })
+    if (emails.length>0) {
+        ajaxAuth({
+            url: "res/household/" + houseId + "/users/invite",
+            type: "POST",
+            data: JSON.stringify(emails),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+    setCurrentHousehold(houseId);
+    window.location.reload();
 }

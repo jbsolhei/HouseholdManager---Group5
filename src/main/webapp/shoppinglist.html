@@ -1,23 +1,23 @@
 <link href="css/shoppinglist.css" rel="stylesheet">
 <script src="js/shoppinglist.js"></script>
 
-<div class="container-fluid">
-    <div class="row content">
-        <div class="col-sm-3">
-            <div class="panel panel-default">
+<div id="shoppingListId" class="container-fluid">
+    <div id="mainRow" class="row content">
+        <div class="col-md-3 widgetCol">
+            <div class="panel panel-default widget">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-10">
+                        <div class="col-md-10">
                             <h4>Shopping lists</h4>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-md-2">
                             <a id="add_shopping_list_btn" data-toggle="modal" onclick="createNewList('ThisIsANewList')" data-target="#theModal" class="btn btn-md pull-right">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="panel-body long-scroll-panel">
+                <div class="panel-body scrollWhenFull SL">
                     <ul id="shoppingSideMenu" class="nav nav-pills nav-stacked">
                     </ul>
 
@@ -32,14 +32,13 @@
                         </span>
                 </div>
                 </div>
-
             </div>
         </div>
-        <div class="col-sm-9">
-            <div class="panel panel-default">
+        <div class="col-md-9 widgetCol">
+            <div class="panel panel-default widget">
                 <div id="head" class="panel-heading">
-                    <h4 id="headline" class="col-sm-11"></h4>
-                    <div id="edit_shopping_list_btn" class="glyphicon glyphicon-eye-open col-sm-1" data-toggle="modal" onclick='callModalRun("modals/editShoppingListUsers.html", [getUsers])' data-target="#theModal"></div>
+                    <h4 id="headline" class="col-md-11"></h4>
+                    <div id="edit_shopping_list_btn" class="glyphicon glyphicon-eye-open col-md-1" data-toggle="modal" onclick='callModalRun("modals/editShoppingListUsers.html", [getUsers])' data-target="#theModal"></div>
                     <div class="input-group">
                         <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
                         <!--
@@ -53,7 +52,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="panel-body long-scroll-panel">
+                <div class="panel-body scrollWhenFull SL">
                     <div class="input-group">
                         <span onclick="additem()" id="additem" class="input-group-addon btn btn-info btn-lg">Add item</span>
                         <input id="shoppingListItemInput" type="text" class="form-control" name="item" placeholder="Item">
@@ -62,10 +61,10 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th class="col-sm-1">Checked</th>
-                                    <th class="col-sm-5">Item</th>
-                                    <th class="col-sm-5"></th>
-                                    <th class="col-sm-1"></th>
+                                    <th class="col-md-1">Checked</th>
+                                    <th class="col-md-5">Item</th>
+                                    <th class="col-md-5"></th>
+                                    <th class="col-md-1"></th>
                                 </tr>
                             </thead>
                             <tbody id="newItem"></tbody>
