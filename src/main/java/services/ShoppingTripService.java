@@ -1,5 +1,7 @@
 package services;
 
+import auth.Auth;
+import auth.AuthType;
 import classes.ShoppingTrip;
 import database.ShoppingTripDAO;
 
@@ -12,6 +14,7 @@ import java.util.List;
 public class ShoppingTripService {
 
     @GET
+    @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}")
     @Produces (MediaType.APPLICATION_JSON)
     public List<ShoppingTrip> getShoppingTrips(@PathParam("id") int houseId) {
@@ -19,6 +22,7 @@ public class ShoppingTripService {
     }
 
     @POST
+    @Auth
     @Consumes (MediaType.APPLICATION_JSON)
     public boolean createShoppingTrip(ShoppingTrip shoppingTrip) {
         LocalDate date = LocalDate.now();
@@ -27,6 +31,7 @@ public class ShoppingTripService {
     }
 
     @GET
+    @Auth
     @Path("/{id}/trip")
     @Produces(MediaType.APPLICATION_JSON)
     public ShoppingTrip getShoppingTrip(@PathParam("id") int shoppingTripid) {
@@ -34,6 +39,7 @@ public class ShoppingTripService {
     }
 
     @DELETE
+    @Auth
     @Path("/{id}")
     public void deleteShoppingTrip(@PathParam("id") int shoppingTripId){
         ShoppingTripDAO.deleteShoppingTrip(shoppingTripId);

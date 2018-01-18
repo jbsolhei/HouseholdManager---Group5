@@ -39,9 +39,9 @@ function addMembers(data) {
 }
 function addShoppinglists(data) {
     $("#sel1").html("");
+    $("#sel1").append("<option id='trip-0'>-None-</option>");
     for(var i=0; i<data.length; i++) {
-        console.log(data[i].shoppingListId);
-        $("#sel1").append("<option id="+data[i].shoppingListId+">"+data[i].name+"</option>");
+        $("#sel1").append("<option id='trip-"+data[i].shoppingListId+"'>"+data[i].name+"</option>");
     }
 }
 
@@ -50,8 +50,8 @@ function addShoppingTrip() {
     var comment = $("#trip-comments").val();
     var sum = $("#trip-sum").val();
     var contributors = [];
-    var shoppingList = $("#sel1").val();
-    var id = $("#sel1 option:selected").attr('id');
+    var shoppingList = $("#sel1").val()-1;
+    var id = $("#sel1 option:selected").attr('id').split("trip-")[1];
 
     for(var i=0; i<result.length; i++) {
         if($("#check-" + i).is(":checked")) {
