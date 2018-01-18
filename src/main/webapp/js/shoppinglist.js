@@ -173,9 +173,9 @@ function addNewShoppingList(){
     $("#headline").replaceWith('<h4 id="headline">' + name + '</h4>');
     $("#headlineInput").addClass("hide");
     $("#addNewShoppingList").addClass("hide");
-    $("#sideMenu").append('<li onclick="showList(' + numberOfLists + ')" id="shoppingList' + numberOfLists + '"><a>' + name + '</a></li>');
+    $("#sideMenu").append('<li onclick="showList(' + numberOfLists-1 + ')" id="shoppingList' + numberOfLists-1 + '"><a>' + name + '</a></li>');
     $("#shoppingListItemInput").focus();
-    $("#" + numberOfLists).addClass("active");
+    $("#shoppingList" + numberOfLists-1).addClass("active");
     var userIds = [];
     if ($("#privateButton").hasClass("has_been_clicked")) {
         userIds.push(getCurrentUser().userId);
@@ -202,8 +202,7 @@ function addNewList(name, users){
         contentType: 'text/plain',
         success: function (data) {
             console.log("List successfully added to database");
-            updateUsersAjax(data, users)
-            updateUsersAjax(data, usersa)
+            updateUsersAjax(data, users);
         }
     });
     console.log("4: addNewList() is done.");
