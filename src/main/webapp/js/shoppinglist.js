@@ -203,6 +203,7 @@ function addNewList(name, users){
         success: function (data) {
             console.log("List successfully added to database");
             updateUsersAjax(data, users)
+            updateUsersAjax(data, usersa)
         }
     });
     console.log("4: addNewList() is done.");
@@ -211,11 +212,15 @@ function addNewList(name, users){
 function updateUsers() {
     var hh = getCurrentHousehold();
     var usersIds = [];
-    $('.glyphicon-check').each(function () {
-        var id = this.id;
+    var checkedUsers = $(".checked-in-modal");
+    console.log(checkedUsers);
+    for (var i = 0; i<checkedUsers.length; i++) {
+        var id = checkedUsers[i].id;
         id = id.replace('uniqueUserId_', '');
         usersIds.push(id);
-    });
+        console.log('id: ' + id);
+    }
+
     console.log(JSON.stringify({'userids': usersIds}));
     ajaxAuth({
         type: 'POST',
@@ -264,7 +269,7 @@ function getUsers() {
             }
             for (var i = 0; i<users.length; i++) {
                 console.log(users[i].userId);
-                $("#uniqueUserId_" + users[i].userId).replaceWith('<td id="uniqueUserId_' + users[i].userId +'" onclick="uncheckUser('+ users[i].userId +')" class="glyphicon glyphicon-check"></td>')
+                $("#uniqueUserId_" + users[i].userId).replaceWith('<td id="uniqueUserId_' + users[i].userId +'" onclick="uncheckUser('+ users[i].userId +')" class="glyphicon glyphicon-check checked-in-modal"></td>')
             }
         },
         error: function(data) {
@@ -277,7 +282,7 @@ function getUsers() {
 
 function checkUser(userId) {
     console.log("check user:" + userId);
-    $("#uniqueUserId_" + userId).replaceWith('<td id="uniqueUserId_' + userId +'" onclick="uncheckUser('+ userId +')" class="glyphicon glyphicon-check"></td>')
+    $("#uniqueUserId_" + userId).replaceWith('<td id="uniqueUserId_' + userId +'" onclick="uncheckUser('+ userId +')" class="glyphicon glyphicon-check checked-in-modal"></td>')
 }
 
 function uncheckUser(userId) {
