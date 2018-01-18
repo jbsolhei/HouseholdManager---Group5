@@ -9,18 +9,20 @@
                 </div>
                 <div class="panel-body scrollWhenFull SL">
                     <ul id="shoppingSideMenu" class="nav nav-pills nav-stacked">
-                    </ul>
 
+                    </ul>
                 </div>
-                <div class="panel-footer">
-                    <div id="searchField" class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for list..">
-                    <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                </div>
+                <div class="footerWrapper">
+                    <div class="panel-footer">
+                        <div id="searchField" class="input-group">
+                            <input type="text" class="form-control" placeholder="Search for list..">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,14 +64,16 @@
                     </div>
                     <p id="emptyListText" class="hide">Your shopping list is empty..</p>
                 </div>
-                <div class="panel-footer">
-                    <div id="buttonDiv">
-                        <a onclick="createNewList('ThisIsANewList')" class="btn btn-success btn-sm">
-                            <span class="glyphicon glyphicon-plus"></span> Create new list
-                        </a>
-                        <a id="deleteButton" onclick="deleteList()" class="btn btn-warning btn-sm">
-                            <span class="glyphicon glyphicon-trash"></span> Delete this list
-                        </a>
+                <div class="footerWrapper">
+                    <div class="panel-footer">
+                        <div id="buttonDiv">
+                            <a onclick="createNewList('ThisIsANewList')" class="btn btn-success btn-sm">
+                                <span class="glyphicon glyphicon-plus"></span> Create new list
+                            </a>
+                            <a id="deleteButton" onclick="deleteList()" class="btn btn-warning btn-sm">
+                                <span class="glyphicon glyphicon-trash"></span> Delete this list
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

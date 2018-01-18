@@ -2,24 +2,48 @@
     text-align: left;
 }
 
-#shoppingSideMenu a {
-    color: black;
+#shoppingSideMenu a:hover {
+    color: white;
 }
 
 #shoppingSideMenu li {
     width: 100%;
 }
 
+a {
+    color: black;
+}
+
+.scrollWhenFull.SL {
+   padding: 0px;
+}
+
+.scrollWhenFull.SL td, .scrollWhenFull.SL th {
+    text-align: center;
+}
+
+.scrollWhenFull.SL .glyphicon-remove, .scrollWhenFull.SL .glyphicon-check {
+    cursor: pointer;
+}
+
 #shoppingSideMenu li:hover, #shoppingSideMenu a:hover {
-    background-color: #3C5158;
+    background-color: #556B72;
 }
 
 #shoppingSideMenu li:active, #shoppingSideMenu a:active {
     background-color: #3C5158;
-    color: #3C5158;
+    color: white;
 }
 
-#shoppingSideMenu a:hover {
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus {
+    background-color: #3C5158;
+    color: white;
+    border-radius: 0px;
+    width: 100%;
+}
+
+.nav-pills>li.active>a:hover {
+    background-color: #556B72;
     color: white;
 }
 
@@ -27,4 +51,29 @@
     float: right;
     margin: 10px 0;
     box-sizing: border-box;
+}
+
+.footerWrapper {
+    height: 45px;
+}
+
+.panel-footer {
+    height: 100%;
+    padding: 5px;
+}
+
+#additem, #shoppingListItemInput {
+    border-radius: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    height: 45px;
+
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+#emptyListText {
+    text-align: center;
 }
