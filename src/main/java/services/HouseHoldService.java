@@ -22,7 +22,7 @@ public class HouseHoldService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getTest(){
-        return "Household service says hello!";
+        return "Household service is running!";
     }
 
     @POST
