@@ -83,8 +83,8 @@ function addShoppingTrip() {
                 console.log(response);
                 getShoppingTrips();
                 document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
-                    '<strong>Success!</strong> You have now created a user.</div>';
-                $(".alert-success").fadeTo(3000, 500).slideUp(500, function(){
+                    '<strong>Success!</strong> Shoppingtrip added.</div>';
+                $(".alert-success").fadeTo(500, 500).slideUp(500, function(){
                     $(".alert-danger").slideUp(500);
                     $(function () {
                         $('#theModal').modal('toggle');

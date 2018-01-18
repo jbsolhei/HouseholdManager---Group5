@@ -8,6 +8,8 @@ import classes.User;
 import database.HouseholdDAO;
 
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class HouseHoldService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getTest(){
-        return "Household service says hello!";
+        return "Household service is running!";
     }
 
     @POST
@@ -118,8 +120,8 @@ public class HouseHoldService {
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Household getHousehold(@PathParam("id") int id) {
-        return HouseholdDAO.getHousehold(id);
+    public Household getHousehold(@PathParam("id") int id,@Context ContainerRequestContext context) {
+        return HouseholdDAO.getHousehold(id,(int)context.getProperty("session.userId"));
     }
 
     @PUT
