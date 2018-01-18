@@ -203,6 +203,7 @@ function addNewList(name, users){
         success: function (data) {
             console.log("List successfully added to database");
             updateUsersAjax(data, users)
+            updateUsersAjax(data, usersa)
         }
     });
     console.log("4: addNewList() is done.");
@@ -215,6 +216,7 @@ function updateUsers() {
         var id = this.id;
         id = id.replace('uniqueUserId_', '');
         usersIds.push(id);
+        console.log(JSON.stringify(usersIds));
     });
     console.log(JSON.stringify({'userids': usersIds}));
     $.ajax({
