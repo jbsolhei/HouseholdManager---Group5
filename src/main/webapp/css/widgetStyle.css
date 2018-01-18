@@ -14,6 +14,10 @@
 .row {
     height: 100%;
 }
+.HH {
+    max-height: 75vh;
+    min-height: 75vh;
+}
 
 
 
