@@ -58,6 +58,7 @@ function check(itemId){
             console.log("List successfully added to database");
             $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-check"></span>');
             $("#checkedBy" + itemId).html(user.name);
+            navToShoppingList(activeSHL);
         }
     });
 }
