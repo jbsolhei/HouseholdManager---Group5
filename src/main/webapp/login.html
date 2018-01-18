@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Household Manager</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/logon.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <link href="css/OpeningPage.css" rel="stylesheet">
+    <link href="css/logon.css" rel="stylesheet">
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/forgotPassword.js"></script>
@@ -16,8 +17,37 @@
     <script src="js/addUser.js"></script>
     <script src="js/invite.js"></script>
     <script src="js/index.js"></script>
+
 </head>
 <body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" onclick="swapContent(profile)" style="max-width: 50%">
+                <img src="images/HHM_logo.png" style="height:150%; display:inline-block;">
+            </a>
+        </div>
+        <div class="navbar-collapse collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class=""><a href="OpeningPage.html">Home</a></li>
+                <li class=""><a href="#">About</a></li>
+                <li class=""><a href="#">Help</a></li>
+                <li class=""><a href="#">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a data-toggle="modal" onclick='callModal("modals/createuser.html")' data-target="#theModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li class="active" id="toLoginButton"><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3"></div>
