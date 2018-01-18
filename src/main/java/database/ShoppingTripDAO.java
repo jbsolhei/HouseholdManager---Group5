@@ -149,5 +149,21 @@ public class ShoppingTripDAO {
         return shoppingTrip;
     }
 
+    public static void deleteShoppingTrip(int shoppingTripId) {
+        String query = "DELETE FROM Shopping_trip WHERE shopping_tripId = ?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, shoppingTripId);
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
