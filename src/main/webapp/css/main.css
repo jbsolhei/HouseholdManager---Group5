@@ -168,3 +168,18 @@ body {
     font-size: 17px;
     letter-spacing: 1px;
 }
+.profile_labels {
+    text-align: left !important;
+}
+#profile-img {
+    width: 90%;
+    margin: 15px;
+}
+#profile-footer {
+    background-color: #984b43;
+    color: white;
+    text-align: center;
+}
+#profile-panel-info {
+    margin-top: 10px;
+}
