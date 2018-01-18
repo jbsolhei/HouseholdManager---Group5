@@ -30,35 +30,7 @@
 
 
 .page-wrapper{
-    max-height: 88vh;
     transition: 0.2s;
-    overflow: hidden;
-}
-
-
-@media (max-width: 767px) {
-    .page-wrapper {
-        margin-top: 1%;
-        margin-left: 1%;
-        overflow: scroll;
-    }
-    .scrollWhenFull {
-        max-height: 20vh; !important;
-        min-height: 20vh; !important;
-        overflow-y: scroll; !important;
-    }
-
-    #fancyLogoId420BlazeIt {
-        display: inline-block; !important;
-    }
-
-    #sideBarBrandId {
-        display: none; !important;
-    }
-
-    html, body {
-        font-size: 10px; !important;
-    }
 }
 
 #fancyLogoId420BlazeIt {

@@ -43,32 +43,14 @@
     overflow-y: auto;
 }
 
-
-/* CSS FOR HOUSEHOLD OVERVIEW */
-#hhoMainRow, #notAWidget {
-    height: 100%;
-}
-
-#topRow1Id, #bottomRowId {
-    height: 50%;
-}
-
-
-/* CSS FOR DASHBOARD WIDGETS */
-#dashboardId {
-    height: 100%;
-}
-
-#dbTopRow, #dbBottomRow {
-    height: 50%;
-}
-
+/* FOR MOBILE */
 @media (max-width: 767px) {
     .page-wrapper {
         margin-top: 1%;
         margin-left: 1%;
         overflow: scroll;
     }
+
     .scrollWhenFull {
         max-height: 20vh; !important;
         min-height: 20vh; !important;
@@ -101,6 +83,42 @@
         font-size: 10px; !important;
     }
 }
+
+
+/* CSS FOR HOUSEHOLD OVERVIEW */
+#hhoMainRow, #notAWidget {
+    height: 100%;
+}
+
+#topRow1Id, #bottomRowId {
+    height: 50%;
+}
+
+
+/* CSS FOR DASHBOARD WIDGETS */
+#dashboardId {
+    height: 100%;
+}
+
+#dbTopRow, #dbBottomRow {
+    height: 50%;
+}
+
+/** CSS FOR SHOPPINGLIST WIDGETS */
+#dashboardId {
+    height: 100%;
+}
+
+#dbTopRow, #dbBottomRow {
+    height: 50%;
+}
+
+.SL {
+    max-height: 80vh;
+    min-height: 80vh;
+}
+
+
 
 
 
