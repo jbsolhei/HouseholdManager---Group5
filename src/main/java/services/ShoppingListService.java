@@ -77,15 +77,19 @@ public class ShoppingListService {
     @Path("/{id}/shopping_list/{shopping_list_id}/users")
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateUsers(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, String[] userIds) {
+        for (String u : userIds) {
+            System.out.println(u);
+        }
         ShoppingListDAO.updateUsers(userIds, shopping_list_id);
     }
 
     @POST
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/shopping_lists/items/{itemId}/user/")
+    @Path("{id}/shopping_lists/items/{itemId}/user/")
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean updateCheckedBy(@PathParam("itemId") int itemId , int userId) {
         int rs = ShoppingListDAO.updateCheckedBy(userId, itemId);
+        System.out.println(userId + " " + itemId);
         return rs >= 0;
     }
 }

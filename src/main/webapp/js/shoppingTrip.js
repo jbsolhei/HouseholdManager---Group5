@@ -3,6 +3,7 @@
  */
 var activeTab =0;
 var numberOfItems = 0;
+var activeSHT;
 
 function getShoppingTrips() {
     ajaxAuth({
@@ -15,6 +16,7 @@ function getShoppingTrips() {
             if (data!==null&&data!==undefined) {
                 numberOfItems = data.length;
                 if (numberOfItems!==0) {
+                    SHT = data;
                     viewShoppingTrips(data);
                 }
             }
@@ -22,6 +24,16 @@ function getShoppingTrips() {
         error: function(result) {
         }
     });
+}
+
+function deleteShoppingTrip(at){
+    ajaxAuth({
+        type: "DELETE",
+        url: "res/shoppingtrip/"+at,
+        success:function(){
+            console.log("List #" + at + " deleted.");
+        }
+    })
 }
 
 function viewShoppingTrips(data) {
@@ -39,6 +51,8 @@ function viewInformation(shoppingTripId, i) {
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         success: function (result) {
+            activeSHT = result;
+            console.log(activeSHT);
             updateInformation(result)
         },
         error: function (result) {
@@ -68,5 +82,4 @@ function updateInformation(result) {
     for(var i=0; i<result.contributors.length; i++) {
         $("#list").append("<li>"+result.contributors[i].name+"</li>");
     }
-
 }
