@@ -374,6 +374,13 @@ public class HouseholdDAO {
         return emails.size();
     }
 
+
+    /**
+     * Used to get list of all household admins.
+     *
+     * @param houseId the id of the house
+     * @return User[] with all the admin user objects
+     */
     public static User[] getAdmins(int houseId) {
         String query = "SELECT House_user.userId, House_user.isAdmin FROM House_user WHERE houseId = ?";
         int counter = 0;
@@ -406,7 +413,12 @@ public class HouseholdDAO {
     }
 
 
-    //TODO: getTodosForHouseHold need some more pimping to include a timestamp in the date, as well as a "checked" or "done" attribute.
+    /**
+     * Used to get all todolists for a household
+     *
+     * @param houseId the id of the house
+     * @return array with all the todos.
+     */
     public static Todo[] getTodosForHousehold(int houseId) {
         ArrayList<Todo> todos = new ArrayList<>();
         boolean householdExists = false;
@@ -444,6 +456,14 @@ public class HouseholdDAO {
         return null;
     }
 
+
+    /**
+     * Make existing user in household admin.
+     *
+     * @param houseId the id of the house
+     * @param userId the users id.
+     * @return boolean of success
+     */
     public static boolean makeUserAdmin(int houseId,int userId){
         String query = "UPDATE House_user SET isAdmin = 1 WHERE userId = ? AND houseId = ?;";
         int updateResult = 0;
@@ -465,6 +485,13 @@ public class HouseholdDAO {
         return true;
     }
 
+    /**
+     * Add user to household and make admin.
+     *
+     * @param houseId the id of the house
+     * @param userId the users id.
+     * @return bollean success
+     */
     public static boolean addAdminToHousehold(int houseId, int userId) {
         String query = "INSERT INTO House_user (houseId, userId, isAdmin) VALUES (?, ?, 1)";
         int insertDone = 0;
@@ -486,7 +513,13 @@ public class HouseholdDAO {
         return true;
     }
 
-    public static ArrayList<Integer> getAdminIds(int id) {
+    /**
+     * get UuserIds of all household admins.
+     *
+     * @param houseId the id of the house
+     * @return arrayList of all admin userIds.
+     */
+    public static ArrayList<Integer> getAdminIds(int houseId) {
         String query = "SELECT userId FROM House_user WHERE houseId=? AND isAdmin=1";
         ArrayList<Integer> adminIds = new ArrayList<>();
 
@@ -494,7 +527,7 @@ public class HouseholdDAO {
             DBConnector dbc = new DBConnector();
             Connection conn = dbc.getConn();
             PreparedStatement st = conn.prepareStatement(query);
-            st.setInt(1, id);
+            st.setInt(1, houseId);
 
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
