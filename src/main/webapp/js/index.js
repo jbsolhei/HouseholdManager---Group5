@@ -28,7 +28,7 @@ function checkSession(){
         error: function (e) {
             if (e.status == 401){
                 window.localStorage.clear();
-                window.location.replace("login.html")
+                window.location.replace("OpeningPage.html")
             }
         }
     })
