@@ -202,8 +202,7 @@ function addNewList(name, users){
         contentType: 'text/plain',
         success: function (data) {
             console.log("List successfully added to database");
-            updateUsersAjax(data, users)
-            updateUsersAjax(data, usersa)
+            updateUsersAjax(data, users);
         }
     });
     console.log("4: addNewList() is done.");
