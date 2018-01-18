@@ -3,8 +3,8 @@ package services;
 import auth.Auth;
 import auth.AuthType;
 import classes.Item;
-import classes.ShoppingList;
 import classes.User;
+import classes.ShoppingList;
 import database.ShoppingListDAO;
 
 import javax.ws.rs.*;
@@ -23,6 +23,14 @@ public class ShoppingListService {
     @Produces(MediaType.APPLICATION_JSON)
     public ShoppingList[] getShoppingLists(@PathParam("id") String id) {
         return ShoppingListDAO.getShoppingLists(Integer.parseInt(id));
+    }
+
+    @GET
+    @Auth(AuthType.HOUSEHOLD)
+    @Path("/{id}/shopping_lists/user/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ShoppingList[] getShoppingLists(@PathParam("id") String id, @PathParam("userId") String userId) {
+        return ShoppingListDAO.getShoppingLists(Integer.parseInt(id, Integer.parseInt(userId)));
     }
 
     @GET
