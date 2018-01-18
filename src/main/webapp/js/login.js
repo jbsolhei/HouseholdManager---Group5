@@ -34,6 +34,8 @@ $(document).ready(function () {
     });
 });
 
+
+
 //Set show to true if you want to show loadingscreen and false if you want to hide it
 function showLoadingScreen(show) {
     if (show) {
