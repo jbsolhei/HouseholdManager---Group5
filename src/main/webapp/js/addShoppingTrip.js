@@ -61,30 +61,42 @@ function addShoppingTrip() {
             })
         }
     }
-    console.log(shoppingList + " id " + id);
 
+    if(name === "" || comment == "" || sum == "" ||
+        shoppingList == "" || id == "" ||
+        contributors.length == 0) {
+        document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+            '<strong>Failed to create user.</strong> Please fill in all the forms. </div>';
 
-    var date = new Date();
-    date = date.toLocaleDateString();
-    var data = {"name" : name, "expence" : sum, "comment" : comment, "userId" : getCurrentUser().userId,
-        "userName" : getCurrentUser().name, "contributors" : contributors,
-        "houseId" : getCurrentHousehold().houseId, "shopping_listId" : id, "shopping_listName" : shoppingList};
+    } else {
+        var data = {"name" : name, "expence" : sum, "comment" : comment, "userId" : getCurrentUser().userId,
+            "userName" : getCurrentUser().name, "contributors" : contributors,
+            "houseId" : getCurrentHousehold().houseId, "shopping_listId" : id, "shopping_listName" : shoppingList};
 
-    console.log(JSON.stringify(data));
-    ajaxAuth({
-        url: "res/shoppingtrip",
-        type: 'post',
-        data: JSON.stringify(data),
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function (response) {
-            console.log(response);
-            getShoppingTrips();
-        },
-        error: function (response) {
-            console.log("error");
-            console.log(response);
-        }
+        ajaxAuth({
+            url: "res/shoppingtrip",
+            type: 'post',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                console.log(response);
+                getShoppingTrips();
+                document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
+                    '<strong>Success!</strong> You have now created a user.</div>';
+                $(".alert-success").fadeTo(3000, 500).slideUp(500, function(){
+                    $(".alert-danger").slideUp(500);
+                    $(function () {
+                        $('#theModal').modal('toggle');
+                    });
+                });
+            },
+            error: function (response) {
+                console.log("error");
+                console.log(response);
+            }
 
-    });
+        });
+    }
+
 }
