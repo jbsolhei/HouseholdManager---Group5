@@ -101,7 +101,7 @@ public class ShoppingListDAO {
         String itemName;
         int checkedBy = 0;
 
-        String query = "SELECT usl.userId, sl.* , Item.*, p.* FROM User_Shopping_list AS usl RIGHT JOIN Shopping_list AS sl ON usl.shopping_listId = sl.shopping_listId LEFT JOIN Item ON Item.shopping_listId = sl.shopping_listId LEFT JOIN Person AS p ON Item.checkedBy = p.userId WHERE sl.houseId = ? AND usl.userId = ?;";
+        String query = "SELECT usl.userId, hu.isAdmin, sl.* , Item.*, p.* FROM User_Shopping_list AS usl RIGHT JOIN House_user AS hu ON usl.userId = hu.userId RIGHT JOIN Shopping_list AS sl ON usl.shopping_listId = sl.shopping_listId LEFT JOIN Item ON Item.shopping_listId = sl.shopping_listId LEFT JOIN Person AS p ON Item.checkedBy = p.userId WHERE sl.houseId = 1 AND (hu.isAdmin = ? OR usl.userId = ?);";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
