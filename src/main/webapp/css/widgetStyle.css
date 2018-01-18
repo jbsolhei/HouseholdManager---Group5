@@ -5,6 +5,12 @@
     font-weight: bold;
     color: white;
     letter-spacing: 1px;
+    max-height: 45px;
+    overflow: hidden;
+}
+
+.panel-default>.panel-footer {
+    max-height: 45px;
 }
 
 .panel-default>.panel-heading:hover{
@@ -117,7 +123,6 @@
     max-height: 75vh;
     min-height: 75vh;
 }
-
 
 
 

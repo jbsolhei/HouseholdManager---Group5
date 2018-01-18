@@ -3,8 +3,8 @@ body{
 }
 
 .divclass {
-    margin: 10px;
-    padding-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     width: auto;
 }
 
