@@ -3,8 +3,8 @@ package services;
 import auth.Auth;
 import auth.AuthType;
 import classes.Item;
-import classes.ShoppingList;
 import classes.User;
+import classes.ShoppingList;
 import database.ShoppingListDAO;
 
 import javax.ws.rs.*;
