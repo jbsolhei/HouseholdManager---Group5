@@ -134,7 +134,7 @@ public class HouseholdDAOTest {
 
     @Test
     public void getHousehold() throws Exception {
-        Household temp = HouseholdDAO.getHousehold(1);
+        Household temp = HouseholdDAO.getHousehold(1,0);
         assertEquals("Testhouse",temp.getName());
         assertEquals("Testaddress 22",temp.getAddress());
     }
