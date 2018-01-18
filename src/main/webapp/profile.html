@@ -1,13 +1,73 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading styled-heading">Profile</div>
-            <div class="panel-body">
-                <div class="row" id="profile_row_1">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="panel row" id="profile-panel-info">
+                <div class="panel-body">
+                    <div class="col-sm-5">
+                        <img src="https://i.pinimg.com/736x/a2/e1/8c/a2e18cbfbcaa8756fe5b40f472eeff45--profile-picture-profile-pics.jpg" id="profile-img">
+                    </div>
+                    <div class="col-sm-7">
+                        <h3 id="profile_information_list_name"></h3>
+                        <hr>
+                        <div class="container">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2 profile_labels" for="profile_information_list_email">Email:</label>
+                                <div class="col-sm-10">
+                                    <p class="form-control-static" id="profile_information_list_email"></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2 profile_labels" for="profile_information_list_phone">Phone:</label>
+                                <div class="col-sm-10">
+                                    <p class="form-control-static" id="profile_information_list_phone">
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer" id="profile-footer">Edit information</div>
+            </div>
+
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+    <!--<div class="row">
+        <div class="col-sm-6">
+
+            <br>
+            <h3 id="profile_information_list_name"></h3>
+            <br>
+            <h4 id="profile_information_list_email"></h4>
+            <br>
+            <h4 id="profile_information_list_phone"></h4>
+
+
+        </div>
+        <div class="col-sm-6" id="profile_todos_container">
+            <div class="panel panel-default">
+                <div class="panel-heading styled-heading">Todos</div>
+                <div class="panel-body long-scroll-panel-2" id="profile_todos_body">
+                    <table class="table table-striped" id="profile_todos_table">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody id="profile_todos_table_body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+                <!--<div class="row" id="profile_row_1">
                     <div class="col-md-2" id="profile_pic_container">
-                        <!--
+                        &lt;!&ndash;
                         <img id="profile_pic_img" class="img-responsive" src="https://worldarts2015.s3-us-west-2.amazonaws.com/images/default-profile-picture.jpg?cache=1473463677">
-                        -->
+                        &ndash;&gt;
                     </div>
                     <div class="col-md-5" id="profile_info_container">
                         <div class="panel panel-info">
@@ -20,42 +80,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5" id="profile_households_container">
-                        <div class="panel panel-info">
-                            <div class="panel-heading styled-heading">Your households</div>
-                            <div class="panel-body long-scroll-panel-2">
-                                <table class="table table-striped" id="profile_households_table">
-                                    <thead>
-                                    <tr>
-                                        <th>Household name</th>
-                                        <th>Adress</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="profile_households_table_body"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
         <div class="row">
-            <div class="col-md-4" id="profile_todos_container">
-                <div class="panel panel-info">
-                    <div class="panel-heading styled-heading">Todos</div>
-                    <div class="panel-body long-scroll-panel-2" id="profile_todos_body">
-                        <table class="table table-striped" id="profile_todos_table">
-                            <tr>
-                                <th>Task name</th>
-                                <th>Date</th>
-                                <th>Household</th>
-                            </tr>
-                            </thead>
-                            <tbody id="profile_todos_table_body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+
             <div class="col-md-3" id="profile_statistics">
-                <div class="panel panel-info">
+                <div class="panel panel-default">
                     <div class="panel-heading styled-heading">Statistics</div>
                     <div class="panel-body long-scroll-panel-2" id="profile_statistics_container">
                         Dette er en tekst.
@@ -63,7 +93,7 @@
                 </div>
             </div>
             <div class="col-md-5" id="profile_economics_container">
-                <div class="panel panel-info">
+                <div class="panel panel-default">
                     <div class="panel-heading styled-heading">Economics</div>
                     <div class="panel-body long-scroll-panel-2">
                         <table class="table table-bordered" id = "profile_payment_table">
@@ -105,13 +135,10 @@
                         </table>
                     </div>
                 </div>
-
-        </div>
-
             </div>
         </div>
-    </div>
-
+    </div>-->
+</div>
 <script>
     loadUser();
 </script>
