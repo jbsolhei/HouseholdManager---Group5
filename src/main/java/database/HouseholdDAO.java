@@ -318,7 +318,7 @@ public class HouseholdDAO {
                 boolean dupe = false;
 
                 System.out.println(i);
-                query = "SELECT * FROM (Person NATURAL JOIN House_user) JOIN Invite_token ON Person.email = Invite_token.email WHERE (House_user.houseId=? AND Person.email=?) OR (Invite_token.email=? AND Invite_token.houseId=?);;";
+                query = "SELECT * FROM (Person NATURAL JOIN House_user) JOIN Invite_token ON Person.email = Invite_token.email WHERE (House_user.houseId=? AND Person.email=?) OR (Invite_token.email=? AND Invite_token.houseId=?);";
 
                 try (DBConnector dbc = new DBConnector();
                      Connection conn = dbc.getConn();
