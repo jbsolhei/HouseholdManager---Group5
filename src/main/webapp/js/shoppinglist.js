@@ -187,10 +187,9 @@ function addNewShoppingList(){
         }
         console.log('user:' + userIds)
     }
+    activeSHL = numberOfLists-1;
     addNewList(name, userIds);
     console.log("5: JS updates activeSHL.");
-    activeSHL = numberOfLists-1;
-    navToShoppingList(activeSHL);
 }
 
 function addNewList(name, users){
@@ -203,6 +202,7 @@ function addNewList(name, users){
         success: function (data) {
             console.log("List successfully added to database");
             updateUsersAjax(data, users);
+            navToShoppingList(activeSHL);
         }
     });
     console.log("4: addNewList() is done.");
