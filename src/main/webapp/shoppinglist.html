@@ -1,21 +1,11 @@
-<link href="css/shoppinglist.css" rel="stylesheet">
-<script src="js/shoppingList.js"></script>
+<script src="js/shoppinglist.js"></script>
 
 <div id="shoppingListId" class="container-fluid">
     <div id="mainRow" class="row content">
         <div class="col-md-3 widgetCol">
             <div class="panel panel-default widget">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h4>Shopping lists</h4>
-                        </div>
-                        <div class="col-md-2">
-                            <a id="add_shopping_list_btn" data-toggle="modal" onclick="createNewList('ThisIsANewList')" data-target="#theModal" class="btn btn-md pull-right">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        </div>
-                    </div>
+                <div class="panel-heading styled-heading clearfix">
+                    <p id="SLHeaderID" >Shopping lists <span id="SLHIcon" data-toggle="modal" onclick="createNewList('ThisIsANewList')" data-target="#theModal" class="pull-right clickable"><i class="glyphicon glyphicon-plus"></i></span></p>
                 </div>
                 <div class="panel-body scrollWhenFull SL">
                     <ul id="shoppingSideMenu" class="nav nav-pills nav-stacked">
@@ -37,7 +27,7 @@
         <div class="col-md-9 widgetCol">
             <div class="panel panel-default widget">
                 <div id="head" class="panel-heading">
-                    <h4 id="headline" class="col-md-11"></h4>
+                    <p id="headline"></p>
                     <div id="edit_shopping_list_btn" class="glyphicon glyphicon-eye-open col-md-1" data-toggle="modal" onclick='callModalRun("modals/editShoppingListUsers.html", [getUsers])' data-target="#theModal"></div>
                     <div class="input-group">
                         <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
@@ -63,8 +53,8 @@
                                 <tr>
                                     <th class="col-md-1">Checked</th>
                                     <th class="col-md-5">Item</th>
-                                    <th class="col-md-5"></th>
-                                    <th class="col-md-1"></th>
+                                    <th class="col-md-5">Bought by</th>
+                                    <th class="col-md-1">Remove</th>
                                 </tr>
                             </thead>
                             <tbody id="newItem"></tbody>
@@ -105,3 +95,7 @@
         $("#modal").load(modalContent);
     }
 </script>
+
+<style>
+
+</style>

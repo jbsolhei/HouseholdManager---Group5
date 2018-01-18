@@ -1,12 +1,26 @@
 #buttonDiv {
     text-align: left;
 }
-#head {
-    overflow: auto;
+
+#shoppingSideMenu a {
+    color: black;
 }
 
-#headline {
-    float: left;
+#shoppingSideMenu li {
+    width: 100%;
+}
+
+#shoppingSideMenu li:hover, #shoppingSideMenu a:hover {
+    background-color: #3C5158;
+}
+
+#shoppingSideMenu li:active, #shoppingSideMenu a:active {
+    background-color: #3C5158;
+    color: #3C5158;
+}
+
+#shoppingSideMenu a:hover {
+    color: white;
 }
 
 #edit_shopping_list_btn {
