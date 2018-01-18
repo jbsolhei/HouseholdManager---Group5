@@ -1,3 +1,4 @@
+/* GENERAL CSS FOR WIDGETS */
 .panel-default>.panel-heading{
     background-color: #984b43;
     font-size: 17px;
@@ -6,18 +7,124 @@
     letter-spacing: 1px;
 }
 
-.widget {
-    height: 100%;
-    margin: 0px;
+.panel-default>.panel-heading:hover{
+    background-color: #7D2E26;
+    cursor: pointer;
 }
 
-.row {
+.panel.panel-default, .widget, .row, #notAWidget{
+    margin: 0px;
+    padding: 0px;
+}
+
+.widgetCol {
+    padding: 20px;
+    height: 100%;
+}
+
+#dashboardId, #householdOverviewId {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.widget {
+    height: 100%;
+    width: 100%;
+}
+
+.scrollWhenFull {
+    width: 100%;
+    max-height: 35vh;
+    min-height: 35vh;
+    overflow-y: auto;
+}
+
+/* FOR MOBILE */
+@media (max-width: 767px) {
+    .page-wrapper {
+        margin-top: 1%;
+        margin-left: 1%;
+        overflow: scroll;
+    }
+
+    .scrollWhenFull {
+        max-height: 20vh; !important;
+        min-height: 20vh; !important;
+        width: 100%; !important;
+        overflow-y: scroll; !important;
+    }
+
+    #dashboardId, #householdOverviewId {
+        padding-left: 5px; !important;
+        padding-right: 5px; !important;
+    }
+
+
+    .navbar {
+        margin-bottom: 10px !important;
+    }
+
+    .widgetCol {
+        padding: 5px; !important;
+        height: 100%;
+        width: 100%; !important;
+    }
+
+
+    #sideBarBrandId {
+        display: none; !important;
+    }
+
+    html, body {
+        font-size: 10px; !important;
+    }
+}
+
+
+/* CSS FOR HOUSEHOLD OVERVIEW */
+#hhoMainRow, #notAWidget {
+    height: 100%;
+}
+
+#topRow1Id, #bottomRowId {
+    height: 50%;
+}
+
+
+/* CSS FOR DASHBOARD WIDGETS */
+#dashboardId {
+    height: 100%;
+}
+
+#dbTopRow, #dbBottomRow {
+    height: 50%;
+}
+
+/** CSS FOR SHOPPINGLIST WIDGETS */
+#dashboardId {
     height: 100%;
 }
 .HH {
     max-height: 75vh;
     min-height: 75vh;
 }
+
+#dbTopRow, #dbBottomRow {
+    height: 50%;
+}
+
+.SL {
+    max-height: 75vh;
+    min-height: 75vh;
+}
+
+
+
+
 
 
 

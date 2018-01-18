@@ -16,7 +16,6 @@ function getShoppingTrips() {
             if (data!==null&&data!==undefined) {
                 numberOfItems = data.length;
                 if (numberOfItems!==0) {
-                    SHT = data;
                     viewShoppingTrips(data);
                 }
             }
@@ -26,12 +25,13 @@ function getShoppingTrips() {
     });
 }
 
-function deleteShoppingTrip(at){
+function deleteShoppingTrip(){
     ajaxAuth({
         type: "DELETE",
-        url: "res/shoppingtrip/"+at,
+        url: "res/shoppingtrip/"+activeSHT.shoppingTripId,
         success:function(){
-            console.log("List #" + at + " deleted.");
+            console.log("List #" + activeSHT.shoppingTripId + " deleted.");
+            getShoppingTrips();
         }
     })
 }
@@ -44,6 +44,7 @@ function viewShoppingTrips(data) {
     $("#"+activeTab).addClass("active");
     viewInformation(data[0].shoppingTripId, 0);
 }
+
 function viewInformation(shoppingTripId, i) {
     ajaxAuth({
         url: "res/shoppingtrip/"+shoppingTripId+"/trip",
@@ -52,6 +53,7 @@ function viewInformation(shoppingTripId, i) {
         contentType: "application/json; charset=utf-8",
         success: function (result) {
             activeSHT = result;
+            activeSHT.shoppingTripId = shoppingTripId;
             console.log(activeSHT);
             updateInformation(result)
         },
@@ -74,7 +76,7 @@ function updateInformation(result) {
     $("#sum").append("<h4>Sum: "+result.expence+" kr.</h4>")
     $("#shoppinglist").html("");
     if(result.shopping_listName === null) {
-
+        $("#shoppinglist").append("<h5><b>No attached shopping list</b></h5>");
     } else {
         $("#shoppinglist").append("<h5><b>Attached shopping list:</b></h5><p>" + result.shopping_listName + "</p>");
     }
