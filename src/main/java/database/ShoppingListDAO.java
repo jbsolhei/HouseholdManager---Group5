@@ -90,6 +90,99 @@ public class ShoppingListDAO {
         return null;
     }
 
+    public static ShoppingList[] getShoppingLists(int houseId, int userId) {
+        ArrayList<ShoppingList> shoppingLists = new ArrayList<>();
+        ArrayList<Item> items = new ArrayList<>();
+        int shoppingListId = 0;
+        int shoppingListId2 = 0;
+        String shoppingListName = "";
+        boolean thereAreLists = false;
+        int itemId = 0;
+        String itemName;
+        int checkedBy = 0;
+
+        String query = "SELECT usl.userId, sl.* , Item.*, p.* FROM User_Shopping_list AS usl RIGHT JOIN Shopping_list AS sl ON usl.shopping_listId = sl.shopping_listId LEFT JOIN Item ON Item.shopping_listId = sl.shopping_listId LEFT JOIN Person AS p ON Item.checkedBy = p.userId WHERE sl.houseId = ? AND usl.userId = ?;";
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, houseId);
+            st.setInt(2, userId);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    thereAreLists = true;
+                    shoppingListId = rs.getInt("sl.shopping_listId");
+
+                    if (shoppingListId != shoppingListId2 && shoppingListId2 != 0) {
+                        ShoppingList sl = new ShoppingList();
+                        sl.setName(shoppingListName);
+                        sl.setItems(toItemArray(items));
+                        sl.setShoppingListId(shoppingListId2);
+                        shoppingLists.add(sl);
+                        items.clear();
+                    }
+                    shoppingListName = rs.getString("sl.name");
+
+                    itemId = rs.getInt("itemId");
+                    itemName = rs.getString("Item.name");
+                    checkedBy = rs.getInt("checkedBy");
+
+                    Item item = new Item();
+                    User checkerboi = new User();
+
+                    if (checkedBy != 0) {
+                        int checkerboiId;
+                        String email;
+                        String personName;
+                        String telephone;
+
+                        checkerboiId = rs.getInt("p.userId");
+                        email = rs.getString("email");
+                        personName = rs.getString("p.name");
+                        telephone = rs.getString("telephone");
+
+                        checkerboi.setUserId(checkerboiId);
+                        checkerboi.setName(personName);
+                        checkerboi.setEmail(email);
+                        checkerboi.setTelephone(telephone);
+
+                        item.setCheckedBy(checkerboi);
+                    } else {
+                        item.setCheckedBy(null);
+                    }
+
+                    item.setItemId(itemId);
+                    item.setName(itemName);
+
+                    items.add(item);
+
+                    shoppingListId2 = shoppingListId;
+                }
+            }
+
+            if (thereAreLists){
+                ShoppingList sl = new ShoppingList();
+                sl.setName(shoppingListName);
+                sl.setItems(toItemArray(items));
+                sl.setShoppingListId(shoppingListId2);
+                shoppingLists.add(sl);
+                items.clear();
+
+                for (ShoppingList shoppingList: shoppingLists) {
+                    //TODO: Make method to get all users associated with a shopping list
+                }
+                return toShoppingListArray(shoppingLists);
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static User[] getShoppingListUsers(int shoppingListId) {
         ArrayList<User> users = new ArrayList<>();
         int userId;
@@ -192,22 +285,31 @@ public class ShoppingListDAO {
      * Creates a new shopping list with no items
      * @param shoppingList
      * @param houseId
+     * @return shoppingListId
      */
-  public static void createShoppingList(String shoppingList, int houseId){
+  public static int createShoppingList(String shoppingList, int houseId){
         String name = shoppingList;
         String query = "INSERT INTO Shopping_list (name, houseId) VALUES (?,?)";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
-             PreparedStatement st = conn.prepareStatement(query)) {
+             PreparedStatement st = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             st.setString(1, name);
             st.setInt(2,houseId);
             st.executeUpdate();
 
+            try (ResultSet resultSet = st.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
 
 
@@ -316,6 +418,32 @@ public class ShoppingListDAO {
         }
     }
 
+    public static int updateCheckedBy(int userId, int itemId) {
+        String query;
+        if (userId == 0) {
+            query = "UPDATE Item SET checkedBy = NULL WHERE itemId = ?";
+        } else {
+            query = "UPDATE Item SET checkedBy = ? WHERE itemId = ?";
+        }
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            if (userId == 0) {
+                st.setInt(1, itemId);
+            } else {
+                st.setInt(1, userId);
+                st.setInt(2, itemId);
+            }
+
+            return st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 
     private static User[] toUserArray(ArrayList<User> users) {
         User[] userArray = new User[users.size()];
@@ -389,5 +517,10 @@ public class ShoppingListDAO {
         } catch (SQLException e) {
             System.out.println("Error in preparing statement\n\n" + e.getMessage());
         }
+    }
+
+    public static void main (String[] args) {
+        int rtn = ShoppingListDAO.createShoppingList("BestList", 1);
+        System.out.println("stop");
     }
 }

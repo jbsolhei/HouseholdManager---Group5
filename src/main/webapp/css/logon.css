@@ -1,43 +1,11 @@
 body {
-    background-color: #eee;
+    background-color: #e9ebee;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.page {
-    min-width: 320px;
-    max-width: 920px;
-    margin: 10px auto;
-}
-
-header {
-    text-align: center;
-}
-
 #logo {
-    width: auto;
-    max-width: 50%;
+    width: 100%;
     height: auto;
-    text-align: center;
-}
-
-div {
-    margin: 10px;
-    padding-bottom: 10px;
-    width: auto;
-}
-
-.title {
-    width: 100px;
-    text-align: right;
-    padding-right: 10px;
-}
-
-.submit {
-    padding-bottom: 0;
-}
-
-#submit {
-    width: 150px;
 }
 
 .footer, #mainpage{
@@ -60,6 +28,19 @@ ul {
 li {
     display: inline;
     margin: 0px 3px;
+}
+
+.boxes {
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+}
+.title {
+    margin: 5px;
+    padding: 5px;
+}
+#forgot {
+    text-align: center;
 }
 
 

@@ -7,11 +7,7 @@ var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
 var activeSHL = 0;
-
-
-$(document).ready(function() {
-    addHouseholdsToList(getCurrentUser().userId);
-});
+var householdsLoaded = false;
 
 function ajaxAuth(attr) {
     attr.headers = {
@@ -45,7 +41,12 @@ function setCurrentUser(id) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
-            setCurrentHousehold(0)
+            var hid = JSON.parse(window.localStorage.getItem("welcome"));
+            if (hid!==null&&hid!==undefined) {
+                setCurrentHousehold(hid.houseId)
+            } else {
+                setCurrentHousehold(0);
+            }
         },
         dataType: "json"
     });
@@ -60,20 +61,24 @@ function getCurrentHousehold() {
 }
 
 function updateCurrentHousehold(bodyContent){
-    var id = getCurrentHousehold().houseId;
-    ajaxAuth({
-        url:"res/household/"+id,
-        type: "GET",
-        contentType: "application/json; charser=utf-8",
-        success: function(data) {
-            window.localStorage.setItem("house", JSON.stringify(data));
-            if (bodyContent!==undefined){
-                $(".page-wrapper").load(bodyContent);
+    if (getCurrentHousehold()!==undefined&&getCurrentHousehold()!==undefined) {
+        var id = getCurrentHousehold().houseId;
+        ajaxAuth({
+            url: "res/household/" + id,
+            type: "GET",
+            contentType: "application/json; charser=utf-8",
+            success: function (data) {
+                window.localStorage.setItem("house", JSON.stringify(data));
+                if (bodyContent !== undefined) {
+                    $(".page-wrapper").load(bodyContent);
 
-            }
-        },
-        dataType: "json"
-    });
+                }
+            },
+            dataType: "json"
+        });
+    } else {
+        setCurrentHousehold(0);
+    }
 }
 
 function setCurrentHousehold(hid) {
@@ -110,30 +115,6 @@ function setCurrentHousehold(hid) {
     }
 }
 
-function getHouseholdsForUser(userId, handleData){
-    ajaxAuth({
-        url:"res/user/"+userId+"/hh",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            handleData(data);
-        },
-        dataType: "json"
-    });
-}
-
-function getAdminIds(houseId, handleData){
-    ajaxAuth({
-        url:"res/household/"+houseId+"/admins",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            handleData(data);
-        },
-        dataType: "json"
-    });
-}
-
 function getHouseholdFromId(id,handleData){
     ajaxAuth({
         url: "res/household/"+id,
@@ -146,24 +127,18 @@ function getHouseholdFromId(id,handleData){
     });
 }
 
-function getTasksForUser(userId, handleData){
-    ajaxAuth({
-        url:"res/user/"+userId+"/tasks",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            console.log("getTasksForUser(), profile.html");
-            handleData(data);
-        },
-        error: console.log("Error in getTasksForUser"),
-        dataType: "json"
-    });
+function checkWelcome() {
+    if (window.localStorage.getItem("welcome")!==null){
+        window.localStorage.removeItem("welcome");
+        callModal("modals/welcome.html");
+        $("#theModal").modal();
+    }
 }
 
 function logout() {
-    console.log("clicked")
+    console.log("clicked");
     window.localStorage.clear();
-    window.location.replace("login.html");
+    window.location.replace("OpeningPage.html");
 }
 
 //Adds the user's households to the dropdown
@@ -180,20 +155,21 @@ function addHouseholdsToList(userId) {
             for (var i = 0; i < households.length; i++) {
                 $("#listOfHouseholds").prepend("<li><a class='householdElement' id='"+households[i].houseId+"'>" + households[i].name + "</a></li>");
             }
+            householdsLoaded = true;
             console.log("DATA LOADET");
             $('#coverScreen').css('display', "none");
         },
         dataType: "json"
     });
 
-    $("#currentHouseholdId").text(getCurrentHousehold().name);
+    $("#currentHouseholdId").html(getCurrentHousehold().name + ' <span class="caret"></span>');
 }
 
 //Sets the chosen household to current household.
 $(document).on('click', '.householdElement', function () {
     var houseId = $(this).attr('id');
     setCurrentHousehold(houseId);
-    $("#currentHouseholdId").text($(this).text());
+    $("#currentHouseholdId").html($(this).text() + ' <span class="caret"></span>');
 });
 
 function callModal(modalContent) {

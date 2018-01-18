@@ -1,0 +1,46 @@
+#sideBarId {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    background-color: #233237;
+    overflow-x: hidden;
+    transition: 0.2s;
+    padding-top: 60px;
+}
+
+#currentHouseholdId:focus {
+    background-color: #162B32;
+}
+
+.sidebar {
+    position: fixed;
+    margin-right: 20px;
+    width: 13%;
+    height: 100vh;
+    color: #9d9d9d;
+}
+
+html  {
+    transition: background-color .2s;
+}
+
+a.btn.btn-default.btn-sidebar {
+    text-align: left;
+    font-size: 17px;
+    margin-top: 5px;
+}
+
+.btn-sidebar {
+    width: 100%;
+    height: 36px;
+    text-align: center;
+    display: block;
+    border: none;
+    outline: none;!important;
+    border: none;!important;
+}
+
+

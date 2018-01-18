@@ -2,6 +2,7 @@
  * Created by Camilla Velvin on 11.01.2018.
  */
 $(document).ready(function () {
+    window.localStorage.setItem("invite",window.location.search);
     $("#submit").click(function () {
         var email = $("#email").val();
         var password = $("#password").val();
@@ -20,7 +21,7 @@ $(document).ready(function () {
                     showLoadingScreen(false);
                     window.localStorage.setItem("sessionToken",response.sessionToken);
                     window.localStorage.setItem("userId",response.userId);
-                    inviteCheck()
+                    inviteCheck();
                 }
             },
             error: function(result) {
