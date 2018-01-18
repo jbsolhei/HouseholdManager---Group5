@@ -6,7 +6,6 @@
 
 .navbar {
     border-radius: 0;!important;
-    margin-bottom: 0;!important;
 }
 
 .btn-sidebar, .sidebar, .navbar, a.navbar-brand {
@@ -31,9 +30,9 @@
 
 
 .page-wrapper{
-    margin-top: 5px;
     max-height: 88vh;
     transition: 0.2s;
+    overflow: hidden;
 }
 
 
@@ -41,11 +40,12 @@
     .page-wrapper {
         margin-top: 1%;
         margin-left: 1%;
+        overflow: scroll;
     }
-    .long-scroll-panel{
-        max-height: 20vh;
-        min-height: 20vh;
-        overflow-y: scroll;
+    .scrollWhenFull {
+        max-height: 20vh; !important;
+        min-height: 20vh; !important;
+        overflow-y: scroll; !important;
     }
 
     #fancyLogoId420BlazeIt {
@@ -56,7 +56,7 @@
         display: none; !important;
     }
 
-    html {
+    html, body {
         font-size: 10px; !important;
     }
 }

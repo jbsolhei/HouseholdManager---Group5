@@ -1,9 +1,9 @@
 <div id="dashboardId" class="container-fluid">
-    <div class="row equal" style="min-height: 280px">
-        <div id="todoPanelId" class="col col-md-6 ">
+    <div id="dbTopRow" class="row">
+        <div id="todoPanelId" class="col-md-8 widgetCol">
             <div class="panel panel-default widget">
                 <div id="lol" class="panel-heading">Household todos</div>
-                <div class="panel-body long-scroll-panel-2">
+                <div class="panel-body scrollWhenFull">
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -17,32 +17,32 @@
                 </div>
             </div>
         </div>
-        <div id="shoppinglistPanelId" class="col col-md-6">
+        <div id="shoppinglistPanelId" class="col-md-4 widgetCol">
             <div class="panel panel-default widget">
                 <div class="panel-heading" onclick="navToShoppingList(0)">Shoppinglists</div>
-                <div class="panel-body long-scroll-panel-2">
+                <div class="panel-body scrollWhenFull">
                     <ul id="dashboard_shopping_list_unordered_list" class="list-group"></ul>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row equal">
-        <div id="debtPanelId" class="col-md-3">
+    <div id="dbBottomRow" class="row">
+        <div id="debtPanelId" class="col-md-4 widgetCol">
             <div class="panel panel-default widget">
                 <div class="panel-heading">Debt</div>
-                <div class="panel-body long-scroll-panel-3">Panel Content</div>
+                <div class="panel-body scrollWhenFull">Panel Content</div>
             </div>
         </div>
-        <div id="newsPanelId" class="col-md-4">
+        <div id="newsPanelId" class="col-md-4 widgetCol">
             <div class="panel panel-default widget">
                 <div class="panel-heading">Household news</div>
-                <div class="panel-body long-scroll-panel-3">Panel Content</div>
+                <div class="panel-body scrollWhenFull">Panel Content</div>
             </div>
         </div>
-        <div id="statisticsPanelId" class="col-md-5">
+        <div id="statisticsPanelId" class="col-md-4 widgetCol">
             <div  class="panel panel-default widget">
                 <div class="panel-heading">Statistics</div>
-                <div class="panel-body long-scroll-panel-3">Statistics here</div>
+                <div class="panel-body scrollWhenFull">Statistics here</div>
             </div>
         </div>
     </div>
