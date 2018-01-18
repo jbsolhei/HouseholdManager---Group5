@@ -48,6 +48,10 @@ function setCurrentUser(id) {
                 setCurrentHousehold(0);
             }
         },
+        error: function () {
+            showLoadingScreen(false);
+            alert("Error loading user");
+        },
         dataType: "json"
     });
 }
@@ -94,7 +98,8 @@ function setCurrentHousehold(hid) {
                 window.location.replace("index.html")
             },
             error: function () {
-                console.log("Error in sethh")
+                showLoadingScreen(false);
+                alert("Error setting household");
             },
             dataType: "json"
         });
@@ -108,7 +113,8 @@ function setCurrentHousehold(hid) {
                 window.location.replace("index.html")
             },
             error: function () {
-                console.log("Error in sethh")
+                showLoadingScreen(false);
+                alert("Error setting household")
             },
             dataType: "json"
         });
