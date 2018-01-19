@@ -192,6 +192,11 @@ public class ShoppingListDAO {
         return null;
     }
 
+    /**
+     * Gives you a shopping list given the shopping list ID
+     * @param shoppingListId the shopping list ID
+     * @return a ShoppingList object
+     */
     public static ShoppingList getShoppingList(int shoppingListId) {
         ShoppingList shoppingList = new ShoppingList();
         ArrayList<User> users = new ArrayList<>();
@@ -364,7 +369,12 @@ public class ShoppingListDAO {
         return -1;
     }
 
-
+    /**
+     * Delet
+     *
+     * @param houseId
+     * @param shopping_list_id
+     */
     public static void deleteShoppingList(int houseId, int shopping_list_id) {
         String query = "DELETE FROM Shopping_list WHERE houseId = ? AND shopping_listId = ?";
 
