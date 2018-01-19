@@ -83,6 +83,10 @@ th, td {
     cursor: pointer;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .has_been_clicked {
     background-color: #d9534f;
     color: #fff;
@@ -90,6 +94,10 @@ th, td {
 
 .has_been_clicked:focus {
     color: #fff;
+}
+
+.clickable {
+    cursor: pointer;
 }
 
 .container-fluid {

@@ -20,7 +20,7 @@ body{
     height: 95vh;
 }
 
-#pic{
+.carousel-pic {
     margin-top: -20px;
     width:100%; height: 95vh;
 }
