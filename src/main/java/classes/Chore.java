@@ -2,21 +2,30 @@ package classes;
 
 import java.util.Date;
 
-public class Todo {
+public class Chore {
     private String description;
-    private Date date;
+    private java.sql.Date date;
     private boolean done;
     private int houseId;
     private User user;
-    private int taskId;
+    private int choreId;
+    private int time;
 
-    public Todo(){}
+    public Chore(){}
 
     public String getDescription() {
         return description;
     }
 
-    public Date getDate() {
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public java.sql.Date getDate() {
         return date;
     }
 
@@ -28,7 +37,7 @@ public class Todo {
         this.description = description;
     }
 
-    public void setDate(Date date) {
+    public void setDate(java.sql.Date date) {
         this.date = date;
     }
 
@@ -44,19 +53,19 @@ public class Todo {
         this.houseId = houseId;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public int getChoreId() {
+        return choreId;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public void setChoreId(int choreId) {
+        this.choreId = choreId;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User userId) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

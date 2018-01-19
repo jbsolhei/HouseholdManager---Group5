@@ -420,11 +420,11 @@ public class HouseholdDAO {
      * @param houseId the id of the house
      * @return array with all the todos.
      */
-    public static Todo[] getTodosForHousehold(int houseId) {
-        ArrayList<Todo> todos = new ArrayList<>();
+    public static Chore[] getTodosForHousehold(int houseId) {
+        ArrayList<Chore> chores = new ArrayList<>();
         boolean householdExists = false;
 
-        String query = "SELECT * FROM Task WHERE houseId = ?";
+        String query = "SELECT * FROM Chore WHERE houseId = ?";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -434,13 +434,13 @@ public class HouseholdDAO {
             try (ResultSet rs = st.executeQuery()) {
 
                 while (rs.next()) {
-                    Todo todo = new Todo();
-                    todo.setDescription(rs.getString("description"));
-                    todo.setHouseId(houseId);
-                    todo.setTaskId(rs.getInt("taskId"));
-                    todo.setUser(UserDAO.getUser(rs.getInt("userId")));
-                    todo.setDate(rs.getDate("date"));
-                    todos.add(todo);
+                    Chore chore = new Chore();
+                    chore.setDescription(rs.getString("description"));
+                    chore.setHouseId(houseId);
+                    chore.setChoreId(rs.getInt("choreId"));
+                    chore.setUser(UserDAO.getUser(rs.getInt("userId")));
+                    chore.setDate(rs.getDate("chore_date"));
+                    chores.add(chore);
                     householdExists = true;
                 }
             }
@@ -449,9 +449,9 @@ public class HouseholdDAO {
             e.printStackTrace();
         }
 
-        Todo[] data = new Todo[todos.size()];
-        for (int i = 0; i < todos.size(); i++) {
-            data[i] = todos.get(i);
+        Chore[] data = new Chore[chores.size()];
+        for (int i = 0; i < chores.size(); i++) {
+            data[i] = chores.get(i);
         }
         if (householdExists) return data;
         return null;

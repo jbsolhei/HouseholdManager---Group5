@@ -102,6 +102,7 @@ public class ShoppingTripDAOTest {
         assertEquals("Test trip", name);
         assertEquals(1, houseId);
         assertEquals("This is a test trip", comment);
+        assertEquals(23, expence, 0.1);
 
     }
 

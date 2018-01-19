@@ -3,7 +3,7 @@ package services;
 import auth.Auth;
 import auth.AuthType;
 import classes.Household;
-import classes.Todo;
+import classes.Chore;
 import classes.User;
 import database.HouseholdDAO;
 
@@ -112,7 +112,7 @@ public class HouseHoldService {
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}/tasks")
     @Produces(MediaType.APPLICATION_JSON)
-    public Todo[] getTodosForHousehold(@PathParam("id") int id){
+    public Chore[] getTodosForHousehold(@PathParam("id") int id){
         return HouseholdDAO.getTodosForHousehold(id);
     }
 
@@ -138,5 +138,4 @@ public class HouseHoldService {
     public void deleteHousehold(@PathParam("id") int id){
         HouseholdDAO.deleteHousehold(id);
     }
-
 }
