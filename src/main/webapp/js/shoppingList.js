@@ -19,10 +19,12 @@ function readyShoppingList(){
 
 function insertShoppingLists(){
     var inputString = "";
-    $.each(SHL, function(i,val){
-        inputString += '<li onclick="showList(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
-    });
-    $("#shoppingSideMenu").html(inputString);
+    if (SHL.name!==null) {
+        $.each(SHL, function (i, val) {
+            inputString += '<li onclick="showList(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
+        });
+        $("#shoppingSideMenu").html(inputString);
+    }
 }
 
 function additem() {
@@ -97,6 +99,7 @@ function deleteItem(itemNumber){
 }
 
 function showList(SLIndex){
+    console.log(SHL);
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
     console.log("SLIndex: " + SLIndex);
     currentItemList = SHL[SLIndex].items;

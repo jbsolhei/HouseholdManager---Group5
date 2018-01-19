@@ -73,7 +73,7 @@
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-            <button class="btn btn-info boxes" onclick="showLoadingScreen(true)" id="submit">Login</button>
+            <button class="btn btn-info boxes" onclick="login($('#email').val(),$('#password').val());showLoadingScreen(true)" id="submit">Login</button>
             <br>
             <br>
             <p id="forgot">
@@ -156,5 +156,12 @@
             <div class="loader"></div>
         </div>
     </div>
+
+<script>
+    $(document).ready(function () {
+        window.localStorage.setItem("invite",window.location.search);
+    });
+</script>
+
 </body>
 </html>
