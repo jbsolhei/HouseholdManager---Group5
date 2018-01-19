@@ -1,0 +1,53 @@
+<script>
+    $(function () {
+        updateNewsList();
+    });
+    function updateNewsList () {
+        document.getElementById("comment").value = "";
+        getNews(function (listOfNews) {
+            $("#list_of_news").html("");
+            for(var i=0; i<listOfNews.length; i++) {
+                var time;
+                if(listOfNews[i].time.minute < 10) {
+                    time = "0"+listOfNews[i].time.minute;
+                } else {
+                    time = listOfNews[i].time.minute;
+                }
+                $("#list_of_news").append("<hr><div class='row'>" +
+                    "<div class='col-sm-2'><div class=\"img-circle\"><img class=\"img-responsive img-pic\" src=\"http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg\"><br></div>" +
+                    "</div><div class='col-sm-10'><label>"+listOfNews[i].user.name+"</label><small style='float: right'>   --"+listOfNews[i].time.dayOfMonth+". "+listOfNews[i].time.month+" "+
+                    listOfNews[i].time.year+". "+listOfNews[i].time.hour+":"+time+" --</small>" +
+                    "<br><p>"+listOfNews[i].message+"</p></div></div>");
+            }
+        });
+    }
+</script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="panel">
+                <div id="add_news" style="padding: 15px">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="img-circle1"><img class="img-responsive img-pic1" src="http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg"></div>
+                            <br>
+                        </div>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="5" id="comment" style="resize: none;"></textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-8"></div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-lg" onclick="postNews($('#comment').val(), updateNewsList)" style="float: right; width: 100%">Send</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="list_of_news"></div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>

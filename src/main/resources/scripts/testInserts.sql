@@ -63,4 +63,5 @@ INSERT INTO Finance (fromPerson, toPerson, value) VALUES (12, 13, 25);
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (12, 14, 50);
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (14, 13, 50);
 
-
+INSERT INTO Chore (description, chore_date, time, choreId, houseId, userId)
+VALUES ('Ta ut søpla', '2018-01-20', 0, 1, 10, 51);

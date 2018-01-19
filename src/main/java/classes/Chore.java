@@ -1,5 +1,6 @@
 package classes;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Chore {
@@ -35,6 +36,19 @@ public class Chore {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setDate(String dateString) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+
+        try {
+            java.util.Date utilDate = format.parse(dateString);
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            this.date = sqlDate;
+        }catch(Exception e){
+            e.printStackTrace();
+
+        }
     }
 
     public void setDate(java.sql.Date date) {
