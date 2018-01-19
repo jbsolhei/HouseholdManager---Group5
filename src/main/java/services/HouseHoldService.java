@@ -138,5 +138,4 @@ public class HouseHoldService {
     public void deleteHousehold(@PathParam("id") int id){
         HouseholdDAO.deleteHousehold(id);
     }
-
 }
