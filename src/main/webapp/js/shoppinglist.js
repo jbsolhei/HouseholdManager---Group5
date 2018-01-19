@@ -202,7 +202,6 @@ function addNewList(name, users){
         success: function (data) {
             console.log("List successfully added to database");
             updateUsersAjax(data, users);
-            navToShoppingList(activeSHL);
         }
     });
     console.log("4: addNewList() is done.");
@@ -245,7 +244,8 @@ function updateUsersAjax(shoppingListId, users) {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("List successfully added to database")
+            console.log("List successfully added to database");
+            navToShoppingList(activeSHL);
         },
         error: function (result) {
             console.log(result);
