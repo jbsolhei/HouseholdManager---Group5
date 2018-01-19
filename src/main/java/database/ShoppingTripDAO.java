@@ -1,5 +1,6 @@
 package database;
 
+import classes.Debt;
 import classes.ShoppingTrip;
 import classes.User;
 
@@ -93,6 +94,7 @@ public class ShoppingTripDAO {
 
         return true;
     }
+
 
     public static ShoppingTrip getShoppingTrip(int shopping_tripId) {
         String query = "SELECT p.* FROM Person p, User_Shopping_trip us WHERE p.userId=us.userId AND us.shopping_tripId=?";

@@ -55,3 +55,12 @@ INSERT INTO Person (userId, email, name, password, telephone) VALUES (103,'notad
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (101, 100, 100);
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (102, 100, 150);
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (100, 103, 50);
+
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (12, 'test1@ert.no', 'ert', '123456', '4383');
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (13, 'Frank1@gmail1.com', 'Frank', '123456', '233');
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (14, 'asdf@hj.no', 'Martin', 'test', '4323');
+INSERT INTO Finance (fromPerson, toPerson, value) VALUES (12, 13, 25);
+INSERT INTO Finance (fromPerson, toPerson, value) VALUES (12, 14, 50);
+INSERT INTO Finance (fromPerson, toPerson, value) VALUES (14, 13, 50);
+
+
