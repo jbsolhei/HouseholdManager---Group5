@@ -140,6 +140,18 @@ public class ShoppingListDAOTest {
         }
 
     }
+    @Test
+    public void updateUsers() throws Exception {
+        String[] userIds = {"1", "2", "3"};
+        ShoppingListDAO.updateUsers(userIds, 1);
 
+        String query = "SELECT * FROM User_Shopping_list WHERE shopping_listId = 1";
+        ResultSet rs = st.executeQuery(query);
 
+        int i = 0;
+        while (rs.next()) {
+            i++;
+        }
+        assertEquals(3, i);
+    }
 }

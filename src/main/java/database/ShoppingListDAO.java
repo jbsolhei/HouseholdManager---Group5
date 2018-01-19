@@ -386,15 +386,13 @@ public class ShoppingListDAO {
              PreparedStatement st = conn.prepareStatement(query)) {
 
             del_st.setInt(1, shoppingListId);
-            int dels = del_st.executeUpdate();
-            System.out.println("deleted " + dels + " rows");
+            del_st.executeUpdate();
 
-            for (int i = 0; i < userIds.length; i++) {
-                st.setInt(1, Integer.parseInt(userIds[i]));
+            for (String userId : userIds) {
+                st.setInt(1, Integer.parseInt(userId));
                 st.setInt(2, shoppingListId);
                 int rtn = st.executeUpdate();
-                if (rtn < 0)
-                    System.err.println("Could not update: " + userIds[i] + " into shoppinglist where shoppinglistid = " + shoppingListId);
+                if (rtn < 0) System.err.println("Could not update: " + userIds + " into shoppinglist where shoppinglistid = " + shoppingListId);
             }
 
         } catch (SQLException e) {
