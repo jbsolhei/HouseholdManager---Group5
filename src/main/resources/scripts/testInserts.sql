@@ -41,3 +41,13 @@ INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (11, 'Fredagst
 
 INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test', '2014-10-12', '', 50, 1, NULL );
 INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test2', '2015-10-12', '', 50, 1, NULL );
+
+
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (100,'userhouseholdtest@holdhouse.com', 'John Wick', 'wordpass', '9999999');
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (101,'inviteduser@house.com', 'Corgi Boii', 'ffffffff', '09020222');
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (102, 'gubbe@epost.no', 'Gubben Gnu', '$2a$12$ZyzEIbrC.0Q2.SfWhkOIGO36NHzDvUkNzvx8qV.mZFBHyZFrrCnum', 40302010);
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (103,'notadminuser@house.com', 'stronk', 'ioooio', '123123550');
+
+INSERT INTO Finance (fromPerson, toPerson, value) VALUES (101, 100, 100);
+INSERT INTO Finance (fromPerson, toPerson, value) VALUES (102, 100, 150);
+INSERT INTO Finance (fromPerson, toPerson, value) VALUES (100, 103, 50);
