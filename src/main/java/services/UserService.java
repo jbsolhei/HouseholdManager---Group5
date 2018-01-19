@@ -128,10 +128,10 @@ public class UserService {
 
     @GET
     @Auth(AuthType.USER_READ)
-    @Path("/{id}/tasks")
+    @Path("/{id}/chores")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Chore> todos(@PathParam("id") int id) {
-        return UserDAO.getTasks(id);
+        return UserDAO.getChores(id);
     }
 
     @POST
