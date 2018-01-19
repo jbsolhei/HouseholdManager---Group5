@@ -10,6 +10,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class NewsDAO {
+
+    /**
+     *
+     * @param houseId
+     * @return
+     */
     public static ArrayList<News> getNews(int houseId){
         ArrayList<News> news = new ArrayList<>();
         String query = "SELECT * FROM (Message NATURAL JOIN Person) WHERE houseId = ?";
@@ -34,7 +40,7 @@ public class NewsDAO {
                     toAdd.setNewsId(rs.getInt("messageId"));
                     toAdd.setMessage(rs.getString("text"));
                     toAdd.setUser(user);
-                    toAdd.setTime(rs.getDate("date").toLocalDate());
+                    toAdd.setTime(rs.getTimestamp("date").toLocalDateTime());
 
                     news.add(toAdd);
                 }

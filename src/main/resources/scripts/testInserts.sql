@@ -41,3 +41,8 @@ INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (11, 'Fredagst
 
 INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test', '2014-10-12', '', 50, 1, NULL );
 INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test2', '2015-10-12', '', 50, 1, NULL );
+
+INSERT INTO Message (messageId,text, date, houseId, userId) VALUES (1,'Test message',NOW(),1,33);
+INSERT INTO Message (messageId,text, date, houseId, userId) VALUES (2,'Another test message',NOW(),10,50);
+INSERT INTO Message (messageId,text, date, houseId, userId) VALUES (3,'Do not delete me',NOW(),2,1);
+INSERT INTO Message (messageId,text, date, houseId, userId) VALUES (4,'Please delete me',NOW(),2,1);
