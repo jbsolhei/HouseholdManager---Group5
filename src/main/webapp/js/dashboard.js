@@ -71,7 +71,6 @@ function printNewsToDashboard(){
         for (var i = 0;i<loops;i++) {
             var post = data[i];
             var time = post.time.dayOfMonth+"."+post.time.monthValue+" "+post.time.hour+":"+post.time.minute;
-            console.log(post);
             if (post.message.length<50){
                 html += "<div class=\"well well-sm\">\n" +
                     "                            <div class=\"message-heading\">\n" +
