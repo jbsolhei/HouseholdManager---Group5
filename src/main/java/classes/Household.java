@@ -1,16 +1,27 @@
 package classes;
 
+import java.util.ArrayList;
+
 public class Household {
     private String name;
     private String address;
     private User[] residents;
     private User[] admins;
     private ShoppingList[] shoppingLists;
+    private ArrayList<News> news;
     private Todo[] todo;
 
     private int houseId;
 
     public Household(){}
+
+    public ArrayList<News> getNews() {
+        return news;
+    }
+
+    public void setNews(ArrayList<News> news) {
+        this.news = news;
+    }
 
     public String getName() {
         return name;

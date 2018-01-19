@@ -424,7 +424,7 @@ public class HouseholdDAO {
         ArrayList<Todo> todos = new ArrayList<>();
         boolean householdExists = false;
 
-        String query = "SELECT * FROM Task WHERE houseId = ?";
+        String query = "SELECT * FROM Chore WHERE houseId = ?";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -437,9 +437,9 @@ public class HouseholdDAO {
                     Todo todo = new Todo();
                     todo.setDescription(rs.getString("description"));
                     todo.setHouseId(houseId);
-                    todo.setTaskId(rs.getInt("taskId"));
+                    todo.setTaskId(rs.getInt("choreId"));
                     todo.setUser(UserDAO.getUser(rs.getInt("userId")));
-                    todo.setDate(rs.getDate("date"));
+                    todo.setDate(rs.getDate("chore_date"));
                     todos.add(todo);
                     householdExists = true;
                 }
