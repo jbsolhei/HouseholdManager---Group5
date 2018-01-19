@@ -15,12 +15,21 @@ import javax.ws.rs.core.MediaType;
  * @author team5
  */
 
-@Path("household")
+@Path("household/{id}/shopping_lists")
 public class ShoppingListService {
 
+    /**
+     * Returns all shopping lists from a given household
+     * If the user is an admin the method will return all available shopping lists associated with the household
+     * If the user is not admin the method only returns shopping lists associated with the household and the user
+     *
+     * @param id the house ID
+     * @param userId the user ID
+     * @return an array of shopping list
+     */
     @GET
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/shopping_lists/user/{userId}")
+    @Path("/user/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
     public ShoppingList[] getShoppingLists(@PathParam("id") String id, @PathParam("userId") String userId) {
         int house_id = Integer.parseInt(id);
@@ -39,7 +48,7 @@ public class ShoppingListService {
 
     @GET
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/shopping_lists/{shopping_list_id}/items")
+    @Path("/{shopping_list_id}/items")
     @Produces(MediaType.APPLICATION_JSON)
     public Item[] getItems(@PathParam("id") String id, @PathParam("shopping_list_id") String shopping_list_id){
         return ShoppingListDAO.getItems(Integer.parseInt(shopping_list_id));
@@ -47,7 +56,6 @@ public class ShoppingListService {
 
     @POST
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/shopping_lists/")
     @Consumes(MediaType.TEXT_PLAIN)
     public int createShoppingList(@PathParam("id") int houseId, String shoppingListName){
         return ShoppingListDAO.createShoppingList(shoppingListName, houseId);
