@@ -10,31 +10,58 @@ import java.util.ArrayList;
 
 public class StatDAO {
 
-    public static ArrayList<Stats> getStats(int houseId, int numberOfMonthsAgo) {
+    /**
+     * Used to get info from the database about how many trips and chores each member of the household does each month.
+     * @param houseId The id of the household that you want to find info about.
+     * @param numberOfMonthsAgo How far back the info goes.
+     * @return An ArrayList of Stats objects.
+     */
+    public static ArrayList<Stats> getTaskStats(int houseId, int numberOfMonthsAgo) {
         ArrayList<Stats> stats = new ArrayList<>();
 
-        String query = "SELECT Person.name, Person.userId, MONTH(chore_date) AS 'MONTH', COUNT(choreId) FROM Person" +
-                "JOIN Chore ON Chore.userId = Person.userId" +
-                "WHERE houseId = 1 AND done = 1 AND chore_date > DATE_SUB(now(), INTERVAL 12 MONTH)" +
-                "GROUP BY Person.name, Person.userId, MONTH;";
+        String query =  "SELECT Person.userId, Person.name,\n" +
+                        "COUNT(choreId) AS 'TASKS',\n" +
+                        "MONTH(chore_date) AS 'MONTH'\n" +
+                        "FROM Person\n" +
+                        "LEFT JOIN Chore ON Person.userId = Chore.userId\n" +
+                        "WHERE Chore.houseId = ? AND chore_date > DATE_SUB(now(), INTERVAL ? MONTH)\n" +
+                        "GROUP BY Person.userId, Person.name, MONTH\n" +
+                        "UNION\n" +
+                        "SELECT Person.userId, Person.name,\n" +
+                        "COUNT(shopping_tripId) AS 'TASKS',\n" +
+                        "MONTH(shopping_tripDate) AS 'MONTH'\n" +
+                        "FROM Person\n" +
+                        "LEFT JOIN Shopping_trip ON Person.userId = Shopping_trip.userId\n" +
+                        "WHERE Shopping_trip.houseId = ? AND shopping_tripDate > DATE_SUB(now(), INTERVAL ? MONTH)\n" +
+                        "GROUP BY Person.userId, Person.name, MONTH\n" +
+                        "ORDER BY userId;";
 
+        //TODO: Spør om det er sånn her try/catch burde se ut
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)){
 
+            st.setInt(1, houseId);
+            st.setInt(2, numberOfMonthsAgo);
+            st.setInt(3, houseId);
+            st.setInt(4, numberOfMonthsAgo);
             ResultSet rs = st.executeQuery();
+
             int lastUserId = -1;
             Stats stat = null;
+
             while (rs.next()) {
                 int userId = rs.getInt("userId");
 
                 if (lastUserId == userId) {
-                    stat.addTasksToMonth(rs.getInt("MONTH"), rs.getInt(4));
+                    stat.addTasksToMonth(rs.getInt("MONTH"), rs.getInt("TASKS"));
                 } else if (lastUserId == -1 || lastUserId != userId) {
                     stat = new Stats();
                     stat.setUserName(rs.getString("name"));
-                    stat.addTasksToMonth(rs.getInt("MONTH"), rs.getInt(4));
+                    stat.addTasksToMonth(rs.getInt("MONTH"), rs.getInt("TASKS"));
+                    stats.add(stat);
                 }
+                lastUserId = userId;
             }
 
         } catch (SQLException e) {
@@ -42,16 +69,5 @@ public class StatDAO {
         }
 
         return stats;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<Stats> stats = getStats(1, 12);
-
-        for (int i = 0; i < stats.size(); i++) {
-            System.out.println(stats.get(i).getUserName());
-            for (int j = 0; j < 12; j++) {
-                System.out.println(stats.get(i).getTasks()[i]);
-            }
-        }
     }
 }
