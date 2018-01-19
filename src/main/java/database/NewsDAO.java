@@ -12,9 +12,10 @@ import java.util.ArrayList;
 public class NewsDAO {
 
     /**
+     * Used to get all news for a household from the database
      *
-     * @param houseId
-     * @return
+     * @param houseId the id of the household
+     * @return a list of news objects
      */
     public static ArrayList<News> getNews(int houseId){
         ArrayList<News> news = new ArrayList<>();
@@ -53,6 +54,12 @@ public class NewsDAO {
         return news;
     }
 
+    /**
+     * Used to post news to the database
+     *
+     * @param news the news object
+     * @return 1 for success 0 for fail
+     */
     public static int postNews(News news){
         String message = news.getMessage();
         String query = "INSERT INTO Message(text, houseId, userId) VALUES (?,?,?)";
@@ -74,6 +81,12 @@ public class NewsDAO {
         return 0;
     }
 
+    /**
+     * Used to delete news from the database
+     *
+     * @param msgId the message id
+     * @return 1 for success 0 for fail
+     */
     public static int deleteNews(int msgId){
         String query = "DELETE FROM Message WHERE messageId=?";
 
