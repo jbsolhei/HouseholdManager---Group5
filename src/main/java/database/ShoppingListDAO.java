@@ -205,7 +205,7 @@ public class ShoppingListDAO {
         String name;
         String telephone;
 
-        String query = "SELECT usl.userId, p.* FROM User_Shopping_list AS usl INNER JOIN Person AS p ON usl.userId = p.userId WHERE shopping_listId = ?";
+        String query = "SELECT User_Shopping_list.userId, Person.* FROM User_Shopping_list  INNER JOIN Person ON User_Shopping_list.userId = Person.userId WHERE shopping_listId = ?";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -216,7 +216,7 @@ public class ShoppingListDAO {
             try(ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     User user = new User();
-                    userId = rs.getInt("p.userId");
+                    userId = rs.getInt("Person.userId");
                     email = rs.getString("email");
                     name = rs.getString("name");
                     telephone = rs.getString("telephone");
