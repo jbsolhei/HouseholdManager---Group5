@@ -2,6 +2,7 @@ package database;
 
 import classes.Item;
 import classes.ShoppingList;
+import classes.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,8 +43,13 @@ public class ShoppingListDAOTest {
     @Test
     public void getShoppingListUser() throws Exception {
         ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingListsUser(1, 50);
-        System.out.println("! - println: " + shoppingLists);
         assertEquals(1, shoppingLists.length);
+    }
+
+    @Test
+    public void getUsersInShoppingList() throws Exception {
+        User[] users = ShoppingListDAO.getUsersInShoppingList(1);
+        assertEquals(1, users.length);
     }
 
     @Test
