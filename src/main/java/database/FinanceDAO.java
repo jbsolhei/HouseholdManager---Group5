@@ -82,6 +82,13 @@ public class FinanceDAO {
         return null;
     }
 
+    /**
+     * Updates the users debt according to what they owed each other from before.
+     * @param userId id of the user who buys the items
+     * @param sum the total sum
+     * @param contributors users that will split the sum
+     * @return true or false, true if the update goes well, else false
+     */
     public static boolean updateFinance(int userId, double sum, List<User> contributors) {
         if(contributors.size() == 0) {
             return false;
