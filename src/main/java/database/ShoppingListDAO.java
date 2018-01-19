@@ -192,6 +192,46 @@ public class ShoppingListDAO {
         return null;
     }
 
+    public static ShoppingList getShoppingList(int shoppingListId) {
+        ShoppingList shoppingList = new ShoppingList();
+        ArrayList<User> users = new ArrayList<>();
+        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.archived, User_Shopping_list.userId, Person.name, Person.name FROM Shopping_list RIGHT JOIN User_Shopping_list ON Shopping_list.shopping_listId=User_Shopping_list.shopping_listId RIGHT JOIN Person ON User_Shopping_list.userId = Person.userId WHERE Shopping_list.shopping_listId = ?;";
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, shoppingListId);
+            try (ResultSet rs = st.executeQuery()) {
+                User user = new User();
+                if (rs.next()) {
+                    String shoppingListName = rs.getString("Shopping_list.name");
+                    shoppingList.setShoppingListId(shoppingListId);
+                    shoppingList.setName(shoppingListName);
+                    int userId = rs.getInt("userId");
+                    String personName = rs.getString("Person.name");
+                    user.setUserId(userId);
+                    user.setName(personName);
+                    users.add(user);
+                    user = new User();
+
+                    while (rs.next()) {
+                        userId = rs.getInt("userId");
+                        personName = rs.getString("Person.name");
+                        user.setUserId(userId);
+                        user.setName(personName);
+                        users.add(user);
+                        user = new User();
+                    }
+                    shoppingList.setUsers(toUserArray(users));
+                }
+            }
+            return shoppingList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * Finds all users that is can view a shopping list
      *
@@ -451,7 +491,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        ShoppingList[] rtn = ShoppingListDAO.getShoppingListsUser(1, 28);
+        ShoppingList rtn = ShoppingListDAO.getShoppingList(107);
         System.out.println("stop");
     }
 }

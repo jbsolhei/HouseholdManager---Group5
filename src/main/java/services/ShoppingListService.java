@@ -43,11 +43,11 @@ public class ShoppingListService {
      *
      * @param id the house ID
      * @param shoppingListId the shopping list ID
-     * @return
+     * @return an array of users
      */
     @GET
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{shopping_list_id}")
+    @Path("/{shopping_list_id}/users")
     @Produces(MediaType.APPLICATION_JSON)
     public User[] getShoppingListUsers(@PathParam("id") String id, @PathParam("shopping_list_id") String shoppingListId) {
         return ShoppingListDAO.getUsersInShoppingList(Integer.parseInt(shoppingListId));
