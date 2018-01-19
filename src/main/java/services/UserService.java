@@ -51,6 +51,14 @@ public class UserService {
         return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName());
     }
 
+    @PUT
+    @Auth(AuthType.USER_MODIFY)
+    @Path("/{id}/password")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean updatePassword(@PathParam("id") int id,String pwd) {
+        return UserDAO.updatePassword(id,pwd);
+    }
+
 
     @GET
     @Auth(AuthType.USER_MODIFY)

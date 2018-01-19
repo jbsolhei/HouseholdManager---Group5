@@ -36,7 +36,20 @@
         <div id="newsPanelId" class="col-md-4 widgetCol">
             <div class="panel panel-default widget">
                 <div class="panel-heading">Household news</div>
-                <div class="panel-body scrollWhenFull">Panel Content</div>
+                <div class="panel-body scrollWhenFull">
+                    <div class="messages-container">
+                        <div class="well well-sm clickable" onclick="toggleTeaser($(this))">
+                            <div class="message-heading">
+                                <b>Name</b>
+                                <div style="float: right">
+                                    -date-
+                                </div>
+                            </div>
+                            <div class="message-teaser">First few words of the message... (show more)</div>
+                            <div class="message-body">First few words of the message and this is the rest of it, can you believe it. Tchnology nowadays has no limits, godamn. aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="statisticsPanelId" class="col-md-4 widgetCol">
@@ -68,6 +81,18 @@
 
     loadDashboard();
     checkWelcome();
+
+    function toggleTeaser(msg){
+        var teaser = msg.find('.message-teaser');
+        var body = msg.find('.message-body');
+        if (teaser[0].style.display === "none"){
+            teaser.css('display','block');
+            body.css('display','none');
+        } else {
+            teaser.css('display','none');
+            body.css('display','block');
+        }
+    }
 </script>
 <style>
     .row.equal {
