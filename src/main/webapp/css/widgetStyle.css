@@ -79,9 +79,11 @@
         display: none; !important;
     }
 
+    /*
     html, body {
         font-size: 10px; !important;
     }
+    */
 }
 
 
@@ -122,9 +124,27 @@
     min-height: 75vh;
 }
 
+.nopadding {
+    padding: 0;
+}
+
+.padding {
+    padding: 15px;
+}
 
 
 
+/* Debt widget */
 
+.debt-row {
+    height: 50% !important;
+}
 
+.debt-widget {
+    height: 0; /* ??  dirty Bootstrap fuckery hack */
+}
 
+.debt-sum {
+    text-align: right;
+    font-weight: bolder;
+}

@@ -1,9 +1,11 @@
 package services;
 
 import auth.*;
+import classes.Debt;
 import classes.Household;
-import classes.Todo;
+import classes.Chore;
 import classes.User;
+import database.FinanceDAO;
 import database.UserDAO;
 
 import javax.ws.rs.*;
@@ -128,7 +130,7 @@ public class UserService {
     @Auth(AuthType.USER_READ)
     @Path("/{id}/tasks")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Todo> todos(@PathParam("id") int id) {
+    public ArrayList<Chore> todos(@PathParam("id") int id) {
         return UserDAO.getTasks(id);
     }
 
@@ -137,5 +139,19 @@ public class UserService {
     @Consumes(MediaType.TEXT_PLAIN)
     public boolean resetPassword(String email) {
         return UserDAO.resetPassword(email);
+    }
+
+    @GET
+    @Path("/{id}/dept")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Debt> getDebt(@PathParam("id") int id){
+        return FinanceDAO.getDept(id);
+    }
+
+    @GET
+    @Path("/{id}/income")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Debt> getIncome(@PathParam("id") int id){
+        return FinanceDAO.getIncome(id);
     }
 }
