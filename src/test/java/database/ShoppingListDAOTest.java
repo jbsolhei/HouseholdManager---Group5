@@ -38,13 +38,14 @@ public class ShoppingListDAOTest {
         ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingListsAdmin(1);
         assertEquals(5, shoppingLists.length);
     }
-    /*
+
     @Test
-    public void getShoppingListUsers() throws Exception {
+    public void getShoppingListUser() throws Exception {
         ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingListsUser(1, 50);
+        System.out.println("! - println: " + shoppingLists);
         assertEquals(1, shoppingLists.length);
     }
-    */
+
     @Test
     public void createShoppingList() throws Exception {
 

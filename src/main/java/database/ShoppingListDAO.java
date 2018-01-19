@@ -26,7 +26,7 @@ public class ShoppingListDAO {
         int itemId = 0;
         String itemName;
         int checkedBy = 0;
-        String query = "SELECT usl.userId, sl.shopping_listId, sl.name, sl.houseId, i.itemId, i.name, i.checkedBy, p.userId, p.name FROM User_Shopping_list AS usl RIGHT JOIN Shopping_list AS sl ON usl.shopping_listId=sl.shopping_listId LEFT JOIN Item AS i ON i.shopping_listId = sl.shopping_listId LEFT JOIN Person AS p ON i.checkedBy = p.userId WHERE sl.houseId = ? AND usl.userId = ?;";
+        String query = "SELECT User_Shopping_list.userId, Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.houseId, Item.itemId, Item.name, Item.checkedBy, Person.userId, Person.name FROM User_Shopping_list RIGHT JOIN Shopping_list ON User_Shopping_list.shopping_listId=Shopping_list.shopping_listId LEFT JOIN Item ON Item.shopping_listId = Shopping_list.shopping_listId LEFT JOIN Person ON Item.checkedBy = Person.userId WHERE Shopping_list.houseId = ? AND User_Shopping_list.userId = ?;";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
@@ -42,14 +42,14 @@ public class ShoppingListDAO {
                     Item item = new Item();
                     User userCheckedBy = null;
 
-                    shoppingListId = rs.getInt("sl.shopping_listId");
-                    shoppingListName = rs.getString("sl.name");
-                    itemId = rs.getInt("i.itemId");
-                    itemName = rs.getString("i.name");
-                    checkedBy = rs.getInt("i.checkedBy");
+                    shoppingListId = rs.getInt("Shopping_list.shopping_listId");
+                    shoppingListName = rs.getString("Shopping_list.name");
+                    itemId = rs.getInt("Item.itemId");
+                    itemName = rs.getString("Item.name");
+                    checkedBy = rs.getInt("Item.checkedBy");
                     if (checkedBy != 0) {
                         userCheckedBy = new User();
-                        String userName = rs.getString("p.name");
+                        String userName = rs.getString("Person.name");
                         userCheckedBy.setName(userName);
                     }
                     item.setItemId(itemId);
@@ -60,7 +60,7 @@ public class ShoppingListDAO {
                     shoppingList.setName(shoppingListName);
 
                     while (rs.next()) {
-                        shoppingListId2 = rs.getInt("sl.shopping_listId");
+                        shoppingListId2 = rs.getInt("Shopping_list.shopping_listId");
 
                         if (shoppingListId != shoppingListId2) {
                             shoppingList.setItems(toItemArray(items));
@@ -68,7 +68,7 @@ public class ShoppingListDAO {
                             items.clear();
 
                             shoppingList = new ShoppingList();
-                            shoppingListName = rs.getString("sl.name");
+                            shoppingListName = rs.getString("Shopping_list.name");
                             shoppingList.setShoppingListId(shoppingListId2);
                             shoppingList.setName(shoppingListName);
                             shoppingListId = shoppingListId2;
@@ -76,12 +76,12 @@ public class ShoppingListDAO {
 
                         item = new Item();
                         userCheckedBy = null;
-                        itemId = rs.getInt("i.itemId");
-                        itemName = rs.getString("i.name");
-                        checkedBy = rs.getInt("i.checkedBy");
+                        itemId = rs.getInt("Item.itemId");
+                        itemName = rs.getString("Item.name");
+                        checkedBy = rs.getInt("Item.checkedBy");
                         if (checkedBy != 0) {
                             userCheckedBy = new User();
-                            String userName = rs.getString("p.name");
+                            String userName = rs.getString("Person.name");
                             userCheckedBy.setName(userName);
                         }
                         item.setItemId(itemId);
@@ -454,7 +454,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        int rtn = ShoppingListDAO.createShoppingList("test list", 100);
+        ShoppingList[] rtn = ShoppingListDAO.getShoppingListsUser(1, 28);
         System.out.println("stop");
     }
 }
