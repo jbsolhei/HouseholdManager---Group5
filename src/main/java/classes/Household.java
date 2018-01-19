@@ -9,7 +9,7 @@ public class Household {
     private User[] admins;
     private ShoppingList[] shoppingLists;
     private ArrayList<News> news;
-    private Todo[] todo;
+    private Chore[] chores;
 
     private int houseId;
 
@@ -39,8 +39,8 @@ public class Household {
         return shoppingLists;
     }
 
-    public Todo[] getTodoList() {
-        return todo;
+    public Chore[] getChores() {
+        return chores;
     }
 
     public User[] getAdmins() {
@@ -67,8 +67,8 @@ public class Household {
         this.shoppingLists = shoppingLists;
     }
 
-    public void setTodoList(Todo[] todoList) {
-        this.todo = todoList;
+    public void setChores(Chore[] choreList) {
+        this.chores = choreList;
     }
 
     public int getHouseId() {

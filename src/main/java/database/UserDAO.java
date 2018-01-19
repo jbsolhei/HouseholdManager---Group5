@@ -272,9 +272,9 @@ public class UserDAO {
      * @param userId The id of the user
      * @return Returns an ArrayList of todo objects
      */
-    public static ArrayList<Todo> getTasks(int userId) {
+    public static ArrayList<Chore> getTasks(int userId) {
         String query = "SELECT * FROM Task WHERE userId = ?";
-        ArrayList<Todo> todos = new ArrayList<>();
+        ArrayList<Chore> chores = new ArrayList<>();
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -285,13 +285,13 @@ public class UserDAO {
             try (ResultSet rs = st.executeQuery()) {
 
                 while (rs.next()) {
-                    Todo todo = new Todo();
-                    todo.setDate(rs.getDate("date"));
-                    todo.setDescription(rs.getString("description"));
-                    todo.setHouseId(rs.getInt("houseId"));
-                    todo.setUser(getUser(rs.getInt("userId")));
-                    todo.setTaskId(rs.getInt("taskId"));
-                    todos.add(todo);
+                    Chore chore = new Chore();
+                    chore.setDate(rs.getDate("date"));
+                    chore.setDescription(rs.getString("description"));
+                    chore.setHouseId(rs.getInt("houseId"));
+                    chore.setUser(getUser(rs.getInt("userId")));
+                    chore.setChoreId(rs.getInt("taskId"));
+                    chores.add(chore);
                 }
             }
 
@@ -299,6 +299,6 @@ public class UserDAO {
             e.printStackTrace();
         }
 
-        return todos;
+        return chores;
     }
 }
