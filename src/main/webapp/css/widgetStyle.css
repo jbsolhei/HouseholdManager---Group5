@@ -5,11 +5,20 @@
     font-weight: bold;
     color: white;
     letter-spacing: 1px;
+    max-height: 45px;
+    min-height: 45px;
+    overflow: hidden;
+    border: 0px;
 }
 
-.panel-default>.panel-heading:hover{
-    background-color: #7D2E26;
+.panel-default>.panel-footer {
+    max-height: 45px;
+}
+
+.cursorPointer:hover {
     cursor: pointer;
+    background-color: #7D2E26;
+
 }
 
 .panel.panel-default, .widget, .row, #notAWidget{
@@ -119,9 +128,9 @@
     height: 50%;
 }
 
-.SL {
-    max-height: 75vh;
-    min-height: 75vh;
+.SL, .ST, .STAT {
+    max-height: 78vh;
+    min-height: 78vh;
 }
 
 .nopadding {
@@ -133,9 +142,7 @@
 }
 
 
-
 /* Debt widget */
-
 .debt-row {
     height: 50% !important;
 }
