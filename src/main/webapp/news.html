@@ -1,0 +1,40 @@
+<script>
+    $(function () {
+        updateNewsList();
+    });
+    function updateNewsList () {
+        getNews(function (listOfNews) {
+            $("#list_of_news").html("");
+            for(var i=0; i<listOfNews.length; i++) {
+                $("#list_of_news").append("<hr><div class='row'>" +
+                    "<div class='col-sm-2'><div class=\"img-circle\"><img class=\"img-responsive img-pic\" src=\"http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg\"><br></div>" +
+                    "</div><div class='col-sm-10'><label>"+listOfNews[i].user.name+"</label><small style='float: right'>   --"+listOfNews[i].time.dayOfMonth+". "+listOfNews[i].time.month+" "+
+                    listOfNews[i].time.year+". "+listOfNews[i].time.hour+":"+listOfNews[i].time.minute+" --</small>" +
+                    "<br><p>"+listOfNews[i].message+"</p></div></div>");
+            }
+        });
+    }
+</script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="panel">
+                <div id="add_news" style="padding: 15px">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="img-circle"><img class="img-responsive img-pic" src="http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg"></div>
+                            <br>
+                        </div>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="5" id="comment" style="resize: none;"></textarea>
+                        </div>
+                        <button class="btn" onclick="postNews($('#comment').val(), updateNewsList())" style="float: right">Send</button>
+                    </div>
+                </div>
+                <div id="list_of_news" style="padding: 15px"></div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
