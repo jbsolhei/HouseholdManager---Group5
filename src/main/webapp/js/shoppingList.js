@@ -228,7 +228,6 @@ function updateUsers() {
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("List successfully added to database");
-            navToShoppingList(activeSHL);
         },
         error: function (result) {
             console.log(result);
@@ -248,6 +247,7 @@ function updateUsersAjax(shoppingListId, users) {
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("Shopping List successfully added to database")
+            navToShoppingList(activeSHL);
         },
         error: function (result) {
             console.log(result);

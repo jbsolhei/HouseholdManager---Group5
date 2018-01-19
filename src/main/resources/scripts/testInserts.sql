@@ -41,3 +41,5 @@ INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (11, 'Fredagst
 
 INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test', '2014-10-12', '', 50, 1, NULL );
 INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test2', '2015-10-12', '', 50, 1, NULL );
+
+INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (50, 1);

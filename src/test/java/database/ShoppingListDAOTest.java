@@ -34,6 +34,18 @@ public class ShoppingListDAOTest {
     }
 
     @Test
+    public void getShoppingListAdmin() throws Exception {
+        ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingListsAdmin(1);
+        assertEquals(5, shoppingLists.length);
+    }
+    /*
+    @Test
+    public void getShoppingListUsers() throws Exception {
+        ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingListsUser(1, 50);
+        assertEquals(1, shoppingLists.length);
+    }
+    */
+    @Test
     public void createShoppingList() throws Exception {
 
         ShoppingList shoppingList = new ShoppingList();
@@ -77,16 +89,6 @@ public class ShoppingListDAOTest {
         assert items!=null;
         assertEquals(3,items.length);
     }
-
-    /*
-    @Test
-    public void getShoppingLists() throws Exception {
-        ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(1);
-        assert shoppingLists != null;
-
-        assertEquals(5,shoppingLists.length);
-    }
-    */
 
     @Test
     public void addItem() throws Exception {

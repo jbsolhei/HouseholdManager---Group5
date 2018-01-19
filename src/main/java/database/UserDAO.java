@@ -301,4 +301,37 @@ public class UserDAO {
 
         return todos;
     }
+
+    /**
+     * Used to find out if a user is a admin of a given household
+     *
+     * @param houseId the house ID
+     * @param userId the user ID
+     * @return true if the user is an admin of the household or false if the user isn't
+     */
+    public static boolean isAdmin(int houseId, int userId) {
+        String query = "SELECT House_user.isAdmin FROM House_user WHERE houseId = ? AND userId = ?;";
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, houseId);
+            st.setInt(2, userId);
+
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    if (rs.getInt("isAdmin") == 1) {
+                        System.out.println("userId: " + userId + " is Admin at house: " + houseId);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

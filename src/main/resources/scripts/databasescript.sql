@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS User_Shopping_list;
+DROP TABLE IF EXISTS User_Shopping_trip;
 DROP TABLE IF EXISTS Item;
 DROP TABLE IF EXISTS Invite_token;
 DROP TABLE IF EXISTS Finance;
