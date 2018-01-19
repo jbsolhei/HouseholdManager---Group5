@@ -1,6 +1,7 @@
 package database;
 
 import classes.Chore;
+import classes.Household;
 import classes.User;
 import org.junit.After;
 import org.junit.Before;
@@ -38,23 +39,15 @@ public class ChoreDAOTest {
         ArrayList<Chore> chores = new ArrayList<>();
         Chore chore = new Chore();
         User user = new User();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 
-        try {
-            java.util.Date utilDate = format.parse("2018/01/20");
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            System.out.println(sqlDate);
 
             user.setUserId(100);
             chore.setDescription("Ta ut av oppvaskmaskinen");
             chore.setHouseId(1);
             chore.setUser(user);
             chore.setDone(false);
-            chore.setDate(sqlDate);
+            chore.setDate("2018/01/20");
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
         ChoreDAO.postChore(chore);
 
@@ -63,11 +56,12 @@ public class ChoreDAOTest {
         ResultSet rs = st.executeQuery(query);
 
         if(rs.next()) {
-            assertEquals(1, rs.getInt("choreId"));
+            assertEquals(2, rs.getInt("choreId"));
             assertEquals(chore.getDescription(), rs.getString("description"));
             assertEquals(chore.getUser().getUserId(), rs.getInt("userId"));
             assertEquals(chore.getHouseId(), rs.getInt("houseId"));
             assertEquals(0, rs.getInt("done"));
+            assertEquals(chore.getDate(), rs.getDate("chore_date"));
         }
         else{
             assert false;
@@ -76,13 +70,55 @@ public class ChoreDAOTest {
 
     @Test
     public void getChores() {
+        Household household = new Household();
+        household.setHouseId(10);
+        ArrayList<Chore> chores = ChoreDAO.getChores(household);
+
+        assertEquals(1, chores.size());
+        assertEquals("Ta ut søpla", chores.get(0).getDescription());
+        assertEquals(51, chores.get(0).getUser().getUserId());
+        assertEquals(false, chores.get(0).isDone());
+        assertEquals("2018-01-20", chores.get(0).getDate().toString());
+
     }
 
     @Test
     public void deleteChore() {
+
     }
 
     @Test
-    public void editChore() {
+    public void editChore() throws Exception{
+        String query = "SELECT * FROM Chore WHERE choreId = 2;";
+
+        ResultSet rs = st.executeQuery(query);
+
+        if(rs.next()) {
+            assertEquals(0, rs.getInt("done"));
+            assertEquals("Ta ut av oppvaskmaskinen", rs.getString("description"));
+        }
+        rs.close();
+
+        Chore chore = new Chore();
+        User user = new User();
+
+        user.setUserId(100);
+        chore.setDescription("Vask badet");
+        chore.setHouseId(1);
+        chore.setUser(user);
+        chore.setDone(true); //endrer fra false til done
+        chore.setDate("2018/01/20");
+
+        ChoreDAO.editChore(chore);
+
+        ResultSet rs2 = st.executeQuery(query);
+
+        if(rs2.next()) {
+            assertEquals(1, rs2.getInt("done"));
+            assertEquals("Vask badet", rs2.getString("description"));
+        }
+
+        rs2.close();
+
     }
 }

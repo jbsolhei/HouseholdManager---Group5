@@ -2,6 +2,7 @@ package database;
 
 import classes.Chore;
 import classes.Household;
+import classes.User;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -16,7 +17,7 @@ public class ChoreDAO {
      */
     public static void postChore(Chore chore){
 
-        String query = "INSERT INTO Chore (description, date, houseId, userId, done) VALUES (?, ?, ?, ?, ?);";
+        String query = "INSERT INTO Chore (description, chore_date, houseId, userId, done) VALUES (?, ?, ?, ?, ?);";
         try {
             DBConnector dbc = new DBConnector();
             Connection conn = dbc.getConn();
@@ -70,13 +71,16 @@ public class ChoreDAO {
                 chore = new Chore();
                 chore.setDescription(rs.getString("description"));
                 chore.setChoreId(rs.getInt("choreId"));
-                //chore.setDate(rs.getDate("date"));
+                chore.setDate(rs.getDate("chore_date"));
                 chore.setHouseId(household.getHouseId());
                 if(rs.getInt("done") == 1){
                     chore.setDone(true);
                 } else {
                     chore.setDone(false);
                 }
+                User user = new User();
+                user.setUserId(rs.getInt("userId"));
+                chore.setUser(user);
                 chores.add(chore);
             }
 
