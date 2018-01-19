@@ -11,6 +11,12 @@
     padding-top: 60px;
 }
 
+.btn-sidebar, .sidebar {
+    background-color: #233237;
+    border-color: #233237;
+    color: white;
+}
+
 #currentHouseholdId:focus {
     background-color: #162B32;
 }

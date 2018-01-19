@@ -1,0 +1,12 @@
+.scrollWhenFull.ST {
+   padding: 0px;
+}
+
+.STHeaderText {
+    margin-top: 3vh;
+    font-weight: bold;
+}
+
+#noCommentID {
+    color: grey;
+}

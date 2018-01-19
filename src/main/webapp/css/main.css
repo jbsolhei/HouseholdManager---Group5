@@ -8,12 +8,11 @@
     border-radius: 0;!important;
 }
 
-.btn-sidebar, .sidebar, .navbar, a.navbar-brand {
+.navbar, a.navbar-brand {
     background-color: #233237;
     border-color: #233237;
     color: white;
 }
-
 
 .btn-default:hover {
     color: #333;
@@ -26,8 +25,6 @@
     background-color: #00415a;
 }
 
-.btn-sidebar:active {}
-
 
 .page-wrapper{
     transition: 0.2s;
@@ -37,10 +34,14 @@
     display: none;
 }
 
-#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId {
+#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #notifyBellId {
     color: white;
     font-size: 17px;
     cursor: pointer;
+}
+
+#notifyBellId {
+    margin-top: 4px;
 }
 
 #currentHouseholdId:hover, #logoutId:hover, #myPageId:hover {
