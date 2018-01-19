@@ -154,8 +154,8 @@
         $("#modal").load(modalContent);
     }
 
-    function toLoginButton() {
-        $("#toLoginButton").replaceWith('<li>Email : <input type="email" class="boxes" id="email" name="email" style="color: black;"/> Password: <input type="password" class="boxes" id="password" name="password" style="color:black;"/></li><button onclick="showLoadingScreen(true)" id="submit">Login</button>');
-    }
+    $(document).ready(function () {
+        window.localStorage.setItem("invite",window.location.search);
+    });
 </script>
 </html>

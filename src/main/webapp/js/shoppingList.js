@@ -19,10 +19,12 @@ function readyShoppingList(){
 
 function insertShoppingLists(){
     var inputString = "";
-    $.each(SHL, function(i,val){
-        inputString += '<li onclick="showList(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
-    });
-    $("#shoppingSideMenu").html(inputString);
+    if (SHL.name!==null) {
+        $.each(SHL, function (i, val) {
+            inputString += '<li onclick="showList(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
+        });
+        $("#shoppingSideMenu").html(inputString);
+    }
 }
 
 function additem() {
@@ -97,6 +99,7 @@ function deleteItem(itemNumber){
 }
 
 function showList(SLIndex){
+    console.log(SHL);
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
     console.log("SLIndex: " + SLIndex);
     currentItemList = SHL[SLIndex].items;
@@ -173,9 +176,9 @@ function addNewShoppingList(){
     $("#headline").replaceWith('<h4 id="headline">' + name + '</h4>');
     $("#headlineInput").addClass("hide");
     $("#addNewShoppingList").addClass("hide");
-    $("#sideMenu").append('<li onclick="showList(' + numberOfLists + ')" id="shoppingList' + numberOfLists + '"><a>' + name + '</a></li>');
+    $("#sideMenu").append('<li onclick="showList(' + numberOfLists-1 + ')" id="shoppingList' + numberOfLists-1 + '"><a>' + name + '</a></li>');
     $("#shoppingListItemInput").focus();
-    $("#" + numberOfLists).addClass("active");
+    $("#shoppingList" + numberOfLists-1).addClass("active");
     var userIds = [];
     if ($("#privateButton").hasClass("has_been_clicked")) {
         userIds.push(getCurrentUser().userId);
@@ -187,10 +190,9 @@ function addNewShoppingList(){
         }
         console.log('user:' + userIds)
     }
+    activeSHL = numberOfLists-1;
     addNewList(name, userIds);
     console.log("5: JS updates activeSHL.");
-    activeSHL = numberOfLists-1;
-    navToShoppingList(activeSHL);
 }
 
 function addNewList(name, users){
@@ -202,8 +204,8 @@ function addNewList(name, users){
         contentType: 'text/plain',
         success: function (data) {
             console.log("List successfully added to database");
-            updateUsersAjax(data, users)
-            updateUsersAjax(data, usersa)
+            updateUsersAjax(data, users);
+            navToShoppingList(activeSHL);
         }
     });
     console.log("4: addNewList() is done.");

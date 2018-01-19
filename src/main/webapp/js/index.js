@@ -65,7 +65,7 @@ function getCurrentHousehold() {
 }
 
 function updateCurrentHousehold(bodyContent){
-    if (getCurrentHousehold()!==undefined&&getCurrentHousehold()!==undefined) {
+    if (getCurrentHousehold()!==null&&getCurrentHousehold()!==undefined) {
         var id = getCurrentHousehold().houseId;
         ajaxAuth({
             url: "res/household/" + id,
@@ -95,10 +95,9 @@ function setCurrentHousehold(hid) {
                 if (data.length>0) {
                     window.localStorage.setItem("house", JSON.stringify(data[0]));
                     window.location.replace("index.html");
-                }
-                else {
+                } else {
+                    showLoadingScreen(false);
                     callModal("modals/addHousehold.html");
-
                     $("#theModal").modal();
                 }
             },
@@ -114,8 +113,14 @@ function setCurrentHousehold(hid) {
             type: "GET",
             contentType: "application/json; charser=utf-8",
             success: function (data) {
-                window.localStorage.setItem("house", JSON.stringify(data));
-                window.location.replace("index.html")
+                if (data.length!==null) {
+                    window.localStorage.setItem("house", JSON.stringify(data));
+                    window.location.replace("index.html")
+                } else {
+                    showLoadingScreen(false);
+                    callModal("modals/addHousehold.html");
+                    $("#theModal").modal();
+                }
             },
             error: function () {
                 showLoadingScreen(false);
