@@ -272,8 +272,8 @@ public class UserDAO {
      * @param userId The id of the user
      * @return Returns an ArrayList of todo objects
      */
-    public static ArrayList<Chore> getTasks(int userId) {
-        String query = "SELECT * FROM Task WHERE userId = ?";
+    public static ArrayList<Chore> getChores(int userId) {
+        String query = "SELECT * FROM Chore WHERE userId = ?";
         ArrayList<Chore> chores = new ArrayList<>();
 
         try (DBConnector dbc = new DBConnector();
@@ -290,7 +290,7 @@ public class UserDAO {
                     chore.setDescription(rs.getString("description"));
                     chore.setHouseId(rs.getInt("houseId"));
                     chore.setUser(getUser(rs.getInt("userId")));
-                    chore.setChoreId(rs.getInt("taskId"));
+                    chore.setChoreId(rs.getInt("choreId"));
                     chores.add(chore);
                 }
             }

@@ -51,6 +51,14 @@ public class UserService {
         return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName());
     }
 
+    @PUT
+    @Auth(AuthType.USER_MODIFY)
+    @Path("/{id}/password")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean updatePassword(@PathParam("id") int id,String pwd) {
+        return UserDAO.updatePassword(id,pwd);
+    }
+
 
     @GET
     @Auth(AuthType.USER_MODIFY)
@@ -128,10 +136,10 @@ public class UserService {
 
     @GET
     @Auth(AuthType.USER_READ)
-    @Path("/{id}/tasks")
+    @Path("/{id}/chores")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Chore> todos(@PathParam("id") int id) {
-        return UserDAO.getTasks(id);
+        return UserDAO.getChores(id);
     }
 
     @POST
