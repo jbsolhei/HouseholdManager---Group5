@@ -19,7 +19,7 @@ public class NewsDAO {
      */
     public static ArrayList<News> getNews(int houseId){
         ArrayList<News> news = new ArrayList<>();
-        String query = "SELECT * FROM (Message NATURAL JOIN Person) WHERE houseId = ?";
+        String query = "SELECT * FROM (Message NATURAL JOIN Person) WHERE houseId = ? ORDER BY date DESC;";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();

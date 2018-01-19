@@ -38,7 +38,7 @@ public class NewsService {
     }
 
     @DELETE
-    @Auth(AuthType.HOUSEHOLD)
+    @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("/{msgId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteNews(@PathParam("msgId") int msgId){
