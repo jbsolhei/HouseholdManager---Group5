@@ -120,7 +120,7 @@
     height: 50%;
 }
 
-.SL {
+.SL, .ST {
     max-height: 75vh;
     min-height: 75vh;
 }
