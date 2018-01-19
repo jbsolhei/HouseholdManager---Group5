@@ -4,6 +4,8 @@ body{
 }
 
 .divclass {
+    margin-right: 10px;
+    margin-left: 10px;
     padding-bottom: 10px;
     width: auto;
 }
