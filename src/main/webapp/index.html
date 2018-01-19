@@ -5,7 +5,7 @@
         <script>
             if (window.localStorage.getItem("sessionToken")==undefined||window.localStorage.getItem("sessionToken")==""){
                 window.localStorage.clear();
-                window.location.replace("login.html")
+                window.location.replace("OpeningPage.html")
             } else {
                 $.ajax({
                     url: "res/user/checkSession",
@@ -16,7 +16,7 @@
                     error: function (e) {
                         if (e.status == 401) {
                             window.localStorage.clear();
-                            window.location.replace("login.html")
+                            window.location.replace("OpeningPage.html")
                         }
                     }
                 });
@@ -75,9 +75,8 @@
         <script src="js/addHousehold.js"></script>
         <script src="js/index.js"></script>
         <script src="js/dashboard.js"></script>
-        <script src="js/shoppinglist.js"></script>
+        <script src="js/shoppingList.js"></script>
         <script src="js/profile.js"></script>
-        <script src="js/invite.js"></script>
         <script src="js/household.js"></script>
         <script src="js/shoppingTrip.js"></script>
         <script src="js/addShoppingTrip.js"></script>

@@ -78,6 +78,7 @@ public class ShoppingListDAOTest {
         assertEquals(3,items.length);
     }
 
+    /*
     @Test
     public void getShoppingLists() throws Exception {
         ShoppingList[] shoppingLists = ShoppingListDAO.getShoppingLists(1);
@@ -85,6 +86,7 @@ public class ShoppingListDAOTest {
 
         assertEquals(5,shoppingLists.length);
     }
+    */
 
     @Test
     public void addItem() throws Exception {
