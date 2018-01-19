@@ -40,15 +40,15 @@ CREATE TABLE Invite_token (
   FOREIGN KEY (houseId) REFERENCES Household(houseId)
 );
 
-CREATE TABLE Task (
+CREATE TABLE Chore (
 date DATE,
 time TIME,
 description VARCHAR(100),
-taskId INTEGER AUTO_INCREMENT,
+choreId INTEGER AUTO_INCREMENT,
 houseId INTEGER NOT NULL,
 userId INTEGER NOT NULL,
 done BOOLEAN NOT NULL DEFAULT 0,
-CONSTRAINT task_pk PRIMARY KEY(taskId),
+CONSTRAINT chore_pk PRIMARY KEY(choreId),
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 FOREIGN KEY (userId) REFERENCES Person(userId));
 

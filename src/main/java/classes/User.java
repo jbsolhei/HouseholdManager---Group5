@@ -22,7 +22,7 @@ public class User {
         this.userId = userId;
     }
 
-    //Todo: addDebt og simplifyDebtForSingleUser er shit
+    //Chore: addDebt og simplifyDebtForSingleUser er shit
     public void addDebt(User toUser, double sum){
         if(debts.size()==0)debts.add(new Debt(sum, toUser));
         for (Debt debt :debts) {
