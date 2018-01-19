@@ -1,16 +1,17 @@
 package services;
 
-import auth.*;
+import auth.Auth;
+import auth.AuthType;
+import auth.Session;
+import auth.UserAuth;
+import classes.Chore;
 import classes.Debt;
 import classes.Household;
-import classes.Chore;
 import classes.User;
 import database.FinanceDAO;
 import database.UserDAO;
 
 import javax.ws.rs.*;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class UserService {
         }
     }
 
-    @DELETE
+    /*@DELETE
     @Auth
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
@@ -124,7 +125,7 @@ public class UserService {
         HashMap<String, Object> response = new HashMap<>();
         response.put("success", true);
         return Response.ok(response).build();
-    }
+    }*/
 
     @GET
     @Auth

@@ -5,8 +5,6 @@ import classes.Household;
 import classes.User;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ChoreDAO {
@@ -24,7 +22,7 @@ public class ChoreDAO {
             PreparedStatement st = conn.prepareStatement(query);
 
             st.setString(1, chore.getDescription());
-            st.setDate(2, chore.getDate()); //MÅ FIKSE DATE FRA JAVASCRIPT TIL JAVA TIL MYSQL
+            st.setDate(2, Date.valueOf(chore.getDate()));
             st.setInt(3, chore.getHouseId());
             System.out.println(chore.getUser());
             st.setInt(4, chore.getUser().getUserId());
@@ -71,7 +69,7 @@ public class ChoreDAO {
                 chore = new Chore();
                 chore.setDescription(rs.getString("description"));
                 chore.setChoreId(rs.getInt("choreId"));
-                chore.setDate(rs.getDate("chore_date"));
+                chore.setDate(rs.getDate("chore_date").toLocalDate());
                 chore.setHouseId(household.getHouseId());
                 if(rs.getInt("done") == 1){
                     chore.setDone(true);
@@ -129,6 +127,13 @@ public class ChoreDAO {
 
             st.setString(1, chore.getDescription());
             //st.setDate(2, null); //MÅ FIKSE DATE FRA JAVASCRIPT TIL JAVA TIL MYSQL
+
+            // Bruk LocalDate
+            // eks: fraDatabase.toLocalDate()
+            // Og omvendt: Date.valueOf(chore.getDate())
+
+            // Se NewsDAO for min løsning.
+
             //st.setInt(3, chore.getTime());
             st.setInt(2, chore.getUser().getUserId());
             if (chore.isDone()) {
