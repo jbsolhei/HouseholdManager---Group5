@@ -394,7 +394,6 @@ public class ShoppingListDAO {
                 int rtn = st.executeUpdate();
                 if (rtn < 0) System.err.println("Could not update: " + userIds + " into shoppinglist where shoppinglistid = " + shoppingListId);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

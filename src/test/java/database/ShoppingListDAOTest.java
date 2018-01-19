@@ -142,7 +142,7 @@ public class ShoppingListDAOTest {
     }
     @Test
     public void updateUsers() throws Exception {
-        String[] userIds = {"1", "2", "3"};
+        String[] userIds = {"1", "50"};
         ShoppingListDAO.updateUsers(userIds, 1);
 
         String query = "SELECT * FROM User_Shopping_list WHERE shopping_listId = 1";
@@ -152,6 +152,27 @@ public class ShoppingListDAOTest {
         while (rs.next()) {
             i++;
         }
-        assertEquals(3, i);
+        assertEquals(2, i);
+    }
+
+    @Test
+    public void updateCheckedBy() throws Exception {
+        String query = "SELECT * FROM Item WHERE itemId = 1";
+
+        int rtn = ShoppingListDAO.updateCheckedBy(50, 1);
+        assertEquals(1, rtn);
+
+        ResultSet rs = st.executeQuery(query);
+        if (rs.next()) {
+            assertEquals(50, rs.getInt("checkedBy"));
+        } else assert false;
+
+        rtn = ShoppingListDAO.updateCheckedBy(0, 1);
+        assertEquals(1, rtn);
+
+        rs = st.executeQuery(query);
+        if (rs.next()) {
+            assertEquals(0, rs.getInt("checkedBy"));
+        } else assert false;
     }
 }
