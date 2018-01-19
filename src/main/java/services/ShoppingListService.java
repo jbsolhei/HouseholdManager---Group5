@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 public class ShoppingListService {
 
     /**
-     * Returns all shopping lists from a given household
+     * Produces all shopping lists from a given household
      * If the user is an admin the method will return all available shopping lists associated with the household
      * If the user is not admin the method only returns shopping lists associated with the household and the user
      *
@@ -38,9 +38,16 @@ public class ShoppingListService {
         return ShoppingListDAO.getShoppingListsUser(house_id, user_id);
     }
 
+    /**
+     * Produces all users associated with a shopping list
+     *
+     * @param id the house ID
+     * @param shoppingListId the shopping list ID
+     * @return
+     */
     @GET
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/shopping_lists/{shopping_list_id}")
+    @Path("/{shopping_list_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public User[] getShoppingListUsers(@PathParam("id") String id, @PathParam("shopping_list_id") String shoppingListId) {
         return ShoppingListDAO.getUsersInShoppingList(Integer.parseInt(shoppingListId));
@@ -63,7 +70,7 @@ public class ShoppingListService {
 
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/shopping_lists/{shopping_list_id}")
+    @Path("/{shopping_list_id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public void deleteShoppingList(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id){
         ShoppingListDAO.deleteShoppingList(houseId, shopping_list_id);
@@ -71,7 +78,7 @@ public class ShoppingListService {
 
     @POST
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/shopping_lists/{shopping_list_id}/items")
+    @Path("/{shopping_list_id}/items")
     @Consumes(MediaType.APPLICATION_JSON)
     public void addItems(@PathParam("shopping_list_id") int shopping_list_id, Item item){
         ShoppingListDAO.addItem(item, shopping_list_id);
@@ -79,14 +86,14 @@ public class ShoppingListService {
 
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/shopping_lists/{shopping_list_id}/items/{itemId}")
+    @Path("/{shopping_list_id}/items/{itemId}")
     public void deleteItem(@PathParam("shopping_list_id") int shopping_list_id, @PathParam("itemId") int itemId){
         ShoppingListDAO.deleteItem(shopping_list_id, itemId);
     }
 
     @POST
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/shopping_list/{shopping_list_id}/users")
+    @Path("/{shopping_list_id}/users")
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateUsers(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, String[] userIds) {
         for (String u : userIds) {
@@ -97,7 +104,7 @@ public class ShoppingListService {
 
     @POST
     @Auth(AuthType.HOUSEHOLD)
-    @Path("{id}/shopping_lists/items/{itemId}/user/")
+    @Path("/items/{itemId}/user/")
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean updateCheckedBy(@PathParam("itemId") int itemId , int userId) {
         int rs = ShoppingListDAO.updateCheckedBy(userId, itemId);
