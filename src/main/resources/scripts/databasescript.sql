@@ -47,6 +47,7 @@ description VARCHAR(100),
 taskId INTEGER AUTO_INCREMENT,
 houseId INTEGER NOT NULL,
 userId INTEGER NOT NULL,
+done BOOLEAN NOT NULL DEFAULT 0,
 CONSTRAINT task_pk PRIMARY KEY(taskId),
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 FOREIGN KEY (userId) REFERENCES Person(userId));
@@ -65,7 +66,7 @@ CREATE TABLE Shopping_list (
 shopping_listId INTEGER AUTO_INCREMENT,
 name VARCHAR(45) NOT NULL,
 houseId INTEGER NOT NULL,
-FOREIGN KEY (houseId) REFERENCES Household(houseId),
+FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE,
 CONSTRAINT shopping_listId PRIMARY KEY (shopping_listId));
 
 CREATE TABLE Item (
@@ -74,8 +75,8 @@ name VARCHAR(45),
 checked BOOLEAN,
 checkedBy INTEGER,
   shopping_listId INTEGER,
-FOREIGN KEY (checkedBy) REFERENCES Person(UserId),
-FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId),
+FOREIGN KEY (checkedBy) REFERENCES Person(UserId) ON DELETE CASCADE,
+FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId) ON DELETE CASCADE,
 CONSTRAINT item_pk PRIMARY KEY (itemId));
 
 CREATE TABLE Shopping_trip (

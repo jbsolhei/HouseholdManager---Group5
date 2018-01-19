@@ -54,11 +54,8 @@ function addUser() {
             if(result === true) {
                 document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
                     '<strong>Success!</strong> You have now created a user.</div>';
-                $(".alert-success").fadeTo(3000, 500).slideUp(500, function(){
-                    $(".alert-danger").slideUp(500);
-                    $(function () {
-                        $('#theModal').modal('toggle');
-                    });
+                $(".alert-success").fadeTo(1000, 500).slideUp(500, function(){
+                    login(person.email,person.password);
                 });
             } else {
                 document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
