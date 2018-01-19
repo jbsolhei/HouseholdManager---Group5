@@ -10,6 +10,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class NewsDAO {
+
+    /**
+     * Used to get all news for a household from the database
+     *
+     * @param houseId the id of the household
+     * @return a list of news objects
+     */
     public static ArrayList<News> getNews(int houseId){
         ArrayList<News> news = new ArrayList<>();
         String query = "SELECT * FROM (Message NATURAL JOIN Person) WHERE houseId = ?";
@@ -34,7 +41,7 @@ public class NewsDAO {
                     toAdd.setNewsId(rs.getInt("messageId"));
                     toAdd.setMessage(rs.getString("text"));
                     toAdd.setUser(user);
-                    toAdd.setTime(rs.getDate("date").toLocalDate());
+                    toAdd.setTime(rs.getTimestamp("date").toLocalDateTime());
 
                     news.add(toAdd);
                 }
@@ -47,6 +54,12 @@ public class NewsDAO {
         return news;
     }
 
+    /**
+     * Used to post news to the database
+     *
+     * @param news the news object
+     * @return 1 for success 0 for fail
+     */
     public static int postNews(News news){
         String message = news.getMessage();
         String query = "INSERT INTO Message(text, houseId, userId) VALUES (?,?,?)";
@@ -68,6 +81,12 @@ public class NewsDAO {
         return 0;
     }
 
+    /**
+     * Used to delete news from the database
+     *
+     * @param msgId the message id
+     * @return 1 for success 0 for fail
+     */
     public static int deleteNews(int msgId){
         String query = "DELETE FROM Message WHERE messageId=?";
 

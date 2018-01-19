@@ -1,6 +1,6 @@
 package classes;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class News {
     private int newsId;
@@ -8,7 +8,7 @@ public class News {
     private User user;
     private int houseId;
     private String message;
-    private LocalDate time;
+    private LocalDateTime time;
 
     public User getUser() {
         return user;
@@ -50,11 +50,11 @@ public class News {
         this.message = message;
     }
 
-    public LocalDate getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(LocalDate time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 }
