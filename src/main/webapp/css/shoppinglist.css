@@ -53,11 +53,11 @@ a {
     box-sizing: border-box;
 }
 
-.footerWrapper {
+.footerWrapper, #headerInputWrapper {
     height: 45px;
 }
 
-.panel-footer {
+.panel-footer{
     height: 100%;
     padding: 5px;
 }
@@ -67,7 +67,6 @@ a {
     border-right: 0px;
     border-left: 0px;
     height: 45px;
-
 }
 
 .input-group {

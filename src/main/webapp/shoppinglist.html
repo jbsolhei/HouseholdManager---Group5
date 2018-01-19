@@ -31,18 +31,21 @@
                 <div id="head" class="panel-heading">
                     <p id="headline"></p>
                     <div id="edit_shopping_list_btn" class="glyphicon glyphicon-eye-open col-md-1" data-toggle="modal" onclick='callModalRun("modals/editShoppingListUsers.html", [getUsers])' data-target="#theModal"></div>
-                    <div class="input-group">
-                        <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
-                        <!--
-                        <span id="okButton" onclick="addNewShoppingList()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
-                        -->
-                        <span class="input-group-btn">
+                    <div id="headerInputWrapper" >
+                        <div class="input-group">
+                            <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
+                            <!--
+                            <span id="okButton" onclick="addNewShoppingList()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
+                            -->
+                            <span class="input-group-btn">
                             <button id="okButton" onclick="addNewShoppingList()" class="btn btn-success hide">Ok</button>
                         </span>
-                        <span class="input-group-btn">
+                            <span class="input-group-btn">
                             <button id="privateButton" onclick="setPrivate()" class="btn btn-secondary hide" type="button">Private</button>
                         </span>
+                        </div>
                     </div>
+
                 </div>
                 <div class="panel-body scrollWhenFull SL">
                     <div class="input-group">

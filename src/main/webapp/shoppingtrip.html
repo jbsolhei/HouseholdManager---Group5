@@ -1,20 +1,14 @@
 <div class="container-fluid">
     <div class="row content">
-        <div class="col-sm-3 sidenav">
-            <div class="panel panel-default">
+        <div class="col-md-3 widgetCol sidenav">
+            <div class="panel panel-default widget">
                 <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-10">
-                            <h4>Shopping trips</h4>
-                        </div>
-                        <div class="col-xs-2">
+                            Shopping trips
                             <a data-toggle="modal" onclick='callModal("modals/regshoppingtrip.html")' data-target="#theModal" class="btn btn-md pull-right">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
-                        </div>
-                    </div>
                 </div>
-                <div class="panel-body long-scroll-panel">
+                <div class="panel-body scrollWhenFull ST">
                     <ul class="nav nav-pills nav-stacked" id="shoppingtrips">
                     </ul>
                 </div>
@@ -31,8 +25,8 @@
             </div>
         </div>
 
-        <div class="col-sm-9">
-            <div class="panel panel-default">
+        <div class="col-md-9 widgetCol">
+            <div class="panel panel-default widget">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-sm-8" id="heading">
@@ -43,21 +37,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-body long-scroll-panel">
+                <div class="panel-body scrollWhenFull ST">
                     <div class="row">
                         <div class="col-xs-6">
-                            <div id="comments" ></div>
+                            <div id="comments"></div>
                             <div id="shoppinglist" ></div>
                         </div>
                         <div class="col-xs-6">
-                            <div class="panel panel-info">
-                                <div class="panel-heading">Shared with</div>
-                                <div class="panel-body" id="listPanel">
-                                    <ul id="list">
+                            <p class='STHeaderText'>Shared With</p>
+                            <ul id="list">
 
-                                    </ul>
-                                </div>
-                            </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
