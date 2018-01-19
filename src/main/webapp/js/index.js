@@ -6,6 +6,7 @@ var todo = "dashboard.html";
 var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
+var stats = "stats.html";
 var activeSHL = 0;
 var householdsLoaded = false;
 
