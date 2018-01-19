@@ -1,11 +1,10 @@
 package classes;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Chore {
     private String description;
-    private java.sql.Date date;
+    private LocalDate date;
     private boolean done;
     private int houseId;
     private User user;
@@ -26,7 +25,7 @@ public class Chore {
         return time;
     }
 
-    public java.sql.Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -38,22 +37,10 @@ public class Chore {
         this.description = description;
     }
 
-    public void setDate(String dateString) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-
-        try {
-            java.util.Date utilDate = format.parse(dateString);
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            this.date = sqlDate;
-        }catch(Exception e){
-            e.printStackTrace();
-
-        }
-    }
-
-    public void setDate(java.sql.Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
+
 
     public void setDone(boolean done) {
         this.done = done;
