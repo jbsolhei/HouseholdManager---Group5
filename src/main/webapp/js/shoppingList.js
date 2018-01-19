@@ -202,7 +202,6 @@ function addNewList(name, users){
         success: function (data) {
             console.log("List successfully added to database");
             updateUsersAjax(data, users);
-            navToShoppingList(activeSHL);
         }
     });
     console.log("4: addNewList() is done.");
@@ -228,7 +227,8 @@ function updateUsers() {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("List successfully added to database")
+            console.log("List successfully added to database");
+            navToShoppingList(activeSHL);
         },
         error: function (result) {
             console.log(result);
@@ -237,7 +237,9 @@ function updateUsers() {
 }
 
 function updateUsersAjax(shoppingListId, users) {
+    console.log("!!! - shoppingListId: " + shoppingListId +  " houseId: " + getCurrentHousehold().houseId);
     console.log(JSON.stringify({'userids': users}));
+
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_list/' + shoppingListId + '/users',
@@ -245,7 +247,7 @@ function updateUsersAjax(shoppingListId, users) {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("List successfully added to database")
+            console.log("Shopping List successfully added to database")
         },
         error: function (result) {
             console.log(result);
