@@ -46,3 +46,12 @@ INSERT INTO Message (messageId,text, date, houseId, userId) VALUES (1,'Test mess
 INSERT INTO Message (messageId,text, date, houseId, userId) VALUES (2,'Another test message',NOW(),10,50);
 INSERT INTO Message (messageId,text, date, houseId, userId) VALUES (3,'Do not delete me',NOW(),2,1);
 INSERT INTO Message (messageId,text, date, houseId, userId) VALUES (4,'Please delete me',NOW(),2,1);
+
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (100,'userhouseholdtest@holdhouse.com', 'John Wick', 'wordpass', '9999999');
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (101,'inviteduser@house.com', 'Corgi Boii', 'ffffffff', '09020222');
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (102, 'gubbe@epost.no', 'Gubben Gnu', '$2a$12$ZyzEIbrC.0Q2.SfWhkOIGO36NHzDvUkNzvx8qV.mZFBHyZFrrCnum', 40302010);
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (103,'notadminuser@house.com', 'stronk', 'ioooio', '123123550');
+
+INSERT INTO Finance (fromPerson, toPerson, value) VALUES (101, 100, 100);
+INSERT INTO Finance (fromPerson, toPerson, value) VALUES (102, 100, 150);
+INSERT INTO Finance (fromPerson, toPerson, value) VALUES (100, 103, 50);

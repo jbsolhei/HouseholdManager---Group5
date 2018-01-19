@@ -14,7 +14,8 @@ import java.sql.Statement;
         HouseholdDAOTest.class,
         ShoppingListDAOTest.class,
         ShoppingTripDAOTest.class,
-        NewsDAOTest.class
+        NewsDAOTest.class,
+        FinanceDAOTest.class
 })
 
 public class DAOTest {

@@ -9,6 +9,7 @@ public class User {
     private String telephone;
     private String password;
     private ArrayList<Debt> debts;
+    private ArrayList<Debt> income;
     private ArrayList<Household> associatedHouseholds;
 
     public User(){}
@@ -26,11 +27,24 @@ public class User {
         if(debts.size()==0)debts.add(new Debt(sum, toUser));
         for (Debt debt :debts) {
             if(debt.getToUser().equals(toUser)){
-                debt.setAmount(debt.getAmount()+sum);
+                debt.setAmount(sum);
+                return;
             }
         }
         debts.add(new Debt(sum, toUser));
     }
+
+    public void addIncome(User toUser, double sum){
+        if(income.size()==0)income.add(new Debt(sum, toUser));
+        for (Debt income :income) {
+            if(income.getToUser().getUserId() == toUser.getUserId()){
+                income.setAmount(sum);
+                return;
+            }
+        }
+        income.add(new Debt(sum, toUser));
+    }
+
 
     public void simplifyDebtForSingleUser(){
         for (Debt debt : debts) {
