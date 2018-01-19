@@ -1,7 +1,7 @@
 package database;
 
+import classes.Chore;
 import classes.HashHandler;
-import classes.Todo;
 import classes.User;
 import org.junit.After;
 import org.junit.Before;
@@ -121,16 +121,6 @@ public class UserDAOTest {
         }
 
         assertEquals(true, deleteExecuted);
-    }
-
-    @Test
-    public void getTasks() throws Exception {
-        ArrayList<Todo> todos;
-        todos = UserDAO.getTasks(5);
-
-        assertEquals(todos.size(), 2);
-        assertEquals(todos.get(0).getDescription(), "Get som milk at the store");
-        assertNotEquals(todos.get(1).getDescription(), "Masturbate");
     }
 
     @Test

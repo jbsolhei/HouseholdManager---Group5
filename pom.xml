@@ -178,6 +178,7 @@
               <exclude>**/database/ShoppingTripDAOTest.java</exclude>
               <exclude>**/database/NewsDAOTest.java</exclude>
               <exclude>**/database/FinanceDAOTest.java</exclude>
+              <exclude>**/database/ChoreDAOTest.java</exclude>
             </excludes>
         </configuration>
     </plugin>
