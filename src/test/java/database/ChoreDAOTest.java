@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class ChoreDAOTest {
             chore.setHouseId(1);
             chore.setUser(user);
             chore.setDone(false);
-            chore.setDate("2018/01/20");
+            chore.setDate(LocalDate.of(2018,01,20));
 
 
         ChoreDAO.postChore(chore);
@@ -61,7 +62,7 @@ public class ChoreDAOTest {
             assertEquals(chore.getUser().getUserId(), rs.getInt("userId"));
             assertEquals(chore.getHouseId(), rs.getInt("houseId"));
             assertEquals(0, rs.getInt("done"));
-            assertEquals(chore.getDate(), rs.getDate("chore_date"));
+            assertEquals(chore.getDate(), rs.getDate("chore_date").toLocalDate());
         }
         else{
             assert false;
@@ -107,7 +108,7 @@ public class ChoreDAOTest {
         chore.setHouseId(1);
         chore.setUser(user);
         chore.setDone(true); //endrer fra false til done
-        chore.setDate("2018/01/20");
+        chore.setDate(LocalDate.of(2018,1,20));
 
         ChoreDAO.editChore(chore);
 
