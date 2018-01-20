@@ -1,22 +1,31 @@
 package classes;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public class Todo {
+public class Chore {
     private String description;
-    private Date date;
+    private LocalDate date;
     private boolean done;
     private int houseId;
     private User user;
-    private int taskId;
+    private int choreId;
+    private int time;
 
-    public Todo(){}
+    public Chore(){}
 
     public String getDescription() {
         return description;
     }
 
-    public Date getDate() {
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 
@@ -28,9 +37,10 @@ public class Todo {
         this.description = description;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
+
 
     public void setDone(boolean done) {
         this.done = done;
@@ -44,19 +54,19 @@ public class Todo {
         this.houseId = houseId;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public int getChoreId() {
+        return choreId;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public void setChoreId(int choreId) {
+        this.choreId = choreId;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User userId) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

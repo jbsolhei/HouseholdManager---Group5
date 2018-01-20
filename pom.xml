@@ -171,8 +171,14 @@
                 <exclude>**/database/UserDAOTest.java</exclude>
                 <exclude>**/database/HouseholdDAOTest.java</exclude>
                 <exclude>**/services/UserServiceTest.java</exclude>
+
+                <exclude>**/database/ShoppingListDAOTest.java</exclude>
+                <exclude>**/database/ShoppingTripDAOTest.java</exclude>
               <exclude>**/database/ShoppingListDAOTest.java</exclude>
               <exclude>**/database/ShoppingTripDAOTest.java</exclude>
+              <exclude>**/database/NewsDAOTest.java</exclude>
+              <exclude>**/database/FinanceDAOTest.java</exclude>
+              <exclude>**/database/ChoreDAOTest.java</exclude>
             </excludes>
         </configuration>
     </plugin>

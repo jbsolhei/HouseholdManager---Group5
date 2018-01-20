@@ -61,8 +61,8 @@ public class AuthorizationFilter implements ContainerRequestFilter {
                         }
                         return;
 
-                    case TASK:
-                        if (!UserAuth.canUserAccessTask(userId, pathId)) {
+                    case CHORE:
+                        if (!UserAuth.canUserAccessChore(userId, pathId)) {
                             unauthorized(context);
                         }
                         return;

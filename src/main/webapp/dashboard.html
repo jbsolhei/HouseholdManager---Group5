@@ -2,7 +2,7 @@
     <div id="dbTopRow" class="row">
         <div id="todoPanelId" class="col-md-8 widgetCol">
             <div class="panel panel-default widget">
-                <div class="panel-heading">Household todos</div>
+                <div class="panel-heading cursorPointer">Household todos</div>
                 <div class="panel-body scrollWhenFull">
                     <table class="table table-striped">
                         <thead>
@@ -19,7 +19,7 @@
         </div>
         <div id="shoppinglistPanelId" class="col-md-4 widgetCol">
             <div class="panel panel-default widget">
-                <div class="panel-heading" onclick="navToShoppingList(activeSHL)">Shoppinglists</div>
+                <div class="panel-heading cursorPointer" onclick="navToShoppingList(activeSHL)">Shoppinglists</div>
                 <div class="panel-body scrollWhenFull">
                     <ul id="dashboard_shopping_list_unordered_list" class="list-group"></ul>
                 </div>
@@ -29,19 +29,41 @@
     <div id="dbBottomRow" class="row">
         <div id="debtPanelId" class="col-md-4 widgetCol">
             <div class="panel panel-default widget">
-                <div class="panel-heading">Debt</div>
-                <div class="panel-body scrollWhenFull">Panel Content</div>
+                <div class="panel-heading cursorPointer">Debt</div>
+                <div class="panel-body scrollWhenFull nopadding debt-widget">
+                    <div class="row debt-row bg-danger padding" id="debtRowOutgoing">
+                        <div class="col-xs-9 nopadding">You owe people in total:</div>
+                        <div class="col-xs-3 nopadding debt-sum" id="debtSumOutgoing">120 kr</div>
+                    </div>
+                    <div class="row debt-row bg-success padding" id="debtRowIncoming">
+                        <div class="col-xs-9 nopadding">People owe you in total:</div>
+                        <div class="col-xs-3 nopadding debt-sum" id="debtSumIncoming">30 kr</div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="newsPanelId" class="col-md-4 widgetCol">
             <div class="panel panel-default widget">
                 <div class="panel-heading">Household news</div>
-                <div class="panel-body scrollWhenFull">Panel Content</div>
+                <div class="panel-body scrollWhenFull">
+                    <div class="messages-container">
+                        <div class="well well-sm clickable" onclick="toggleTeaser($(this))">
+                            <div class="message-heading">
+                                <b>Name</b>
+                                <div style="float: right">
+                                    -date-
+                                </div>
+                            </div>
+                            <div class="message-teaser">First few words of the message... (show more)</div>
+                            <div class="message-body">First few words of the message and this is the rest of it, can you believe it. Tchnology nowadays has no limits, godamn. aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="statisticsPanelId" class="col-md-4 widgetCol">
             <div  class="panel panel-default widget">
-                <div class="panel-heading">Statistics</div>
+                <div class="panel-heading cursorPointer">Statistics</div>
                 <div class="panel-body scrollWhenFull">Statistics here</div>
             </div>
         </div>
@@ -68,6 +90,18 @@
 
     loadDashboard();
     checkWelcome();
+
+    function toggleTeaser(msg){
+        var teaser = msg.find('.message-teaser');
+        var body = msg.find('.message-body');
+        if (teaser[0].style.display === "none"){
+            teaser.css('display','block');
+            body.css('display','none');
+        } else {
+            teaser.css('display','none');
+            body.css('display','block');
+        }
+    }
 </script>
 <style>
     .row.equal {

@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS Finance;
 DROP TABLE IF EXISTS Shopping_tour;
 DROP TABLE IF EXISTS Shopping_list;
 DROP TABLE IF EXISTS Message;
-DROP TABLE IF EXISTS Task;
+DROP TABLE IF EXISTS Chore;
 DROP TABLE IF EXISTS House_user;
 DROP TABLE IF EXISTS Household;
 DROP TABLE IF EXISTS Person;
@@ -40,15 +40,15 @@ CREATE TABLE Invite_token (
   FOREIGN KEY (houseId) REFERENCES Household(houseId)
 );
 
-CREATE TABLE Task (
-date DATE,
-time TIME,
+CREATE TABLE Chore (
+chore_date DATE,
+time INTEGER,
 description VARCHAR(100),
-taskId INTEGER AUTO_INCREMENT,
+choreId INTEGER AUTO_INCREMENT,
 houseId INTEGER NOT NULL,
 userId INTEGER NOT NULL,
 done BOOLEAN NOT NULL DEFAULT 0,
-CONSTRAINT task_pk PRIMARY KEY(taskId),
+CONSTRAINT chore_pk PRIMARY KEY(choreId),
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 FOREIGN KEY (userId) REFERENCES Person(userId));
 
@@ -66,6 +66,7 @@ CREATE TABLE Shopping_list (
 shopping_listId INTEGER AUTO_INCREMENT,
 name VARCHAR(45) NOT NULL,
 houseId INTEGER NOT NULL,
+archived INTEGER DEFAULT 0,
 FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE,
 CONSTRAINT shopping_listId PRIMARY KEY (shopping_listId));
 

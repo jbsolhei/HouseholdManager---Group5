@@ -119,7 +119,7 @@ function showList(SLIndex){
                 $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="unCheck(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
             }
         });
-    }$("#headline").replaceWith('<h4 id="headline">' + SHL[SLIndex].name + '</h4>');
+    }$("#headline").replaceWith('<p id="headline">' + SHL[SLIndex].name + '</p>');
     $("#shoppingListItemInput").focus();
     $("#shoppingList" + activeSHL).removeClass("active");
     $("#shoppingList" + SLIndex).addClass("active");
@@ -173,7 +173,7 @@ function addNewShoppingList(){
     $("#headlineInput").value = "";
     $("#headline").removeClass("hide");
     $("#edit_shopping_list_btn").removeClass("hide");
-    $("#headline").replaceWith('<h4 id="headline">' + name + '</h4>');
+    $("#headline").replaceWith('<p id="headline">' + name + '</p>');
     $("#headlineInput").addClass("hide");
     $("#addNewShoppingList").addClass("hide");
     $("#sideMenu").append('<li onclick="showList(' + numberOfLists-1 + ')" id="shoppingList' + numberOfLists-1 + '"><a>' + name + '</a></li>');
