@@ -1,18 +1,21 @@
-<div class="modal-header">
+<div class="modal-header clearfix">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <h4 class="modal-title">Invite member</h4>
+    <h4 class="modal-title pull-left">Invite members</h4>
+    <i data-toggle="tooltip" data-placement="bottom" title="Enter email to invite new users to this household. Click users to remove." id="newUserInfoIcon" class="glyphicon glyphicon-question-sign pull-right"></i>&nbsp;
 </div>
 <div class="modal-body">
-    <div>
-        <div class="addMembers">
-            <input id="addMemberHousehold1" placeholder="email">
+    <div class="panel-body">
+        <ul id="inviteMembersToHouseholdList" class="nav nav-pills nav-stacked addHouseInput"></ul>
+    </div>
+    <div class="input-group">
+        <input id="inviteEmail" type="text" class="form-control" placeholder="John.Doe@example.com">
+        <div class="input-group-btn">
+            <button onclick="addEmailToInviteList()" class="btn btn-default" type="submit">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
         </div>
-        <br>
-        <button class="btn btn-default" id="addMoreMembers">
-            <span class="glyphicon glyphicon-plus"></span> add more
-        </button>
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Send</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="inviteMembersToHousehold()">Send invite</button>
 </div>

@@ -1,14 +1,17 @@
 package services;
 
-import auth.*;
+import auth.Auth;
+import auth.AuthType;
+import auth.Session;
+import auth.UserAuth;
+import classes.Chore;
+import classes.Debt;
 import classes.Household;
-import classes.Todo;
 import classes.User;
+import database.FinanceDAO;
 import database.UserDAO;
 
 import javax.ws.rs.*;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -47,6 +50,14 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean updateUser(@PathParam("id") int id, User user) {
         return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName());
+    }
+
+    @PUT
+    @Auth(AuthType.USER_MODIFY)
+    @Path("/{id}/password")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean updatePassword(@PathParam("id") int id,String pwd) {
+        return UserDAO.updatePassword(id,pwd);
     }
 
 
@@ -104,7 +115,7 @@ public class UserService {
         }
     }
 
-    @DELETE
+    /*@DELETE
     @Auth
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
@@ -114,7 +125,7 @@ public class UserService {
         HashMap<String, Object> response = new HashMap<>();
         response.put("success", true);
         return Response.ok(response).build();
-    }
+    }*/
 
     @GET
     @Auth
@@ -126,10 +137,10 @@ public class UserService {
 
     @GET
     @Auth(AuthType.USER_READ)
-    @Path("/{id}/tasks")
+    @Path("/{id}/chores")
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Todo> todos(@PathParam("id") int id) {
-        return UserDAO.getTasks(id);
+    public ArrayList<Chore> todos(@PathParam("id") int id) {
+        return UserDAO.getChores(id);
     }
 
     @POST
@@ -137,5 +148,19 @@ public class UserService {
     @Consumes(MediaType.TEXT_PLAIN)
     public boolean resetPassword(String email) {
         return UserDAO.resetPassword(email);
+    }
+
+    @GET
+    @Path("/{id}/dept")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Debt> getDebt(@PathParam("id") int id){
+        return FinanceDAO.getDept(id);
+    }
+
+    @GET
+    @Path("/{id}/income")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Debt> getIncome(@PathParam("id") int id){
+        return FinanceDAO.getIncome(id);
     }
 }

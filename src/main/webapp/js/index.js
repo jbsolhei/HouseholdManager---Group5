@@ -4,8 +4,9 @@ var shoppinglists = "shoppinglist.html";
 var shoppingtrips = "shoppingtrip.html";
 var chores = "chores.html";
 var statistics = "dashboard.html";
-var news = "dashboard.html";
+var news = "news.html";
 var profile = "profile.html";
+var stats = "stats.html";
 var activeSHL = 0;
 var householdsLoaded = false;
 
@@ -207,4 +208,46 @@ function swapContent(bodyContent) {
 function navToShoppingList(shoppingListId){
     activeSHL = shoppingListId;
     swapContent(shoppinglists);
+}
+
+function getNews(runThisAfter){
+    ajaxAuth({
+        url:"res/household/"+getCurrentHousehold().houseId+"/news",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            var house = JSON.parse(window.localStorage.getItem("house"));
+            house.news = data;
+            window.localStorage.setItem("house",JSON.stringify(house));
+            runThisAfter(data);
+        },
+        dataType: "json"
+    });
+}
+
+function postNews(text,runThisAfter){
+    var message = {"message":text};
+    ajaxAuth({
+        url:"res/household/"+getCurrentHousehold().houseId+"/news",
+        type: "POST",
+        data: JSON.stringify(message),
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            console.log("Success!");
+            runThisAfter(data);
+            // Do things after post here
+        }
+    });
+}
+
+function deleteNews(newsId,runThisAfter){
+    ajaxAuth({
+        url:"res/household/"+getCurrentHousehold().houseId+"/news/"+newsId,
+        type: "DELETE",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            runThisAfter(data);
+            // Do things after delete here
+        }
+    });
 }
