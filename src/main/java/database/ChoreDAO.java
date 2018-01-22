@@ -99,6 +99,46 @@ public class ChoreDAO {
         return null;
     }
 
+    public static ArrayList<Chore> getUserChores(int userId){
+        ArrayList<Chore> chores = new ArrayList<>();
+        Chore chore;
+
+        String query = "SELECT * FROM Chore WHERE userId = ?;";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)){
+
+            st.setInt(1, userId);
+
+            try(ResultSet rs = st.executeQuery()) {
+
+                while (rs.next()) {
+                    chore = new Chore();
+                    chore.setTitle(rs.getString("title"));
+                    chore.setDescription(rs.getString("description"));
+                    chore.setChoreId(rs.getInt("choreId"));
+
+                    chore.setTime(rs.getTimestamp("chore_time").toLocalDateTime());
+
+                    chore.setHouseId(rs.getInt("houseId"));
+                    if (rs.getInt("done") == 1) {
+                        chore.setDone(true);
+                    } else {
+                        chore.setDone(false);
+                    }
+                    chore.setUserId(userId);
+                    chores.add(chore);
+                }
+
+                return chores;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Deletes a chore from the database
      * @param choreId

@@ -418,12 +418,12 @@ public class HouseholdDAO {
 
 
     /**
-     * Used to get all todolists for a household
+     * Used to get all chores for a household
      *
      * @param houseId the id of the house
-     * @return array with all the todos.
+     * @return array with all the chores.
      */
-    public static Chore[] getTodosForHousehold(int houseId) {
+    public static Chore[] getChoresForHousehold(int houseId) {
         ArrayList<Chore> chores = new ArrayList<>();
         boolean householdExists = false;
 

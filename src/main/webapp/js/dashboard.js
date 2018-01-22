@@ -2,26 +2,27 @@
  * Created by Simen Moen Storvik on 12.01.2018.
  */
 
-//TODO: Vurdere bruken av lokalt lagrede brukere under opplisting av todos og handlelister mtp på autoriseringsproblemer.
+//TODO: Vurdere bruken av lokalt lagrede brukere under opplisting av chores og handlelister mtp på autoriseringsproblemer.
 
 function loadDashboard(){
     var house = getCurrentHousehold();
     console.log(house);
     if (house!==undefined) {
         printShoppingListsToDashboard(house);
-        printHouseholdTodosToDashboard(house.houseId);
+        printHouseholdChoresToDashboard(house.houseId);
         printNewsToDashboard();
     }
 
     if (!householdsLoaded) addHouseholdsToList(getCurrentUser().userId);
 }
 
-function printHouseholdTodosToDashboard(id){
+function printHouseholdChoresToDashboard(id){
     ajaxAuth({
-        url: "res/household/" + id + "/tasks",
+        url: "res/household/" + id + "/chores",
         type: "GET",
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
+            console.log(data);
             if (data !== null && data !==undefined) {
                 for (var i = 0; i < data.length; i++) {
                     var current = data[i];
@@ -30,15 +31,15 @@ function printHouseholdTodosToDashboard(id){
                     } else {
                         var name = current.user.name;
                     }
-                    var inputString = "<tr>\n" +
+                    var inputString = "<tr onclick='activeChore=["+1+","+i+"];updateCurrentHousehold("+chores+");'>" +
                         "<td>" + current.description + "</td>" +
                         "<td>" + current.date + "</td>" +
                         "<td>" + name + "</td>" +
                         "</tr>";
-                    $("#dashboard_todos_table_body").append(inputString);
+                    $("#dashboard_chores_table_body").append(inputString);
                 }
             }else{
-                $("#dashboard_todos_table_body").append("There are no todos for this household.");
+                $("#dashboard_chores_table_body").append("There are no chores for this household.");
             }
         }
     });
