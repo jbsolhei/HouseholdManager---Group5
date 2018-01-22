@@ -4,7 +4,7 @@ public enum AuthType {
     DEFAULT,
     USER_READ,
     USER_MODIFY,
-    TASK,
+    CHORE,
     SHOPPING_LIST,
     HOUSEHOLD,
     HOUSEHOLD_ADMIN

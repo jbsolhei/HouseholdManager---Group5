@@ -30,12 +30,12 @@ public class UserAuthTest {
     }
 
     @Test
-    public void canUserAccessTask() {
+    public void canUserAccessChore() {
         // Test Testesen, "Vask badet"
-        assertTrue(UserAuth.canUserAccessTask(50, 100));
+        assertTrue(UserAuth.canUserAccessChore(50, 100));
 
         // Trym, "Vask badet"
-        assertFalse(UserAuth.canUserAccessTask(1, 100));
+        assertFalse(UserAuth.canUserAccessChore(1, 100));
     }
 
     @Test
