@@ -67,3 +67,7 @@ INSERT INTO Chore (title, description, chore_date, chore_time, choreId, houseId,
 VALUES ('Ta ut søpla', 'Husk at grønn pose betyr restavfall!', '2018-02-15', '2018-02-15 10:30:00', 1, 10, 51);
 INSERT INTO Chore (title, description, chore_date, chore_time, choreId, houseId, userId)
 VALUES ('Ta ut søpla', 'Husk at grønn pose betyr restavfall!', '2017-02-15', '2017-02-15 10:30:00', 2, 10, 51);
+
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (200, 'trym@gmail.com', 'trym', '123', '88888888');
+INSERT INTO House_user (houseId, userId, isAdmin) VALUES (1, 200, 0);
+INSERT INTO Notification (userId, houseId, message, notificationDateTime) VALUES (200, 1, 'Du må være snill!', '2018-01-01');

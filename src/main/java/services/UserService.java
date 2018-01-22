@@ -4,11 +4,9 @@ import auth.Auth;
 import auth.AuthType;
 import auth.Session;
 import auth.UserAuth;
-import classes.Chore;
-import classes.Debt;
-import classes.Household;
-import classes.User;
+import classes.*;
 import database.FinanceDAO;
+import database.NotificationDAO;
 import database.UserDAO;
 
 import javax.ws.rs.*;
@@ -162,5 +160,14 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Debt> getIncome(@PathParam("id") int id){
         return FinanceDAO.getIncome(id);
+    }
+
+
+    @GET
+    @Path("/{id}/notifications")
+    //@Auth(AuthType.USER_MODIFY)
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Notification> getNotifications(@PathParam("id") int id) {
+        return NotificationDAO.getNotifications(id);
     }
 }
