@@ -286,10 +286,10 @@ public class UserDAO {
 
                 while (rs.next()) {
                     Chore chore = new Chore();
-                    chore.setDate(rs.getDate("date").toLocalDate());
+                    chore.setTime(rs.getTimestamp("date").toLocalDateTime());
                     chore.setDescription(rs.getString("description"));
                     chore.setHouseId(rs.getInt("houseId"));
-                    chore.setUser(getUser(rs.getInt("userId")));
+                    chore.setUserId(rs.getInt("userId"));
                     chore.setChoreId(rs.getInt("choreId"));
                     chores.add(chore);
                 }
