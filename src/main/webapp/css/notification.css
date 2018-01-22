@@ -1,0 +1,33 @@
+#notifyBellId.dropdown-toggle {
+    background-color: #233237;
+}
+
+.notificationElement {
+    color: #233237;
+    height: 5vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
+}
+
+
+.notificationElement.list-group-item {
+    -moz-border-radius-topleft:  0;
+    -moz-border-radius-topright: 0;
+}
+
+#notifyDropdownListId {
+    width: 30vh;
+    border: none;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.notifyMessageId {
+    font-size: 15px;
+    margin-bottom: 1px;
+}
+
+.notifyDateTimeId {
+    color: dimgrey;
+    font-size: 8px;
+}

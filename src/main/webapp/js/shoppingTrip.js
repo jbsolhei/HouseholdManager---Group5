@@ -65,6 +65,7 @@ function viewInformation(shoppingTripId, i) {
     $("#tab-" + i).addClass("active");
     activeTab = i;
 }
+
 function updateInformation(result) {
     $("#heading").html("<p>Registered by: " +result.userName+"<small>   on   "+result.shoppingDate.dayOfMonth+"-" +result.shoppingDate.month+"-"+result.shoppingDate.year+"</small></p>");
     if (result.comment == "") $("#comments").html("<p class='STHeaderText'><b>Comment:</b></p><p id='noCommentID'>No Comments</p><br>");
