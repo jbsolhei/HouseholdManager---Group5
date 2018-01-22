@@ -78,6 +78,11 @@ th, td {
     border-bottom: 1px solid #ddd;
     height: 50px;
     padding: 10px;
+
+}
+
+tr:hover{
+    background-color: #eeeeee;
 }
 
 #add_shopping_list_btn {

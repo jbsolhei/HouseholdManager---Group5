@@ -43,4 +43,11 @@ public class ChoreService {
     public void editChore(@PathParam("id") int houseId, Chore chore){
         ChoreDAO.editChore(chore);
     }
+
+    @DELETE
+    @Auth(AuthType.HOUSEHOLD)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteChore(@PathParam("id") int houseId, int choreId){
+        ChoreDAO.deleteChore(choreId);
+    }
 }
