@@ -42,6 +42,7 @@ CREATE TABLE Invite_token (
 
 CREATE TABLE Chore (
 chore_date DATE,
+chore_time TIMESTAMP,
 time INTEGER,
 description VARCHAR(100),
 choreId INTEGER AUTO_INCREMENT,

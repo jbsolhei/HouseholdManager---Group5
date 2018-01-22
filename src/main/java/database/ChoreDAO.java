@@ -5,8 +5,9 @@ import classes.Household;
 import classes.User;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ChoreDAO {
@@ -17,22 +18,28 @@ public class ChoreDAO {
      */
     public static void postChore(Chore chore){
 
-        String query = "INSERT INTO Chore (description, chore_date, houseId, userId, done) VALUES (?, ?, ?, ?, ?);";
+        String query = "INSERT INTO Chore (description, chore_date, chore_time, houseId, userId, done) VALUES (?, ?, ?, ?, ?, ?);";
         try {
             DBConnector dbc = new DBConnector();
             Connection conn = dbc.getConn();
             PreparedStatement st = conn.prepareStatement(query);
 
             st.setString(1, chore.getDescription());
-            st.setDate(2, chore.getDate()); //MÅ FIKSE DATE FRA JAVASCRIPT TIL JAVA TIL MYSQL
-            st.setInt(3, chore.getHouseId());
-            System.out.println(chore.getUser());
-            st.setInt(4, chore.getUser().getUserId());
+            LocalDateTime dateTime = chore.getTime(); // your ldt
+            java.sql.Date sqlDate = java.sql.Date.valueOf(dateTime.toLocalDate());
+            st.setDate(2, sqlDate);
+
+            Timestamp timestamp = Timestamp.valueOf(dateTime);
+            st.setTimestamp(3, timestamp);
+
+            st.setInt(4, chore.getHouseId());
+            System.out.println(chore.getUserId());
+            st.setInt(5, chore.getUserId());
             if(chore.isDone()) {
-                st.setInt(5, 1);
+                st.setInt(6, 1);
             }
             else {
-                st.setInt(5, 0);
+                st.setInt(6, 0);
             }
 
             st.executeUpdate();
@@ -71,16 +78,16 @@ public class ChoreDAO {
                 chore = new Chore();
                 chore.setDescription(rs.getString("description"));
                 chore.setChoreId(rs.getInt("choreId"));
-                chore.setDate(rs.getDate("chore_date"));
+
+                chore.setTime(rs.getTimestamp("chore_time").toLocalDateTime());
+
                 chore.setHouseId(household.getHouseId());
                 if(rs.getInt("done") == 1){
                     chore.setDone(true);
                 } else {
                     chore.setDone(false);
                 }
-                User user = new User();
-                user.setUserId(rs.getInt("userId"));
-                chore.setUser(user);
+                chore.setUserId(rs.getInt("userId"));
                 chores.add(chore);
             }
 
@@ -129,8 +136,15 @@ public class ChoreDAO {
 
             st.setString(1, chore.getDescription());
             //st.setDate(2, null); //MÅ FIKSE DATE FRA JAVASCRIPT TIL JAVA TIL MYSQL
+
+            // Bruk LocalDate
+            // eks: fraDatabase.toLocalDate()
+            // Og omvendt: Date.valueOf(chore.getDate())
+
+            // Se NewsDAO for min løsning.
+
             //st.setInt(3, chore.getTime());
-            st.setInt(2, chore.getUser().getUserId());
+            st.setInt(2, chore.getUserId());
             if (chore.isDone()) {
                 st.setInt(3, 1);
             } else {

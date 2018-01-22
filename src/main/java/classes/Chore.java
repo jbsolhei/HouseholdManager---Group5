@@ -1,33 +1,20 @@
 package classes;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Chore {
     private String description;
-    private java.sql.Date date;
     private boolean done;
     private int houseId;
-    private User user;
+    private int userId;
     private int choreId;
-    private int time;
+    private LocalDateTime time;
 
     public Chore(){}
 
     public String getDescription() {
         return description;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public java.sql.Date getDate() {
-        return date;
     }
 
     public boolean isDone() {
@@ -36,23 +23,6 @@ public class Chore {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setDate(String dateString) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-
-        try {
-            java.util.Date utilDate = format.parse(dateString);
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            this.date = sqlDate;
-        }catch(Exception e){
-            e.printStackTrace();
-
-        }
-    }
-
-    public void setDate(java.sql.Date date) {
-        this.date = date;
     }
 
     public void setDone(boolean done) {
@@ -75,11 +45,19 @@ public class Chore {
         this.choreId = choreId;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 }

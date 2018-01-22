@@ -131,7 +131,7 @@ public class UserService {
     @Path("/{id}/tasks")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Chore> todos(@PathParam("id") int id) {
-        return UserDAO.getTasks(id);
+        return UserDAO.getChores(id);
     }
 
     @POST

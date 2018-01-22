@@ -10,6 +10,9 @@ import org.junit.Test;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,15 +41,14 @@ public class ChoreDAOTest {
     public void postChore() throws Exception{
         ArrayList<Chore> chores = new ArrayList<>();
         Chore chore = new Chore();
-        User user = new User();
 
 
-            user.setUserId(100);
+
             chore.setDescription("Ta ut av oppvaskmaskinen");
             chore.setHouseId(1);
-            chore.setUser(user);
+            chore.setUserId(100);
             chore.setDone(false);
-            chore.setDate("2018/01/20");
+            chore.setTime(LocalDateTime.of(2018, Month.FEBRUARY, 1, 8, 30, 0));
 
 
         ChoreDAO.postChore(chore);
@@ -58,10 +60,16 @@ public class ChoreDAOTest {
         if(rs.next()) {
             assertEquals(2, rs.getInt("choreId"));
             assertEquals(chore.getDescription(), rs.getString("description"));
-            assertEquals(chore.getUser().getUserId(), rs.getInt("userId"));
+            assertEquals(chore.getUserId(), rs.getInt("userId"));
             assertEquals(chore.getHouseId(), rs.getInt("houseId"));
             assertEquals(0, rs.getInt("done"));
-            assertEquals(chore.getDate(), rs.getDate("chore_date"));
+
+            LocalDateTime dateTime = chore.getTime(); // your ldt
+            java.sql.Date sqlDate = java.sql.Date.valueOf(dateTime.toLocalDate());
+            Timestamp timestamp = Timestamp.valueOf(dateTime);
+
+            assertEquals(sqlDate, rs.getDate("chore_date"));
+            assertEquals(timestamp, rs.getTimestamp("chore_time"));
         }
         else{
             assert false;
@@ -76,9 +84,15 @@ public class ChoreDAOTest {
 
         assertEquals(1, chores.size());
         assertEquals("Ta ut søpla", chores.get(0).getDescription());
-        assertEquals(51, chores.get(0).getUser().getUserId());
+        assertEquals(51, chores.get(0).getUserId());
         assertEquals(false, chores.get(0).isDone());
-        assertEquals("2018-01-20", chores.get(0).getDate().toString());
+
+        LocalDateTime localDateTime = LocalDateTime.of(2018, Month.FEBRUARY, 15, 10, 30, 0);
+        java.sql.Date sqlDate = java.sql.Date.valueOf(localDateTime.toLocalDate());
+        Timestamp timestamp = Timestamp.valueOf(localDateTime);
+
+        assertEquals(sqlDate, java.sql.Date.valueOf(chores.get(0).getTime().toLocalDate()));
+        assertEquals(timestamp, Timestamp.valueOf(chores.get(0).getTime()));
 
     }
 
@@ -100,14 +114,12 @@ public class ChoreDAOTest {
         rs.close();
 
         Chore chore = new Chore();
-        User user = new User();
 
-        user.setUserId(100);
         chore.setDescription("Vask badet");
         chore.setHouseId(1);
-        chore.setUser(user);
+        chore.setUserId(10);
         chore.setDone(true); //endrer fra false til done
-        chore.setDate("2018/01/20");
+        //chore.setTime(LocalDateTime.of(2018, ));
 
         ChoreDAO.editChore(chore);
 
