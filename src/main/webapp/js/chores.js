@@ -24,7 +24,19 @@ function newChoreButtonPressed(){
     console.log($("#newChoreDateInput").val());
     console.log($("#newChoreTimeInput").val());
     console.log($("#newChoreLocalTimeInput").val());
+    getChoresForUser(getCurrentUser().userId);
 }
 function setNewChorePersonFromDropdown(index){
     $("#newChoreDropdownButton").html(householdUsers[index]);
+}
+
+function getChoresForUser(id){
+    $.ajax({
+        url: "/res/user/"+id+"/chores",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            console.log(data);
+        }
+    })
 }

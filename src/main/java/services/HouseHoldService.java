@@ -112,8 +112,8 @@ public class HouseHoldService {
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}/chores")
     @Produces(MediaType.APPLICATION_JSON)
-    public Chore[] getTodosForHousehold(@PathParam("id") int id){
-        return HouseholdDAO.getTodosForHousehold(id);
+    public Chore[] getChoresForHousehold(@PathParam("id") int id){
+        return HouseholdDAO.getChoresForHousehold(id);
     }
 
     @GET
