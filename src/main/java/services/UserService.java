@@ -58,7 +58,7 @@ public class UserService {
     @Auth(AuthType.USER_MODIFY)
     @Path("/{id}/password")
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean updatePassword(@PathParam("id") int id,String pwd) {
+    public boolean updatePassword(@PathParam("id") int id, String pwd) {
         return UserDAO.updatePassword(id,pwd);
     }
 

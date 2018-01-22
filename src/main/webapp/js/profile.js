@@ -119,6 +119,8 @@ function changePassword() {
     var newPassword = $("#newPassword").val();
     var repeatPassword = $("#repeatPassword").val();
 
+    console.log(oldPassword);
+
     if(oldPassword == "") {
         saveInformation();
     } else {
@@ -135,9 +137,7 @@ function changePassword() {
                     success: function (res) {
                         console.log(res);
                         if (res == "true") {
-                            console.log("inne");
-
-
+                            updatePassword(newPassword);
                             saveInformation();
                         } else {
                             document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
@@ -151,8 +151,18 @@ function changePassword() {
             }
         }
     }
+}
 
-
+function updatePassword(password) {
+    ajaxAuth({
+        url: "res/user/"+getCurrentUser().userId+"/password",
+        type: 'PUT',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(password),
+        success: function (res) {
+            console.log("");
+        }
+    });
 }
 
 function saveInformation() {

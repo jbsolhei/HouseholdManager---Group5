@@ -182,8 +182,8 @@ public class UserDAO {
      * @return a boolean, true if the password is correct, else false.
      */
     public static boolean getPasswordMatch(int id, String password) {
-       // String query = "SELECT * FROM Person WHERE userId=?;";
-
+        password = password.substring(1, password.length()-1);
+        System.out.println(password);
         String query = "SELECT password FROM Person WHERE userId = ?";
         boolean correctPassword = false;
 
@@ -199,21 +199,6 @@ public class UserDAO {
                     }
                 }
             }
-
-       /* try (DBConnector dbc = new DBConnector();
-             Connection conn = dbc.getConn();
-             PreparedStatement st = conn.prepareStatement(query)) {
-
-            st.setInt(1, id);
-
-            try (ResultSet rs = st.executeQuery()){
-                while (rs.next()) {
-                    correctPassword = HashHandler.passwordMatchesHash(password, rs.getString("password"));
-                    System.out.println(correctPassword);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -269,8 +254,9 @@ public class UserDAO {
      */
     public static boolean updatePassword(int id, String newPassword) {
         String query = "UPDATE Person SET password = ? WHERE userId = ?";
-
         boolean passwordUpdated = false;
+        newPassword = newPassword.substring(1, newPassword.length()-1);
+        System.out.println(newPassword);
 
         newPassword = HashHandler.makeHashFromPassword(newPassword);
 
@@ -289,6 +275,7 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println(passwordUpdated);
 
         return passwordUpdated;
     }
