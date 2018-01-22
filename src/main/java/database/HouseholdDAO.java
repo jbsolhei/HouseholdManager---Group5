@@ -540,4 +540,28 @@ public class HouseholdDAO {
         }
         return adminIds;
     }
+
+    /**
+     * Removes a user from a household.
+     * @param householdId the household ID
+     * @param userId the user ID to remove
+     * @return true on success, false otherwise.
+     */
+    public static boolean removeUserFromHousehold(int householdId, int userId) {
+        String query = "DELETE FROM House_user WHERE houseId = ? AND userId = ?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, householdId);
+            stmt.setInt(2, userId);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
