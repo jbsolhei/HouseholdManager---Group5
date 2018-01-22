@@ -64,7 +64,7 @@ public class ChoreDAO {
         ArrayList<Chore> chores = new ArrayList<>();
         Chore chore;
 
-        String query = "SELECT * FROM Chore WHERE houseId = ?;/* AND chore_date >= CURDATE();*/";
+        String query = "SELECT * FROM Chore WHERE houseId = ? AND chore_date >= CURDATE();";
 
         try {
             DBConnector dbc = new DBConnector();

@@ -57,7 +57,7 @@ public class ChoreDAOTest {
         ResultSet rs = st.executeQuery(query);
 
         if(rs.next()) {
-            assertEquals(2, rs.getInt("choreId"));
+            assertEquals(3, rs.getInt("choreId"));
             assertEquals(chore.getTitle(), rs.getString("title"));
             assertEquals(chore.getDescription(), rs.getString("description"));
             assertEquals(chore.getUserId(), rs.getInt("userId"));
@@ -103,7 +103,7 @@ public class ChoreDAOTest {
 
     @Test
     public void editChore() throws Exception{
-        String query = "SELECT * FROM Chore WHERE choreId = 2;";
+        String query = "SELECT * FROM Chore WHERE choreId = 3;";
 
         ResultSet rs = st.executeQuery(query);
 
