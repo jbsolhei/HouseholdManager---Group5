@@ -1,19 +1,12 @@
 package services;
 import auth.Auth;
 import auth.AuthType;
-import classes.Household;
 import classes.Chore;
-import classes.User;
 import database.ChoreDAO;
-import database.HouseholdDAO;
 
 import javax.ws.rs.*;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author team5
@@ -27,6 +20,14 @@ public class ChoreService {
     public ArrayList<Chore> getChores(@PathParam("id") int houseId){
         return ChoreDAO.getChores(houseId);
     }
+
+    /*@GET
+    @Auth(AuthType.HOUSEHOLD)
+    @Path("{choreId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Chore> getChores(@PathParam("choreId") int choreId){ // TODO: Kansje lag denne?
+        return ChoreDAO.getCore(choreId);
+    }*/
 
     @POST
     @Auth(AuthType.HOUSEHOLD)

@@ -26,6 +26,7 @@ function printHouseholdChoresToDashboard(id){
             if (data !== null && data !==undefined) {
                 for (var i = 0; i < data.length; i++) {
                     var current = data[i];
+                    console.log(current);
                     if (current.user === undefined || current.user === null) {
                         var name = "None";
                     } else {
@@ -33,7 +34,7 @@ function printHouseholdChoresToDashboard(id){
                     }
                     var inputString = "<tr onclick='activeChore=["+1+","+i+"];updateCurrentHousehold("+chores+");'>" +
                         "<td>" + current.description + "</td>" +
-                        "<td>" + current.date + "</td>" +
+                        "<td>" + current.time.dayOfMonth + "."+current.time.monthValue+"." + current.time.year  + "</td>" +
                         "<td>" + name + "</td>" +
                         "</tr>";
                     $("#dashboard_chores_table_body").append(inputString);

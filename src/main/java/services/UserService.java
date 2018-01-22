@@ -8,7 +8,6 @@ import classes.Chore;
 import classes.Debt;
 import classes.Household;
 import classes.User;
-import database.ChoreDAO;
 import database.FinanceDAO;
 import database.UserDAO;
 

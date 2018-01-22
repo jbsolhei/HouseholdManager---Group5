@@ -29,10 +29,10 @@ function listUserChores(){
         var leftUpperTableBodyHTML = "";
         $.each(data,function(i,val){
             console.log("It LOOPS!!");
-            leftUpperTableBodyHTML += "<tr onclick='showChoreInfo("+i+")'>" +
+            leftUpperTableBodyHTML += "<tr onclick='showChoreInfo(0,"+i+")'>" +
                 "<td>"+val.title+"</td>" +
-                "<td>"+getHouseholdFromId(val.houseId,function(data){return data}).name+"</td>" +
-                "<td>"+val.date+"</td></tr>";
+                "<td>"+val.user.name+"</td>" +
+                "<td>"+val.time.dayOfMonth + "."+val.time.monthValue+"." + val.time.year+"</td></tr>";
         });
         $("#choresLeftUpperTableBody").html(leftUpperTableBodyHTML);
     });
@@ -45,10 +45,10 @@ function listHouseholdChores() {
         var leftLowerTableBodyHTML = "";
         $.each(data,function(i,val){
             console.log("It LOOPS!!");
-            leftLowerTableBodyHTML += "<tr onclick='showChoreInfo("+i+")'>" +
+            leftLowerTableBodyHTML += "<tr onclick='showChoreInfo(1,"+i+")'>" +
                 "<td>"+val.title+"</td>" +
-                "<td>"+getLocalResident(userId).name+"</td>" +
-                "<td>"+val.date+"</td></tr>";
+                "<td>"+val.user.name+"</td>" +
+                "<td>"+val.time.dayOfMonth + "."+val.time.monthValue+"." + val.time.year+"</td></tr>";
         });
         $("#choresLeftLowerTableBody").html(leftLowerTableBodyHTML);
     });
@@ -72,15 +72,19 @@ function deleteSelectedChore(id){
     })
 }
 
-function showChoreInfo(chore){
+function showChoreInfo(from,chore){
     console.log("showChoreInfo()");
+    if (from===0){
+        selectedChore = userChoreList[chore];
+    } else {
+        selectedChore = householdChoreList[chore];
+    }
     switchChoresContent(0);
-    selectedChore = chore;
     $("#choresRightUpperPanelHeading").html(chore.title);
     $("#choresDetailsDescriptionContent").html(chore.description);
-    $("#choresDetailsDateTimeContent").html(chore.time);
-    $("#choresDetailsHouseholdContent").html(getHouseholdFromId((chore.houseId),function (data) {return data;}).name);
-    $("#choresDetailsUserNameContent").html(getLocalResident(chore.userId));
+    $("#choresDetailsDateTimeContent").html(chore.time.dayOfMonth + "."+chore.time.monthValue+"." + chore.time.year);
+    getHouseholdFromId((chore.houseId),function (data) {$("#choresDetailsHouseholdContent").html(data.name);});
+    $("#choresDetailsUserNameContent").html(chore.user.name);
     if(chore.done){
         $("#choresDetailsCheckedContent").html("Done");
     }else{
@@ -107,7 +111,7 @@ function switchChoresContent(num) {
 }
 
 function newChoreButtonPressed(){
-    console.log($("#newChoreLocalTimeInput").val());
+
 
     //input formatting:
     var newChoreTitle = $("#newChoreTitleInput").val();
@@ -116,7 +120,7 @@ function newChoreButtonPressed(){
     var newChoreUserId = getCurrentHousehold().residents[selectedUserForNewChore].userId;
     var checked = false;
     var newChore = {title:newChoreTitle, description:newChoreDescription, time: newChoreDate, userId: newChoreUserId, done:checked};
-
+    console.log(newChore);
     postNewChore(newChore);
 }
 function setNewChorePersonFromDropdown(index){
