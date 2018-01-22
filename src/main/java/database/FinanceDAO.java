@@ -12,8 +12,8 @@ import java.util.List;
 
 public class FinanceDAO {
 
-    public static ArrayList<Debt> getDept(int userId) {
-        ArrayList<Debt> depts = new ArrayList<>();
+    public static ArrayList<Debt> getDebt(int userId) {
+        ArrayList<Debt> debts = new ArrayList<>();
         int fromPerson = 0;
         double value = 0;
         User theOtherUser;
@@ -32,11 +32,11 @@ public class FinanceDAO {
 
                     theOtherUser = new User();
                     theOtherUser.setUserId(userId);
-                    depts.add(new Debt(value, theOtherUser));
+                    debts.add(new Debt(value, theOtherUser));
 
                 }
             }
-            return depts;
+            return debts;
 
         } catch (SQLException e) {
             e.printStackTrace();

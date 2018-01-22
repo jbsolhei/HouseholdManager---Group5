@@ -79,6 +79,7 @@ public class ChoreDAO {
                     chore.setDescription(rs.getString("description"));
                     chore.setChoreId(rs.getInt("choreId"));
 
+                    //converts SQL-timestamp to JAVA-localDateTime
                     chore.setTime(rs.getTimestamp("chore_time").toLocalDateTime());
 
                     chore.setHouseId(householdId);

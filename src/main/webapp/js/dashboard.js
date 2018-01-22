@@ -5,6 +5,7 @@
 //TODO: Vurdere bruken av lokalt lagrede brukere under opplisting av todos og handlelister mtp på autoriseringsproblemer.
 
 function loadDashboard(){
+
     var house = getCurrentHousehold();
     console.log(house);
     if (house!==undefined) {
@@ -12,8 +13,10 @@ function loadDashboard(){
         printHouseholdTodosToDashboard(house.houseId);
         printNewsToDashboard();
     }
-
     if (!householdsLoaded) addHouseholdsToList(getCurrentUser().userId);
+
+    getDebt();
+    getIncome();
 }
 
 function printHouseholdTodosToDashboard(id){

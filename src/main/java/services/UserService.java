@@ -151,10 +151,10 @@ public class UserService {
     }
 
     @GET
-    @Path("/{id}/dept")
+    @Path("/{id}/debt")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Debt> getDebt(@PathParam("id") int id){
-        return FinanceDAO.getDept(id);
+        return FinanceDAO.getDebt(id);
     }
 
     @GET

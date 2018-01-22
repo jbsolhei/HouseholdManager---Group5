@@ -180,6 +180,8 @@ function addHouseholdsToList(userId) {
     });
 
     $("#currentHouseholdId").html(getCurrentHousehold().name + ' <span class="caret"></span>');
+
+
 }
 
 //Sets the chosen household to current household.
@@ -203,6 +205,7 @@ function callModalRun(modalContent, functions) {
 
 function swapContent(bodyContent) {
     updateCurrentHousehold(bodyContent);
+    getDebt();
 }
 
 function navToShoppingList(shoppingListId){
