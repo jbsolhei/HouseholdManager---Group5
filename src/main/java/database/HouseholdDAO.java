@@ -4,8 +4,6 @@ import classes.*;
 
 import java.security.SecureRandom;
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -442,7 +440,7 @@ public class HouseholdDAO {
                     chore.setHouseId(houseId);
                     chore.setChoreId(rs.getInt("choreId"));
                     chore.setUserId(rs.getInt("userId"));
-                    chore.setTime(rs.getTimestamp("date").toLocalDateTime());
+                    chore.setTime(rs.getTimestamp("chore_date").toString());
                     chores.add(chore);
                     householdExists = true;
                 }
