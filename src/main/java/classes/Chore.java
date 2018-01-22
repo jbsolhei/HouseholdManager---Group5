@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Chore {
+    private String title;
     private String description;
     private boolean done;
     private int houseId;
@@ -12,6 +13,14 @@ public class Chore {
     private LocalDateTime time;
 
     public Chore(){}
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getDescription() {
         return description;

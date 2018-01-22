@@ -43,13 +43,12 @@ public class ChoreDAOTest {
         Chore chore = new Chore();
 
 
-
-            chore.setDescription("Ta ut av oppvaskmaskinen");
-            chore.setHouseId(1);
-            chore.setUserId(100);
-            chore.setDone(false);
-            chore.setTime(LocalDateTime.of(2018, Month.FEBRUARY, 1, 8, 30, 0));
-
+        chore.setTitle("Ta ut av oppvaskmaskinen");
+        chore.setDescription("Husk å være forsiktig med serviset fra oldemor!");
+        chore.setHouseId(1);
+        chore.setUserId(100);
+        chore.setDone(false);
+        chore.setTime(LocalDateTime.of(2018, Month.FEBRUARY, 1, 8, 30, 0));
 
         ChoreDAO.postChore(chore);
 
@@ -59,6 +58,7 @@ public class ChoreDAOTest {
 
         if(rs.next()) {
             assertEquals(2, rs.getInt("choreId"));
+            assertEquals(chore.getTitle(), rs.getString("title"));
             assertEquals(chore.getDescription(), rs.getString("description"));
             assertEquals(chore.getUserId(), rs.getInt("userId"));
             assertEquals(chore.getHouseId(), rs.getInt("houseId"));
@@ -78,12 +78,12 @@ public class ChoreDAOTest {
 
     @Test
     public void getChores() {
-        Household household = new Household();
-        household.setHouseId(10);
-        ArrayList<Chore> chores = ChoreDAO.getChores(household);
+
+        ArrayList<Chore> chores = ChoreDAO.getChores(10);
 
         assertEquals(1, chores.size());
-        assertEquals("Ta ut søpla", chores.get(0).getDescription());
+        assertEquals("Ta ut søpla", chores.get(0).getTitle());
+        assertEquals("Husk at grønn pose betyr restavfall!", chores.get(0).getDescription());
         assertEquals(51, chores.get(0).getUserId());
         assertEquals(false, chores.get(0).isDone());
 
@@ -109,17 +109,17 @@ public class ChoreDAOTest {
 
         if(rs.next()) {
             assertEquals(0, rs.getInt("done"));
-            assertEquals("Ta ut av oppvaskmaskinen", rs.getString("description"));
+            assertEquals("Ta ut av oppvaskmaskinen", rs.getString("title"));
         }
         rs.close();
 
         Chore chore = new Chore();
 
-        chore.setDescription("Vask badet");
+        chore.setTitle("Vask badet");
         chore.setHouseId(1);
         chore.setUserId(10);
         chore.setDone(true); //endrer fra false til done
-        //chore.setTime(LocalDateTime.of(2018, ));
+        chore.setTime(LocalDateTime.of(2018, Month.FEBRUARY, 14, 12, 00));
 
         ChoreDAO.editChore(chore);
 
@@ -127,7 +127,7 @@ public class ChoreDAOTest {
 
         if(rs2.next()) {
             assertEquals(1, rs2.getInt("done"));
-            assertEquals("Vask badet", rs2.getString("description"));
+            assertEquals("Vask badet", rs2.getString("title"));
         }
 
         rs2.close();
