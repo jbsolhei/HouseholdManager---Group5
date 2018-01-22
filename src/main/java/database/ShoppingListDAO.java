@@ -421,7 +421,7 @@ public class ShoppingListDAO {
         }
     }
 
-    public static void updateUsers(int[] userIds, int shoppingListId) {
+    public static void updateUsers(String[] userIds, int shoppingListId) {
         String delete = "DELETE FROM User_Shopping_list WHERE shopping_listId = ?";
         String query = "INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (?, ?);";
 
@@ -433,20 +433,13 @@ public class ShoppingListDAO {
             del_st.setInt(1, shoppingListId);
             del_st.executeUpdate();
 
-            for (int i = 0; i < userIds.length; i++) {
-                st.setInt(1, userIds[i]);
-                st.setInt(2, shoppingListId);
-                int rtn = st.executeUpdate();
-                if (rtn < 0) System.err.println("Could not update: " + userIds + " into shoppinglist where shoppinglistid = " + shoppingListId);
-            }
-            /*
             for (String userId : userIds) {
                 st.setInt(1, Integer.parseInt(userId));
                 st.setInt(2, shoppingListId);
                 int rtn = st.executeUpdate();
                 if (rtn < 0) System.err.println("Could not update: " + userIds + " into shoppinglist where shoppinglistid = " + shoppingListId);
             }
-            */
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

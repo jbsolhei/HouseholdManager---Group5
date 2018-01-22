@@ -103,7 +103,10 @@ public class ShoppingListService {
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}/users")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateUsers(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, int[] userIds) {
+    public void updateUsers(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, String[] userIds) {
+        for (String u : userIds) {
+            System.out.println(u);
+        }
         ShoppingListDAO.updateUsers(userIds, shopping_list_id);
     }
 
