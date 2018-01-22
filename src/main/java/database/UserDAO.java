@@ -5,6 +5,8 @@ import classes.Email;
 import classes.HashHandler;
 import classes.Household;
 import classes.User;
+import org.junit.Assert;
+
 import java.security.SecureRandom;
 import java.sql.*;
 import java.util.ArrayList;
@@ -180,11 +182,25 @@ public class UserDAO {
      * @return a boolean, true if the password is correct, else false.
      */
     public static boolean getPasswordMatch(int id, String password) {
-        String query = "SELECT * FROM Person WHERE userId=?;";
+       // String query = "SELECT * FROM Person WHERE userId=?;";
 
+        String query = "SELECT password FROM Person WHERE userId = ?";
         boolean correctPassword = false;
 
         try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)){
+
+            st.setInt(1, id);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    if (HashHandler.passwordMatchesHash(password, rs.getString("password"))) {
+                        correctPassword = true;
+                    }
+                }
+            }
+
+       /* try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
 
@@ -193,10 +209,11 @@ public class UserDAO {
             try (ResultSet rs = st.executeQuery()){
                 while (rs.next()) {
                     correctPassword = HashHandler.passwordMatchesHash(password, rs.getString("password"));
+                    System.out.println(correctPassword);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-            }
+            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
