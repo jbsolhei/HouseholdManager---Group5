@@ -5,9 +5,7 @@ import classes.Household;
 import classes.User;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ChoreDAO {
@@ -18,14 +16,14 @@ public class ChoreDAO {
      */
     public static void postChore(Chore chore){
 
-        String query = "INSERT INTO Chore (description, chore_date, chore_time, houseId, userId, done, title, ) VALUES (?, ?, ?, ?, ?, ?, ?);";
-        try {
-            DBConnector dbc = new DBConnector();
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        String query = "INSERT INTO Chore (description, chore_date, houseId, userId, done) VALUES (?, ?, ?, ?, ?);";
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setString(7, chore.getTitle());
             st.setString(1, chore.getDescription());
+
             LocalDateTime dateTime = chore.getTime(); // your ldt
             java.sql.Date sqlDate = java.sql.Date.valueOf(dateTime.toLocalDate());
             st.setDate(2, sqlDate);
@@ -33,10 +31,11 @@ public class ChoreDAO {
             Timestamp timestamp = Timestamp.valueOf(dateTime);
             st.setTimestamp(3, timestamp);
 
+
             st.setInt(4, chore.getHouseId());
             System.out.println(chore.getUserId());
             st.setInt(5, chore.getUserId());
-            if(chore.isDone()) {
+            if (chore.isDone()) {
                 st.setInt(6, 1);
             }
             else {
@@ -44,9 +43,6 @@ public class ChoreDAO {
             }
 
             st.executeUpdate();
-
-            st.close();
-
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,35 +62,32 @@ public class ChoreDAO {
 
         String query = "SELECT * FROM Chore WHERE houseId = ? AND chore_date >= CURDATE();";
 
-        try {
-            DBConnector dbc = new DBConnector();
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, householdId);
 
-            ResultSet rs = st.executeQuery();
+            try (ResultSet rs = st.executeQuery()) {
 
-            while(rs.next()){
-                chore = new Chore();
-                chore.setTitle(rs.getString("title"));
-                chore.setDescription(rs.getString("description"));
-                chore.setChoreId(rs.getInt("choreId"));
-
-                chore.setTime(rs.getTimestamp("chore_time").toLocalDateTime());
-
-                chore.setHouseId(householdId);
-                if(rs.getInt("done") == 1){
-                    chore.setDone(true);
-                } else {
-                    chore.setDone(false);
+                while (rs.next()) {
+                    chore = new Chore();
+                    chore.setTitle(rs.getString("title"));
+                    chore.setDescription(rs.getString("description"));
+                    chore.setChoreId(rs.getInt("choreId"));
+                    chore.setTime(rs.getTimestamp("chore_date").toLocalDateTime());
+                    chore.setHouseId(householdId);
+                    if (rs.getInt("done") == 1) {
+                        chore.setDone(true);
+                    } else {
+                        chore.setDone(false);
+                    }
+                    chore.setUserId(rs.getInt("userId"));
+                    chores.add(chore);
                 }
-                chore.setUserId(rs.getInt("userId"));
-                chores.add(chore);
+
+                return chores;
             }
-
-            return chores;
-
 
         } catch (SQLException e){
             e.printStackTrace();
@@ -131,10 +124,9 @@ public class ChoreDAO {
     public static void editChore(Chore chore){
 
         String query = "UPDATE Chore SET title = ?, description = ?, chore_time = ?, userId = ?, done = ? WHERE choreId = ?;";
-        try {
-            DBConnector dbc = new DBConnector();
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setString(1, chore.getTitle());
             st.setString(2, chore.getDescription());
@@ -148,9 +140,8 @@ public class ChoreDAO {
             st.setInt(6, chore.getChoreId());
 
             st.executeUpdate();
-            st.close();
 
-        }catch(SQLException e){
+        } catch(SQLException e){
             e.printStackTrace();
         }
     }

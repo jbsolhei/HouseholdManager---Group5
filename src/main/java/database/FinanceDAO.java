@@ -19,25 +19,23 @@ public class FinanceDAO {
         User theOtherUser;
         String query = "SELECT * FROM Finance WHERE fromPerson = ?";
 
-        try {
-            DBConnector dbc = new DBConnector();
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, userId);
-            ResultSet rs = st.executeQuery();
+            try (ResultSet rs = st.executeQuery()) {
 
-            while (rs.next()) {
-                fromPerson = rs.getInt("toPerson");
-                value = rs.getDouble("value");
+                while (rs.next()) {
+                    fromPerson = rs.getInt("toPerson");
+                    value = rs.getDouble("value");
 
-                theOtherUser = new User();
-                theOtherUser.setUserId(userId);
-                depts.add(new Debt(value, theOtherUser));
+                    theOtherUser = new User();
+                    theOtherUser.setUserId(userId);
+                    depts.add(new Debt(value, theOtherUser));
 
+                }
             }
-            rs.close();
-            st.close();
             return depts;
 
         } catch (SQLException e) {
@@ -52,27 +50,26 @@ public class FinanceDAO {
         int toPerson = 0;
         double value = 0;
         User theOtherUser;
+
         String query = "SELECT * FROM Finance WHERE toPerson = ?";
-        try {
-            DBConnector dbc = new DBConnector();
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, userId);
-            ResultSet rs = st.executeQuery();
+            try (ResultSet rs = st.executeQuery()) {
 
-            while (rs.next()) {
-                userId = rs.getInt("fromPerson");
-                value = rs.getDouble("value");
+                while (rs.next()) {
+                    userId = rs.getInt("fromPerson");
+                    value = rs.getDouble("value");
 
-                theOtherUser = new User();
-                theOtherUser.setUserId(userId);
-                income.add(new Debt(value, theOtherUser));
+                    theOtherUser = new User();
+                    theOtherUser.setUserId(userId);
+                    income.add(new Debt(value, theOtherUser));
 
+                }
             }
 
-            rs.close();
-            st.close();
             return income;
 
         } catch (SQLException e) {
@@ -100,7 +97,7 @@ public class FinanceDAO {
         String query = "SELECT * FROM Finance WHERE fromPerson = ?";
         String query2 = "SELECT * FROM Finance WHERE toPerson = ?";
 
-        try(DBConnector dbc = new DBConnector();
+        try (DBConnector dbc = new DBConnector();
             Connection conn = dbc.getConn();
             PreparedStatement st = conn.prepareStatement(query);
             PreparedStatement st2 = conn.prepareStatement(query2)) {
