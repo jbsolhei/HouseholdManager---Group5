@@ -39,8 +39,8 @@ INSERT INTO Task (date, time, description, taskId, houseId, userId) VALUES ('201
 */INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (10, 'Dagligvarer', 10);
 INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (11, 'Fredagstaco', 1);
 
-INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test', '2014-10-12', '', 50, 1, NULL );
-INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test2', '2015-10-12', '', 50, 1, NULL );
+INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test', '2014-10-12', '', 50, 1, NULL);
+INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test2', '2015-10-12', '', 50, 1, NULL);
 
 INSERT INTO Message (messageId,text, date, houseId, userId) VALUES (1,'Test message',NOW(),1,33);
 INSERT INTO Message (messageId,text, date, houseId, userId) VALUES (2,'Another test message',NOW(),10,50);
@@ -62,7 +62,6 @@ INSERT INTO Person (userId, email, name, password, telephone) VALUES (14, 'asdf@
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (12, 13, 25);
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (12, 14, 50);
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (14, 13, 50);
-
 
 INSERT INTO Chore (title, description, chore_date, chore_time, choreId, houseId, userId)
 VALUES ('Ta ut søpla', 'Husk at grønn pose betyr restavfall!', '2018-02-15', '2018-02-15 10:30:00', 1, 10, 51);
