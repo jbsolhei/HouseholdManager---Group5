@@ -3,8 +3,8 @@ package services;
 import auth.Auth;
 import auth.AuthType;
 import classes.Item;
-import classes.User;
 import classes.ShoppingList;
+import classes.User;
 import database.ShoppingListDAO;
 import database.UserDAO;
 
@@ -38,6 +38,12 @@ public class ShoppingListService {
         return ShoppingListDAO.getShoppingListsUser(house_id, user_id);
     }
 
+    /**
+     * Gets a specific shopping list given its shopping list ID
+     *
+     * @param shoppingListId the shopping list ID
+     * @return a ShoppingList object
+     */
     @GET
     @Auth
     @Path("/{shopping_list_id}")
@@ -76,6 +82,12 @@ public class ShoppingListService {
         return ShoppingListDAO.createShoppingList(shoppingListName, houseId);
     }
 
+    /**
+     * Deletes a shopping list given its shopping list ID
+     *
+     * @param houseId the hose ID
+     * @param shopping_list_id the shopping list ID
+     */
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}")
@@ -99,6 +111,13 @@ public class ShoppingListService {
         ShoppingListDAO.deleteItem(shopping_list_id, itemId);
     }
 
+    /**
+     * Udates users associated with a shopping list
+     *
+     * @param houseId the house ID
+     * @param shopping_list_id the shopping list ID
+     * @param userIds an array of user IDs
+     */
     @POST
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}/users")
@@ -110,6 +129,13 @@ public class ShoppingListService {
         ShoppingListDAO.updateUsers(userIds, shopping_list_id);
     }
 
+    /**
+     * Updates 'checkedBy' of an Item given its itemId and userId
+     *
+     * @param itemId the item ID
+     * @param userId the user ID
+     * @return true if the database was updated, false if an error occurred
+     */
     @POST
     @Auth(AuthType.HOUSEHOLD)
     @Path("/items/{itemId}/user/")
@@ -118,5 +144,19 @@ public class ShoppingListService {
         int rs = ShoppingListDAO.updateCheckedBy(userId, itemId);
         System.out.println(userId + " " + itemId);
         return rs >= 0;
+    }
+
+    /**
+     * Updates a shopping lists 'archived' column in the database
+     *
+     * @param shoppingListId the shopping list ID
+     * @param archived the wanted value of the column
+     */
+    @PUT
+    @Auth(AuthType.HOUSEHOLD)
+    @Path("/{shopping_list_id}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public void updateArchived(@PathParam("shopping_list_id") int shoppingListId, String archived) {
+        ShoppingListDAO.updateArchived(shoppingListId,Boolean.parseBoolean(archived));
     }
 }

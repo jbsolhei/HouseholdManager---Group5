@@ -175,4 +175,21 @@ public class ShoppingListDAOTest {
             assertEquals(0, rs.getInt("checkedBy"));
         } else assert false;
     }
+
+    @Test
+    public void updateArchived() throws Exception {
+        String query = "SELECT * FROM Shopping_list WHERE shopping_listId = 1";
+
+        ShoppingListDAO.updateArchived(1, true);
+        ResultSet rs = st.executeQuery(query);
+        if (rs.next()) {
+            assertEquals(true, rs.getBoolean("archived"));
+        } else assert false;
+
+        ShoppingListDAO.updateArchived(1, false);
+        rs = st.executeQuery(query);
+        if (rs.next()) {
+            assertEquals(false, rs.getBoolean("archived"));
+        } else assert false;
+    }
 }

@@ -471,6 +471,27 @@ public class ShoppingListDAO {
         return -1;
     }
 
+    /**
+     * Updates the 'archived' column given the shopping list ID
+     * @param shoppingListId the shopping list ID
+     * @param archived the wanted column value
+     */
+    public static void updateArchived(int shoppingListId, boolean archived) {
+        String query = "UPDATE Shopping_list SET archived = ? WHERE shopping_listId = ?;";
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setBoolean(1, archived);
+            st.setInt(2, shoppingListId);
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private static User[] toUserArray(ArrayList<User> users) {
         User[] userArray = new User[users.size()];
@@ -497,7 +518,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        ShoppingList rtn = ShoppingListDAO.getShoppingList(109);
+        ShoppingListDAO.updateArchived(66, false);
         System.out.println("stop");
     }
 }

@@ -67,6 +67,7 @@ CREATE TABLE Shopping_list (
 shopping_listId INTEGER AUTO_INCREMENT,
 name VARCHAR(45) NOT NULL,
 houseId INTEGER NOT NULL,
+archived INTEGER(1) DEFAULT 0 NOT NULL,
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 CONSTRAINT shopping_listId PRIMARY KEY (shopping_listId));
 
