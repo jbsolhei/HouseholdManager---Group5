@@ -1,5 +1,6 @@
 <link href="css/shoppinglist.css" rel="stylesheet">
 <script src="js/shoppinglist.js"></script>
+<script src="js/shopping_list.js"></script>
 
 <div id="shoppingListId" class="container-fluid">
     <div id="mainRow" class="row content">
@@ -11,7 +12,7 @@
                             <h4>Shopping lists</h4>
                         </div>
                         <div class="col-md-2">
-                            <a id="add_shopping_list_btn" data-toggle="modal" onclick="createNewList('ThisIsANewList')" data-target="#theModal" class="btn btn-md pull-right">
+                            <a id="add_shopping_list_btn" data-toggle="modal" onclick="ajax_updateUsers({'userids': '28'}, 66)" data-target="#theModal" class="btn btn-md pull-right">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
                         </div>

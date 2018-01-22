@@ -38,6 +38,14 @@ public class ShoppingListService {
         return ShoppingListDAO.getShoppingListsUser(house_id, user_id);
     }
 
+    @GET
+    @Auth
+    @Path("/{shopping_list_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ShoppingList getShoppingList(@PathParam("shopping_list_id") String shoppingListId) {
+        return ShoppingListDAO.getShoppingList(Integer.parseInt(shoppingListId));
+    }
+
     /**
      * Produces all users associated with a shopping list
      *
@@ -95,10 +103,7 @@ public class ShoppingListService {
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}/users")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateUsers(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, String[] userIds) {
-        for (String u : userIds) {
-            System.out.println(u);
-        }
+    public void updateUsers(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id, int[] userIds) {
         ShoppingListDAO.updateUsers(userIds, shopping_list_id);
     }
 

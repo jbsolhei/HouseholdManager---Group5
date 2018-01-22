@@ -230,6 +230,7 @@ public class ShoppingListDAO {
                     shoppingList.setUsers(toUserArray(users));
                 }
             }
+            shoppingList.setItems(ShoppingListDAO.getItems(shoppingListId));
             return shoppingList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -292,11 +293,9 @@ public class ShoppingListDAO {
         int itemId;
         String itemName;
         int userId;
-        String email;
         String personName;
-        String telephone;
 
-        String query = "SELECT Item.*, Person.* FROM Item LEFT JOIN Person ON Item.checkedBy = Person.userId WHERE shopping_listId = ?;";
+        String query = "SELECT Item.shopping_listId, itemId, Item.name, checkedBy, Person.name FROM Item LEFT JOIN Person ON Item.checkedBy=Person.userId WHERE shopping_listId = ?;";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -316,12 +315,8 @@ public class ShoppingListDAO {
                     if (userId != 0) {
                         user = new User();
                         user.setUserId(userId);
-                        email = rs.getString("email");
                         personName = rs.getString("Person.name");
-                        telephone = rs.getString("telephone");
-                        user.setEmail(email);
                         user.setName(personName);
-                        user.setTelephone(telephone);
                     }
 
                     item.setItemId(itemId);
@@ -370,7 +365,7 @@ public class ShoppingListDAO {
     }
 
     /**
-     * Delet
+     * Delete
      *
      * @param houseId
      * @param shopping_list_id
@@ -426,7 +421,7 @@ public class ShoppingListDAO {
         }
     }
 
-    public static void updateUsers(String[] userIds, int shoppingListId) {
+    public static void updateUsers(int[] userIds, int shoppingListId) {
         String delete = "DELETE FROM User_Shopping_list WHERE shopping_listId = ?";
         String query = "INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (?, ?);";
 
@@ -438,12 +433,20 @@ public class ShoppingListDAO {
             del_st.setInt(1, shoppingListId);
             del_st.executeUpdate();
 
+            for (int i = 0; i < userIds.length; i++) {
+                st.setInt(1, userIds[i]);
+                st.setInt(2, shoppingListId);
+                int rtn = st.executeUpdate();
+                if (rtn < 0) System.err.println("Could not update: " + userIds + " into shoppinglist where shoppinglistid = " + shoppingListId);
+            }
+            /*
             for (String userId : userIds) {
                 st.setInt(1, Integer.parseInt(userId));
                 st.setInt(2, shoppingListId);
                 int rtn = st.executeUpdate();
                 if (rtn < 0) System.err.println("Could not update: " + userIds + " into shoppinglist where shoppinglistid = " + shoppingListId);
             }
+            */
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -501,7 +504,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        ShoppingList rtn = ShoppingListDAO.getShoppingList(107);
+        ShoppingList rtn = ShoppingListDAO.getShoppingList(109);
         System.out.println("stop");
     }
 }
