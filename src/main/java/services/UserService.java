@@ -8,6 +8,7 @@ import classes.Chore;
 import classes.Debt;
 import classes.Household;
 import classes.User;
+import database.ChoreDAO;
 import database.FinanceDAO;
 import database.UserDAO;
 
@@ -140,7 +141,6 @@ public class UserService {
     @Path("/{id}/chores")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Chore> todos(@PathParam("id") int id) {
-        System.out.println("getchores");
         return UserDAO.getChores(id);
     }
 

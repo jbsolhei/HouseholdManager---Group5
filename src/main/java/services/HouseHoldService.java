@@ -110,14 +110,6 @@ public class HouseHoldService {
 
     @GET
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/chores")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Chore[] getChoresForHousehold(@PathParam("id") int id){
-        return HouseholdDAO.getChoresForHousehold(id);
-    }
-
-    @GET
-    @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Household getHousehold(@PathParam("id") int id,@Context ContainerRequestContext context) {

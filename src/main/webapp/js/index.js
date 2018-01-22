@@ -9,6 +9,7 @@ var profile = "profile.html";
 var stats = "stats.html";
 var activeSHL = 0;
 var householdsLoaded = false;
+var activeChore = [0,0];
 
 function ajaxAuth(attr) {
     attr.headers = {

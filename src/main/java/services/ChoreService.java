@@ -32,6 +32,8 @@ public class ChoreService {
     @Auth(AuthType.HOUSEHOLD)
     @Produces(MediaType.APPLICATION_JSON)
     public void postChore(@PathParam("id") int houseId, Chore chore){
+        System.out.println(chore.getTitle());
+        System.out.println(chore.getTime());
         ChoreDAO.postChore(chore);
     }
 
@@ -41,6 +43,4 @@ public class ChoreService {
     public void editChore(@PathParam("id") int houseId, Chore chore){
         ChoreDAO.editChore(chore);
     }
-
-
 }

@@ -8,7 +8,7 @@
                             <h4>Your chores</h4>
                         </div>
                         <div class="col-md-2">
-                            <a id="addTodoGlyphicon" onclick="switchChoresContent()" class="btn btn-md pull-right">
+                            <a id="addTodoGlyphicon" onclick="switchChoresContent(1)" class="btn btn-md pull-right">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
                         </div>
@@ -39,11 +39,6 @@
                         <div class="col-md-10">
                             <h4>Household chores</h4>
                         </div>
-                        <div class="col-md-2">
-                            <a id="uselessAddTodoGlyphicon" onclick="switchChoresContent()" class="btn btn-md pull-right">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        </div>
                     </div>
                 </div>
                 <div class="panel-body scrollWhenFull HH2" id="choresLeftLowerPanelBody">
@@ -71,18 +66,10 @@
                 <div class="row" id="choresRightPanelFirstWindow">
                     <div class="panel panel-default widget" id="choresRightUpperPanel">
                         <div class="panel-heading styled-heading" id ="choresRightUpperPanelHeading">
-                            Details
+
                         </div>
                         <div class="panel-body scrollWhenFull HH" id="choresRightUpperPanelBody">
-                            <div class="row" id="choresDetailsTitleRow">
-                                <div class="col-sm-3">
-                                    <h3>Chore title</h3>
-                                </div>
-                                <div class="col-sm-9">
-                                    <div id="choresDetailsTitleContent"></div>
-                                </div>
-                            </div>
-                            <div class="row" id="choresDetailsDescriptionRow">
+                            <div class="row choresContentRow" id="choresDetailsDescriptionRow">
                                 <div class="col-sm-3">
                                     <h3>Description</h3>
                                 </div>
@@ -90,7 +77,7 @@
                                     <div id="choresDetailsDescriptionContent"></div>
                                 </div>
                             </div>
-                            <div class="row" id="choresDetailsDateTimeRow">
+                            <div class="row choresContentRow" id="choresDetailsDateTimeRow">
                                 <div class="col-sm-3">
                                     <h3>Date</h3>
                                 </div>
@@ -98,7 +85,7 @@
                                     <div id="choresDetailsDateTimeContent"></div>
                                 </div>
                             </div>
-                            <div class="row" id="choresDetailsUserNameRow">
+                            <div class="row choresContentRow" id="choresDetailsUserNameRow">
                                 <div class="col-sm-3">
                                     <h3>Responsible</h3>
                                 </div>
@@ -106,7 +93,7 @@
                                     <div id="choresDetailsUserNameContent"></div>
                                 </div>
                             </div>
-                            <div class="row" id="choresDetailsHouseholdRow">
+                            <div class="row choresContentRow" id="choresDetailsHouseholdRow">
                                 <div class="col-sm-3">
                                     <h3>Household</h3>
                                 </div>
@@ -114,12 +101,20 @@
                                     <div id="choresDetailsHouseholdContent"></div>
                                 </div>
                             </div>
-                            <div class="row" id="choresDetailsCheckedRow">
+                            <div class="row choresContentRow" id="choresDetailsCheckedRow">
                                 <div class="col-sm-3">
                                     <h3>Checked</h3>
                                 </div>
                                 <div class="col-sm-9">
                                     <div id="choresDetailsCheckedContent"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button onclick="" id="checkSelectedChoreButton"></button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <button onclick="deleteSelectedChore(selectedChore.choreId)" id="deleteSelectedChoreButton"></button>
                                 </div>
                             </div>
                         </div>
@@ -163,10 +158,12 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <h4>Checkety check</h4>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-3">
                                     <button id="newChoreConfirmButton" onclick="newChoreButtonPressed()">Confirm</button>
+                                </div>
+                                <div class="col-sm-5">
+                                    <button id="newChoreCancelButton" onclick="switchChoresContent(0)">Cancel</button>
                                 </div>
                             </div>
                         </div>
