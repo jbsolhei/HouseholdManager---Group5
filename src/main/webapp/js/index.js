@@ -7,6 +7,7 @@ var statistics = "dashboard.html";
 var news = "dashboard.html";
 var profile = "profile.html";
 var activeSHL = 0;
+var archivedSHL = 0;
 var householdsLoaded = false;
 
 function ajaxAuth(attr) {

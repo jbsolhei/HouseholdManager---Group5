@@ -1,3 +1,5 @@
+/* --- Ajax- methods --- */
+
 /**
  * Ajax-method to create a new Shopping List given a shopping list name
  *
@@ -51,7 +53,7 @@ function ajax_updateUsers (userIds, shoppingListId) {
  *
  * @param shoppingListId, the shopping list ID
  */
-function ajax_getShoppingList(shoppingListId) {
+function ajax_getShoppingList(shoppingListId, handleData) {
     console.log('ajax_getShoppingList()');
     ajaxAuth({
         type: 'GET',
@@ -60,7 +62,7 @@ function ajax_getShoppingList(shoppingListId) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             console.log("success: ajax_getShoppingList()");
-            console.log(data);
+            handleData(data);
         },
         error: function (data) {
             console.log("error: ajax_getShoppingList()");
@@ -135,23 +137,102 @@ function ajax_updateArchived(shoppingListId, archived){
     })
 }
 
-function updateUsersAjax(shoppingListId, users) {
-    console.log("!!! - shoppingListId: " + shoppingListId +  " houseId: " + getCurrentHousehold().houseId);
-    console.log(JSON.stringify({'userids': users}));
+/* --- visual updates methods --- */
 
-    ajaxAuth({
-        type: 'POST',
-        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_list/' + shoppingListId + '/users',
-        data: JSON.stringify(users),
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function () {
-            console.log("Shopping List successfully added to database");
-            navToShoppingList(activeSHL);
-        },
-        error: function (result) {
-            console.log(result);
-        }
-    });
 
+function readyShoppingList(){
+    SHL = getCurrentHousehold().shoppingLists;
+    if(SHL!==null&&SHL!==undefined)numberOfLists = SHL.length;
+    if(numberOfLists>0){
+        insertShoppingLists();
+        $("#shoppingList" + activeSHL).addClass("active");
+        showList(activeSHL);
+    }
 }
+
+/**
+ * Function to load the side menu
+ */
+function loadSideMenu(){
+    SHL = getCurrentHousehold().shoppingLists;
+    console.log(SHL);
+    if(SHL!==null&&SHL!==undefined)numberOfLists = SHL.length;
+    if(numberOfLists>0){
+        var firstActive = true;
+        var firstArchived = true;
+        var inputStringActive = "<ul id=\"shopping-list-active-side-menu\" class=\"nav nav-pills nav-stacked\">";
+        var inputStringArchived = "<ul id=\"shopping-list-archived-side-menu\" class=\"nav nav-pills nav-stacked\">";
+        $.each(SHL, function(i,val){
+            if (val.archived) {
+                if (firstActive) {
+                    activeSHL = i;
+                    firstActive = false;
+                }
+                inputStringArchived += '<li onclick="showListFromMenu(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
+
+            } else {
+                if (firstArchived) {
+                    archivedSHL = i;
+                    firstArchived = false;
+                }
+                inputStringActive += '<li onclick="showListFromMenu(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
+            }
+        });
+        inputStringActive += '</ul>';
+        inputStringArchived += '</ul>';
+        $("#shopping-list-active-tab").html(inputStringActive);
+        $("#shopping-list-archived-tab").html(inputStringArchived);
+    }
+    $("#shoppingList" + activeSHL).addClass("active");
+}
+
+/**
+ * Funtion to show a list from the menu
+ * @param SLIndex
+ */
+function showListFromMenu(SLIndex, isArchived){
+    $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
+    console.log("SLIndex: " + SLIndex);
+    console.log("id: " + SHL[SLIndex].shoppingListId);
+    ajax_getShoppingList(SHL[SLIndex].shoppingListId, function (shoppingList) {
+        console.log(shoppingList);
+        console.log(shoppingList.items.length);
+        if(shoppingList.items.length===0){
+            $("#emptyListText").removeClass("hide");
+        }else{
+            $("#emptyListText").addClass("hide");
+            var items = shoppingList.items;
+            $.each(items,function(i,val){
+                console.log('checkedBy: ' + val.checkedBy);
+                var checkedBy;
+                if(val.checkedBy === null) {
+                    checkedBy="";
+                    $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                } else {
+                    checkedBy = val.checkedBy.name;
+                    $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="unCheck(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                }
+            });
+        }
+        $("#headline").replaceWith('<h4 id="headline">' + shoppingList.name + '</h4>');
+        $("#shoppingListItemInput").focus();
+        $("#shoppingList" + activeSHL).removeClass("active");
+        $("#shoppingList" + SLIndex).addClass("active");
+        if (isArchived) archivedSHL = SLIndex;
+        else activeSHL = SLIndex;
+    });
+}
+
+/**
+ * Opens the shoppingList based on the ShoppingListIndex
+ *
+ * @param ShoppingListIndex the index of the shopping list
+ */
+function navToAShoppingList(shoppingListIndex, isArchived) {
+    if (isArchived) archivedSHL = shoppingListIndex;
+    else activeSHL = shoppingListIndex;
+    showListFromMenu(activeSHL)
+}
+
+
+

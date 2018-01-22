@@ -4,7 +4,7 @@
 
 <div id="shoppingListId" class="container-fluid">
     <div id="mainRow" class="row content">
-        <div class="col-md-3 widgetCol">
+        <div class="col-md-4 widgetCol">
             <div class="panel panel-default widget">
                 <div class="panel-heading">
                     <div class="row">
@@ -19,9 +19,21 @@
                     </div>
                 </div>
                 <div class="panel-body scrollWhenFull SL">
-                    <ul id="shoppingSideMenu" class="nav nav-pills nav-stacked">
+                    <ul id="shopping-list-tabs" class="nav nav-tabs list-inline">
+                        <li class="active"><a data-toggle="tab" href="#shopping-list-active-tab" onclick="showList(activeSHL)">Active</a></li>
+                        <li><a data-toggle="tab" href="#shopping-list-archived-tab" onclick="showList(archivedSHL)">Archived</a></li>
+                        <!-- <ul id="shoppingSideMenu" class="nav nav-pills nav-stacked"></ul> -->
                     </ul>
-
+                    <div class="tab-content">
+                        <div id="shopping-list-active-tab" class="tab-pane fade in active">
+                            <ul id="shopping-list-active-side-menu" class="nav nav-pills nav-stacked">
+                            </ul>
+                        </div>
+                        <div id="shopping-list-archived-tab"  class="tab-pane fade">
+                            <ul id="shopping-list-archived-side-menu" class="nav nav-pills nav-stacked">
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-footer">
                     <div id="searchField" class="input-group">
@@ -35,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9 widgetCol">
+        <div class="col-md-8 widgetCol">
             <div class="panel panel-default widget">
                 <div id="head" class="panel-heading">
                     <h4 id="headline" class="col-md-11"></h4>
@@ -89,7 +101,7 @@
 </div>
 
 <script>
-    readyShoppingList();
+    loadSideMenu();
 </script>
 
 <!-- Denne må være her, trengs aldri å endres -->

@@ -22,11 +22,12 @@ public class ShoppingListDAO {
         int shoppingListId = 0;
         int shoppingListId2 = 0;
         String shoppingListName = "";
+        boolean isArchived = false;
         boolean thereAreLists = false;
         int itemId = 0;
         String itemName;
         int checkedBy = 0;
-        String query = "SELECT User_Shopping_list.userId, Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.houseId, Item.itemId, Item.name, Item.checkedBy, Person.userId, Person.name FROM User_Shopping_list RIGHT JOIN Shopping_list ON User_Shopping_list.shopping_listId=Shopping_list.shopping_listId LEFT JOIN Item ON Item.shopping_listId = Shopping_list.shopping_listId LEFT JOIN Person ON Item.checkedBy = Person.userId WHERE Shopping_list.houseId = ? AND User_Shopping_list.userId = ?;";
+        String query = "SELECT User_Shopping_list.userId, Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.houseId, Shopping_list.archived, Item.itemId, Item.name, Item.checkedBy, Person.userId, Person.name FROM User_Shopping_list RIGHT JOIN Shopping_list ON User_Shopping_list.shopping_listId=Shopping_list.shopping_listId LEFT JOIN Item ON Item.shopping_listId = Shopping_list.shopping_listId LEFT JOIN Person ON Item.checkedBy = Person.userId WHERE Shopping_list.houseId = ? AND User_Shopping_list.userId = ?;";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
@@ -44,6 +45,7 @@ public class ShoppingListDAO {
 
                     shoppingListId = rs.getInt("Shopping_list.shopping_listId");
                     shoppingListName = rs.getString("Shopping_list.name");
+                    isArchived = rs.getBoolean("Shopping_list.archived");
                     itemId = rs.getInt("Item.itemId");
                     itemName = rs.getString("Item.name");
                     checkedBy = rs.getInt("Item.checkedBy");
@@ -58,6 +60,7 @@ public class ShoppingListDAO {
                     items.add(item);
                     shoppingList.setShoppingListId(shoppingListId);
                     shoppingList.setName(shoppingListName);
+                    shoppingList.setArchived(isArchived);
 
                     while (rs.next()) {
                         shoppingListId2 = rs.getInt("Shopping_list.shopping_listId");
@@ -125,9 +128,10 @@ public class ShoppingListDAO {
         String personName = "";
         String email = "";
         String telephone = "";
+        boolean isArchved = false;
         boolean thereAreLists = false;
 
-        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, User_Shopping_list.userId, Person.name, Person.email, Person.telephone FROM Shopping_list LEFT JOIN User_Shopping_list ON Shopping_list.shopping_listId = User_Shopping_list.shopping_listId LEFT JOIN Person ON User_Shopping_list.userId = Person.userId WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
+        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.archived, User_Shopping_list.userId, Person.name, Person.email, Person.telephone FROM Shopping_list LEFT JOIN User_Shopping_list ON Shopping_list.shopping_listId = User_Shopping_list.shopping_listId LEFT JOIN Person ON User_Shopping_list.userId = Person.userId WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
@@ -141,12 +145,14 @@ public class ShoppingListDAO {
                     if (shoppingListId != shoppingListId2 && shoppingListId2 != 0) {
                         ShoppingList sl = new ShoppingList();
                         sl.setName(shoppingListName);
+                        sl.setArchived(isArchved);
                         sl.setUsers(toUserArray(users));
                         sl.setShoppingListId(shoppingListId2);
                         shoppingLists.add(sl);
                         users.clear();
                     }
                     shoppingListName = rs.getString("shopping_list.name");
+                    isArchved = rs.getBoolean("Shopping_list.archived");
 
                     userId = rs.getInt("userId");
 
@@ -171,6 +177,7 @@ public class ShoppingListDAO {
             if (thereAreLists) {
                 ShoppingList sl = new ShoppingList();
                 sl.setName(shoppingListName);
+                sl.setArchived(isArchved);
                 sl.setUsers(toUserArray(users));
                 sl.setShoppingListId(shoppingListId2);
                 shoppingLists.add(sl);
@@ -210,8 +217,10 @@ public class ShoppingListDAO {
                 User user = new User();
                 if (rs.next()) {
                     String shoppingListName = rs.getString("Shopping_list.name");
+                    boolean isArchived = rs.getBoolean("Shopping_list.archived");
                     shoppingList.setShoppingListId(shoppingListId);
                     shoppingList.setName(shoppingListName);
+                    shoppingList.setArchived(isArchived);
                     int userId = rs.getInt("userId");
                     String personName = rs.getString("Person.name");
                     user.setUserId(userId);
@@ -387,14 +396,20 @@ public class ShoppingListDAO {
         }
     }
 
-    public static void addItem(Item items, int shopping_list_id) {
+    /**
+     * Inserts a row to the Item table, and associates it with a shopping list
+     *
+     * @param item the item to be added to the database
+     * @param shopping_list_id the shopping list ID of the shopping list to be associated with the item
+     */
+    public static void addItem(Item item, int shopping_list_id) {
         String query = "INSERT INTO Item(name, shopping_listId) VALUES (?, ?);";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
 
-            st.setString(1, items.getName());
+            st.setString(1, item.getName());
             //st.setInt(2, 0);
             st.setInt(2, shopping_list_id);
             st.executeUpdate();
@@ -404,6 +419,12 @@ public class ShoppingListDAO {
         }
     }
 
+    /**
+     * Deletes a row in the Item table given the item ID and associated shopping list ID
+     *
+     * @param shopping_list_id the shopping list ID of the associated shopping list
+     * @param itemId the item ID of the item to be deleted
+     */
     public static void deleteItem(int shopping_list_id, int itemId) {
         String query = "DELETE FROM Item WHERE shopping_listId = ? AND itemId = ?;";
 
@@ -421,6 +442,11 @@ public class ShoppingListDAO {
         }
     }
 
+    /**
+     * Deletes and inserts rows into the User_Shopping_list
+     * @param userIds
+     * @param shoppingListId
+     */
     public static void updateUsers(String[] userIds, int shoppingListId) {
         String delete = "DELETE FROM User_Shopping_list WHERE shopping_listId = ?";
         String query = "INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (?, ?);";
@@ -445,6 +471,13 @@ public class ShoppingListDAO {
         }
     }
 
+    /**
+     * Updates a column in the Item table, and sets the checkedBy to a userId
+     *
+     * @param userId the user ID of the user who checked off the item
+     * @param itemId the item ID of the item that has been checked off
+     * @return number of rows that have been altered, or -1 if an error occurred
+     */
     public static int updateCheckedBy(int userId, int itemId) {
         String query;
         if (userId == 0) {
@@ -473,6 +506,7 @@ public class ShoppingListDAO {
 
     /**
      * Updates the 'archived' column given the shopping list ID
+     *
      * @param shoppingListId the shopping list ID
      * @param archived the wanted column value
      */
@@ -518,7 +552,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        ShoppingListDAO.updateArchived(66, false);
+        ShoppingList rtn = ShoppingListDAO.getShoppingList(107);
         System.out.println("stop");
     }
 }

@@ -20,5 +20,4 @@ public class HashHandler {
         //This returns "true" if the password matches the hash.
         return (BCrypt.checkpw(potentialPassword, hashFromDB));
     }
-
 }
