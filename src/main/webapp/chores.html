@@ -1,8 +1,8 @@
 <div id="choresMainContainer">
     <div class="row" id="choresMainRow">
         <div class="col-sm-4">
-            <div class="panel panel-default widget" id="choresLeftPanel">
-                <div class="panel-heading" id="choresLeftPanelHeading">
+            <div class="panel panel-default widget" id="choresLeftUpperPanel">
+                <div class="panel-heading" id="choresLeftUpperPanelHeading">
                     <div class="row">
                         <div class="col-md-10">
                             <h4>Your chores</h4>
@@ -14,16 +14,48 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel-body scrollWhenFull HH" id="choresLeftPanelBody">
-                    <table class="table table-striped" id="choresLeftTable">
-                        <thead id="choresLeftTableHead">
+                <div class="panel-body scrollWhenFull HH2" id="choresLeftUpperPanelBody">
+                    <table class="table table-striped" id="choresLeftUpperTable">
+                        <thead id="choresLeftUpperTableHead">
                         <tr>
                             <th>Title</th>
                             <th>Household</th>
                             <th>Date</th>
                         </tr>
                         </thead>
-                        <tbody id="choresLeftTableBody">
+                        <tbody id="choresLeftUpperTableBody">
+                        <tr onclick="swapContent(dashboard)">
+                            <td>Navn på todo</td>
+                            <td>Navn på ansvarshavende</td>
+                            <td>Dato for utføring</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-default widget" id="choresLeftLowerPanel">
+                <div class="panel-heading" id="choresLeftLowerPanelHeading">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h4>Household chores</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <a id="uselessAddTodoGlyphicon" onclick="switchChoresContent()" class="btn btn-md pull-right">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body scrollWhenFull HH2" id="choresLeftLowerPanelBody">
+                    <table class="table table-striped" id="choresLeftLowerTable">
+                        <thead id="choresLeftLowerTableHead">
+                        <tr>
+                            <th>Title</th>
+                            <th>User</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody id="choresLeftLowerTableBody">
                         <tr onclick="swapContent(dashboard)">
                             <td>Navn på todo</td>
                             <td>Navn på ansvarshavende</td>
@@ -36,39 +68,76 @@
         </div>
         <div class="col-sm-8">
             <div class="panel panel-default widget" id="choresRightPanel">
-                <div class="row" id="choresRightPanelFirstRow">
+                <div class="row" id="choresRightPanelFirstWindow">
                     <div class="panel panel-default widget" id="choresRightUpperPanel">
                         <div class="panel-heading styled-heading" id ="choresRightUpperPanelHeading">
                             Details
                         </div>
                         <div class="panel-body scrollWhenFull HH" id="choresRightUpperPanelBody">
-                            <table class="table table-striped" id="choresRightUpperTable">
-                                <thead id="choresRightUpperTableHead">
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                </tr>
-                                </thead>
-                                <tbody id="choresRightUpperTableBody">
-                                </tbody>
-                            </table>
+                            <div class="row" id="choresDetailsTitleRow">
+                                <div class="col-sm-3">
+                                    <h3>Chore title</h3>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div id="choresDetailsTitleContent"></div>
+                                </div>
+                            </div>
+                            <div class="row" id="choresDetailsDescriptionRow">
+                                <div class="col-sm-3">
+                                    <h3>Description</h3>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div id="choresDetailsDescriptionContent"></div>
+                                </div>
+                            </div>
+                            <div class="row" id="choresDetailsDateTimeRow">
+                                <div class="col-sm-3">
+                                    <h3>Date</h3>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div id="choresDetailsDateTimeContent"></div>
+                                </div>
+                            </div>
+                            <div class="row" id="choresDetailsUserNameRow">
+                                <div class="col-sm-3">
+                                    <h3>Responsible</h3>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div id="choresDetailsUserNameContent"></div>
+                                </div>
+                            </div>
+                            <div class="row" id="choresDetailsHouseholdRow">
+                                <div class="col-sm-3">
+                                    <h3>Household</h3>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div id="choresDetailsHouseholdContent"></div>
+                                </div>
+                            </div>
+                            <div class="row" id="choresDetailsCheckedRow">
+                                <div class="col-sm-3">
+                                    <h3>Checked</h3>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div id="choresDetailsCheckedContent"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row hide" id="choresRightPanelSecondRow">
-                    <div class="panel panel-default widget" id="choresRightLowerPanel">
-                        <div class="panel-heading styled-heading" id ="choresRightLowerPanelHeading">
-                            <input class="form-control" id="newChoreTitleInput" type="text" placeholder="Chore title" style="font-size:18px">
+                <div class="row hide" id="choresRightPanelSecondWindow">
+                    <div class="panel panel-default widget" id="choresRightSecondPanel">
+                        <div class="panel-heading styled-heading" id ="choresRightSecondPanelHeading">
+                            <input class="form-control newChoreInput" id="newChoreTitleInput" type="text" placeholder="Chore title" style="font-size:18px">
                         </div>
-                        <div class="panel-body scrollWhenFull HH" id="choresRightLowerPanelBody">
+                        <div class="panel-body scrollWhenFull HH" id="choresRightSecondPanelBody">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <h4>Description</h4>
                                 </div>
                                 <div class="col-sm-8">
                                     <!--<input class="form-control" type="text" placeholder="Chore title" maxlength="280">-->
-                                    <textarea id="newChoreDescriptionInput" name="Text1" style="width:90%; height:10vw"></textarea>
+                                    <textarea class="newChoreInput" id="newChoreDescriptionInput" name="Text1" style="width:90%; height:10vw"></textarea>
                                 </div>
                             </div>
                             <div class="row">
@@ -76,9 +145,7 @@
                                     <h4>Date and time</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input id="newChoreDateInput" type="date">
-                                    <input id="newChoreTimeInput" type="time">
-                                    <input id="newChoreLocalTimeInput" type="datetime-local">
+                                    <input class="newChoreInput" id="newChoreLocalTimeInput" type="datetime-local">
                                 </div>
                             </div>
                             <div class="row">
@@ -87,12 +154,9 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <div class="dropdown">
-                                        <button id="newChoreDropdownButton" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+                                        <button id="newChoreDropdownButton" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User
                                             <span class="caret"></span></button>
                                         <ul id="newChoreDropdownMenu" class="dropdown-menu">
-                                            <li onclick="setNewChorePersonFromDropdown('0')"><a href="#">HTML</a></li>
-                                            <li onclick="setNewChorePersonFromDropdown('1')"><a href="#">CSS</a></li>
-                                            <li onclick="setNewChorePersonFromDropdown('2')"><a href="#">JavaScript</a></li>
                                         </ul>
                                     </div>
                                 </div>

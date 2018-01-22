@@ -251,3 +251,11 @@ function deleteNews(newsId,runThisAfter){
         }
     });
 }
+
+function getLocalResident(userId){
+    $.each(getCurrentHousehold().residents, function (i, val) {
+        if(val.userId===userID){
+            return val;
+        }
+    });
+}
