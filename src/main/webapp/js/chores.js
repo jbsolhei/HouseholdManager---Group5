@@ -17,6 +17,8 @@ function readyChores(){
     if(activeChore[0]===1){
         showChoreInfo(householdChoreList(activeChore[1]));
         activeChore[0]=0;
+    }else if(selectedChore!==undefined){
+        showChoreInfo(selectedChore);
     }
 }
 
@@ -51,8 +53,9 @@ function listHouseholdChores() {
         $("#choresLeftLowerTableBody").html(leftLowerTableBodyHTML);
     });
 }
-function checkSelectedChore(){
-    //TODO: fill with content and decide id/index usage
+function checkSelectedChore(chore){
+    chore.done = true;
+    updateChore(chore);
 }
 
 function deleteSelectedChore(id){
@@ -188,6 +191,7 @@ function updateChore(chore){
         data: JSON.stringify(chore),
         success: function(){
             console.log("Success in updateChore()");
+            readyChores();
         },
         error: function(data){
             console.log("error in updateChore()");
