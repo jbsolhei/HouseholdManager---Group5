@@ -31,11 +31,12 @@ public class HouseholdDAO {
             st.setString(1, name);
             st.setString(2, address);
             st.executeUpdate();
-            ResultSet rs = st.getGeneratedKeys();
-            while (rs.next()) {
-                houseId = rs.getInt(1);
+            try (ResultSet rs = st.getGeneratedKeys()) {
+                while (rs.next()) {
+                    houseId = rs.getInt(1);
+                }
             }
-            st.close();
+
             query = "INSERT INTO House_user (houseId, userId, isAdmin) VALUES (?, ?, 1)";
 
             try (PreparedStatement st2 = conn.prepareStatement(query)) {
@@ -524,10 +525,9 @@ public class HouseholdDAO {
         String query = "SELECT userId FROM House_user WHERE houseId=? AND isAdmin=1";
         ArrayList<Integer> adminIds = new ArrayList<>();
 
-        try {
-            DBConnector dbc = new DBConnector();
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
             st.setInt(1, houseId);
 
             try (ResultSet rs = st.executeQuery()) {
