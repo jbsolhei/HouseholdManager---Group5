@@ -1,6 +1,5 @@
 package classes;
 
-import java.util.ArrayList;
 
 public class Stats {
     private int[] tasks = new int[12];
