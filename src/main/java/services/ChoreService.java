@@ -46,8 +46,9 @@ public class ChoreService {
 
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
-    @Produces(MediaType.APPLICATION_JSON)
-    public void deleteChore(@PathParam("id") int houseId, int choreId){
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{choreId}")
+    public void deleteChore(@PathParam("choreId") int choreId){
         ChoreDAO.deleteChore(choreId);
     }
 }
