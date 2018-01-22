@@ -72,9 +72,16 @@ public class UserDAOTest {
     }
 
     @Test
+    public void getPassword() throws Exception {
+        UserDAO.updatePassword(143, "12345");
+
+        assertTrue(UserDAO.getPasswordMatch(143, "12345"));
+    }
+
+    @Test
     public void updateUser() throws Exception {
         String newName = "Frederic";
-        UserDAO.updateUser(1, "Ole@gmail.com", "11223344", newName);
+        UserDAO.updateUser(1, "OleH@gmail.com", "11223344", newName);
 
         String query = "SELECT * FROM Person WHERE userId=1";
         ResultSet rs = st.executeQuery(query);

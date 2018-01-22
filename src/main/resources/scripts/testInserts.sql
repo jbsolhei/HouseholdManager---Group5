@@ -6,6 +6,7 @@ INSERT INTO Person (userId, email, name, password, telephone) VALUES (34,'userho
 INSERT INTO Person (userId, email, name, password, telephone) VALUES (35,'inviteduser@house.com', 'Corgi Boii', 'ffffffff', '09020222');
 INSERT INTO Person (userId, email, name, password, telephone) VALUES (36, 'gubbe@epost.no', 'Gubben Gnu', '$2a$12$ZyzEIbrC.0Q2.SfWhkOIGO36NHzDvUkNzvx8qV.mZFBHyZFrrCnum', 40302010);
 INSERT INTO Person (userId, email, name, password, telephone) VALUES (37,'notadminuser@house.com', 'stronk', 'ioooio', '123123550');
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (143,'ert@ertyui.no', 'blabla', 'wert', '9373942');
 
 
 INSERT INTO Household (houseId,house_name,house_address) VALUES (1,'Testhouse','Testaddress 22');

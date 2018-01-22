@@ -24,12 +24,6 @@ import java.util.HashMap;
 @Path("/user")
 public class UserService {
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getTest(){
-        return "User service says hello!";
-    }
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean addUser(User newUser) {
@@ -50,6 +44,14 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean updateUser(@PathParam("id") int id, User user) {
         return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName());
+    }
+
+    @PUT
+    @Auth(AuthType.USER_MODIFY)
+    @Path("/{id}/checkPassword")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean getPasswordMatch(@PathParam("id") int id, String password) {
+        return UserDAO.getPasswordMatch(id, password);
     }
 
     @PUT
@@ -163,4 +165,5 @@ public class UserService {
     public ArrayList<Debt> getIncome(@PathParam("id") int id){
         return FinanceDAO.getIncome(id);
     }
+
 }
