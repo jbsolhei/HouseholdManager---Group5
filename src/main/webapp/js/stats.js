@@ -26,7 +26,6 @@ function drawExpenseGraph() {
         success: function (result) {
             householdStats = result;
             householdStats = fixData(householdStats);
-            console.log(householdStats);
             showExpenseStats();
         },
         error: function (e) {
