@@ -15,7 +15,7 @@
     <script src="js/test-hash.js"></script>
     <script src="js/addUser.js"></script>
     <script src="js/index.js"></script>
-</head>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:200,100i" rel="stylesheet"></head>
 <body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -46,7 +46,14 @@
 </nav>
 
 <div id="mainOpeningPageDivId">
-    <img id="opgbPicId" src="images/opbgPic.jpeg" alt="Mountain View">
+    <div id="opTextDivId">
+        <div class="row opTextRow">
+            <p id="opTextId">Share shopping lists and expenses with the people you live with</p>
+        </div>
+        <div class="row joinNowBtnRow">
+            <button id="joinNowBtnId" data-toggle="modal" class="btn btn-default" onclick='callModal("modals/createuser.html")' data-target="#theModal"><p id="btnTextId">Sign up</p></button>
+        </div>
+    </div>
 </div>
 
 
