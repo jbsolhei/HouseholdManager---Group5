@@ -141,7 +141,7 @@ $(document).on('click', 'body', function (e) {
     var a = e.target.parentElement;
     b = $(a).attr('class');
 
-    if (b === undefined && a !== null || b.slice(0, 4) !== "noti" && opened) {
+    if (b == undefined && a !== null || b.slice(0, 4) !== "noti" && opened) {
         $('#notifyBellId').parent().removeClass('open');
 
         opened = false;
