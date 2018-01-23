@@ -32,7 +32,7 @@ function printHouseholdChoresToDashboard(id){
                     } else {
                         var name = current.user.name;
                     }
-                    var inputString = "<tr onclick='activeChore=["+1+","+i+"];updateCurrentHousehold("+chores+");'>" +
+                    var inputString = "<tr /*onclick='activeChore=["+1+","+i+"];updateCurrentHousehold("+chores+")*/;'>" +
                         "<td>" + current.description + "</td>" +
                         "<td>" + current.time.dayOfMonth + "."+current.time.monthValue+"." + current.time.year  + "</td>" +
                         "<td>" + name + "</td>" +

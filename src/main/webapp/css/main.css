@@ -142,3 +142,17 @@ body {
 #profile-panel-info {
     margin-top: 10px;
 }
+
+.clickableChore:hover{
+    padding: 2px;
+    border: 2px;
+    margin: 2px;
+    background-color: cornflowerblue;
+}
+
+.checkedChoreListElement{
+    background-color: greenyellow;
+}
+.overdueChoreListElement{
+    background-color: orangered;
+}
