@@ -5,7 +5,7 @@ import auth.AuthType;
 import classes.ShoppingTrip;
 import database.FinanceDAO;
 import database.ShoppingTripDAO;
-import org.apache.commons.lang3.StringEscapeUtils;
+//import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
