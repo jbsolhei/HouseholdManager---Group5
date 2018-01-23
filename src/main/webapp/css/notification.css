@@ -4,10 +4,13 @@
 
 .notificationElement {
     color: #233237;
-    height: 5.5vh;
+    min-height: 5.5vh;
+    width: 100%;
     padding: 1vh;
     cursor: pointer;
     border-radius: 0;
+    border-right: 0px;
+    border-left: 0px;
 }
 
 .notificationElement:hover {
@@ -19,25 +22,29 @@
 }
 
 #notifyDropdownListId {
-    width: 30vh;
+    width: 40vh;
     border: none;
+    max-height: 50vh;
+    overflow: scroll;
     padding-top: 0px;
     padding-bottom: 0px;
+    margin: 0px;
 }
 
 .notifyMessageId {
-    font-size: 1.2em;
-    margin-bottom: 1px;
+    font-size: 1.0em;
 }
 
 .notifyDateTimeId {
     color: dimgrey;
     font-size: 0.7em;
     text-align: left;
+    margin-bottom: 0;
 }
 
 .notifyHousehold {
     float: right;
     color: dimgrey;
-    font-size: 0.9em;
+    font-size: 1.2em;
+    margin-bottom: 0;
 }
