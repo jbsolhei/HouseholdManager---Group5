@@ -56,19 +56,19 @@ public class UserService {
         return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName());
     }
 
-    @PUT
-    @Auth(AuthType.USER_MODIFY)
-    @Path("/checkPassword")
-    public boolean getPasswordMatch(@FormParam("id") int id, @FormParam("password") String password) {
+    @POST
+    @Path("/{id}/checkPassword")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public boolean getPasswordMatch(@PathParam("id") int id, String password) {
         return UserDAO.getPasswordMatch(id, password);
     }
 
     @PUT
     @Auth(AuthType.USER_MODIFY)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/updatePassword")
-    public boolean updatePassword(User user) {
-        return UserDAO.updatePassword(user.getUserId(), user.getPassword());
+    @Path("/{id}/updatePassword")
+    public boolean updatePassword(@PathParam("id") int id,User user) {
+        return UserDAO.updatePassword(id, user.getPassword());
     }
 
 

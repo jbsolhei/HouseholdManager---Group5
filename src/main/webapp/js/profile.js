@@ -129,16 +129,17 @@ function changePassword() {
                 '<strong>Weak password! </strong> Use at least 8 characters</div>';
         } else {
             if (newPassword === repeatPassword) {
+
                 ajaxAuth({
-                    url: "res/user/" + getCurrentUser().userId + "/checkPassword",
-                    type: 'PUT',
-                    contentType: 'application/json; charset=utf-8',
-                    data: JSON.stringify(oldPassword),
+                    url: "res/user/"+getCurrentUser().userId+"/checkPassword",
+                    type: 'POST',
+                    contentType: 'text/plain; charset=utf-8',
+                    data: oldPassword,
                     success: function (res) {
                         console.log(res);
                         if (res == "true") {
                             updatePassword(newPassword);
-                            saveInformation();
+                           // saveInformation();
                         } else {
                             document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
                                 '<strong>Current password does not match</strong></div>';
@@ -154,13 +155,18 @@ function changePassword() {
 }
 
 function updatePassword(password) {
+    var data = {"name": "", "email": "", "telephone": "", "password": password};
     ajaxAuth({
-        url: "res/user/"+getCurrentUser().userId+"/password",
+        url: "res/user/"+getCurrentUser().userId+"/updatePassword",
         type: 'PUT',
         contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(password),
+        data: JSON.stringify(data),
         success: function (res) {
-            console.log("");
+            console.log(res);
+            saveInformation();
+        },
+        error: function (res) {
+            console.log(res);
         }
     });
 }
