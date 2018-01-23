@@ -62,6 +62,10 @@ function addShoppingTrip() {
         }
     }
 
+    for (i = 0; i < contributors.length; i++) {
+        addNotification(contributors[i].userId, getCurrentHousehold().houseId, "You have been added to a new Shopping Trip.");
+    }
+
     if(name === "" || comment == "" || sum == "" ||
         shoppingList == "" || id == "" ||
         contributors.length == 0) {

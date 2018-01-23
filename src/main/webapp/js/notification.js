@@ -1,11 +1,21 @@
 /**
- * Used to add a notification to the database.
+ * Used to add a notification to the database. DateTime automatically added.
  * @param userId The id of the user that the notification is going to.
  * @param houseId The house that the notification is connected to.
  * @param message The message in the notification.
- * @param dateTime The date and time of the notification.
  */
-function addNotification(userId, houseId, message, dateTime) {
+function addNotification(userId, houseId, message) {
+
+var currentdate = new Date();
+var dateTime =    currentdate.getFullYear() + "-"
+                +(currentdate.getMonth()+1)  + "-"
+                + currentdate.getDate() + " "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":"
+                + currentdate.getSeconds();
+
+    console.log(dateTime);
+
     var notification = {
         userId: userId,
         houseId: houseId,
