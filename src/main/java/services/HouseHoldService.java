@@ -3,9 +3,9 @@ package services;
 import auth.Auth;
 import auth.AuthType;
 import classes.Household;
-import classes.Chore;
 import classes.User;
 import database.HouseholdDAO;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -31,6 +31,8 @@ public class HouseHoldService {
     @Auth
     @Consumes(MediaType.APPLICATION_JSON)
     public int addHouseHold(Household newHousehold) {
+        newHousehold.setName(StringEscapeUtils.escapeHtml4(newHousehold.getName()));
+        newHousehold.setAddress(StringEscapeUtils.escapeHtml4(newHousehold.getAddress()));
         return HouseholdDAO.addNewHouseHold(newHousehold);
     }
 
@@ -120,8 +122,35 @@ public class HouseHoldService {
     @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateHousehold(@PathParam("id") int id, Household newHouse){
-        int result = HouseholdDAO.updateHousehold(id,newHouse);
+    public int updateHousehold(@PathParam("id") int id, Household newHouse){
+        newHouse.setName(StringEscapeUtils.escapeHtml4(newHouse.getName()));
+        newHouse.setAddress(StringEscapeUtils.escapeHtml4(newHouse.getAddress()));
+        return HouseholdDAO.updateHousehold(id,newHouse);
+    }
+
+    @DELETE
+    @Auth(AuthType.HOUSEHOLD)
+    @Path("/{id}/user")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeMyselfFromHousehold(@PathParam("id") int householdId,
+                                              @Context ContainerRequestContext context) {
+        int userId = (Integer) context.getProperty("session.userId");
+        boolean success = HouseholdDAO.removeUserFromHousehold(householdId, userId);
+        HashMap<String, Boolean> result = new HashMap<>();
+        result.put("success", success);
+        return Response.ok(result).build();
+    }
+
+    @DELETE
+    @Auth(AuthType.HOUSEHOLD_ADMIN)
+    @Path("{id}/users/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeOthersFromHousehold(@PathParam("id") int householdId,
+                                              @PathParam("userId") int userId) {
+        boolean success = HouseholdDAO.removeUserFromHousehold(householdId, userId);
+        HashMap<String, Boolean> result = new HashMap<>();
+        result.put("success", success);
+        return Response.ok(result).build();
     }
 
     @DELETE

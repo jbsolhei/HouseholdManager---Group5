@@ -111,6 +111,11 @@
       <artifactId>google-api-client</artifactId>
       <version>1.23.0</version>
     </dependency>
+      <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+          <version>3.4</version>
+      </dependency>
   </dependencies>
 
 
@@ -179,6 +184,7 @@
               <exclude>**/database/NewsDAOTest.java</exclude>
               <exclude>**/database/FinanceDAOTest.java</exclude>
               <exclude>**/database/ChoreDAOTest.java</exclude>
+              <exclude>**/database/NotificationDAOTest.java></exclude>
             </excludes>
         </configuration>
     </plugin>

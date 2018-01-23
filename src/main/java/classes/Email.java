@@ -1,9 +1,5 @@
 package classes;
 
-/**
- *
- * @author Trym Vegard Gjeleth-Borgen
- */
 
 import javax.mail.Message;
 import javax.mail.Session;

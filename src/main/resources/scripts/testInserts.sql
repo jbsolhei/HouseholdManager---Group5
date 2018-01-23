@@ -6,6 +6,7 @@ INSERT INTO Person (userId, email, name, password, telephone) VALUES (34,'userho
 INSERT INTO Person (userId, email, name, password, telephone) VALUES (35,'inviteduser@house.com', 'Corgi Boii', 'ffffffff', '09020222');
 INSERT INTO Person (userId, email, name, password, telephone) VALUES (36, 'gubbe@epost.no', 'Gubben Gnu', '$2a$12$ZyzEIbrC.0Q2.SfWhkOIGO36NHzDvUkNzvx8qV.mZFBHyZFrrCnum', 40302010);
 INSERT INTO Person (userId, email, name, password, telephone) VALUES (37,'notadminuser@house.com', 'stronk', 'ioooio', '123123550');
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (143,'ert@ertyui.no', 'blabla', 'wert', '9373942');
 
 
 INSERT INTO Household (houseId,house_name,house_address) VALUES (1,'Testhouse','Testaddress 22');
@@ -67,3 +68,7 @@ INSERT INTO Chore (title, description, chore_datetime, choreId, houseId, userId)
 VALUES ('Ta ut søpla', 'Husk at grønn pose betyr restavfall!', '2018-02-15 10:30:00', 1, 10, 51);
 INSERT INTO Chore (title, description, chore_datetime, choreId, houseId, userId)
 VALUES ('Ta ut søpla', 'Husk at grønn pose betyr restavfall!', '2017-02-15 10:30:00', 2, 10, 51);
+
+INSERT INTO Person (userId, email, name, password, telephone) VALUES (200, 'trym@gmail.com', 'trym', '123', '88888888');
+INSERT INTO House_user (houseId, userId, isAdmin) VALUES (1, 200, 0);
+INSERT INTO Notification (userId, houseId, message, notificationDateTime) VALUES (200, 1, 'Du må være snill!', '2018-01-01');

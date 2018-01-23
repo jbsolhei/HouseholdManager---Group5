@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Notification;
 DROP TABLE IF EXISTS Item;
 DROP TABLE IF EXISTS Invite_token;
 DROP TABLE IF EXISTS Finance;
@@ -116,3 +117,15 @@ shopping_tripId INTEGER NOT NULL,
 CONSTRAINT user_shopping_trip_pk PRIMARY KEY(userId, shopping_tripId),
 FOREIGN KEY (userId) REFERENCES Person(userId),
 FOREIGN KEY (shopping_tripId) REFERENCES Shopping_trip(shopping_tripId));
+
+CREATE TABLE Notification (
+  userId INTEGER NOT NULL,
+  houseId INTEGER NOT NULL,
+  notificationId INTEGER AUTO_INCREMENT NOT NULL,
+  message VARCHAR(120),
+  notificationDateTime DATETIME NOT NULL,
+  isRead BOOLEAN NOT NULL DEFAULT FALSE,
+  CONSTRAINT notification PRIMARY KEY(notificationId),
+  FOREIGN KEY (userId) REFERENCES Person(userId),
+  FOREIGN KEY (houseId) REFERENCES Household(houseId)
+);

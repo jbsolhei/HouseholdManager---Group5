@@ -1,12 +1,12 @@
 package database;
 
 import classes.*;
-import classes.Email;
-import classes.HashHandler;
-import classes.Household;
-import classes.User;
+
 import java.security.SecureRandom;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -118,22 +118,34 @@ public class UserDAO {
      * @return True or false depending on success.
      */
     public static boolean updateUser(int id, String newEmail, String newTelephone, String newName) {
+        String getQuery = "SELECT * FROM Person WHERE email=? AND userId NOT LIKE ?";
         String query = "UPDATE Person SET email = ?, telephone = ?, name = ? WHERE userId = ?";
         boolean userInfoUpdated = false;
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
-             PreparedStatement st = conn.prepareStatement(query)) {
+             PreparedStatement st = conn.prepareStatement(query);
+             PreparedStatement st1 = conn.prepareStatement(getQuery)) {
 
-            st.setString(1, newEmail);
-            st.setString(2, newTelephone);
-            st.setString(3, newName);
-            st.setInt(4, id);
+            st1.setString(1, newEmail);
+            st1.setInt(2, id);
+            int number = 0;
+            try (ResultSet rs = st1.executeQuery()){
+                while (rs.next()) {
+                    number++;
+                }
+            }
+            if(number == 0) {
+                st.setString(1, newEmail);
+                st.setString(2, newTelephone);
+                st.setString(3, newName);
+                st.setInt(4, id);
 
-            int update = st.executeUpdate();
+                int update = st.executeUpdate();
 
-            if (update != 0) {
-                userInfoUpdated = true;
+                if (update != 0) {
+                    userInfoUpdated = true;
+                }
             }
 
         } catch (SQLException e) {
@@ -301,5 +313,32 @@ public class UserDAO {
         }
 
         return chores;
+    }
+
+    /**
+     * Method for checking if current password is correct, when changing password
+     * @param id the user id
+     * @return a boolean, true if the password is correct, else false.
+     */
+    public static boolean getPasswordMatch(int id, String password) {
+        String query = "SELECT password FROM Person WHERE userId = ?";
+        boolean correctPassword = false;
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)){
+
+            st.setInt(1, id);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    if (HashHandler.passwordMatchesHash(password, rs.getString("password"))) {
+                        correctPassword = true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return correctPassword;
     }
 }
