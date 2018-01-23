@@ -4,6 +4,7 @@ import auth.Auth;
 import auth.AuthType;
 import classes.ShoppingTrip;
 import database.ShoppingTripDAO;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -25,6 +26,8 @@ public class ShoppingTripService {
     @Auth
     @Consumes (MediaType.APPLICATION_JSON)
     public boolean createShoppingTrip(ShoppingTrip shoppingTrip) {
+        shoppingTrip.setName(StringEscapeUtils.escapeHtml4(shoppingTrip.getName()));
+        shoppingTrip.setComment(StringEscapeUtils.escapeHtml4(shoppingTrip.getComment()));
         LocalDate date = LocalDate.now();
         shoppingTrip.setShoppingDate(date);
         return ShoppingTripDAO.createShoppingTrip(shoppingTrip);
