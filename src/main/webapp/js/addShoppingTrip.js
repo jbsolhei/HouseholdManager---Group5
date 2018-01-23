@@ -4,42 +4,47 @@
 var result;
 
 function createPage() {
-    console.log(getCurrentHousehold());
-    ajaxAuth({
-        url: "res/household/"+getCurrentHousehold().houseId+"/users",//Må byttes ut med currentHousehold!!!!
-        type: 'get',
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function(data) {
-            console.log(data);
-            result = data;
-            addMembers(data);
-        },
-        error: function(result) {
-        }
-    });
-    ajaxAuth({
-        url: "res/household/"+getCurrentHousehold().houseId+"/shopping_lists",//Må byttes ut med currentHousehold!!!!
-        type: 'get',
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function(data) {
-            console.log(data);
-            addShoppinglists(data);
-        },
-        error: function(result) {
-        }
-    });
+    if (getCurrentHousehold() !== null || getCurrentHousehold() !==  undefined) {
+        ajaxAuth({
+            url: "res/household/" + getCurrentHousehold().houseId + "/users",//Må byttes ut med currentHousehold!!!!
+            type: 'get',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                console.log(data);
+                result = data;
+                addMembers(data);
+            },
+            error: function (result) {
+            }
+        });
+        ajaxAuth({
+            url: "res/household/" + getCurrentHousehold().houseId + "/shopping_lists",//Må byttes ut med currentHousehold!!!!
+            type: 'get',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                console.log(data);
+                addShoppinglists(data);
+            },
+            error: function (result) {
+            }
+        });
+    }
 }
-function addMembers(data) {
-    $("#members").html("");
-    for(var i=0; i<data.length; i++) {
-        $("#members").append("<label style='float: left; margin-left: 5px'><input type='checkbox' id=check-"+i+" value=''>"+data[i].name+"</label><br>");
+function addMembers(members) {
+    $("#members").empty();
+    for(var i=0; i<members.length; i++) {
+        $("#members").append(
+            "<div class='shopping-list-member-line'>" +
+            "<label style='margin-left: 5px'>" +
+            "<input type='checkbox' id='check-" + i + "'>" + members[i].name + "</label>" +
+            "</div>"
+        );
     }
 }
 function addShoppinglists(data) {
-    $("#sel1").html("");
-    $("#sel1").append("<option id='trip-0'>-None-</option>");
+    $("#sel1").html("<option id='trip-0'>-None-</option>");
     for(var i=0; i<data.length; i++) {
         $("#sel1").append("<option id='trip-"+data[i].shoppingListId+"'>"+data[i].name+"</option>");
     }
@@ -66,11 +71,11 @@ function addShoppingTrip() {
         addNotification(contributors[i].userId, getCurrentHousehold().houseId, "You have been added to a new Shopping Trip.");
     }
 
-    if(name === "" || comment == "" || sum == "" ||
-        shoppingList == "" || id == "" ||
-        contributors.length == 0) {
+    if(name === "" || comment === "" || sum === "" ||
+        shoppingList === "" || id === "" ||
+        contributors.length === 0) {
         document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-            '<strong>Failed to create user.</strong> Please fill in all the forms. </div>';
+            '<strong>Please fill in all the forms. </div>';
 
     } else {
         var data = {"name" : name, "expence" : sum, "comment" : comment, "userId" : getCurrentUser().userId,

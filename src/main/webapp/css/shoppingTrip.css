@@ -10,3 +10,14 @@
 #noCommentID {
     color: grey;
 }
+
+div.shopping-list-member-line {
+    text-align: left;
+    margin: 5px 0;
+}
+
+div.checkbox#members {
+    margin: 0;
+    overflow: auto;
+    max-height: 250px;
+}
