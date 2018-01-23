@@ -1,48 +1,120 @@
 function loadHousehold(){
     $("#hh_name").html(getCurrentHousehold().name);
     $("#hh_address").html(getCurrentHousehold().address);
-//    buildAdminTable();
     buildMemberTable();
     buildOtherInfoHousehold();
 }
 
 function buildMemberTable(){
+    $("table#members tbody").empty();
+
+    if (getCurrentHousehold() === null || getCurrentUser() === null) {
+        return;
+    }
+
+    var currentUser = getCurrentUser();
     var members = getCurrentHousehold().residents;
     var admins = getCurrentHousehold().admins;
-    console.log(getCurrentHousehold());
 
-    for (var i = 0; i<members.length; i++) {
-        var found = false;
-        for(var j=0; j<admins.length; j++) {
-            if(members[i].userId === admins[j].userId) {
-                var user = members[i];
-                $("#members").append(
-                    "<tr onclick=\"showMiniProfile(" + i + ")\">\n" +
-                    "<td><i data-toggle='tooltip' data-placement='bottom' title='Administrator for this household' class='glyphicon glyphicon-star-empty'></i></td>" +
-                    "<td><div class=\"img-circle\"><img class=\"img-responsive img-pic\" src=\"http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg\"></div></td>\n" +
-                    "<td>"+user.name+"</td>\n" +
-                    "<td>"+user.email+"</td>\n" +
-                    "<td>"+user.telephone+"</td>\n" +
-                    "</tr>");
-                found = true;
+    var currentUserIsAdmin = admins.find(function (admin) {
+        return currentUser.userId === admin.userId
+    }) !== undefined;
+
+    for (var i = 0; i < members.length; i++) {
+        var user = members[i];
+        var isAdmin = (function (user) {
+            return admins.find(function (admin) {
+                return user.userId === admin.userId
+            }) !== undefined;
+        })(user);
+
+        var adminTd = "<td></td>";
+        if (isAdmin) {
+            adminTd = "<td><i data-toggle='tooltip' data-placement='bottom' " +
+                "title='Administrator for this household' class='glyphicon glyphicon-star-empty'></i></td>";
+        }
+
+        var removeTd = "<td></td>";
+        if (user.userId === currentUser.userId) {
+            removeTd = "<td><span class='glyphicon glyphicon-remove remove' " +
+                "data-toggle='confirm' data-remove='self'></span></td>";
+        }
+        else if (currentUserIsAdmin) {
+            removeTd = "<td><span class='glyphicon glyphicon-remove remove' " +
+                "data-toggle='confirm' data-remove='" + user.userId + "'></span></td>";
+        }
+
+        $("table#members tbody").append(
+            "<tr onclick=\"showMiniProfile(" + i + ")\">\n" +
+            adminTd + "\n" +
+            "<td><div class=\"img-circle\">" +
+            "<img class=\"img-responsive img-pic\" src=\"http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg\">" +
+            "</div></td>\n" +
+            "<td>" + user.name + "</td>\n" +
+            "<td>" + user.email + "</td>\n" +
+            "<td>" + user.telephone + "</td>\n" +
+            removeTd + "\n" +
+            "</tr>"
+        );
+    }
+
+    $("span.remove[data-toggle='confirm']").confirmation({
+        rootSelector: "span.remove[data-toggle='confirm']",
+        popout: true,
+        singleton: true,
+        title: "Really remove user from household?",
+        btnOkClass: "btn-sm btn-danger",
+        btnOkIcon: "glyphicon glyphicon-trash",
+        btnCancelClass: "btn-sm btn-default",
+        onConfirm: function () {
+            var remove = $(this).data("remove");
+            console.log("Confirm clicked! Removing " + remove);
+            if (remove === "self") {
+                removeMyselfFromHousehold();
+            }
+            else {
+                removeUserFromHousehold(remove);
             }
         }
-        if(found === false) {
-            var user = members[i];
-            $("#members").append(
-                "<tr onclick=\"showMiniProfile(" + i + ")\">\n" +
-                "<td></td>" +
-                "<td><div class=\"img-circle\"><img class=\"img-responsive img-pic\" src=\"http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg\"></div></td>\n" +
-                "<td>" + user.name + "</td>\n" +
-                "<td>" + user.email + "</td>\n" +
-                "<td>" + user.telephone + "</td>\n" +
-                "</tr>");
-        }
+    });
+}
+
+function buildOtherInfoHousehold() {
+    $("#householdAddress").html("<p>" + getCurrentHousehold().address + "</p>");
+}
+
+function removeMyselfFromHousehold() {
+    if (getCurrentHousehold() !== null) {
+        ajaxAuth({
+            url: "res/household/" + getCurrentHousehold().houseId + "/user",
+            method: "DELETE",
+            dataType: "json",
+            success: function (response) {
+                if (response.success === true) {
+                    window.location.reload();
+                }
+            }
+        });
     }
 }
-function buildOtherInfoHousehold() {
-    $("#householdAddress").html("");
-    $("#householdAddress").append("<p>"+getCurrentHousehold().address+"</p>");
+
+function removeUserFromHousehold(userId) {
+    if (getCurrentHousehold() !== null) {
+        ajaxAuth({
+            url: "res/household/" + getCurrentHousehold().houseId + "/users/" + userId,
+            method: "DELETE",
+            success: function (response) {
+                if (response.success === true) {
+                    updateCurrentHousehold(undefined, buildMemberTable);
+                }
+            },
+            error: function (xhr) {
+                if (xhr.status === 403) {
+                    console.log("Du har ikke tilgang til å gjøre dette. FY SKAMME SEG!");
+                }
+            }
+        });
+    }
 }
 
 function showMiniProfile(index){

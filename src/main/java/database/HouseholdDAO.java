@@ -4,8 +4,6 @@ import classes.*;
 
 import java.security.SecureRandom;
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -418,12 +416,12 @@ public class HouseholdDAO {
 
 
     /**
-     * Used to get all todolists for a household
+     * Used to get all chores for a household
      *
      * @param houseId the id of the house
-     * @return array with all the todos.
+     * @return array with all the chores.
      */
-    public static Chore[] getTodosForHousehold(int houseId) {
+    public static Chore[] getChoresForHousehold(int houseId) {
         ArrayList<Chore> chores = new ArrayList<>();
         boolean householdExists = false;
 
@@ -442,7 +440,7 @@ public class HouseholdDAO {
                     chore.setHouseId(houseId);
                     chore.setChoreId(rs.getInt("choreId"));
                     chore.setUserId(rs.getInt("userId"));
-                    chore.setTime(rs.getTimestamp("date").toLocalDateTime());
+                    chore.setTime(rs.getTimestamp("chore_datetime").toString());
                     chores.add(chore);
                     householdExists = true;
                 }
@@ -541,5 +539,29 @@ public class HouseholdDAO {
             e.printStackTrace();
         }
         return adminIds;
+    }
+
+    /**
+     * Removes a user from a household.
+     * @param householdId the household ID
+     * @param userId the user ID to remove
+     * @return true on success, false otherwise.
+     */
+    public static boolean removeUserFromHousehold(int householdId, int userId) {
+        String query = "DELETE FROM House_user WHERE houseId = ? AND userId = ?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, householdId);
+            stmt.setInt(2, userId);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

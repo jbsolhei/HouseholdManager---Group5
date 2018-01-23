@@ -1,6 +1,5 @@
 package classes;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Chore {
@@ -9,10 +8,19 @@ public class Chore {
     private boolean done;
     private int houseId;
     private int userId;
+    private User user;
     private int choreId;
     private LocalDateTime time;
 
     public Chore(){}
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getTitle() {
         return title;
@@ -66,7 +74,7 @@ public class Chore {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
+    public void setTime(String timeString) {
+        this.time = LocalDateTime.parse(timeString);
     }
 }

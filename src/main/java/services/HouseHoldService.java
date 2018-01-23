@@ -110,14 +110,6 @@ public class HouseHoldService {
 
     @GET
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/chores")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Chore[] getTodosForHousehold(@PathParam("id") int id){
-        return HouseholdDAO.getTodosForHousehold(id);
-    }
-
-    @GET
-    @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Household getHousehold(@PathParam("id") int id,@Context ContainerRequestContext context) {
@@ -130,6 +122,31 @@ public class HouseHoldService {
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateHousehold(@PathParam("id") int id, Household newHouse){
         int result = HouseholdDAO.updateHousehold(id,newHouse);
+    }
+
+    @DELETE
+    @Auth(AuthType.HOUSEHOLD)
+    @Path("/{id}/user")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeMyselfFromHousehold(@PathParam("id") int householdId,
+                                              @Context ContainerRequestContext context) {
+        int userId = (Integer) context.getProperty("session.userId");
+        boolean success = HouseholdDAO.removeUserFromHousehold(householdId, userId);
+        HashMap<String, Boolean> result = new HashMap<>();
+        result.put("success", success);
+        return Response.ok(result).build();
+    }
+
+    @DELETE
+    @Auth(AuthType.HOUSEHOLD_ADMIN)
+    @Path("{id}/users/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeOthersFromHousehold(@PathParam("id") int householdId,
+                                              @PathParam("userId") int userId) {
+        boolean success = HouseholdDAO.removeUserFromHousehold(householdId, userId);
+        HashMap<String, Boolean> result = new HashMap<>();
+        result.put("success", success);
+        return Response.ok(result).build();
     }
 
     @DELETE

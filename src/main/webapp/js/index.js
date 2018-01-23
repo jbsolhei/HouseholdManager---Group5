@@ -9,17 +9,31 @@ var profile = "profile.html";
 var stats = "stats.html";
 var activeSHL = 0;
 var householdsLoaded = false;
+var activeChore = [0,0];
 
 function ajaxAuth(attr) {
-    attr.headers = {
-        Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
-    };
-    if (attr.error === undefined) {
-        attr.error = function (jqXHR, exception) {
-            console.log("Error: " + jqXHR.status);
-        };
+    var attributes = {};
+    $.extend(attributes, attr);
+
+    if (attributes.headers === undefined || attributes.headers === null) {
+        attributes.headers = {};
     }
-    return $.ajax(attr);
+    attributes.headers.Authorization = "Bearer " + window.localStorage.getItem("sessionToken");
+
+    attributes.error = function (xhr, textStatus, exceptionThrown) {
+        console.log("Error: " + xhr.status);
+
+        if (typeof attr.error === "function") {
+            attr.error(xhr, textStatus, exceptionThrown);
+        }
+
+        if (xhr.status === 401){
+            window.localStorage.clear();
+            window.location.replace("OpeningPage.html");
+        }
+    };
+
+    return $.ajax(attributes);
 }
 
 function checkSession(){
@@ -27,9 +41,9 @@ function checkSession(){
         url: "res/user/checkSession",
         type: "GET",
         error: function (e) {
-            if (e.status == 401){
+            if (e.status === 401){
                 window.localStorage.clear();
-                window.location.replace("OpeningPage.html")
+                window.location.replace("OpeningPage.html");
             }
         }
     })
@@ -65,7 +79,7 @@ function getCurrentHousehold() {
     return JSON.parse(window.localStorage.getItem("house"));
 }
 
-function updateCurrentHousehold(bodyContent){
+function updateCurrentHousehold(bodyContent, successCallback){
     if (getCurrentHousehold()!==null&&getCurrentHousehold()!==undefined) {
         var id = getCurrentHousehold().houseId;
         ajaxAuth({
@@ -77,6 +91,10 @@ function updateCurrentHousehold(bodyContent){
                 if (bodyContent !== undefined) {
                     $(".page-wrapper").load(bodyContent);
 
+                }
+
+                if (typeof successCallback === "function") {
+                    successCallback();
                 }
             },
             dataType: "json"
@@ -248,6 +266,14 @@ function deleteNews(newsId,runThisAfter){
         success: function(data){
             runThisAfter(data);
             // Do things after delete here
+        }
+    });
+}
+
+function getLocalResident(userId){
+    $.each(getCurrentHousehold().residents, function (i, val) {
+        if(val.userId===userID){
+            return val;
         }
     });
 }

@@ -1,22 +1,19 @@
 package database;
 
 import classes.Chore;
-import classes.Household;
-import classes.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ChoreDAOTest {
     DBConnector dbc = new DBConnector();
@@ -48,7 +45,7 @@ public class ChoreDAOTest {
         chore.setHouseId(1);
         chore.setUserId(100);
         chore.setDone(false);
-        chore.setTime(LocalDateTime.of(2018, Month.FEBRUARY, 1, 8, 30, 0));
+        chore.setTime("2018-02-01T08:30");
 
         ChoreDAO.postChore(chore);
 
@@ -66,10 +63,8 @@ public class ChoreDAOTest {
 
             LocalDateTime dateTime = chore.getTime(); // your ldt
             java.sql.Date sqlDate = java.sql.Date.valueOf(dateTime.toLocalDate());
-            Timestamp timestamp = Timestamp.valueOf(dateTime);
 
-            assertEquals(sqlDate, rs.getDate("chore_date"));
-            assertEquals(timestamp, rs.getTimestamp("chore_time"));
+            assertEquals(sqlDate, rs.getDate("chore_datetime"));
         }
         else{
             assert false;
@@ -92,7 +87,7 @@ public class ChoreDAOTest {
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
         assertEquals(sqlDate, java.sql.Date.valueOf(chores.get(0).getTime().toLocalDate()));
-        assertEquals(timestamp, Timestamp.valueOf(chores.get(0).getTime()));
+        assertEquals(localDateTime,chores.get(0).getTime());
 
     }
 
@@ -119,7 +114,7 @@ public class ChoreDAOTest {
         chore.setHouseId(1);
         chore.setUserId(10);
         chore.setDone(true); //endrer fra false til done
-        chore.setTime(LocalDateTime.of(2018, Month.FEBRUARY, 14, 12, 00));
+        chore.setTime("2018-02-14T12:00");
 
         ChoreDAO.editChore(chore);
 

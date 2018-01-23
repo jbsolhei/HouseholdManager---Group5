@@ -1,17 +1,21 @@
 package services;
 
-import auth.Auth;
-import auth.AuthType;
-import auth.Session;
-import auth.UserAuth;
+import auth.*;
 import classes.Chore;
 import classes.Debt;
 import classes.Household;
 import classes.User;
+import auth.Auth;
+import auth.AuthType;
+import auth.Session;
+import auth.UserAuth;
+import classes.*;
 import database.FinanceDAO;
+import database.NotificationDAO;
 import database.UserDAO;
-
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -122,7 +126,7 @@ public class UserService {
         }
     }
 
-    /*@DELETE
+    @DELETE
     @Auth
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
@@ -132,7 +136,7 @@ public class UserService {
         HashMap<String, Object> response = new HashMap<>();
         response.put("success", true);
         return Response.ok(response).build();
-    }*/
+    }
 
     @GET
     @Auth
@@ -169,5 +173,14 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Debt> getIncome(@PathParam("id") int id){
         return FinanceDAO.getIncome(id);
+    }
+
+
+    @GET
+    @Path("/{id}/notifications")
+    //@Auth(AuthType.USER_MODIFY)
+    @Produces(MediaType.APPLICATION_JSON)
+    public ArrayList<Notification> getNotifications(@PathParam("id") int id) {
+        return NotificationDAO.getNotifications(id);
     }
 }

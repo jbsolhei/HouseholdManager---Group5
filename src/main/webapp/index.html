@@ -73,10 +73,12 @@
         <link href="css/widgetStyle.css" rel="stylesheet">
         <link href="css/stats.css" rel="stylesheet">
         <link href="css/scrollBar.css" rel="stylesheet">
+        <link href="css/notification.css" rel="stylesheet">
 
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-ui.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-confirmation.min.js"></script>
         <script src="js/addHousehold.js"></script>
         <script src="js/addMembersToHouseholdModal.js"></script>
         <script src="js/index.js"></script>
@@ -88,7 +90,7 @@
         <script src="js/addShoppingTrip.js"></script>
         <script src="js/chores.js"></script>
         <script src="js/stats.js"></script>
-        <script src="js/stats.js"></script>
+        <script src="js/notification.js"></script>
 
     </head>
     <body>
@@ -116,7 +118,16 @@
                         <li><a class="visible-xs" onclick="swapContent(chores)">To Do</a></li>
                         <li><a class="visible-xs" onclick="swapContent(statistics)">Statistics</a></li>
                         <li><a class="visible-xs" onclick="swapContent(news)">News</a></li>
-                        <li><a id="notifyBellId" ><i class="glyphicon glyphicon-bell"></i></a></li>
+
+
+                        <li>
+                            <a id="notifyBellId" class="dropdown-toggle"><i class="glyphicon glyphicon-bell"></i></a>
+                            <ul id="notifyDropdownListId" class="noti dropdown-menu list-group" role="menu" aria-labelledby="menu1">
+
+                            </ul>
+                        </li>
+
+
                         <li class="dropdown">
                             <a id="currentHouseholdId" class="dropdown-toggle" data-toggle="dropdown" href="#">Current household
                                 <span class="caret"></span>
@@ -184,6 +195,12 @@
             if (sideBarOpen) closeNav();
         });
 
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+        });
+
+        getNotifications(getCurrentUser().userId);
+        updateNotificationBell();
     </script>
 
     <style>
