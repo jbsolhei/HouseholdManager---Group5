@@ -1,3 +1,8 @@
+/* --- Variables --- */
+var SHL_active;
+var SHL_archived;
+var current_SHL_index;
+
 /* --- Ajax- methods --- */
 
 /**
@@ -137,6 +142,24 @@ function ajax_updateArchived(shoppingListId, archived){
     })
 }
 
+function ajax_getShoppingListUsers(shoppingListId, handleData) {
+    console.log('ajax_getShoppingListUsers()');
+    ajaxAuth({
+        type: 'GET',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/users',
+        data: shoppingListId,
+        contentType: 'text/plain',
+        success: function (data) {
+            console.log("success: ajax_getShoppingListUsers()")
+            handleData(data);
+        },
+        error: function (result) {
+            console.log("error: ajax_getShoppingListUsers()");
+            console.log(result);
+        }
+    })
+}
+
 /* --- visual updates methods --- */
 
 
@@ -232,6 +255,25 @@ function navToAShoppingList(shoppingListIndex, isArchived) {
     if (isArchived) archivedSHL = shoppingListIndex;
     else activeSHL = shoppingListIndex;
     showListFromMenu(activeSHL)
+}
+
+function showListOfAssociatedUsers() {
+
+    var shoppingListId = SHL[0].shoppingListId;
+    console.log(shoppingListId);
+    var householdUsers = getCurrentHousehold().residents;
+    $("#associated_users_table").empty();
+    ajax_getShoppingListUsers(shoppingListId, function (users) {
+        console.log(users);
+        $("#associated_users_table").append('<thead><tr><th></th><th>' + "Users that can view this list" + '</th></tr></thead>');
+        $.each(householdUsers, function (i, val){
+            $("#associated_users_table").append('<tbody><tr><td id="associated_user_id_"'+ val.userId +' onclick="checkUser('+ val.userId +')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr></tbody>');
+        });
+        $.each(users, function (i, val) {
+            $("#associated_user_id_" + val.userId).replaceWith('<td id="associated_user_id_' + val.userId +'" onclick="uncheckUser('+ val.userId +')" class="glyphicon glyphicon-check checked-in-modal"></td>')
+        });
+        $("#list_of_users_associated_with_shopping_list").slideToggle("slow");
+    })
 }
 
 

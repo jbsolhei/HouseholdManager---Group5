@@ -20,4 +20,8 @@ public class HashHandler {
         //This returns "true" if the password matches the hash.
         return (BCrypt.checkpw(potentialPassword, hashFromDB));
     }
+
+    public static void main(String[] args) {
+        System.out.println(makeHashFromPassword("1"));
+    }
 }

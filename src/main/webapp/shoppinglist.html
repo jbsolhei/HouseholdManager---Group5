@@ -1,4 +1,5 @@
 <link href="css/shoppinglist.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="js/shoppinglist.js"></script>
 <script src="js/shopping_list.js"></script>
 
@@ -51,7 +52,7 @@
             <div class="panel panel-default widget">
                 <div id="head" class="panel-heading">
                     <h4 id="headline" class="col-md-11"></h4>
-                    <div id="edit_shopping_list_btn" class="glyphicon glyphicon-eye-open col-md-1" data-toggle="modal" onclick='callModalRun("modals/editShoppingListUsers.html", [getUsers])' data-target="#theModal"></div>
+                    <div id="edit_shopping_list_btn" class="glyphicon glyphicon-eye-open col-md-1" onclick="showListOfAssociatedUsers()"></div>
                     <div class="input-group">
                         <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
                         <!--
@@ -64,6 +65,16 @@
                             <button id="privateButton" onclick="setPrivate()" class="btn btn-secondary hide" type="button">Private</button>
                         </span>
                     </div>
+                </div>
+                <div id="list_of_users_associated_with_shopping_list">
+                    <table id="associated_users_table" class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Users that can view this list</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
                 <div class="panel-body scrollWhenFull SL">
                     <div class="input-group">
@@ -111,10 +122,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    // Ikke rør
-    function callModal(modalContent) {
-        $("#modal").load(modalContent);
-    }
-</script>
