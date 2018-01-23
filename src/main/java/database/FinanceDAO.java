@@ -79,6 +79,23 @@ public class FinanceDAO {
         return null;
     }
 
+    public static void deleteDebt(int fromUser, int toUser) {
+        String query = "DELETE FROM Finance WHERE fromPerson = ? AND toPerson = ?;";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, fromUser);
+            st.setInt(2, toUser);
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+
+        }
+    }
+
     /**
      * Updates the users debt according to what they owed each other from before.
      * @param userId id of the user who buys the items

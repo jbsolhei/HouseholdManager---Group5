@@ -168,6 +168,12 @@ public class UserService {
         return FinanceDAO.getIncome(id);
     }
 
+    @DELETE
+    @Path("/{id}/debt/{toUser}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void settlePayment(@PathParam("id") int fromUser, @PathParam("toUser") int toUser){
+       FinanceDAO.deleteDebt(fromUser, toUser);
+    }
 
     @GET
     @Path("/{id}/notifications")

@@ -3,6 +3,7 @@ var debt = [];
 var name = "";
 var amount = 0;
 var payOrAlert = 0;
+var index = 0;
 
 
 function getDebt(){
@@ -82,25 +83,25 @@ function loadFinanceTables(){
 }
 
 function payMoney(i) {
+    index = i;
     payOrAlert = 0;
-    callModal("modals/payMoney.html");
+    callModal("modals/financeModal.html");
     name = debt[i].toUser.name;
     amount = debt[i].amount;
 
 }
 
 function sendPaymentRequest(i) {
+    index = i;
     payOrAlert = 1;
-    callModal("modals/payMoney.html");
+    callModal("modals/financeModal.html");
     name = income[i].toUser.name;
     amount = income[i].amount;
 }
 
-function loadPayMoneyModal() {
+function loadFinanceModal() {
     if(payOrAlert == 0){
         document.getElementById("payMoneyText").innerHTML = '<p id="payMoneyText">Do you confirm that you have payed ' + name + ' ' + amount + ',- ?</p>';
-
-
     } else {
         $("#financeModalTitle").replaceWith('<h4 id="financeModalTitle" class="modal-title">Send payment alert</h4>');
         document.getElementById("payMoneyText").innerHTML = '<p id="payMoneyText">Do you want to send ' + name + ' an alert to pay the ' + amount + ',- that he/she ows you?</p>';
@@ -111,7 +112,17 @@ function loadPayMoneyModal() {
 
 
 function confirmPayment(){
-
+    console.log("fromuser: " + getCurrentUser().userId + ", touser: " + debt[index].toUser.userId);
+    ajaxAuth({
+        url: "res/user/"+ getCurrentUser().userId +"/debt/" + debt[index].toUser.userId,
+        type: "DELETE",
+        data: debt[index].toUser.userId,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function () {
+            console.log("success!");
+        },
+    });
 }
 
 function confirmSendAlertPayment() {
