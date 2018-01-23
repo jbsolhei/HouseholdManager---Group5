@@ -126,5 +126,6 @@ function confirmPayment(){
 }
 
 function confirmSendAlertPayment() {
-
+    console.log("" + getCurrentUser().name + " asks you to pay the " + income[index] + "kr that you owe.");
+    addNotification(income[index].toUser.userId, getCurrentHousehold().houseId, getCurrentUser().name + " asks you to pay the " + income[index].amount + "kr that you owe.");
 }
