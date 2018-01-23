@@ -58,6 +58,10 @@ html {
     background: url("../images/opgbPicWL.png") center;
 }
 
+#loginButton:hover {
+    cursor: pointer;
+}
+
 #opTextDivId {
     background-color: rgba(180, 180, 180, 0.0);
     height: auto;
