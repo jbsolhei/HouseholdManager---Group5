@@ -52,23 +52,51 @@ function loadFinanceTables(){
     for(var i = 0; i < debt.length; i++){
         for(var j = 0; j < members.length; j++){
             if(debt[i].toUser.userId == members[j].userId){
-                debt[i].toUser.setName(members[j].name);
+                debt[i].toUser = members[j];
                 j = members.length;
             }
         }
-        $("#debtTable").append('<tr>\n' +
+        $("#debtTable").append('<tr data-target="#theModal" data-toggle="modal" onclick="payMoney(' + i + ')">\n' +
             '                                <td>' + debt[i].toUser.name + '</td>\n' +
             '                                <td>' + debt[i].amount + ',-</td>\n' +
-            '                                <td>*pay*</td>\n' +
             '                            </tr>'
         );
     }
 
     for(var i = 0; i < income.length; i++){
-        $("#incomeTable").append('<tr>\n' +
+        for(var j = 0; j < members.length; j++){
+            if(income[i].toUser.userId == members[j].userId){
+                income[i].toUser = members[j];
+                j = members.length;
+            }
+        }
+        $("#incomeTable").append('<tr onclick="sendPaymentRequest(' + i + ')">\n' +
             '                                <td>' + income[i].toUser.name + '</td>\n' +
             '                                <td>' + income[i].amount + ',-</td>\n' +
             '                            </tr>'
         );
+    }
+}
+
+function payMoney(userId) {
+    console.log("hei");
+    callModal("modals/payMoney.html");
+}
+
+function sendPaymentRequest() {
+    callModal("modals/payMoney.html");
+}
+
+function confirmPayment(){
+    var amount = document.getElementById("paymentAmount").value;
+    if(amount != "" && amount != null && amount > 0){
+
+        document.getElementById("alertboxPayment").innerHTML = '<div id="alertboxPayment" class="alert alert-success">\n' +
+            '  <strong>Success!</strong> Your payment is now registered.\n' +
+            '</div>';
+    } else {
+        document.getElementById("alertboxPayment").innerHTML = '<div id="alertboxPayment" class="alert alert-danger">\n' +
+            '  <strong>Failed!</strong> You have to put in the amount you have payed. <br> (no letters or negative numbers)' +
+            '</div>';
     }
 }

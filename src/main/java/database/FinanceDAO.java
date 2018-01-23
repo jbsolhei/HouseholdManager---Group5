@@ -14,7 +14,7 @@ public class FinanceDAO {
 
     public static ArrayList<Debt> getDebt(int userId) {
         ArrayList<Debt> debts = new ArrayList<>();
-        int fromPerson = 0;
+        int toPerson = 0;
         double value = 0;
         User theOtherUser;
         String query = "SELECT * FROM Finance WHERE fromPerson = ?";
@@ -27,11 +27,11 @@ public class FinanceDAO {
             try (ResultSet rs = st.executeQuery()) {
 
                 while (rs.next()) {
-                    fromPerson = rs.getInt("toPerson");
+                    toPerson = rs.getInt("toPerson");
                     value = rs.getDouble("value");
 
                     theOtherUser = new User();
-                    theOtherUser.setUserId(userId);
+                    theOtherUser.setUserId(toPerson);
                     debts.add(new Debt(value, theOtherUser));
 
                 }

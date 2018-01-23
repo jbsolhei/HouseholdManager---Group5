@@ -3,27 +3,40 @@
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
             <div class="panel row" id="profile-panel-info">
-                <div class="panel-heading">Finance</div>
+                <div class="panel-heading">
+                    <label style="float: left"><h4>Finance</h4></label>
+                    <label style="float: right">
+                        <i data-toggle="tooltip" data-placement="bottom" title="Click on rows to either:
+                        1. Settle payment or
+                        2. Send an alert to the user to
+                        request your money." id="financeInfoButton" class="glyphicon glyphicon-question-sign"></i>
+                    </label>
+                </div>
                 <div class="panel-body">
+                    <br>
                     <div class="row">
-                        <div class="bg-danger col-sm-7">
+                        <div class="bg-danger col-sm-12">
+                            <h4>People you owe money</h4>
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>People you owe money</th>
+                                    <th>Name</th>
                                     <th>Sum</th>
-                                    <th>Settle</th>
                                 </tr>
                                 </thead>
                                 <tbody id="debtTable">
                                 </tbody>
                             </table>
                         </div>
-                        <div class="bg-success col-sm-5">
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="bg-success col-sm-12">
+                            <h4>People who owe you money</h4>
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>People who owe you money</th>
+                                <th>Name</th>
                                 <th>Sum</th>
                             </tr>
                             </thead>
@@ -37,6 +50,12 @@
             </div>
         </div>
         <div class="col-sm-1"></div>
+    </div>
+    <div class="modal fade text-center" id="theModal">
+        <div class="modal-dialog">
+            <div class="modal-content" id="modal">
+            </div>
+        </div>
     </div>
 </div>
 <script>
