@@ -157,7 +157,7 @@
     <plugin>
       <groupId>com.sebastian-daschner</groupId>
       <artifactId>jaxrs-analyzer-maven-plugin</artifactId>
-      <version>0.14</version>
+      <version>0.16</version>
       <executions>
         <execution>
           <goals>
@@ -196,8 +196,6 @@
 
                 <exclude>**/database/ShoppingListDAOTest.java</exclude>
                 <exclude>**/database/ShoppingTripDAOTest.java</exclude>
-              <exclude>**/database/ShoppingListDAOTest.java</exclude>
-              <exclude>**/database/ShoppingTripDAOTest.java</exclude>
               <exclude>**/database/NewsDAOTest.java</exclude>
               <exclude>**/database/FinanceDAOTest.java</exclude>
               <exclude>**/database/ChoreDAOTest.java</exclude>

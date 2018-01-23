@@ -1,6 +1,8 @@
 package database;
 
 import classes.Notification;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.*;
@@ -9,6 +11,17 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class NotificationDAOTest {
+
+    @Before
+    public void setUp() throws Exception {
+        DAOTest.setUp();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        DAOTest.tearDown();
+    }
+
     @Test
     public void getNotifications() throws Exception {
         ArrayList<Notification> notifications = NotificationDAO.getNotifications(200);
