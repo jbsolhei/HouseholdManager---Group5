@@ -166,13 +166,14 @@ public class ShoppingListService {
      *
      * @param shoppingListId the shopping list ID
      * @param userId the user ID
-     * @return false if an error occurred, 1 if no errors occurred
+     * @return false if an error occurred, true if no errors occurred
      */
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}/user")
-    public boolean deleteUserInShoppingList(@PathParam("shopping_list_id") int shoppingListId, int userId) {
-        return (ShoppingListDAO.updateUserInShoppingList(shoppingListId, userId, true) != -1);
+    @Consumes(MediaType.TEXT_PLAIN)
+    public boolean deleteUserInShoppingList(@PathParam("shopping_list_id") int shoppingListId, String userId) {
+        return (ShoppingListDAO.updateUserInShoppingList(shoppingListId, Integer.parseInt(userId), true) != -1);
     }
 
     /**
@@ -180,12 +181,13 @@ public class ShoppingListService {
      *
      * @param shoppingListId the shopping list ID
      * @param userId the user ID
-     * @return false if an error occurred, 1 if no errors occurred
+     * @return false if an error occurred, true if no errors occurred
      */
     @POST
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}/user")
-    public boolean insertUserInShoppingList(@PathParam("shopping_list_id") int shoppingListId, int userId) {
-        return (ShoppingListDAO.updateUserInShoppingList(shoppingListId, userId, false) != -1);
+    @Consumes(MediaType.TEXT_PLAIN)
+    public boolean insertUserInShoppingList(@PathParam("shopping_list_id") int shoppingListId, String userId) {
+        return (ShoppingListDAO.updateUserInShoppingList(shoppingListId, Integer.parseInt(userId) , false) != -1);
     }
 }

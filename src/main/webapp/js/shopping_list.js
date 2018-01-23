@@ -159,6 +159,8 @@ function ajax_getShoppingListUsers(shoppingListId, handleData) {
         }
     })
 }
+    
+}
 
 /* --- visual updates methods --- */
 
