@@ -1,11 +1,21 @@
 /**
- * Used to add a notification to the database.
+ * Used to add a notification to the database. DateTime automatically added.
  * @param userId The id of the user that the notification is going to.
  * @param houseId The house that the notification is connected to.
  * @param message The message in the notification.
- * @param dateTime The date and time of the notification.
  */
-function addNotification(userId, houseId, message, dateTime) {
+function addNotification(userId, houseId, message) {
+
+var currentdate = new Date();
+var dateTime =    currentdate.getFullYear() + "-"
+                +(currentdate.getMonth()+1)  + "-"
+                + currentdate.getDate() + " "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":"
+                + currentdate.getSeconds();
+
+    console.log(dateTime);
+
     var notification = {
         userId: userId,
         houseId: houseId,
@@ -58,7 +68,6 @@ function getNotifications(userId) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
-            console.log(result);
             updateNotificationDropdown(result);
             updateNotificationBell();
             return result;
@@ -80,6 +89,7 @@ function updateNotificationDropdown(notifications) {
         var message = notifications[i].message;
         var id = notifications[i].notificationId;
         var houseName = notifications[i].houseName;
+        if (houseName == null) houseName = "";
 
         $("#notifyDropdownListId").prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
     }
@@ -99,7 +109,6 @@ function countNotifications() {
  */
 function updateNotificationBell() {
     if (countNotifications() > 0) {
-        console.log("MERE ENN NULL");
         $("#notifyBellId").css('color', 'orange');
     }
 }
@@ -114,7 +123,7 @@ var opened = false;
  */
 $(document).on('click', '.notificationElement', function () {
     var id = $(this).attr('id');
-    id = id.slice(-1);
+    id = id.slice(7);
     updateNotification(id);
     $(this).remove();
 
@@ -132,7 +141,7 @@ $(document).on('click', 'body', function (e) {
     var a = e.target.parentElement;
     b = $(a).attr('class');
 
-    if (b === undefined && a !== null || b.slice(0, 4) !== "noti" && opened) {
+    if (b == undefined && a !== null || b.slice(0, 4) !== "noti" && opened) {
         $('#notifyBellId').parent().removeClass('open');
 
         opened = false;
