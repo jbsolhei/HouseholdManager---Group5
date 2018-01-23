@@ -6,6 +6,7 @@ public class Notification {
     private int notificationId;
     private int userId;
     private int houseId;
+    private String houseName;
     private String dateTime;
     private boolean isRead;
 
@@ -57,4 +58,11 @@ public class Notification {
         isRead = read;
     }
 
+    public String getHouseName() {
+        return houseName;
+    }
+
+    public void setHouseName(String houseName) {
+        this.houseName = houseName;
+    }
 }
