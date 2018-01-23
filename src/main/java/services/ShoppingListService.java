@@ -3,9 +3,10 @@ package services;
 import auth.Auth;
 import auth.AuthType;
 import classes.Item;
-import classes.User;
 import classes.ShoppingList;
+import classes.User;
 import database.ShoppingListDAO;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -54,7 +55,7 @@ public class ShoppingListService {
     @Path("/{id}/shopping_lists/")
     @Consumes(MediaType.TEXT_PLAIN)
     public int createShoppingList(@PathParam("id") int houseId, String shoppingListName){
-        return  ShoppingListDAO.createShoppingList(shoppingListName, houseId);
+        return  ShoppingListDAO.createShoppingList(StringEscapeUtils.escapeHtml4(shoppingListName), houseId);
     }
 
     @DELETE
@@ -70,6 +71,7 @@ public class ShoppingListService {
     @Path("/{id}/shopping_lists/{shopping_list_id}/items")
     @Consumes(MediaType.APPLICATION_JSON)
     public void addItems(@PathParam("shopping_list_id") int shopping_list_id, Item item){
+        item.setName(StringEscapeUtils.escapeHtml4(item.getName()));
         ShoppingListDAO.addItem(item, shopping_list_id);
     }
 
