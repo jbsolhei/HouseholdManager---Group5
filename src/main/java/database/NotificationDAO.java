@@ -17,7 +17,10 @@ public class NotificationDAO {
      */
     public static ArrayList<Notification> getNotifications(int userId) {
 
-        String query = "SELECT * FROM Notification WHERE userId = ? and isRead = FALSE";
+        String query = "SELECT userId, Notification.houseId, notificationId, message, notificationDateTime, isRead, house_name\n" +
+                       "FROM Notification\n" +
+                       "LEFT JOIN Household ON Notification.houseId = Household.houseId\n" +
+                       "WHERE userId = ? AND isRead = FALSE";
         ArrayList<Notification> notifications = new ArrayList<>();
 
         try (DBConnector dbc = new DBConnector();
@@ -35,6 +38,7 @@ public class NotificationDAO {
                     notification.setMessage(rs.getString("message"));
                     notification.setDateTime(rs.getString("notificationDateTime"));
                     notification.setRead(rs.getBoolean("isRead"));
+                    notification.setHouseName(rs.getString("house_name"));
 
                     notifications.add(notification);
                 }

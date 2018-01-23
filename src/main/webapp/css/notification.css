@@ -4,15 +4,18 @@
 
 .notificationElement {
     color: #233237;
-    height: 5vh;
-    padding-left: 1vh;
-    padding-right: 1vh;
+    height: 5.5vh;
+    padding: 1vh;
+    cursor: pointer;
+    border-radius: 0;
 }
 
+.notificationElement:hover {
+    background-color: lightgrey;
+}
 
 .notificationElement.list-group-item {
-    -moz-border-radius-topleft:  0;
-    -moz-border-radius-topright: 0;
+    border-radius: 0;
 }
 
 #notifyDropdownListId {
@@ -23,11 +26,18 @@
 }
 
 .notifyMessageId {
-    font-size: 15px;
+    font-size: 1.2em;
     margin-bottom: 1px;
 }
 
 .notifyDateTimeId {
     color: dimgrey;
-    font-size: 8px;
+    font-size: 0.7em;
+    text-align: left;
+}
+
+.notifyHousehold {
+    float: right;
+    color: dimgrey;
+    font-size: 0.9em;
 }

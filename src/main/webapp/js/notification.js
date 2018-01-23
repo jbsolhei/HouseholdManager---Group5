@@ -60,6 +60,7 @@ function getNotifications(userId) {
         success: function (result) {
             console.log(result);
             updateNotificationDropdown(result);
+            updateNotificationBell();
             return result;
         },
         error: function (e) {
@@ -68,12 +69,78 @@ function getNotifications(userId) {
     })
 }
 
+/**
+ * Inserts the user's notifications in to the dropdown.
+ * @param notifications A Notification object.
+ */
 function updateNotificationDropdown(notifications) {
     for (i = 0; i < notifications.length; i++) {
-        $("#notifyDropdownListId").prepend("<li id='notifId"+notifications[i].notificationId+"' class='notificationElement list-group-item'><p class='notifyMessageId'>"+ notifications[i].message +"</p><p class='notifyDateTimeId'>"+notifications[i].dateTime+"</p></li>");
+        var dateTime = notifications[i].dateTime;
+        dateTime = dateTime.slice(0, dateTime.length - 2);
+        var message = notifications[i].message;
+        var id = notifications[i].notificationId;
+        var houseName = notifications[i].houseName;
+
+        $("#notifyDropdownListId").prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
     }
 }
 
+/**
+ * Counts the number of notifications in the dropdown.
+ * @returns {jQuery} Returns the number of notifications.
+ */
+function countNotifications() {
+    var notifications = $('#notifyDropdownListId').children('li').length;
+    return notifications;
+}
+
+/**
+ * Updates the notifications bell to the color orange if there are some notifications left in the dropdown.
+ */
+function updateNotificationBell() {
+    if (countNotifications() > 0) {
+        console.log("MERE ENN NULL");
+        $("#notifyBellId").css('color', 'orange');
+    }
+}
+
+//Set to true when the dropdown is opened, and false if closed.
+var opened = false;
+
+
+/**
+ * When a notifications element is clicked it will be removed and sett to "read" in the database.
+ * If there are no more notifications left in the dropdown the bell is turned back to white.
+ */
+$(document).on('click', '.notificationElement', function () {
+    var id = $(this).attr('id');
+    id = id.slice(-1);
+    updateNotification(id);
+    $(this).remove();
+
+    if (countNotifications() <= 0) {
+        $("#notifyBellId").css('color', 'white');
+        $('#notifyBellId').parent().removeClass('open');
+    }
+});
+
+
+/**
+ * Used to make the dropdown close when pressed outside the dropdown.
+ */
+$(document).on('click', 'body', function (e) {
+    var a = e.target.parentElement;
+    b = $(a).attr('class');
+
+    if (b === undefined && a !== null || b.slice(0, 4) !== "noti" && opened) {
+        $('#notifyBellId').parent().removeClass('open');
+
+        opened = false;
+    } else if (b == "dropdown-toggle" && countNotifications() > 0) {
+        opened = true;
+        $('#notifyBellId').parent().toggleClass('open');
+    }
+});
 
 
 
