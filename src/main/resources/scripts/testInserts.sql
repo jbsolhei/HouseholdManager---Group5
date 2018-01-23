@@ -64,6 +64,6 @@ INSERT INTO Finance (fromPerson, toPerson, value) VALUES (12, 14, 50);
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (14, 13, 50);
 
 INSERT INTO Chore (title, description, chore_date, chore_time, choreId, houseId, userId)
-VALUES ('Ta ut søpla', 'Husk at grønn pose betyr restavfall!', '2018-02-15', '2018-02-15 10:30:00', 1, 10, 51);
+VALUES ('Ta ut søpla', 'Husk at grønn pose betyr restavfall!', '2018-02-15 10:30:00', '2018-02-15 10:30:00', 1, 10, 51);
 INSERT INTO Chore (title, description, chore_date, chore_time, choreId, houseId, userId)
-VALUES ('Ta ut søpla', 'Husk at grønn pose betyr restavfall!', '2017-02-15', '2017-02-15 10:30:00', 2, 10, 51);
+VALUES ('Ta ut søpla', 'Husk at grønn pose betyr restavfall!', '2017-02-15 10:30:00', '2017-02-15 10:30:00', 2, 10, 51);

@@ -4,8 +4,6 @@ import classes.*;
 
 import java.security.SecureRandom;
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -418,12 +416,12 @@ public class HouseholdDAO {
 
 
     /**
-     * Used to get all todolists for a household
+     * Used to get all chores for a household
      *
      * @param houseId the id of the house
-     * @return array with all the todos.
+     * @return array with all the chores.
      */
-    public static Chore[] getTodosForHousehold(int houseId) {
+    public static Chore[] getChoresForHousehold(int houseId) {
         ArrayList<Chore> chores = new ArrayList<>();
         boolean householdExists = false;
 
@@ -442,7 +440,7 @@ public class HouseholdDAO {
                     chore.setHouseId(houseId);
                     chore.setChoreId(rs.getInt("choreId"));
                     chore.setUserId(rs.getInt("userId"));
-                    chore.setTime(rs.getTimestamp("date").toLocalDateTime());
+                    chore.setTime(rs.getTimestamp("chore_date").toString());
                     chores.add(chore);
                     householdExists = true;
                 }

@@ -1,13 +1,9 @@
 package database;
 
 import classes.Chore;
-import classes.Household;
-import classes.User;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ChoreDAO {
@@ -25,7 +21,7 @@ public class ChoreDAO {
 
             st.setString(7, chore.getTitle());
             st.setString(1, chore.getDescription());
-            LocalDateTime dateTime = chore.getTime(); // your ldt
+            LocalDateTime dateTime = chore.getTime();
             java.sql.Date sqlDate = java.sql.Date.valueOf(dateTime.toLocalDate());
             st.setDate(2, sqlDate);
 
@@ -62,8 +58,7 @@ public class ChoreDAO {
     public static ArrayList<Chore> getChores(int householdId){
         ArrayList<Chore> chores = new ArrayList<>();
         Chore chore;
-
-        String query = "SELECT * FROM Chore WHERE houseId = ? AND chore_date >= CURDATE();";
+        String query = "SELECT * FROM Chore WHERE houseId = ? AND chore_date >= NOW();";
 
         try (DBConnector dbc = new DBConnector();
             Connection conn = dbc.getConn();
@@ -79,8 +74,7 @@ public class ChoreDAO {
                     chore.setDescription(rs.getString("description"));
                     chore.setChoreId(rs.getInt("choreId"));
 
-                    //converts SQL-timestamp to JAVA-localDateTime
-                    chore.setTime(rs.getTimestamp("chore_time").toLocalDateTime());
+                    chore.setTime(rs.getTimestamp("chore_date").toString().replace(" ","T"));
 
                     chore.setHouseId(householdId);
                     if (rs.getInt("done") == 1) {
@@ -89,6 +83,47 @@ public class ChoreDAO {
                         chore.setDone(false);
                     }
                     chore.setUserId(rs.getInt("userId"));
+                    chore.setUser(UserDAO.getUser(rs.getInt("userId")));
+                    chores.add(chore);
+                }
+
+                return chores;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ArrayList<Chore> getUserChores(int userId){
+        ArrayList<Chore> chores = new ArrayList<>();
+        Chore chore;
+
+        String query = "SELECT * FROM Chore WHERE userId = ?;";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)){
+
+            st.setInt(1, userId);
+
+            try(ResultSet rs = st.executeQuery()) {
+
+                while (rs.next()) {
+                    chore = new Chore();
+                    chore.setTitle(rs.getString("title"));
+                    chore.setDescription(rs.getString("description"));
+                    chore.setChoreId(rs.getInt("choreId"));
+
+                    chore.setTime(rs.getTimestamp("chore_time").toString().replace(" ","T"));
+
+                    chore.setHouseId(rs.getInt("houseId"));
+                    if (rs.getInt("done") == 1) {
+                        chore.setDone(true);
+                    } else {
+                        chore.setDone(false);
+                    }
+                    chore.setUserId(userId);
                     chores.add(chore);
                 }
 

@@ -10,6 +10,7 @@ var profile = "profile.html";
 var stats = "stats.html";
 var activeSHL = 0;
 var householdsLoaded = false;
+var activeChore = [0,0];
 
 function ajaxAuth(attr) {
     attr.headers = {
@@ -251,6 +252,14 @@ function deleteNews(newsId,runThisAfter){
         success: function(data){
             runThisAfter(data);
             // Do things after delete here
+        }
+    });
+}
+
+function getLocalResident(userId){
+    $.each(getCurrentHousehold().residents, function (i, val) {
+        if(val.userId===userID){
+            return val;
         }
     });
 }
