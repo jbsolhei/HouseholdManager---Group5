@@ -226,6 +226,24 @@ function ajax_deleteItem(shoppingListId, itemId, handleData) {
     })
 }
 
+function ajax_addItem(shoppingListId, itemName, handleData) {
+    console.log('ajax_addItem(). shoppingListId: ' + shoppingListId + ". itemName: " + itemName);
+    ajaxAuth({
+        type: 'POST',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/items',
+        data: itemName,
+        contentType: 'text/plain',
+        success: function (data) {
+            console.log("success: ajax_addItem()");
+            handleData(data);
+        },
+        error: function (result) {
+            console.log("error: ajax_addItem()");
+            console.log(result);
+        }
+    })
+}
+
 /* --- visual updates methods --- */
 
 
@@ -420,6 +438,11 @@ function uncheckAssociatedUser(userId) {
     })
 }
 
+/**
+ * Deletes an item and refreshes the list
+ *
+ * @param itemId the itemId
+ */
 function deleteItem(itemId) {
     console.log("delete item:" + itemId);
     ajax_deleteItem(SHL[activeSHL].shoppingListId, itemId, function (data) {
@@ -427,4 +450,22 @@ function deleteItem(itemId) {
             showListFromMenu(activeSHL, false)
         }
     })
+}
+
+/**
+ * method for adding an item to a list
+ * The shopping list ID is pulled from SHL[activeSHL]
+ * The shopping list name is pulled from $("#emptyListText")
+ */
+function addItem() {
+    var itemName = $("#shoppingListItemInput").val();
+    if(itemName !== "" && itemName !== null) {
+        $("#emptyListText").addClass("hide");
+        ajax_addItem(SHL[activeSHL].shoppingListId, itemName, function (data) {
+            if (data) {
+                console.log("actove: " + activeSHL);
+                showListFromMenu(activeSHL, false);
+            }
+        })
+    }
 }

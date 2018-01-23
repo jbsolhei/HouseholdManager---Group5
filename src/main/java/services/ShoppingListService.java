@@ -99,9 +99,9 @@ public class ShoppingListService {
     @POST
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}/items")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void addItems(@PathParam("shopping_list_id") int shopping_list_id, Item item){
-        ShoppingListDAO.addItem(item, shopping_list_id);
+    @Consumes(MediaType.TEXT_PLAIN)
+    public boolean addItem(@PathParam("shopping_list_id") String shopping_list_id, String itemName){
+        return (ShoppingListDAO.addItem(itemName, Integer.parseInt(shopping_list_id)) == 1);
     }
 
     @DELETE

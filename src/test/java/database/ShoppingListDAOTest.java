@@ -100,10 +100,9 @@ public class ShoppingListDAOTest {
     @Test
     public void addItem() throws Exception {
 
-        Item item = new Item();
-        item.setName("Pastasaus");
+        String itemName = "Pastasaus";
 
-        ShoppingListDAO.addItem(item, 2);
+        ShoppingListDAO.addItem(itemName, 2);
 
         String query = "SELECT * FROM Item WHERE name='Pastasaus' and shopping_listId='2'";
         ResultSet rs = st.executeQuery(query);

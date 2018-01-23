@@ -397,25 +397,26 @@ public class ShoppingListDAO {
     }
 
     /**
-     * Inserts a row to the Item table, and associates it with a shopping list
+     * * Inserts a row to the Item table, and associates it with a shopping list
      *
-     * @param item the item to be added to the database
+     * @param itemName the name of the item to be added to the database
      * @param shopping_list_id the shopping list ID of the shopping list to be associated with the item
+     * @return -1 if an error occurred, returns 1 if no errors occurred
      */
-    public static void addItem(Item item, int shopping_list_id) {
+    public static int addItem(String itemName, int shopping_list_id) {
         String query = "INSERT INTO Item(name, shopping_listId) VALUES (?, ?);";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
 
-            st.setString(1, item.getName());
-            //st.setInt(2, 0);
+            st.setString(1, itemName);
             st.setInt(2, shopping_list_id);
-            st.executeUpdate();
+            return st.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return -1;
         }
     }
 
