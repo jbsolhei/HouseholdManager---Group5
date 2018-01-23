@@ -440,7 +440,7 @@ public class HouseholdDAO {
                     chore.setHouseId(houseId);
                     chore.setChoreId(rs.getInt("choreId"));
                     chore.setUserId(rs.getInt("userId"));
-                    chore.setTime(rs.getTimestamp("chore_date").toString());
+                    chore.setTime(rs.getTimestamp("chore_datetime").toString());
                     chores.add(chore);
                     householdExists = true;
                 }

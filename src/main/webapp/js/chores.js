@@ -112,14 +112,14 @@ function switchChoresContent(num) {
 
 function newChoreButtonPressed(){
 
-
     //input formatting:
     var newChoreTitle = $("#newChoreTitleInput").val();
     var newChoreDescription = $("#newChoreDescriptionInput").val();
     var newChoreDate = $("#newChoreLocalTimeInput").val();
     var newChoreUserId = getCurrentHousehold().residents[selectedUserForNewChore].userId;
+    var newHouseId = getCurrentHousehold().houseId;
     var checked = false;
-    var newChore = {title:newChoreTitle, description:newChoreDescription, time: newChoreDate, userId: newChoreUserId, done:checked};
+    var newChore = {houseId:newHouseId,title:newChoreTitle, description:newChoreDescription, time: newChoreDate, userId: newChoreUserId, done:checked};
     console.log(newChore);
     postNewChore(newChore);
 }
