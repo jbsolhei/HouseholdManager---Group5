@@ -131,6 +131,7 @@ public class ShoppingListService {
 
     /**
      * Updates 'checkedBy' of an Item given its itemId and userId
+     * Sets checkedBy = null if user id = 0
      *
      * @param itemId the item ID
      * @param userId the user ID
@@ -158,5 +159,33 @@ public class ShoppingListService {
     @Consumes(MediaType.TEXT_PLAIN)
     public void updateArchived(@PathParam("shopping_list_id") int shoppingListId, String archived) {
         ShoppingListDAO.updateArchived(shoppingListId,Boolean.parseBoolean(archived));
+    }
+
+    /**
+     * Deletes a row in User_Shopping_list
+     *
+     * @param shoppingListId the shopping list ID
+     * @param userId the user ID
+     * @return false if an error occurred, 1 if no errors occurred
+     */
+    @DELETE
+    @Auth(AuthType.HOUSEHOLD)
+    @Path("/{shopping_list_id}/user")
+    public boolean deleteUserInShoppingList(@PathParam("shopping_list_id") int shoppingListId, int userId) {
+        return (ShoppingListDAO.updateUserInShoppingList(shoppingListId, userId, true) != -1);
+    }
+
+    /**
+     * Inserts a row in User_Shopping_list
+     *
+     * @param shoppingListId the shopping list ID
+     * @param userId the user ID
+     * @return false if an error occurred, 1 if no errors occurred
+     */
+    @POST
+    @Auth(AuthType.HOUSEHOLD)
+    @Path("/{shopping_list_id}/user")
+    public boolean insertUserInShoppingList(@PathParam("shopping_list_id") int shoppingListId, int userId) {
+        return (ShoppingListDAO.updateUserInShoppingList(shoppingListId, userId, false) != -1);
     }
 }

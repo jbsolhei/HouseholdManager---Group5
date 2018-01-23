@@ -59,7 +59,7 @@ function ajax_updateUsers (userIds, shoppingListId) {
  * @param shoppingListId, the shopping list ID
  */
 function ajax_getShoppingList(shoppingListId, handleData) {
-    console.log('ajax_getShoppingList()');
+    console.log('ajax_getShoppingList(). shoppingListId: ' + shoppingListId);
     ajaxAuth({
         type: 'GET',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId,
@@ -80,17 +80,17 @@ function ajax_getShoppingList(shoppingListId, handleData) {
  * Ajax-method that updates checkedBy to an Item given the item ID
  * @param itemId, the item ID
  */
-function ajax_updateCheckedBy(itemId) {
-    console.log('ajax_updateCheckedBy()');
-    console.log('json:' + JSON.stringify(getCurrentUser().userId));
+function ajax_updateCheckedBy(itemId, userId, handleData) {
+    console.log('ajax_updateCheckedBy(). itemId: ' + itemId + ". userId: " + userId);
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/items/' + itemId + '/user/',
-        data: JSON.stringify(getCurrentUser().userId),
+        data: JSON.stringify(userId),
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
-        success: function () {
+        success: function (data) {
             console.log("success: ajax_updateCheckedBy()");
+            handleData(data);
         },
         error: function (result) {
             console.log("error: ajax_updateCheckedBy()");
@@ -169,7 +169,7 @@ function readyShoppingList(){
     if(numberOfLists>0){
         insertShoppingLists();
         $("#shoppingList" + activeSHL).addClass("active");
-        showList(activeSHL);
+        showListFromMenu(activeSHL);
     }
 }
 
@@ -216,28 +216,25 @@ function loadSideMenu(){
 function showListFromMenu(SLIndex, isArchived){
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
     console.log("SLIndex: " + SLIndex);
-    console.log("id: " + SHL[SLIndex].shoppingListId);
     ajax_getShoppingList(SHL[SLIndex].shoppingListId, function (shoppingList) {
         console.log(shoppingList);
-        console.log(shoppingList.items.length);
         if(shoppingList.items.length===0){
             $("#emptyListText").removeClass("hide");
         }else{
             $("#emptyListText").addClass("hide");
             var items = shoppingList.items;
             $.each(items,function(i,val){
-                console.log('checkedBy: ' + val.checkedBy);
                 var checkedBy;
                 if(val.checkedBy === null) {
                     checkedBy="";
-                    $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                    $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="checkItem(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td id="name_item_id_' + val.itemId + '">' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
                 } else {
                     checkedBy = val.checkedBy.name;
-                    $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="unCheck(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                    $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="uncheckItem(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td id="name_item_id_' + val.itemId + '" class="item-is-checked">' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
                 }
             });
         }
-        $("#headline").replaceWith('<h4 id="headline">' + shoppingList.name + '</h4>');
+        $("#headline").replaceWith('<h4 id="headline" class="col-md-10">' + shoppingList.name + '</h4>');
         $("#shoppingListItemInput").focus();
         $("#shoppingList" + activeSHL).removeClass("active");
         $("#shoppingList" + SLIndex).addClass("active");
@@ -257,8 +254,7 @@ function navToAShoppingList(shoppingListIndex, isArchived) {
     showListFromMenu(activeSHL)
 }
 
-function showListOfAssociatedUsers() {
-
+function toggleListOfAssociatedUsers() {
     var shoppingListId = SHL[0].shoppingListId;
     console.log(shoppingListId);
     var householdUsers = getCurrentHousehold().residents;
@@ -267,14 +263,68 @@ function showListOfAssociatedUsers() {
         console.log(users);
         $("#associated_users_table").append('<thead><tr><th></th><th>' + "Users that can view this list" + '</th></tr></thead>');
         $.each(householdUsers, function (i, val){
-            $("#associated_users_table").append('<tbody><tr><td id="associated_user_id_"'+ val.userId +' onclick="checkUser('+ val.userId +')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr></tbody>');
+            $("#associated_users_table").append('<tbody><tr><td id="associated_user_id_' + val.userId + '" onclick="checkAssociatedUser('+ val.userId +')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr></tbody>');
         });
         $.each(users, function (i, val) {
-            $("#associated_user_id_" + val.userId).replaceWith('<td id="associated_user_id_' + val.userId +'" onclick="uncheckUser('+ val.userId +')" class="glyphicon glyphicon-check checked-in-modal"></td>')
+            $("#associated_user_id_" + val.userId).replaceWith('<td id="associated_user_id_' + val.userId +'" onclick="uncheckAssociatedUser('+ val.userId +')" class="glyphicon glyphicon-check"></td>')
         });
-        $("#list_of_users_associated_with_shopping_list").slideToggle("slow");
+        if ($("#list_of_users_associated_with_shopping_list").css('display') === "none") {
+            $("#list_of_users_associated_with_shopping_list").css('display', 'block');
+        } else {
+            $("#list_of_users_associated_with_shopping_list").css('display', 'none');
+        }
     })
 }
 
+/**
+ * Replaces the unchecked-icon with a refresh icon
+ * Calls the Ajax-method: ajax_updateCheckedBy(), which in turn updates the item given the item id and the user ID
+ * the user ID is pulled from getCurrentUser()
+ * @param itemId, the item ID
+ */
+function checkItem(itemId) {
+    $("#unchecked" + itemId).addClass("glyphicon-refresh").removeClass("glyphicon-unchecked");
+    ajax_updateCheckedBy(itemId, getCurrentUser().userId, function (data) {
+        if (data === true) {
+            $("#unchecked" + itemId).replaceWith('<span onclick="checkItem(' + itemId + ')" id="unchecked' + itemId + '" class="glyphicon glyphicon-unchecked"></span>');
+            $("#name_item_id_" + itemId).addClass("item-is-checked");
+            $("#checkedBy" + itemId).html(getCurrentUser().name);
+            showListFromMenu(activeSHL);
+        } else {
+            console.log("error: data === false");
+            $("#unchecked" + itemId).addClass("glyphicon-check").removeClass("glyphicon-refresh");
+        }
+    })
+}
 
+/**
+ * Replaces the check-icon with a refresh icon
+ * Calls the Ajax-method: ajax_updateCheckedBy(), which in turn updates the item given the item id and the user ID
+ * the user ID is always 0
+ * @param itemId, the item ID
+ */
+function uncheckItem(itemId) {
+    $("#checked" + itemId).addClass("glyphicon-refresh").removeClass("glyphicon-unchecked");
+    ajax_updateCheckedBy(itemId, 0, function (data) {
+        if (data === true) {
+            $("#checked" + itemId).replaceWith('<span onclick="unCheckItem(' + itemId + ')" id="checked' + itemId + '" class="glyphicon glyphicon-check"></span>');
+            $("#name_item_id_" + itemId).removeClass("item-is-checked");
+            $("#checkedBy" + itemId).html('');
+            showListFromMenu(activeSHL);
+        } else  {
+            console.log("error: data === false");
+            $("#checked" + itemId).addClass("glyphicon-unchecked").removeClass("glyphicon-refresh");
+        }
+    })
+}
 
+function checkAssociatedUser(userId) {
+    console.log("check user:" + userId);
+    ajax_updateUsers()
+    $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="uncheckAssociatedUser('+ userId +')" class="glyphicon glyphicon-check"></td>')
+}
+
+function uncheckAssociatedUser(userId) {
+    console.log("check user:" + userId);
+    $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="checkAssociatedUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td>')
+}

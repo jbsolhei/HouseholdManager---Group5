@@ -21,8 +21,8 @@
                 </div>
                 <div class="panel-body scrollWhenFull SL">
                     <ul id="shopping-list-tabs" class="nav nav-tabs list-inline">
-                        <li class="active"><a data-toggle="tab" href="#shopping-list-active-tab" onclick="showList(activeSHL)">Active</a></li>
-                        <li><a data-toggle="tab" href="#shopping-list-archived-tab" onclick="showList(archivedSHL)">Archived</a></li>
+                        <li class="active"><a data-toggle="tab" href="#shopping-list-active-tab" onclick="showListFromMenu(activeSHL)">Active</a></li>
+                        <li><a data-toggle="tab" href="#shopping-list-archived-tab" onclick="showListFromMenu(archivedSHL)">Archived</a></li>
                         <!-- <ul id="shoppingSideMenu" class="nav nav-pills nav-stacked"></ul> -->
                     </ul>
                     <div class="tab-content">
@@ -51,19 +51,21 @@
         <div class="col-md-8 widgetCol">
             <div class="panel panel-default widget">
                 <div id="head" class="panel-heading">
-                    <h4 id="headline" class="col-md-11"></h4>
-                    <div id="edit_shopping_list_btn" class="glyphicon glyphicon-eye-open col-md-1" onclick="showListOfAssociatedUsers()"></div>
-                    <div class="input-group">
-                        <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
-                        <!--
-                        <span id="okButton" onclick="addNewShoppingList()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
-                        -->
-                        <span class="input-group-btn">
-                            <button id="okButton" onclick="addNewShoppingList()" class="btn btn-success hide">Ok</button>
-                        </span>
-                        <span class="input-group-btn">
-                            <button id="privateButton" onclick="setPrivate()" class="btn btn-secondary hide" type="button">Private</button>
-                        </span>
+                    <div class="row">
+                        <h4 id="headline" class="col-md-10"></h4>
+                        <button id="edit_share_shopping_list_btn"  class="col-md-2 btn-info" onclick="toggleListOfAssociatedUsers()">Share</button>
+                        <div class="input-group">
+                            <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
+                            <!--
+                            <span id="okButton" onclick="addNewShoppingList()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
+                            -->
+                            <span class="input-group-btn">
+                                <button id="okButton" onclick="addNewShoppingList()" class="btn btn-success hide">Ok</button>
+                            </span>
+                            <span class="input-group-btn">
+                                <button id="privateButton" onclick="setPrivate()" class="btn btn-secondary hide" type="button">Private</button>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div id="list_of_users_associated_with_shopping_list">
@@ -101,7 +103,10 @@
                         <a onclick="createNewList('ThisIsANewList')" class="btn btn-success btn-sm">
                             <span class="glyphicon glyphicon-plus"></span> Create new list
                         </a>
-                        <a id="deleteButton" onclick="deleteList()" class="btn btn-warning btn-sm">
+                        <a id="archiveButton" onclick="archiveList()" class="btn btn-warning btn-sm">
+                            <span class="glyphicon glyphicon-folder-open"></span> Archive this list
+                        </a>
+                        <a id="deleteButton" onclick="deleteList()" class="btn btn-danger btn-sm">
                             <span class="glyphicon glyphicon-trash"></span> Delete this list
                         </a>
                     </div>

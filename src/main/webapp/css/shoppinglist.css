@@ -15,10 +15,20 @@
     box-sizing: border-box;
 }
 
-#associated_users_table{
-    padding: 5px;
-    text-align: center;
-    background-color: #e5eecc;
-    border: solid 1px #c3c3c3;
+#list_of_users_associated_with_shopping_list {
     display: none;
+    transition: height 1.5s;
+}
+
+#edit_share_shopping_list_btn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#deleteButton {
+    float: right;
+}
+
+.item-is-checked {
+    text-decoration: line-through;
 }

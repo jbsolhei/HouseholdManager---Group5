@@ -192,4 +192,28 @@ public class ShoppingListDAOTest {
             assertEquals(false, rs.getBoolean("archived"));
         } else assert false;
     }
+
+    @Test
+    public void updateUserInShoppingList() throws Exception {
+        String delete = "DELETE FROM User_Shopping_list WHERE shopping_listId = 2 AND userId = 50";
+        st.executeUpdate(delete);
+
+        String query = "SELECT * FROM User_Shopping_list WHERE shopping_listId = 2 AND userId = 50";
+
+        int rtn = ShoppingListDAO.updateUserInShoppingList(2, 50, false);
+        if (rtn != -1) assert true;
+        else assert false;
+
+        ResultSet rs = st.executeQuery(query);
+        if (rs.next()) assert true;
+        else assert false;
+
+        rtn = ShoppingListDAO.updateUserInShoppingList(2, 50, true);
+        if (rtn != -1) assert true;
+        else assert false;
+
+        rs = st.executeQuery(query);
+        if (rs.next()) assert false;
+        else assert true;
+    }
 }

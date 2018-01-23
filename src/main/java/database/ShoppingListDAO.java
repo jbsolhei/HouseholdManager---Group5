@@ -526,6 +526,34 @@ public class ShoppingListDAO {
         }
     }
 
+    /**
+     * Updates a row in the User_Shopping_list table
+     * if 'delete' == true, a row will be deleted
+     * if not a row will be added
+     *
+     * @param shoppingListId the shopping list ID
+     * @param userId the user ID
+     * @param delete decides if the method should delete or add
+     * @return -1 if an error occurs, 1 if no errors occurred
+     */
+    public static int updateUserInShoppingList(int shoppingListId, int userId, boolean delete) {
+        String query;
+        if (delete) query = "DELETE FROM User_Shopping_list WHERE userId=? AND shopping_listId=?";
+        else query = "INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (?, ?)";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+            st.setInt(1, userId);
+            st.setInt(2, shoppingListId);
+
+            return st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
     private static User[] toUserArray(ArrayList<User> users) {
         User[] userArray = new User[users.size()];
@@ -552,7 +580,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        ShoppingList rtn = ShoppingListDAO.getShoppingList(107);
+        int rtn = ShoppingListDAO.updateUserInShoppingList(66, 28, true);
         System.out.println("stop");
     }
 }
