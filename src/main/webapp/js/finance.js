@@ -1,5 +1,8 @@
 var income = [];
 var debt = [];
+var name = "";
+var amount = 0;
+var payOrAlert = 0;
 
 
 function getDebt(){
@@ -70,7 +73,7 @@ function loadFinanceTables(){
                 j = members.length;
             }
         }
-        $("#incomeTable").append('<tr onclick="sendPaymentRequest(' + i + ')">\n' +
+        $("#incomeTable").append('<tr data-target="#theModal" data-toggle="modal" onclick="sendPaymentRequest(' + i + ')">\n' +
             '                                <td>' + income[i].toUser.name + '</td>\n' +
             '                                <td>' + income[i].amount + ',-</td>\n' +
             '                            </tr>'
@@ -78,25 +81,39 @@ function loadFinanceTables(){
     }
 }
 
-function payMoney(userId) {
-    console.log("hei");
+function payMoney(i) {
+    payOrAlert = 0;
     callModal("modals/payMoney.html");
+    name = debt[i].toUser.name;
+    amount = debt[i].amount;
+
 }
 
-function sendPaymentRequest() {
+function sendPaymentRequest(i) {
+    payOrAlert = 1;
     callModal("modals/payMoney.html");
+    name = income[i].toUser.name;
+    amount = income[i].amount;
 }
+
+function loadPayMoneyModal() {
+    if(payOrAlert == 0){
+        document.getElementById("payMoneyText").innerHTML = '<p id="payMoneyText">Do you confirm that you have payed ' + name + ' ' + amount + ',- ?</p>';
+
+
+    } else {
+        $("#financeModalTitle").replaceWith('<h4 id="financeModalTitle" class="modal-title">Send payment alert</h4>');
+        document.getElementById("payMoneyText").innerHTML = '<p id="payMoneyText">Do you want to send ' + name + ' an alert to pay the ' + amount + ',- that he/she ows you?</p>';
+        $("#confirmPaymentButton").replaceWith('<button id="confirmSendAlertPaymentButton" type="button" class="btn btn-primary" onclick="confirmSendAlertPayment()">Send alert</button>');
+    }
+
+}
+
 
 function confirmPayment(){
-    var amount = document.getElementById("paymentAmount").value;
-    if(amount != "" && amount != null && amount > 0){
 
-        document.getElementById("alertboxPayment").innerHTML = '<div id="alertboxPayment" class="alert alert-success">\n' +
-            '  <strong>Success!</strong> Your payment is now registered.\n' +
-            '</div>';
-    } else {
-        document.getElementById("alertboxPayment").innerHTML = '<div id="alertboxPayment" class="alert alert-danger">\n' +
-            '  <strong>Failed!</strong> You have to put in the amount you have payed. <br> (no letters or negative numbers)' +
-            '</div>';
-    }
+}
+
+function confirmSendAlertPayment() {
+
 }

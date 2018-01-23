@@ -1,19 +1,15 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <h4 class="modal-title">Payment</h4>
+    <h4 id="financeModalTitle"class="modal-title">Payment</h4>
 </div>
 <div id="modalBodyID" class="modal-body">
     <br>
     <div clas="row">
         <div class="col-sm-12">
-            <p>Confirm your payment by inserting the amount:</p>
+            <p id="payMoneyText"></p>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <input style="width: 70%; text-align: center;" placeholder="$$$" type="number" class="boxes" id="paymentAmount" autofocus/>
-        </div>
+        <br>
     </div>
     <br>
 </div>
@@ -23,9 +19,5 @@
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>
 <script>
-    $("#paymentAmount").keyup(function(event){
-        if(event.keyCode == 13){
-            $("#confirmPaymentButton").click();
-        }
-    });
+    loadPayMoneyModal();
 </script>
