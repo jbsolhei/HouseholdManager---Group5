@@ -154,10 +154,10 @@ public class UserService {
 
     @GET
     @Auth(AuthType.USER_MODIFY)
-    @Path("/{id}/dept")
+    @Path("/{id}/debt")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Debt> getDebt(@PathParam("id") int id){
-        return FinanceDAO.getDept(id);
+        return FinanceDAO.getDebt(id);
     }
 
     @GET
@@ -168,6 +168,12 @@ public class UserService {
         return FinanceDAO.getIncome(id);
     }
 
+    @DELETE
+    @Path("/{id}/debt/{toUser}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void settlePayment(@PathParam("id") int fromUser, @PathParam("toUser") int toUser){
+       FinanceDAO.deleteDebt(fromUser, toUser);
+    }
 
     @GET
     @Path("/{id}/notifications")
