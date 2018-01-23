@@ -37,7 +37,7 @@ public class FinanceDAOTest {
     public void getDept() {
         //User 1 has a total dept of 50,- from user 4
         double totalDept = 0;
-        ArrayList<Debt> dept = FinanceDAO.getDept(100);
+        ArrayList<Debt> dept = FinanceDAO.getDebt(100);
 
         for(int i = 0; i < dept.size(); i++){
             totalDept += dept.get(i).getAmount();

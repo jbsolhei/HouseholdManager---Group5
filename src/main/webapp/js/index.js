@@ -1,4 +1,5 @@
 var dashboard = "dashboard.html";
+var finance = "finance.html";
 var household = "HouseholdOverview.html";
 var shoppinglists = "shoppinglist.html";
 var shoppingtrips = "shoppingtrip.html";
@@ -198,6 +199,8 @@ function addHouseholdsToList(userId) {
     });
 
     $("#currentHouseholdId").html(getCurrentHousehold().name + ' <span class="caret"></span>');
+
+
 }
 
 //Sets the chosen household to current household.
