@@ -4,6 +4,7 @@ import auth.Auth;
 import auth.AuthType;
 import classes.News;
 import database.NewsDAO;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -30,6 +31,8 @@ public class NewsService {
     public Response postNews(@PathParam("id") int houseId,News news,@Context ContainerRequestContext context){
         news.setHouseId(houseId);
         news.setUserId((int)context.getProperty("session.userId"));
+
+        news.setMessage(StringEscapeUtils.escapeHtml4(news.getMessage()));
 
         if (NewsDAO.postNews(news)>0){
             return Response.ok().build();

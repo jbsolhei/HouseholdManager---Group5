@@ -1,12 +1,12 @@
 package database;
 
 import classes.*;
-import classes.Email;
-import classes.HashHandler;
-import classes.Household;
-import classes.User;
+
 import java.security.SecureRandom;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
 

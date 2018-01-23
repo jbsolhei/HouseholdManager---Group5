@@ -3,9 +3,9 @@ package services;
 import auth.Auth;
 import auth.AuthType;
 import classes.Household;
-import classes.Chore;
 import classes.User;
 import database.HouseholdDAO;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -31,6 +31,8 @@ public class HouseHoldService {
     @Auth
     @Consumes(MediaType.APPLICATION_JSON)
     public int addHouseHold(Household newHousehold) {
+        newHousehold.setName(StringEscapeUtils.escapeHtml4(newHousehold.getName()));
+        newHousehold.setAddress(StringEscapeUtils.escapeHtml4(newHousehold.getAddress()));
         return HouseholdDAO.addNewHouseHold(newHousehold);
     }
 
@@ -120,8 +122,10 @@ public class HouseHoldService {
     @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void updateHousehold(@PathParam("id") int id, Household newHouse){
-        int result = HouseholdDAO.updateHousehold(id,newHouse);
+    public int updateHousehold(@PathParam("id") int id, Household newHouse){
+        newHouse.setName(StringEscapeUtils.escapeHtml4(newHouse.getName()));
+        newHouse.setAddress(StringEscapeUtils.escapeHtml4(newHouse.getAddress()));
+        return HouseholdDAO.updateHousehold(id,newHouse);
     }
 
     @DELETE
