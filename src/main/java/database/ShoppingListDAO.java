@@ -425,7 +425,7 @@ public class ShoppingListDAO {
      * @param shopping_list_id the shopping list ID of the associated shopping list
      * @param itemId the item ID of the item to be deleted
      */
-    public static void deleteItem(int shopping_list_id, int itemId) {
+    public static int deleteItem(int shopping_list_id, int itemId) {
         String query = "DELETE FROM Item WHERE shopping_listId = ? AND itemId = ?;";
 
         try (DBConnector dbc = new DBConnector();
@@ -433,12 +433,12 @@ public class ShoppingListDAO {
              PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, shopping_list_id);
-            //st.setInt(2, 0);
             st.setInt(2, itemId);
-            st.executeUpdate();
+            return st.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return -1;
         }
     }
 

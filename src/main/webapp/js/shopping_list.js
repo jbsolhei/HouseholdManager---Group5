@@ -150,7 +150,7 @@ function ajax_getShoppingListUsers(shoppingListId, handleData) {
         data: shoppingListId,
         contentType: 'text/plain',
         success: function (data) {
-            console.log("success: ajax_getShoppingListUsers()")
+            console.log("success: ajax_getShoppingListUsers()");
             handleData(data);
         },
         error: function (result) {
@@ -159,7 +159,71 @@ function ajax_getShoppingListUsers(shoppingListId, handleData) {
         }
     })
 }
-    
+
+/**
+ * Ajax-method to remove a single users association with a shopping list
+ *
+ * @param shoppingListId, the shopping list ID
+ * @param userId, the user ID
+ * @param handleData, function to be called upon success
+ */
+function ajax_deleteUserInShoppingList(shoppingListId, userId, handleData) {
+    console.log('ajax_deleteUserInShoppingList(). shoppingListId: ' + shoppingListId + ". userId: " + userId);
+    ajaxAuth({
+        type: 'DELETE',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/user',
+        data: ""+userId,
+        contentType: 'text/plain',
+        success: function (data) {
+            console.log("success: ajax_deleteUserInShoppingList()");
+            handleData(data);
+        },
+        error: function (result) {
+            console.log("error: ajax_deleteUserInShoppingList()");
+            console.log(result);
+        }
+    })
+}
+
+/**
+ * Ajax-method to add a single users association with a shopping list
+ *
+ * @param shoppingListId, the shopping list ID
+ * @param userId, the user ID
+ * @param handleData, function to be called upon success
+ */
+function ajax_insertUserInShoppingList(shoppingListId, userId, handleData) {
+    console.log('ajax_insertUserInShoppingList(). shoppingListId: ' + shoppingListId + ". userId: " + userId);
+    ajaxAuth({
+        type: 'POST',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/user',
+        data: ""+userId,
+        contentType: 'text/plain',
+        success: function (data) {
+            console.log("success: ajax_insertUserInShoppingList()");
+            handleData(data);
+        },
+        error: function (result) {
+            console.log("error: ajax_insertUserInShoppingList()");
+            console.log(result);
+        }
+    })
+}
+
+function ajax_deleteItem(shoppingListId, itemId, handleData) {
+    console.log('ajax_deleteItem(). shoppingListId: ' + shoppingListId + ". itemId: " + itemId);
+    ajaxAuth({
+        type: 'DELETE',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/items/' + itemId,
+        success: function (data) {
+            console.log("success: ajax_insertUserInShoppingList()");
+            handleData(data);
+        },
+        error: function (result) {
+            console.log("error: ajax_insertUserInShoppingList()");
+            console.log(result);
+        }
+    })
 }
 
 /* --- visual updates methods --- */
@@ -216,6 +280,7 @@ function loadSideMenu(){
  * @param SLIndex
  */
 function showListFromMenu(SLIndex, isArchived){
+    closeListOfAssociatedUsers();
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
     console.log("SLIndex: " + SLIndex);
     ajax_getShoppingList(SHL[SLIndex].shoppingListId, function (shoppingList) {
@@ -256,26 +321,33 @@ function navToAShoppingList(shoppingListIndex, isArchived) {
     showListFromMenu(activeSHL)
 }
 
+/**
+ * method to refresh the list of toggle the list of associated users
+ */
 function toggleListOfAssociatedUsers() {
-    var shoppingListId = SHL[0].shoppingListId;
-    console.log(shoppingListId);
-    var householdUsers = getCurrentHousehold().residents;
-    $("#associated_users_table").empty();
-    ajax_getShoppingListUsers(shoppingListId, function (users) {
-        console.log(users);
-        $("#associated_users_table").append('<thead><tr><th></th><th>' + "Users that can view this list" + '</th></tr></thead>');
-        $.each(householdUsers, function (i, val){
-            $("#associated_users_table").append('<tbody><tr><td id="associated_user_id_' + val.userId + '" onclick="checkAssociatedUser('+ val.userId +')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr></tbody>');
-        });
-        $.each(users, function (i, val) {
-            $("#associated_user_id_" + val.userId).replaceWith('<td id="associated_user_id_' + val.userId +'" onclick="uncheckAssociatedUser('+ val.userId +')" class="glyphicon glyphicon-check"></td>')
-        });
-        if ($("#list_of_users_associated_with_shopping_list").css('display') === "none") {
+    if ($("#list_of_users_associated_with_shopping_list").css('display') === "none") {
+        var shoppingListId = SHL[activeSHL].shoppingListId;
+        console.log(shoppingListId);
+        var householdUsers = getCurrentHousehold().residents;
+        $("#associated_users_table").empty();
+        ajax_getShoppingListUsers(shoppingListId, function (users) {
+            console.log(users);
+            $("#associated_users_table").append('<thead><tr><th></th><th>' + "Users that can view this list" + '</th></tr></thead>');
+            $.each(householdUsers, function (i, val) {
+                $("#associated_users_table").append('<tbody><tr><td id="associated_user_id_' + val.userId + '" onclick="checkAssociatedUser(' + val.userId + ')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr></tbody>');
+            });
+            $.each(users, function (i, val) {
+                $("#associated_user_id_" + val.userId).replaceWith('<td id="associated_user_id_' + val.userId + '" onclick="uncheckAssociatedUser(' + val.userId + ')" class="glyphicon glyphicon-check"></td>')
+            });
             $("#list_of_users_associated_with_shopping_list").css('display', 'block');
-        } else {
-            $("#list_of_users_associated_with_shopping_list").css('display', 'none');
-        }
-    })
+        })
+    } else $("#list_of_users_associated_with_shopping_list").css('display', 'none');
+}
+
+function closeListOfAssociatedUsers() {
+    if ($("#list_of_users_associated_with_shopping_list").css('display') === "block") {
+        $("#list_of_users_associated_with_shopping_list").css('display', 'none');
+    }
 }
 
 /**
@@ -320,13 +392,39 @@ function uncheckItem(itemId) {
     })
 }
 
+/**
+ * Updates the database, and checks an user as associated with a shopping list
+ * The shoppingList
+ *
+ * @param userId, the user ID
+ */
 function checkAssociatedUser(userId) {
     console.log("check user:" + userId);
-    ajax_updateUsers()
-    $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="uncheckAssociatedUser('+ userId +')" class="glyphicon glyphicon-check"></td>')
+    ajax_insertUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
+        if (data) {
+            $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="uncheckAssociatedUser('+ userId +')" class="glyphicon glyphicon-check"></td>')
+        }
+    })
 }
 
+/**
+ * Updates the database, and unchecks an user as associated with a shopping list
+ * @param userId
+ */
 function uncheckAssociatedUser(userId) {
-    console.log("check user:" + userId);
-    $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="checkAssociatedUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td>')
+    console.log("uncheck user:" + userId);
+    ajax_deleteUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
+        if (data) {
+            $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="checkAssociatedUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td>')
+        }
+    })
+}
+
+function deleteItem(itemId) {
+    console.log("delete item:" + itemId);
+    ajax_deleteItem(SHL[activeSHL].shoppingListId, itemId, function (data) {
+        if (data) {
+            showListFromMenu(activeSHL, false)
+        }
+    })
 }

@@ -107,8 +107,8 @@ public class ShoppingListService {
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}/items/{itemId}")
-    public void deleteItem(@PathParam("shopping_list_id") int shopping_list_id, @PathParam("itemId") int itemId){
-        ShoppingListDAO.deleteItem(shopping_list_id, itemId);
+    public boolean deleteItem(@PathParam("shopping_list_id") int shopping_list_id, @PathParam("itemId") int itemId){
+        return (ShoppingListDAO.deleteItem(shopping_list_id, itemId) != -1);
     }
 
     /**
