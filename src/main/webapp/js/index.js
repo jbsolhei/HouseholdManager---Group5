@@ -1,4 +1,5 @@
 var dashboard = "dashboard.html";
+var finance = "finance.html";
 var household = "HouseholdOverview.html";
 var shoppinglists = "shoppinglist.html";
 var shoppingtrips = "shoppingtrip.html";
@@ -205,7 +206,6 @@ function callModalRun(modalContent, functions) {
 
 function swapContent(bodyContent) {
     updateCurrentHousehold(bodyContent);
-    getDebt();
 }
 
 function navToShoppingList(shoppingListId){
