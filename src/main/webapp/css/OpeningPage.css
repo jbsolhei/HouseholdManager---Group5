@@ -1,5 +1,9 @@
-body{
-    background-color: #233237;
+body {
+    background-color: white;
+}
+
+html {
+    overflow: hidden;
 }
 
 .divclass {
@@ -9,21 +13,20 @@ body{
     width: auto;
 }
 
-#myCarousel {
-    width: 100%;
-    height: 95vh;
-}
-
-.carousel-inner{
-    width: 100%;
-    height: 95vh;
-}
-
-.carousel-pic {
-    margin-top: -20px;
-    width:100%; height: 95vh;
-}
-
 .navbar {
     margin-bottom: 0px;
+}
+
+#mainOpeningPageDivId {
+    overflow: hidden;
+    height:100%;
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#opgbPicId {
+    height: 100%;
+    width: 100%;
 }
