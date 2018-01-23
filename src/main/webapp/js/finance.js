@@ -60,7 +60,7 @@ function loadFinanceTables(){
                 j = members.length;
             }
         }
-        $("#debtTable").append('<tr data-target="#theModal" data-toggle="modal" onclick="payMoney(' + i + ')">\n' +
+        $("#debtTable").append('<tr id="debt' + i + '" data-target="#theModal" data-toggle="modal" onclick="payMoney(' + i + ')">\n' +
             '                                <td>' + debt[i].toUser.name + '</td>\n' +
             '                                <td>' + debt[i].amount + ',-</td>\n' +
             '                            </tr>'
@@ -74,7 +74,7 @@ function loadFinanceTables(){
                 j = members.length;
             }
         }
-        $("#incomeTable").append('<tr data-target="#theModal" data-toggle="modal" onclick="sendPaymentRequest(' + i + ')">\n' +
+        $("#incomeTable").append('<tr id="income' + i + '" data-target="#theModal" data-toggle="modal" onclick="sendPaymentRequest(' + i + ')">\n' +
             '                                <td>' + income[i].toUser.name + '</td>\n' +
             '                                <td>' + income[i].amount + ',-</td>\n' +
             '                            </tr>'
@@ -112,7 +112,6 @@ function loadFinanceModal() {
 
 
 function confirmPayment(){
-    console.log("fromuser: " + getCurrentUser().userId + ", touser: " + debt[index].toUser.userId);
     ajaxAuth({
         url: "res/user/"+ getCurrentUser().userId +"/debt/" + debt[index].toUser.userId,
         type: "DELETE",
@@ -121,11 +120,14 @@ function confirmPayment(){
         contentType: 'application/json; charset=utf-8',
         success: function () {
             console.log("success!");
+            $("#closeFinanceModalButton").click();
+            $("#debt" + index).remove();
         },
     });
+    addNotification(debt[index].toUser.userId, getCurrentHousehold().houseId, getCurrentUser().name + " have payed you the " + debt[index].amount + "kr they owed you. If this is not correct, please contact " + getCurrentUser().name + ".");
 }
 
 function confirmSendAlertPayment() {
-    console.log("" + getCurrentUser().name + " asks you to pay the " + income[index] + "kr that you owe.");
     addNotification(income[index].toUser.userId, getCurrentHousehold().houseId, getCurrentUser().name + " asks you to pay the " + income[index].amount + "kr that you owe.");
+    $("#closeFinanceModalButton").click();
 }
