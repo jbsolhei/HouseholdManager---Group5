@@ -8,6 +8,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <link href="css/OpeningPage.css" rel="stylesheet">
+    <link href="css/logon.css" rel="stylesheet">
     <script src="js/login.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -15,7 +16,9 @@
     <script src="js/test-hash.js"></script>
     <script src="js/addUser.js"></script>
     <script src="js/index.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Raleway:200,100i" rel="stylesheet"></head>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:200,100i" rel="stylesheet">
+</head>
+
 <body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -25,21 +28,21 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" onclick="swapContent(profile)" style="max-width: 50%">
-                <img src="images/HHM_logo.png" style="height:150%; display:inline-block;">
+            <a class="navbar-brand" style="max-width: 50%">
+                <img src="images/HHM_logo.png">
             </a>
         </div>
         <div class="navbar-collapse collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li class=""><a href="#">About</a></li>
-                <li class=""><a href="#">Help</a></li>
-                <li class=""><a href="#">Contact</a></li>
+                <li class="opNav active"><a href="#">Home</a></li>
+                <li class="opNav"><a href="#">About</a></li>
+                <li class="opNav"><a href="#">Help</a></li>
+                <li class="opNav"><a href="#">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-
-                <li><a data-toggle="modal" onclick='callModal("modals/createuser.html")' data-target="#theModal" class="clickable"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li id="toLoginButton"><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li id="emailInputId"><input placeholder="Email" class="form-control" type="email" id="email" name="email"/></li>
+                <li id="passwordInputId"><input placeholder="Password" class="form-control" type="password" id="password" name="password"/></li>
+                <li id="toLoginButton"><a onclick="login($('#email').val(),$('#password').val()); showLoadingScreen(true)"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div>
     </div>
@@ -56,7 +59,6 @@
     </div>
 </div>
 
-
 <!-- Denne må være her, trengs aldri å endres -->
 <div class="modal fade" id="theModal">
     <div class="modal-dialog modal-md">
@@ -65,61 +67,15 @@
     </div>
 </div>
 
-<style>
-    .loader {
-        border: 16px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 16px solid #3498db;
-        width: 120px;
-        height: 120px;
-        -webkit-animation: spin 2s linear infinite; /* Safari */
-        animation: spin 2s linear infinite;
-    }
-
-    /* Safari */
-    @-webkit-keyframes spin {
-        0% { -webkit-transform: rotate(0deg); }
-        100% { -webkit-transform: rotate(360deg); }
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    #coverScreen {
-        margin: 0px;
-        display: none;
-        left: 0px;
-        top: 0px;
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        z-index: 999999999999999;
-        background-color: rgba(0,0,0,0.2);
-    }
-
-    #centerDiv {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-</style>
-
+<!-- For the loading screen -->
 <div id="coverScreen">
     <div id="centerDiv">
         <div class="loader"></div>
     </div>
 </div>
-</body>
-</html>
 
-
-
-
-</body>
 <script>
+
     // Ikke rør
     function callModal(modalContent) {
         $("#modal").load(modalContent);
@@ -129,4 +85,7 @@
         window.localStorage.setItem("invite",window.location.search);
     });
 </script>
+
+
+</body>
 </html>
