@@ -142,3 +142,10 @@ body {
 #profile-panel-info {
     margin-top: 10px;
 }
+.sidePanelProfile {
+    width: 100%;
+}
+#verticalLine {
+    border-right: 1px solid black;
+    height: auto;
+}
