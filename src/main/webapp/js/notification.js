@@ -80,6 +80,7 @@ function updateNotificationDropdown(notifications) {
         var message = notifications[i].message;
         var id = notifications[i].notificationId;
         var houseName = notifications[i].houseName;
+        if (houseName == null) houseName = "";
 
         $("#notifyDropdownListId").prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
     }

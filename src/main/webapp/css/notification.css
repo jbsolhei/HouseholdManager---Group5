@@ -19,14 +19,14 @@
 }
 
 #notifyDropdownListId {
-    width: 30vh;
+    width: 35vh;
     border: none;
     padding-top: 0px;
     padding-bottom: 0px;
 }
 
 .notifyMessageId {
-    font-size: 1.2em;
+    font-size: 1.0em;
     margin-bottom: 1px;
 }
 
