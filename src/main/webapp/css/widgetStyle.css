@@ -123,6 +123,14 @@
     max-height: 75vh;
     min-height: 75vh;
 }
+.HH2 {
+    max-height: 37.5vh;
+    min-height: 37.5vh;
+}
+.choresContentRow{
+    max-height: 12.5vh;
+    min-height: 12.5vh;
+}
 
 #dbTopRow, #dbBottomRow {
     height: 50%;

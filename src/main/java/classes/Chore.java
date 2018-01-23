@@ -1,32 +1,37 @@
 package classes;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Chore {
+    private String title;
     private String description;
-    private LocalDate date;
     private boolean done;
     private int houseId;
+    private int userId;
     private User user;
     private int choreId;
-    private int time;
+    private LocalDateTime time;
 
     public Chore(){}
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public LocalDate getDate() {
-        return date;
     }
 
     public boolean isDone() {
@@ -36,11 +41,6 @@ public class Chore {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
 
     public void setDone(boolean done) {
         this.done = done;
@@ -62,11 +62,19 @@ public class Chore {
         this.choreId = choreId;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(String timeString) {
+        this.time = LocalDateTime.parse(timeString);
     }
 }

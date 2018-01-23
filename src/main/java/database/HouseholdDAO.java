@@ -416,12 +416,12 @@ public class HouseholdDAO {
 
 
     /**
-     * Used to get all todolists for a household
+     * Used to get all chores for a household
      *
      * @param houseId the id of the house
-     * @return array with all the todos.
+     * @return array with all the chores.
      */
-    public static Chore[] getTodosForHousehold(int houseId) {
+    public static Chore[] getChoresForHousehold(int houseId) {
         ArrayList<Chore> chores = new ArrayList<>();
         boolean householdExists = false;
 
@@ -439,8 +439,8 @@ public class HouseholdDAO {
                     chore.setDescription(rs.getString("description"));
                     chore.setHouseId(houseId);
                     chore.setChoreId(rs.getInt("choreId"));
-                    chore.setUser(UserDAO.getUser(rs.getInt("userId")));
-                    chore.setDate(rs.getDate("chore_date").toLocalDate());
+                    chore.setUserId(rs.getInt("userId"));
+                    chore.setTime(rs.getTimestamp("chore_datetime").toString());
                     chores.add(chore);
                     householdExists = true;
                 }

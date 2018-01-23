@@ -1,42 +1,68 @@
 <div id="householdOverviewId" class="container-fluid">
     <div id="hhoMainRow" class="row">
         <div class="col-sm-8 widgetCol">
-            <div class="panel panel-default widget">
+            <div id="accordion" class="panel panel-default widget">
                 <div class="panel-heading styled-heading clearfix">Members  <span class="glyphicon glyphicon-plus pull-right clickable" data-toggle="modal" data-target="#theModal" onclick="callModal('modals/addMemberHousehold.html')"></span></div>
                 <div class="panel-body scrollWhenFull HH">
+                    <div class="hide" id="miniProfile">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <img src="https://i.pinimg.com/736x/a2/e1/8c/a2e18cbfbcaa8756fe5b40f472eeff45--profile-picture-profile-pics.jpg" id="profile-img">
+                            </div>
+                            <div class="col-sm-7">
+                                <h3 id="miniProfile-name"></h3>
+                                <hr>
+                                <div class="container">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2 profile_labels" for="miniProfile-email">Email:</label>
+                                            <div class="col-sm-10">
+                                                <p class="form-control-static" id="miniProfile-email"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2 profile_labels" for="miniProfile-telephone">Phone:</label>
+                                            <div class="col-sm-10">
+                                                <p class="form-control-static" id="miniProfile-telephone">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div type="button" class="btn btn-default" onclick="hideMiniProfile()" style="width: 100%; text-align: center;">hide pls</div>
+                            </div>
+                        </div>
+                    </div>
                     <table class="membertable" id="members">
                         <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th></th>
-                            </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th></th>
+                        </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
         <div class="col-sm-4 widgetCol">
             <div class="panel panel-default widget">
                 <div class="panel-heading">Other Information</div>
-                <div class="panel-body scrollWhenFull HH">
+                <div class="panel-body">
                     <br>
                     <div class="row">
                         <div class="col-sm-5"><b>Address:</b></div>
                         <div class="col-sm-7" id="householdAddress"></div>
                     </div>
                     <br>
-                    <ul>
-                        <li>Her skriver man informasjon om kollektivet</li>
-                        <li>bla bla bla bla</li>
-                        <li>asdfghjk</li>
-                    </ul>
                 </div>
             </div>
         </div>

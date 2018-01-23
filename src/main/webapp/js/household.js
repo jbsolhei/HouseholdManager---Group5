@@ -20,9 +20,9 @@ function buildMemberTable(){
         return currentUser.userId === admin.userId
     }) !== undefined;
 
-    for (var i = 0; i<members.length; i++) {
+    for (var i = 0; i < members.length; i++) {
         var user = members[i];
-        var isAdmin = (function(user){
+        var isAdmin = (function (user) {
             return admins.find(function (admin) {
                 return user.userId === admin.userId
             }) !== undefined;
@@ -45,7 +45,7 @@ function buildMemberTable(){
         }
 
         $("table#members tbody").append(
-            "<tr>\n" +
+            "<tr onclick=\"showMiniProfile(" + i + ")\">\n" +
             adminTd + "\n" +
             "<td><div class=\"img-circle\">" +
             "<img class=\"img-responsive img-pic\" src=\"http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg\">" +
@@ -116,6 +116,24 @@ function removeUserFromHousehold(userId) {
         });
     }
 }
+
+function showMiniProfile(index){
+    var members = getCurrentHousehold().residents;
+    $("#members").fadeOut(500);
+    setTimeout(function(){
+        document.getElementById("miniProfile-name").innerHTML = '<p id="miniProfile-name">' + members[index].name + '</p>';
+        document.getElementById("miniProfile-email").innerHTML = '<p id="miniProfile-email">' + members[index].email + '</p>';
+        document.getElementById("miniProfile-telephone").innerHTML = '<p id="miniProfile-telephone">' + members[index].telephone + '</p>';
+        $("#miniProfile").removeClass("hide");
+
+    }, 500);
+}
+
+function hideMiniProfile(){
+    $("#members").fadeIn(500);
+    $("#miniProfile").addClass("hide");
+}
+
 /*
  function buildAdminTable() {
  var admins = getCurrentHousehold().admins;
