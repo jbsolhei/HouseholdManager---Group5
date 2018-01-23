@@ -1,6 +1,3 @@
-/**
- * Created by Camilla Velvin on 15.01.2018.
- */
 var result;
 
 function createPage() {
@@ -63,7 +60,7 @@ function addShoppingTrip() {
     }
 
     for (i = 0; i < contributors.length; i++) {
-        addNotification(contributors[i].userId, getCurrentHousehold().houseId, "You have been added to a new Shopping Trip.");
+        addNotification(contributors[i].userId, getCurrentHousehold().houseId, getCurrentUser().name + " have added you to a new Shopping Trip, " +name);
     }
 
     if(name === "" || comment == "" || sum == "" ||
@@ -102,5 +99,4 @@ function addShoppingTrip() {
 
         });
     }
-
 }
