@@ -6,39 +6,28 @@
                 <div class="panel-heading">Finance</div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="bg-success col-sm-6">
+                        <div class="bg-danger col-sm-7">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>People you owe money</th>
+                                    <th>Sum</th>
+                                    <th>Settle</th>
+                                </tr>
+                                </thead>
+                                <tbody id="debtTable">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="bg-success col-sm-5">
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>People you owe you money</th>
+                                <th>People who owe you money</th>
                                 <th>Sum</th>
-                                <th>Settle</th>
                             </tr>
                             </thead>
                             <tbody id="incomeTable">
-                            <tr>
-                                <td>John</td>
-                                <td>50,-</td>
-                                <td>*pay*</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </div>
-                        <div class="bg-danger col-sm-6">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>People you owe money</th>
-                                <th>Sum</th>
-                                <th>Settle</th>
-                            </tr>
-                            </thead>
-                            <tbody id="debtTable">
-                            <tr>
-                                <td>John</td>
-                                <td>10 ,-</td>
-                                <td>*knapp her*</td>
-                            </tr>
                             </tbody>
                         </table>
                         </div>
@@ -50,3 +39,6 @@
         <div class="col-sm-1"></div>
     </div>
 </div>
+<script>
+    loadFinanceTables();
+</script>
