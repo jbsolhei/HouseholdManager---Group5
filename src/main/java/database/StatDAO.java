@@ -21,11 +21,11 @@ public class StatDAO {
 
         String query =  "SELECT Person.userId, Person.name,\n" +
                         "COUNT(choreId) AS 'TASKS',\n" +
-                        "MONTH(chore_date) AS 'MONTH'\n" +
+                        "MONTH(chore_datetime) AS 'MONTH'\n" +
                         "FROM Person\n" +
                         "LEFT JOIN House_user ON Person.userId = House_user.userId\n" +
                         "LEFT JOIN Chore ON Person.userId = Chore.userId\n" +
-                        "WHERE House_user.houseId = ? AND (chore_date > DATE_SUB(now(), INTERVAL ? MONTH) OR chore_date IS NULL)\n" +
+                        "WHERE House_user.houseId = ? AND (chore_datetime > DATE_SUB(now(), INTERVAL ? MONTH) OR chore_datetime IS NULL)\n" +
                         "GROUP BY Person.userId, Person.name, MONTH\n" +
                         "UNION\n" +
                         "SELECT Person.userId, Person.name,\n" +

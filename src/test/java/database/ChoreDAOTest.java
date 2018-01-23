@@ -63,10 +63,8 @@ public class ChoreDAOTest {
 
             LocalDateTime dateTime = chore.getTime(); // your ldt
             java.sql.Date sqlDate = java.sql.Date.valueOf(dateTime.toLocalDate());
-            Timestamp timestamp = Timestamp.valueOf(dateTime);
 
-            assertEquals(sqlDate, rs.getDate("chore_date"));
-            assertEquals(timestamp, rs.getTimestamp("chore_time"));
+            assertEquals(sqlDate, rs.getDate("chore_datetime"));
         }
         else{
             assert false;
