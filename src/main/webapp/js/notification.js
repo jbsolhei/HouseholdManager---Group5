@@ -68,7 +68,6 @@ function getNotifications(userId) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
-            console.log(result);
             updateNotificationDropdown(result);
             updateNotificationBell();
             return result;
@@ -110,7 +109,6 @@ function countNotifications() {
  */
 function updateNotificationBell() {
     if (countNotifications() > 0) {
-        console.log("MERE ENN NULL");
         $("#notifyBellId").css('color', 'orange');
     }
 }
@@ -125,7 +123,7 @@ var opened = false;
  */
 $(document).on('click', '.notificationElement', function () {
     var id = $(this).attr('id');
-    id = id.slice(-1);
+    id = id.slice(7);
     updateNotification(id);
     $(this).remove();
 
