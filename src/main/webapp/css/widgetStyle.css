@@ -1,9 +1,11 @@
 /* GENERAL CSS FOR WIDGETS */
 .panel-default>.panel-heading{
-    background-color: #984b43;
+    /* background-color: #7D2E26; Den gamle fargen */
+    background-color: rgba(150, 19, 12, 0.3);
+
     font-size: 17px;
     font-weight: bold;
-    color: white;
+    color: black;
     letter-spacing: 1px;
     max-height: 45px;
     min-height: 45px;
@@ -17,13 +19,16 @@
 
 .cursorPointer:hover {
     cursor: pointer;
-    background-color: #7D2E26;
-
+    background-color: rgba(150, 19, 12, 0.4);
 }
 
-.panel.panel-default, .widget, .row, #notAWidget{
+.panel.panel-default, .widget, .row, #notAWidget, .outerCol{
     margin: 0px;
     padding: 0px;
+}
+
+.outerCol {
+    height: 100%;
 }
 
 .widgetCol {
@@ -42,7 +47,7 @@
 
 .widget {
     height: 100%;
-    width: 100%;
+    width: 100% !important;
 }
 
 .scrollWhenFull {
@@ -87,12 +92,6 @@
     #sideBarBrandId {
         display: none; !important;
     }
-
-    /*
-    html, body {
-        font-size: 10px; !important;
-    }
-    */
 }
 
 
@@ -104,7 +103,6 @@
 #topRow1Id, #bottomRowId {
     height: 50%;
 }
-
 
 /* CSS FOR DASHBOARD WIDGETS */
 #dashboardId {
@@ -136,7 +134,7 @@
     height: 50%;
 }
 
-.SL, .ST, .STAT {
+.SL, .ST, .STAT{
     max-height: 78vh;
     min-height: 78vh;
 }
@@ -147,6 +145,15 @@
 
 .padding {
     padding: 15px;
+}
+
+/* For header colors */
+.slHeader {
+    background-color: rgba(189, 87, 0, 0.3) !important;
+}
+
+.slHeader:hover {
+    background-color: rgba(189, 87, 0, 0.4) !important;
 }
 
 
@@ -162,4 +169,39 @@
 .debt-sum {
     text-align: right;
     font-weight: bolder;
+}
+
+/* NEWS WIDGET */
+.N {
+    min-height: 79vh;
+    max-height: 79vh;
+}
+
+.messages-container .well {
+    background-color: rgba(6, 76, 160, 0.05);
+}
+
+/* For header color */
+.nHeader {
+    background-color: rgba(5, 41, 101, 0.3) !important;
+}
+
+.nHeader:hover {
+    background-color: rgba(5, 41, 101, 0.4) !important;
+    cursor: pointer;
+}
+
+/* CHORE WIDGET */
+#choresPanelId .scrollWhenFull {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+/* For header colors*/
+.cHeader {
+    background-color: rgba(19, 66, 2, 0.3) !important;
+}
+
+.cHeader:hover {
+    background-color: rgba(19, 66, 2, 0.4) !important;
 }
