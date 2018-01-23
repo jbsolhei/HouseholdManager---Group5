@@ -155,6 +155,7 @@ public class UserService {
     }
 
     @GET
+    @Auth(AuthType.USER_MODIFY)
     @Path("/{id}/dept")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Debt> getDebt(@PathParam("id") int id){
@@ -162,6 +163,7 @@ public class UserService {
     }
 
     @GET
+    @Auth(AuthType.USER_MODIFY)
     @Path("/{id}/income")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Debt> getIncome(@PathParam("id") int id){

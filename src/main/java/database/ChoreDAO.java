@@ -15,7 +15,6 @@ public class ChoreDAO {
 
         String query = "INSERT INTO Chore (description, chore_datetime, houseId, userId, done, title) VALUES (?, ?, ?, ?, ?, ?);";
 
-        System.out.println("Postchore");
         try (DBConnector dbc = new DBConnector();
             Connection conn = dbc.getConn();
             PreparedStatement st = conn.prepareStatement(query)){
@@ -25,7 +24,6 @@ public class ChoreDAO {
             st.setTimestamp(2, Timestamp.valueOf(chore.getTime()));
 
             st.setInt(3, chore.getHouseId());
-            System.out.println(chore.getUserId());
             st.setInt(4, chore.getUserId());
             if(chore.isDone()) {
                 st.setInt(5, 1);
