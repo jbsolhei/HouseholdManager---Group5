@@ -286,7 +286,7 @@ public class UserDAO {
 
                 while (rs.next()) {
                     Chore chore = new Chore();
-                    chore.setTime(rs.getTimestamp("chore_date").toString().replace(" ","T"));
+                    chore.setTime(rs.getTimestamp("chore_datetime").toString().replace(" ","T"));
                     chore.setDescription(rs.getString("description"));
                     chore.setHouseId(rs.getInt("houseId"));
                     chore.setUserId(rs.getInt("userId"));
