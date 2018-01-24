@@ -191,12 +191,14 @@ function saveInformation() {
                 if (result == "true") {
                     document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
                         '<strong>Your profile is changed</strong></div>';
-                    setCurrentUser(getCurrentUser().userId);
+                    updateCurrentUser(getCurrentUser().userId);
+                    $("#myPageId").click();
+
+
                 } else {
                     document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
                         '<strong>Email already exists</strong></div>';
                 }
-
             },
             error: function (result) {
             }
