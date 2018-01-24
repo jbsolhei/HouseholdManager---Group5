@@ -1,12 +1,10 @@
 package database;
 
 import classes.*;
+import com.sun.mail.iap.ByteArray;
 
 import java.security.SecureRandom;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -19,15 +17,18 @@ public class UserDAO {
      * @return Returns false if the new user's email or telephone number already exists in the database, if else true
      */
     public static boolean addNewUser(User newUser) {
+        System.out.println(newUser.getProfileImage());
         String email = newUser.getEmail();
         String name = newUser.getName();
         String password = newUser.getPassword();
         String telephone = newUser.getTelephone();
+        String profileImage = newUser.getProfileImage();
+
 
         if (userExist(email, telephone)) return false;
 
         String hashedPassword = HashHandler.makeHashFromPassword(password);
-        String query = "INSERT INTO Person (email, name, password, telephone) VALUES (?,?,?,?)";
+        String query = "INSERT INTO Person (email, name, password, telephone, image) VALUES (?,?,?,?,?)";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -37,6 +38,7 @@ public class UserDAO {
             st.setString(2, name);
             st.setString(3, hashedPassword);
             st.setString(4, telephone);
+            st.setString(5, profileImage);
 
             st.executeUpdate();
         } catch (SQLException e) {
@@ -97,6 +99,7 @@ public class UserDAO {
                     user.setName(rs.getString("name"));
                     // user.setPassword(rs.getString("password"));
                     user.setTelephone(rs.getString("telephone"));
+                    user.setProfileImage(rs.getString("image"));
                     return user;
                 }
             }
