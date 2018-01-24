@@ -26,21 +26,24 @@ function printHouseholdChoresToDashboard(id){
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             console.log(data);
+            var today = new Date;
             if (data !== null && data !==undefined) {
                 for (var i = 0; i < data.length; i++) {
                     var current = data[i];
                     console.log(current);
-                    if (current.user === undefined || current.user === null) {
-                        var name = "None";
-                    } else {
-                        var name = current.user.name;
+                    if(!(today>toJSDate(current.time)&&current.done)){
+                        if (current.user === undefined || current.user === null) {
+                            var name = "None";
+                        } else {
+                            var name = current.user.name;
+                        }
+                        var inputString = "<tr>" +
+                            "<td>" + current.title + "</td>" +
+                            "<td>" + current.time.dayOfMonth + "."+current.time.monthValue+"." + current.time.year  + " " + current.time.hour+":"+current.time.minute+ "</td>" +
+                            "<td>" + name + "</td>" +
+                            "</tr>";
+                        $("#dashboard_chores_table_body").append(inputString);
                     }
-                    var inputString = "<tr /*onclick='activeChore=["+1+","+i+"];updateCurrentHousehold("+chores+")*/;'>" +
-                        "<td>" + current.description + "</td>" +
-                        "<td>" + current.time.dayOfMonth + "."+current.time.monthValue+"." + current.time.year  + "</td>" +
-                        "<td>" + name + "</td>" +
-                        "</tr>";
-                    $("#dashboard_chores_table_body").append(inputString);
                 }
             }else{
                 $("#dashboard_chores_table_body").append("There are no chores for this household.");
