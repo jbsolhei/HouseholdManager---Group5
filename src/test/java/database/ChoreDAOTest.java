@@ -39,7 +39,6 @@ public class ChoreDAOTest {
         ArrayList<Chore> chores = new ArrayList<>();
         Chore chore = new Chore();
 
-
         chore.setTitle("Ta ut av oppvaskmaskinen");
         chore.setDescription("Husk å være forsiktig med serviset fra oldemor!");
         chore.setHouseId(1);
@@ -49,12 +48,11 @@ public class ChoreDAOTest {
 
         ChoreDAO.postChore(chore);
 
-        String query = "SELECT * FROM Chore WHERE houseId = 1";
+        String query = "SELECT * FROM Chore WHERE title = 'Ta ut av oppvaskmaskinen'";
 
         ResultSet rs = st.executeQuery(query);
 
         if(rs.next()) {
-            assertEquals(3, rs.getInt("choreId"));
             assertEquals(chore.getTitle(), rs.getString("title"));
             assertEquals(chore.getDescription(), rs.getString("description"));
             assertEquals(chore.getUserId(), rs.getInt("userId"));

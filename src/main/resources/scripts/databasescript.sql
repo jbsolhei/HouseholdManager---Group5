@@ -2,7 +2,9 @@ DROP TABLE IF EXISTS Notification;
 DROP TABLE IF EXISTS Item;
 DROP TABLE IF EXISTS Invite_token;
 DROP TABLE IF EXISTS Finance;
-DROP TABLE IF EXISTS Shopping_tour;
+DROP TABLE IF EXISTS User_Shopping_list;
+DROP TABLE IF EXISTS User_Shopping_trip;
+DROP TABLE IF EXISTS Shopping_trip;
 DROP TABLE IF EXISTS Shopping_list;
 DROP TABLE IF EXISTS Message;
 DROP TABLE IF EXISTS Chore;
@@ -131,6 +133,6 @@ CREATE TABLE Notification (
   notificationDateTime DATETIME NOT NULL,
   isRead BOOLEAN NOT NULL DEFAULT FALSE,
   CONSTRAINT notification PRIMARY KEY(notificationId),
-  FOREIGN KEY (userId) REFERENCES Person(userId),
-  FOREIGN KEY (houseId) REFERENCES Household(houseId)
+  FOREIGN KEY (userId) REFERENCES Person(userId) ON DELETE SET NULL ,
+  FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE
 );

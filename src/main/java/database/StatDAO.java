@@ -19,6 +19,7 @@ public class StatDAO {
     public static ArrayList<Stats> getTaskStats(int houseId, int numberOfMonthsAgo) {
         ArrayList<Stats> stats = new ArrayList<>();
 
+        // TODO: Skriv om sånn at den ikke henter ut chores som ikke er merket med 'done'.
         String query =  "SELECT Person.userId, Person.name,\n" +
                         "COUNT(choreId) AS 'TASKS',\n" +
                         "MONTH(chore_datetime) AS 'MONTH'\n" +
