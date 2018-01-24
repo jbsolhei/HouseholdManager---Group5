@@ -124,6 +124,9 @@ public class HouseholdDAO {
                     toAdd.setEmail(rs.getString("email"));
                     toAdd.setUserId(rs.getInt("userId"));
                     toAdd.setTelephone(rs.getString("telephone"));
+                    toAdd.setRelationship(rs.getString("relationship"));
+                    toAdd.setBio(rs.getString("bio"));
+                    toAdd.setGender(rs.getString("gender"));
                     users.add(toAdd);
                     if (rs.getBoolean("isAdmin")){
                         admins.add(toAdd);

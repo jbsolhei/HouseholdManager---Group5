@@ -25,7 +25,7 @@ name VARCHAR(45) NOT NULL,
 password VARCHAR(100) NOT NULL,
 telephone VARCHAR(20),
 bio VARCHAR(150),
-gender BOOL,
+gender VARCHAR(20),
 relationship VARCHAR (30),
 image LONGBLOB,
 CONSTRAINT user_pk PRIMARY KEY(userId));
