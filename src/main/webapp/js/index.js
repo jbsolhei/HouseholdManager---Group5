@@ -23,7 +23,7 @@ function ajaxAuth(attr) {
     attributes.headers.Authorization = "Bearer " + window.localStorage.getItem("sessionToken");
 
     attributes.error = function (xhr, textStatus, exceptionThrown) {
-        console.log("Error: " + xhr.status);
+        console.log("[AjaxAuth] Error: " + xhr.status);
 
         if (typeof attr.error === "function") {
             attr.error(xhr, textStatus, exceptionThrown);
@@ -154,7 +154,7 @@ function setCurrentHousehold(hid) {
             success: function (data) {
                 if (data.length!==null) {
                     window.localStorage.setItem("house", JSON.stringify(data));
-                    window.location.replace("index.html")
+                    window.location.replace("index.html");
                 } else {
                     showLoadingScreen(false);
                     callModal("modals/addHousehold.html");
@@ -298,4 +298,13 @@ function getLocalResident(userId){
             return val;
         }
     });
+}
+
+//Set show to true if you want to show loadingscreen and false if you want to hide it
+function showLoadingScreen(show) {
+    if (show) {
+        $("#coverScreen").css('display', 'block');
+    } else {
+        $("#coverScreen").css('display', 'none');
+    }
 }

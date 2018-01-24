@@ -27,16 +27,6 @@ function login(email,password){
     });
 }
 
-
-//Set show to true if you want to show loadingscreen and false if you want to hide it
-function showLoadingScreen(show) {
-    if (show) {
-        $("#coverScreen").css('display', 'block');
-    } else {
-        $("#coverScreen").css('display', 'none');
-    }
-}
-
 function inviteCheck() {
     var urlParams = window.localStorage.getItem("invite");
     var token = urlParams.split("?invite=")[1];

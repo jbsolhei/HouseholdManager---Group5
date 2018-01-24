@@ -96,7 +96,7 @@ function checkSelectedChore(chore){
     chore.done = !chore.done;
     chore.time = chore.time.year + "-" + pad(chore.time.monthValue) + "-" + pad(chore.time.dayOfMonth) + "T" + pad(chore.time.hour) + ":" + pad(chore.time.minute);
     selectedChore = undefined;
-    updateChore(chore);
+    checkChore(chore);
 }
 
 function deleteSelectedChore(id){
@@ -307,6 +307,22 @@ function updateChore(chore){
         },
         error: function(data){
             console.log("error in updateChore()");
+            console.log(data);
+        }
+    });
+}
+
+function checkChore(chore){
+    ajaxAuth({
+        url: "res/household/"+getCurrentHousehold().houseId+"/chores/check",
+        type: "PUT",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify(chore),
+        success: function(data){
+            readyChores();
+        },
+        error: function(data){
             console.log(data);
         }
     });

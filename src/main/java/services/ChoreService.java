@@ -49,6 +49,15 @@ public class ChoreService {
         return ChoreDAO.editChore(chore);
     }
 
+    @PUT
+    @Path("/check")
+    @Auth(AuthType.HOUSEHOLD)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int checkChore(@PathParam("id") int houseId, Chore chore){
+        return ChoreDAO.editChore(chore);
+    }
+
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
     @Consumes(MediaType.APPLICATION_JSON)

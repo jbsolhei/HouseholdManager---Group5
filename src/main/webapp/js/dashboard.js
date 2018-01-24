@@ -26,21 +26,24 @@ function printHouseholdChoresToDashboard(id){
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             console.log(data);
+            var today = new Date;
             if (data !== null && data !==undefined) {
                 for (var i = 0; i < data.length; i++) {
                     var current = data[i];
                     console.log(current);
-                    if (current.user === undefined || current.user === null) {
-                        var name = "None";
-                    } else {
-                        var name = current.user.name;
+                    if(!(today>toJSDate(current.time)&&current.done)){
+                        if (current.user === undefined || current.user === null) {
+                            var name = "None";
+                        } else {
+                            var name = current.user.name;
+                        }
+                        var inputString = "<tr>" +
+                            "<td>" + current.title + "</td>" +
+                            "<td>" + current.time.dayOfMonth + "."+current.time.monthValue+"." + current.time.year  + " " + current.time.hour+":"+current.time.minute+ "</td>" +
+                            "<td>" + name + "</td>" +
+                            "</tr>";
+                        $("#dashboard_chores_table_body").append(inputString);
                     }
-                    var inputString = "<tr /*onclick='activeChore=["+1+","+i+"];updateCurrentHousehold("+chores+")*/;'>" +
-                        "<td>" + current.description + "</td>" +
-                        "<td>" + current.time.dayOfMonth + "."+current.time.monthValue+"." + current.time.year  + "</td>" +
-                        "<td>" + name + "</td>" +
-                        "</tr>";
-                    $("#dashboard_chores_table_body").append(inputString);
                 }
             }else{
                 $("#dashboard_chores_table_body").append("There are no chores for this household.");
@@ -70,36 +73,58 @@ function printShoppingListsToDashboard(house) {
 
 function printNewsToDashboard(){
     getNews(function (data) {
-        var html = "";
         var loops = data.length;
         if (loops>6)loops=6;
+        $(".messages-container").html("");
         for (var i = 0;i<loops;i++) {
+            var html = "";
             var post = data[i];
             var time = post.time.dayOfMonth+"."+post.time.monthValue+" "+post.time.hour+":"+post.time.minute;
-            if (post.message.length<50){
-                html += "<div class=\"well well-sm\">\n" +
+            var decoded = he.unescape(post.message);
+            if (decoded.length<34){
+                html = "<div class=\"well well-sm\">\n" +
                     "                            <div class=\"message-heading\">\n" +
                     "                                <b>"+post.user.name+"</b>\n" +
                     "                                <div style=\"float: right\">\n" +
                     "                                    <small>"+time+"</small>\n" +
                     "                                </div>\n" +
                     "                            </div>\n" +
-                    "                            <div class=\"message-total\">"+post.message+"</div>\n" +
-                    "                        </div>"
+                    "                            <div style=\"word-wrap: break-word\" class=\"message-total\">"+post.message+"</div>\n" +
+                    "                        </div>";
+                $(".messages-container").append(html);
             } else {
-                html += "<div class=\"well well-sm clickable\" onclick=\"toggleTeaser($(this))\">\n" +
+                html = "<div class=\"well well-sm clickable\" onclick=\"toggleTeaser($(this))\">\n" +
                     "                            <div class=\"message-heading\">\n" +
                     "                                <b>"+post.user.name+"</b>\n" +
                     "                                <div style=\"float: right\">\n" +
                     "                                    <small>"+time+"</small>\n" +
                     "                                </div>\n" +
                     "                            </div>\n" +
-                    "                            <div class=\"message-teaser\">"+post.message.substring(0,36)+"...(show more)</div>\n" +
-                    "                            <div class=\"message-body\">"+post.message+"</div>\n" +
-                    "                        </div>"
+                    "                            <div style=\"word-wrap: break-word\" class=\"message-teaser\" id=\"msgt_"+i+"\"></div>\n" +
+                    "                            <div style=\"word-wrap: break-word\" class=\"message-body\">"+post.message+"</div>\n" +
+                    "                        </div>";
+                $(".messages-container").append(html);
+                $("#msgt_"+i).text(decoded.substring(0,34)+"...(show more)");
             }
         }
-        $(".messages-container").html(html);
         $('.message-body').css('display','none');
     });
+}
+
+function toggleTeaser(msg){
+    var daddy = msg.parent();
+
+    var teaser = msg.find('.message-teaser');
+    var body = msg.find('.message-body');
+
+    daddy.find('.message-body').not(body).css('display','none');
+    daddy.find('.message-teaser').not(teaser).css('display','block');
+
+    if (teaser[0].style.display === "none"){
+        teaser.css('display','block');
+        body.css('display','none');
+    } else {
+        teaser.css('display','none');
+        body.css('display','block');
+    }
 }
