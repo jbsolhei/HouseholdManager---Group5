@@ -13,7 +13,11 @@ import java.sql.Statement;
         UserDAOTest.class,
         HouseholdDAOTest.class,
         ShoppingListDAOTest.class,
-        ShoppingTripDAOTest.class
+        ShoppingTripDAOTest.class,
+        NewsDAOTest.class,
+        FinanceDAOTest.class,
+        ChoreDAOTest.class,
+        NotificationDAOTest.class
 })
 
 public class DAOTest {
@@ -26,6 +30,8 @@ public class DAOTest {
         DBConnector.USE_CONNECTION_POOLING = false;
         DriverManager.getConnection("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:scripts/databasescript.sql'\\;RUNSCRIPT FROM 'classpath:scripts/testInserts.sql';DB_CLOSE_DELAY=-1;");
     }
+
+    //hei
 
     @AfterClass
     public static void tearDown() throws Exception {

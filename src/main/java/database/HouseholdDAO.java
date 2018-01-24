@@ -31,11 +31,12 @@ public class HouseholdDAO {
             st.setString(1, name);
             st.setString(2, address);
             st.executeUpdate();
-            ResultSet rs = st.getGeneratedKeys();
-            while (rs.next()) {
-                houseId = rs.getInt(1);
+            try (ResultSet rs = st.getGeneratedKeys()) {
+                while (rs.next()) {
+                    houseId = rs.getInt(1);
+                }
             }
-            st.close();
+
             query = "INSERT INTO House_user (houseId, userId, isAdmin) VALUES (?, ?, 1)";
 
             try (PreparedStatement st2 = conn.prepareStatement(query)) {
@@ -418,16 +419,16 @@ public class HouseholdDAO {
 
 
     /**
-     * Used to get all todolists for a household
+     * Used to get all chores for a household
      *
      * @param houseId the id of the house
-     * @return array with all the todos.
+     * @return array with all the chores.
      */
-    public static Todo[] getTodosForHousehold(int houseId) {
-        ArrayList<Todo> todos = new ArrayList<>();
+    public static Chore[] getChoresForHousehold(int houseId) {
+        ArrayList<Chore> chores = new ArrayList<>();
         boolean householdExists = false;
 
-        String query = "SELECT * FROM Task WHERE houseId = ?";
+        String query = "SELECT * FROM Chore WHERE houseId = ?";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -437,13 +438,13 @@ public class HouseholdDAO {
             try (ResultSet rs = st.executeQuery()) {
 
                 while (rs.next()) {
-                    Todo todo = new Todo();
-                    todo.setDescription(rs.getString("description"));
-                    todo.setHouseId(houseId);
-                    todo.setTaskId(rs.getInt("taskId"));
-                    todo.setUser(UserDAO.getUser(rs.getInt("userId")));
-                    todo.setDate(rs.getDate("date"));
-                    todos.add(todo);
+                    Chore chore = new Chore();
+                    chore.setDescription(rs.getString("description"));
+                    chore.setHouseId(houseId);
+                    chore.setChoreId(rs.getInt("choreId"));
+                    chore.setUserId(rs.getInt("userId"));
+                    chore.setTime(rs.getTimestamp("chore_datetime").toString());
+                    chores.add(chore);
                     householdExists = true;
                 }
             }
@@ -452,9 +453,9 @@ public class HouseholdDAO {
             e.printStackTrace();
         }
 
-        Todo[] data = new Todo[todos.size()];
-        for (int i = 0; i < todos.size(); i++) {
-            data[i] = todos.get(i);
+        Chore[] data = new Chore[chores.size()];
+        for (int i = 0; i < chores.size(); i++) {
+            data[i] = chores.get(i);
         }
         if (householdExists) return data;
         return null;
@@ -527,10 +528,9 @@ public class HouseholdDAO {
         String query = "SELECT userId FROM House_user WHERE houseId=? AND isAdmin=1";
         ArrayList<Integer> adminIds = new ArrayList<>();
 
-        try {
-            DBConnector dbc = new DBConnector();
-            Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query);
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
             st.setInt(1, houseId);
 
             try (ResultSet rs = st.executeQuery()) {
@@ -542,5 +542,29 @@ public class HouseholdDAO {
             e.printStackTrace();
         }
         return adminIds;
+    }
+
+    /**
+     * Removes a user from a household.
+     * @param householdId the household ID
+     * @param userId the user ID to remove
+     * @return true on success, false otherwise.
+     */
+    public static boolean removeUserFromHousehold(int householdId, int userId) {
+        String query = "DELETE FROM House_user WHERE houseId = ? AND userId = ?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, householdId);
+            stmt.setInt(2, userId);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

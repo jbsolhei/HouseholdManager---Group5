@@ -19,10 +19,12 @@ function readyShoppingList(){
 
 function insertShoppingLists(){
     var inputString = "";
-    $.each(SHL, function(i,val){
-        inputString += '<li onclick="showList(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
-    });
-    $("#shoppingSideMenu").html(inputString);
+    if (SHL.name!==null) {
+        $.each(SHL, function (i, val) {
+            inputString += '<li onclick="showList(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
+        });
+        $("#shoppingSideMenu").html(inputString);
+    }
 }
 
 function additem() {
@@ -97,6 +99,7 @@ function deleteItem(itemNumber){
 }
 
 function showList(SLIndex){
+    console.log(SHL);
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
     console.log("SLIndex: " + SLIndex);
     currentItemList = SHL[SLIndex].items;
@@ -119,7 +122,7 @@ function showList(SLIndex){
                 }
             }
         });
-    }$("#headline").replaceWith('<h4 id="headline">' + SHL[SLIndex].name + '</h4>');
+    }$("#headline").replaceWith('<p id="headline">' + SHL[SLIndex].name + '</p>');
     $("#shoppingListItemInput").focus();
     $("#shoppingList" + activeSHL).removeClass("active");
     $("#shoppingList" + SLIndex).addClass("active");
@@ -173,7 +176,7 @@ function addNewShoppingList(){
     $("#headlineInput").value = "";
     $("#headline").removeClass("hide");
     $("#edit_shopping_list_btn").removeClass("hide");
-    $("#headline").replaceWith('<h4 id="headline">' + name + '</h4>');
+    $("#headline").replaceWith('<p id="headline">' + name + '</p>');
     $("#headlineInput").addClass("hide");
     $("#addNewShoppingList").addClass("hide");
     $("#sideMenu").append('<li onclick="showList(' + numberOfLists-1 + ')" id="shoppingList' + numberOfLists-1 + '"><a>' + name + '</a></li>');
@@ -249,7 +252,7 @@ function updateUsersAjax(shoppingListId, users) {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("Shopping List successfully added to database")
+            console.log("List successfully added to database");
             navToShoppingList(activeSHL);
         },
         error: function (result) {

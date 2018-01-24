@@ -5,7 +5,7 @@
         <script>
             if (window.localStorage.getItem("sessionToken")==undefined||window.localStorage.getItem("sessionToken")==""){
                 window.localStorage.clear();
-                window.location.replace("login.html")
+                window.location.replace("OpeningPage.html")
             } else {
                 $.ajax({
                     url: "res/user/checkSession",
@@ -16,7 +16,7 @@
                     error: function (e) {
                         if (e.status == 401) {
                             window.localStorage.clear();
-                            window.location.replace("login.html")
+                            window.location.replace("OpeningPage.html")
                         }
                     }
                 });
@@ -68,19 +68,31 @@
         <link href="css/main.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link href="css/shoppinglist.css" rel="stylesheet">
+        <link href="css/shoppingTrip.css" rel="stylesheet">
         <link href="css/widgetStyle.css" rel="stylesheet">
+        <link href="css/stats.css" rel="stylesheet">
+        <link href="css/scrollBar.css" rel="stylesheet">
+        <link href="css/notification.css" rel="stylesheet">
 
         <script src="js/jquery.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-confirmation.min.js"></script>
         <script src="js/addHousehold.js"></script>
+        <script src="js/addMembersToHouseholdModal.js"></script>
         <script src="js/index.js"></script>
         <script src="js/dashboard.js"></script>
         <script src="js/shoppinglist.js"></script>
         <script src="js/profile.js"></script>
-        <script src="js/invite.js"></script>
         <script src="js/household.js"></script>
         <script src="js/shoppingTrip.js"></script>
         <script src="js/addShoppingTrip.js"></script>
+        <script src="js/chores.js"></script>
+        <script src="js/stats.js"></script>
+        <script src="js/notification.js"></script>
+        <script src="js/stats.js"></script>
+        <script src="js/finance.js"></script>
 
     </head>
     <body>
@@ -105,9 +117,19 @@
                         <li><a class="visible-xs" onclick="swapContent(household)">Household</a></li>
                         <li><a class="visible-xs" onclick="swapContent(shoppinglists)">Shopping lists</a></li>
                         <li><a class="visible-xs" onclick="swapContent(shoppingtrips)">Shopping trip</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(todo)">To Do</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(chores)">To Do</a></li>
                         <li><a class="visible-xs" onclick="swapContent(statistics)">Statistics</a></li>
                         <li><a class="visible-xs" onclick="swapContent(news)">News</a></li>
+
+
+                        <li>
+                            <a id="notifyBellId" class="dropdown-toggle"><i class="glyphicon glyphicon-bell"></i></a>
+                            <ul id="notifyDropdownListId" class="noti dropdown-menu list-group" role="menu" aria-labelledby="menu1">
+
+                            </ul>
+                        </li>
+
+
                         <li class="dropdown">
                             <a id="currentHouseholdId" class="dropdown-toggle" data-toggle="dropdown" href="#">Current household
                                 <span class="caret"></span>
@@ -126,13 +148,13 @@
         <!-- sidebar -->
         <nav id="sideBarId" class="sidebar hidden-xs">
             <ul class="list-unstyled components">
-                <li><a onclick="swapContent(dashboard), closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
-                <li><a onclick="swapContent(household, closeNav())" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
-                <li><a onclick="swapContent(shoppinglists), closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
-                <li><a onclick="swapContent(shoppingtrips), closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trip</a></li>
-                <li><a onclick="swapContent(todo),closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
-                <li><a onclick="swapContent(statistics), closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
-                <li><a onclick="swapContent(news), closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
+                <li><a onclick="swapContent(dashboard); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
+                <li><a onclick="swapContent(household); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
+                <li><a onclick="swapContent(shoppinglists); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
+                <li><a onclick="swapContent(shoppingtrips); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trip</a></li>
+                <li><a onclick="swapContent(chores);closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
+                <li><a onclick="swapContent(stats); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
+                <li><a onclick="swapContent(news); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
                 <li><a class="navbar-brand" onclick="swapContent(profile)" style="max-width: 50%"><img src="images/HHM_logo.png" style="height:150%; display:inline-block;"></a></li>
             </ul>
         </nav>
@@ -175,6 +197,12 @@
             if (sideBarOpen) closeNav();
         });
 
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+        });
+
+        getNotifications(getCurrentUser().userId);
+        updateNotificationBell();
     </script>
 
     <style>

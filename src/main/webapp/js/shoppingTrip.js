@@ -65,20 +65,16 @@ function viewInformation(shoppingTripId, i) {
     $("#tab-" + i).addClass("active");
     activeTab = i;
 }
+
 function updateInformation(result) {
-    $("#heading").html("");
-    $("#heading").append("<h4>Registered by: "
-        +result.userName+"</h4><small>--"+result.shoppingDate.dayOfMonth+". "
-        +result.shoppingDate.month+" "+result.shoppingDate.year+"--</small>");
-    $("#comments").html("");
-    $("#comments").append("<h5><b>Comment:</b></h5><p>"+result.comment+"</p><br>");
-    $("#sum").html("");
-    $("#sum").append("<h4>Sum: "+result.expence+" kr.</h4>")
-    $("#shoppinglist").html("");
+    $("#heading").html("<p>Registered by: " +result.userName+"<small>   on   "+result.shoppingDate.dayOfMonth+"-" +result.shoppingDate.month+"-"+result.shoppingDate.year+"</small></p>");
+    if (result.comment == "") $("#comments").html("<p class='STHeaderText'><b>Comment:</b></p><p id='noCommentID'>No Comments</p><br>");
+    else $("#comments").html("<p class='STHeaderText'><b>Comment:</b></p><p>"+result.comment+"</p><br>");
+    $("#sum").html("<p class='pull-right'>Sum: "+result.expence+" kr.</p>")
     if(result.shopping_listName === null) {
-        $("#shoppinglist").append("<h5><b>No attached shopping list</b></h5>");
+        $("#shoppinglist").html("<p class='STHeaderText'><b>No attached shopping list</b></p>");
     } else {
-        $("#shoppinglist").append("<h5><b>Attached shopping list:</b></h5><p>" + result.shopping_listName + "</p>");
+        $("#shoppinglist").html("<p class='STHeaderText'><b>Attached shopping list:</b></p><p>" + result.shopping_listName + "</p>");
     }
 
     $("#list").html("");

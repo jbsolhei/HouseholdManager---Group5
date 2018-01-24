@@ -69,17 +69,17 @@ public class UserAuth {
     }
 
     /**
-     * Checks if a user can read and modify a Task.
+     * Checks if a user can read and modify a Chore.
      * @param userId ID of the user to check
-     * @param taskId the Task ID
-     * @return whether the user can access the Task or not
+     * @param choreId the chore ID
+     * @return whether the user can access the chore or not
      */
-    public static boolean canUserAccessTask(int userId, int taskId) {
+    public static boolean canUserAccessChore(int userId, int choreId) {
         String query = "SELECT House_user.userId FROM House_user WHERE House_user.userId = ? " +
-                "AND House_user.houseId = (SELECT Task.houseId FROM Task WHERE Task.taskId = ?)";
+                "AND House_user.houseId = (SELECT Chore.houseId FROM Chore WHERE Chore.choreId = ?)";
 
         try {
-            return isInRelation(query, userId, taskId);
+            return isInRelation(query, userId, choreId);
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

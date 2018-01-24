@@ -1,0 +1,39 @@
+<script src="js/Chart.min.js"></script>
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-md-12 widgetCol">
+            <div class="panel panel-default widget">
+                <div class="panel-heading">
+                    <span>Statistics <p id="choreStatId" class="pull-right" style="margin-right: 1em;"> CHORES </p> <p id="moneyStatId" class="pull-right" style="margin-right: 2em"> EXPENSES</p> </span>
+                </div>
+                <div class="panel-body scrollWhenFull STAT">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var canvas = document.getElementById('myChart');
+    fitToContainer(canvas);
+
+    function fitToContainer(canvas){
+        // Make it visually fill the positioned parent
+        canvas.style.width ='100%';
+        canvas.style.height='100%';
+        // ...then set the internal size to match
+        canvas.width  = canvas.offsetWidth - 45;
+        canvas.height = canvas.offsetHeight - 45;
+    }
+
+    $("#moneyStatId").click(function () {
+        drawExpenseGraph();
+    });
+
+    $("#choreStatId").click(function () {
+        drawChoreStats();
+    });
+
+    drawExpenseGraph();
+</script>

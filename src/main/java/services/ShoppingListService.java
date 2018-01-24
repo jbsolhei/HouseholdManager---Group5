@@ -7,6 +7,7 @@ import classes.ShoppingList;
 import classes.User;
 import database.ShoppingListDAO;
 import database.UserDAO;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -79,7 +80,7 @@ public class ShoppingListService {
     @Auth(AuthType.HOUSEHOLD)
     @Consumes(MediaType.TEXT_PLAIN)
     public int createShoppingList(@PathParam("id") int houseId, String shoppingListName){
-        return ShoppingListDAO.createShoppingList(shoppingListName, houseId);
+        return  ShoppingListDAO.createShoppingList(StringEscapeUtils.escapeHtml4(shoppingListName), houseId);
     }
 
     /**
@@ -98,10 +99,10 @@ public class ShoppingListService {
 
     @POST
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{shopping_list_id}/items")
-    @Consumes(MediaType.TEXT_PLAIN)
-    public boolean addItem(@PathParam("shopping_list_id") String shopping_list_id, String itemName){
-        return (ShoppingListDAO.addItem(itemName, Integer.parseInt(shopping_list_id)) == 1);
+    @Path("/{id}/shopping_lists/{shopping_list_id}/items")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void addItems(@PathParam("shopping_list_id") int shopping_list_id, String itemName){
+        ShoppingListDAO.addItem(StringEscapeUtils.escapeHtml4(itemName), shopping_list_id);
     }
 
     @DELETE

@@ -1,7 +1,7 @@
 package database;
 
+import classes.Chore;
 import classes.HashHandler;
-import classes.Todo;
 import classes.User;
 import org.junit.After;
 import org.junit.Before;
@@ -72,9 +72,16 @@ public class UserDAOTest {
     }
 
     @Test
+    public void getPassword() throws Exception {
+        UserDAO.updatePassword(143, "NzTeaYqEzd8");
+
+        assertTrue(UserDAO.getPasswordMatch(143, "NzTeaYqEzd8"));
+    }
+
+    @Test
     public void updateUser() throws Exception {
         String newName = "Frederic";
-        UserDAO.updateUser(1, "Ole@gmail.com", "11223344", newName);
+        UserDAO.updateUser(1, "OleH@gmail.com", "11223344", newName);
 
         String query = "SELECT * FROM Person WHERE userId=1";
         ResultSet rs = st.executeQuery(query);
@@ -121,16 +128,6 @@ public class UserDAOTest {
         }
 
         assertEquals(true, deleteExecuted);
-    }
-
-    @Test
-    public void getTasks() throws Exception {
-        ArrayList<Todo> todos;
-        todos = UserDAO.getTasks(5);
-
-        assertEquals(todos.size(), 2);
-        assertEquals(todos.get(0).getDescription(), "Get som milk at the store");
-        assertNotEquals(todos.get(1).getDescription(), "Masturbate");
     }
 
     @Test

@@ -1,0 +1,16 @@
+.STAT {
+    height: 78vh;
+}
+
+#dropdownWrapperDiv {
+    display: inline-block;
+}
+
+#choreStatId, #moneyStatId {
+    color: white;
+}
+
+#choreStatId:hover, #moneyStatId:hover {
+    cursor: pointer;
+    color: black;
+}

@@ -2,42 +2,48 @@
  * Created by Simen Moen Storvik on 12.01.2018.
  */
 
-//TODO: Vurdere bruken av lokalt lagrede brukere under opplisting av todos og handlelister mtp på autoriseringsproblemer.
+//TODO: Vurdere bruken av lokalt lagrede brukere under opplisting av chores og handlelister mtp på autoriseringsproblemer.
 
 function loadDashboard(){
+
     var house = getCurrentHousehold();
     console.log(house);
     if (house!==undefined) {
         printShoppingListsToDashboard(house);
-        printHouseholdTodosToDashboard(house.houseId);
+        printHouseholdChoresToDashboard(house.houseId);
+        printNewsToDashboard();
     }
-
     if (!householdsLoaded) addHouseholdsToList(getCurrentUser().userId);
+
+    getDebt();
+    getIncome();
 }
 
-function printHouseholdTodosToDashboard(id){
+function printHouseholdChoresToDashboard(id){
     ajaxAuth({
-        url: "res/household/" + id + "/tasks",
+        url: "res/household/" + id + "/chores",
         type: "GET",
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
+            console.log(data);
             if (data !== null && data !==undefined) {
                 for (var i = 0; i < data.length; i++) {
                     var current = data[i];
+                    console.log(current);
                     if (current.user === undefined || current.user === null) {
                         var name = "None";
                     } else {
                         var name = current.user.name;
                     }
-                    var inputString = "<tr>\n" +
+                    var inputString = "<tr onclick='activeChore=["+1+","+i+"];updateCurrentHousehold("+chores+");'>" +
                         "<td>" + current.description + "</td>" +
-                        "<td>" + current.date + "</td>" +
+                        "<td>" + current.time.dayOfMonth + "."+current.time.monthValue+"." + current.time.year  + "</td>" +
                         "<td>" + name + "</td>" +
                         "</tr>";
-                    $("#dashboard_todos_table_body").append(inputString);
+                    $("#dashboard_chores_table_body").append(inputString);
                 }
             }else{
-                $("#dashboard_todos_table_body").append("There are no todos for this household.");
+                $("#dashboard_chores_table_body").append("There are no chores for this household.");
             }
         }
     });
@@ -60,4 +66,40 @@ function printShoppingListsToDashboard(house) {
             $("#dashboard_shopping_list_unordered_list").append(inputSting);
         }
     }
+}
+
+function printNewsToDashboard(){
+    getNews(function (data) {
+        var html = "";
+        var loops = data.length;
+        if (loops>6)loops=6;
+        for (var i = 0;i<loops;i++) {
+            var post = data[i];
+            var time = post.time.dayOfMonth+"."+post.time.monthValue+" "+post.time.hour+":"+post.time.minute;
+            if (post.message.length<50){
+                html += "<div class=\"well well-sm\">\n" +
+                    "                            <div class=\"message-heading\">\n" +
+                    "                                <b>"+post.user.name+"</b>\n" +
+                    "                                <div style=\"float: right\">\n" +
+                    "                                    <small>"+time+"</small>\n" +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"message-total\">"+post.message+"</div>\n" +
+                    "                        </div>"
+            } else {
+                html += "<div class=\"well well-sm clickable\" onclick=\"toggleTeaser($(this))\">\n" +
+                    "                            <div class=\"message-heading\">\n" +
+                    "                                <b>"+post.user.name+"</b>\n" +
+                    "                                <div style=\"float: right\">\n" +
+                    "                                    <small>"+time+"</small>\n" +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"message-teaser\">"+post.message.substring(0,36)+"...(show more)</div>\n" +
+                    "                            <div class=\"message-body\">"+post.message+"</div>\n" +
+                    "                        </div>"
+            }
+        }
+        $(".messages-container").html(html);
+        $('.message-body').css('display','none');
+    });
 }

@@ -1,25 +1,41 @@
 var dashboard = "dashboard.html";
+var finance = "finance.html";
 var household = "HouseholdOverview.html";
 var shoppinglists = "shoppinglist.html";
 var shoppingtrips = "shoppingtrip.html";
-var todo = "dashboard.html";
+var chores = "chores.html";
 var statistics = "dashboard.html";
-var news = "dashboard.html";
+var news = "news.html";
 var profile = "profile.html";
+var stats = "stats.html";
 var activeSHL = 0;
 var archivedSHL = 0;
 var householdsLoaded = false;
+var activeChore = [0,0];
 
 function ajaxAuth(attr) {
-    attr.headers = {
-        Authorization: "Bearer " + window.localStorage.getItem("sessionToken")
-    };
-    if (attr.error === undefined) {
-        attr.error = function (jqXHR, exception) {
-            console.log("Error: " + jqXHR.status);
-        };
+    var attributes = {};
+    $.extend(attributes, attr);
+
+    if (attributes.headers === undefined || attributes.headers === null) {
+        attributes.headers = {};
     }
-    return $.ajax(attr);
+    attributes.headers.Authorization = "Bearer " + window.localStorage.getItem("sessionToken");
+
+    attributes.error = function (xhr, textStatus, exceptionThrown) {
+        console.log("Error: " + xhr.status);
+
+        if (typeof attr.error === "function") {
+            attr.error(xhr, textStatus, exceptionThrown);
+        }
+
+        if (xhr.status === 401){
+            window.localStorage.clear();
+            window.location.replace("OpeningPage.html");
+        }
+    };
+
+    return $.ajax(attributes);
 }
 
 function checkSession(){
@@ -27,9 +43,9 @@ function checkSession(){
         url: "res/user/checkSession",
         type: "GET",
         error: function (e) {
-            if (e.status == 401){
+            if (e.status === 401){
                 window.localStorage.clear();
-                window.location.replace("OpeningPage.html")
+                window.location.replace("OpeningPage.html");
             }
         }
     })
@@ -65,8 +81,8 @@ function getCurrentHousehold() {
     return JSON.parse(window.localStorage.getItem("house"));
 }
 
-function updateCurrentHousehold(bodyContent){
-    if (getCurrentHousehold()!==undefined&&getCurrentHousehold()!==undefined) {
+function updateCurrentHousehold(bodyContent, successCallback){
+    if (getCurrentHousehold()!==null&&getCurrentHousehold()!==undefined) {
         var id = getCurrentHousehold().houseId;
         ajaxAuth({
             url: "res/household/" + id,
@@ -77,6 +93,10 @@ function updateCurrentHousehold(bodyContent){
                 if (bodyContent !== undefined) {
                     $(".page-wrapper").load(bodyContent);
 
+                }
+
+                if (typeof successCallback === "function") {
+                    successCallback();
                 }
             },
             dataType: "json"
@@ -95,8 +115,12 @@ function setCurrentHousehold(hid) {
             success: function (data) {
                 if (data.length>0) {
                     window.localStorage.setItem("house", JSON.stringify(data[0]));
+                    window.location.replace("index.html");
+                } else {
+                    showLoadingScreen(false);
+                    callModal("modals/addHousehold.html");
+                    $("#theModal").modal();
                 }
-                window.location.replace("index.html")
             },
             error: function () {
                 showLoadingScreen(false);
@@ -110,8 +134,14 @@ function setCurrentHousehold(hid) {
             type: "GET",
             contentType: "application/json; charser=utf-8",
             success: function (data) {
-                window.localStorage.setItem("house", JSON.stringify(data));
-                window.location.replace("index.html")
+                if (data.length!==null) {
+                    window.localStorage.setItem("house", JSON.stringify(data));
+                    window.location.replace("index.html")
+                } else {
+                    showLoadingScreen(false);
+                    callModal("modals/addHousehold.html");
+                    $("#theModal").modal();
+                }
             },
             error: function () {
                 showLoadingScreen(false);
@@ -170,6 +200,8 @@ function addHouseholdsToList(userId) {
     });
 
     $("#currentHouseholdId").html(getCurrentHousehold().name + ' <span class="caret"></span>');
+
+
 }
 
 //Sets the chosen household to current household.
@@ -198,4 +230,54 @@ function swapContent(bodyContent) {
 function navToShoppingList(shoppingListId){
     activeSHL = shoppingListId;
     swapContent(shoppinglists);
+}
+
+function getNews(runThisAfter){
+    ajaxAuth({
+        url:"res/household/"+getCurrentHousehold().houseId+"/news",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            var house = JSON.parse(window.localStorage.getItem("house"));
+            house.news = data;
+            window.localStorage.setItem("house",JSON.stringify(house));
+            runThisAfter(data);
+        },
+        dataType: "json"
+    });
+}
+
+function postNews(text,runThisAfter){
+    var message = {"message":text};
+    ajaxAuth({
+        url:"res/household/"+getCurrentHousehold().houseId+"/news",
+        type: "POST",
+        data: JSON.stringify(message),
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            console.log("Success!");
+            runThisAfter(data);
+            // Do things after post here
+        }
+    });
+}
+
+function deleteNews(newsId,runThisAfter){
+    ajaxAuth({
+        url:"res/household/"+getCurrentHousehold().houseId+"/news/"+newsId,
+        type: "DELETE",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            runThisAfter(data);
+            // Do things after delete here
+        }
+    });
+}
+
+function getLocalResident(userId){
+    $.each(getCurrentHousehold().residents, function (i, val) {
+        if(val.userId===userID){
+            return val;
+        }
+    });
 }

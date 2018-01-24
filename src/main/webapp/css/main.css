@@ -8,12 +8,11 @@
     border-radius: 0;!important;
 }
 
-.btn-sidebar, .sidebar, .navbar, a.navbar-brand {
+.navbar, a.navbar-brand {
     background-color: #233237;
     border-color: #233237;
     color: white;
 }
-
 
 .btn-default:hover {
     color: #333;
@@ -26,8 +25,6 @@
     background-color: #00415a;
 }
 
-.btn-sidebar:active {}
-
 
 .page-wrapper{
     transition: 0.2s;
@@ -37,10 +34,14 @@
     display: none;
 }
 
-#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId {
+#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #notifyBellId {
     color: white;
     font-size: 17px;
     cursor: pointer;
+}
+
+#notifyBellId {
+    margin-top: 4px;
 }
 
 #currentHouseholdId:hover, #logoutId:hover, #myPageId:hover {
@@ -62,10 +63,26 @@
     min-height: 40px;
     min-width: 100%;
 }
+.img-circle1 {
+    height: 80px;
+    width: 80px;
+    overflow: hidden;
+    border-radius: 40px;
+    text-align: center;
+}
+.img-pic1 {
+    min-height: 100px;
+    min-width: 100%;
+}
 th, td {
     border-bottom: 1px solid #ddd;
     height: 50px;
     padding: 10px;
+
+}
+
+tr:hover{
+    background-color: #eeeeee;
 }
 
 #add_shopping_list_btn {
@@ -83,6 +100,10 @@ th, td {
     cursor: pointer;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 .has_been_clicked {
     background-color: #d9534f;
     color: #fff;
@@ -90,6 +111,10 @@ th, td {
 
 .has_been_clicked:focus {
     color: #fff;
+}
+
+.clickable {
+    cursor: pointer;
 }
 
 .container-fluid {
@@ -116,4 +141,11 @@ body {
 }
 #profile-panel-info {
     margin-top: 10px;
+}
+.sidePanelProfile {
+    width: 100%;
+}
+#verticalLine {
+    border-right: 1px solid black;
+    height: auto;
 }

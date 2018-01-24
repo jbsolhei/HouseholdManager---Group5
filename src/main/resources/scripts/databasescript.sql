@@ -1,12 +1,13 @@
-DROP TABLE IF EXISTS User_Shopping_list;
-DROP TABLE IF EXISTS User_Shopping_trip;
+DROP TABLE IF EXISTS Notification;
 DROP TABLE IF EXISTS Item;
 DROP TABLE IF EXISTS Invite_token;
 DROP TABLE IF EXISTS Finance;
-DROP TABLE IF EXISTS Shopping_tour;
+DROP TABLE IF EXISTS User_Shopping_list;
+DROP TABLE IF EXISTS User_Shopping_trip;
+DROP TABLE IF EXISTS Shopping_trip;
 DROP TABLE IF EXISTS Shopping_list;
 DROP TABLE IF EXISTS Message;
-DROP TABLE IF EXISTS Task;
+DROP TABLE IF EXISTS Chore;
 DROP TABLE IF EXISTS House_user;
 DROP TABLE IF EXISTS Household;
 DROP TABLE IF EXISTS Person;
@@ -42,14 +43,16 @@ CREATE TABLE Invite_token (
   FOREIGN KEY (houseId) REFERENCES Household(houseId)
 );
 
-CREATE TABLE Task (
-date DATE,
-time TIME,
-description VARCHAR(100),
-taskId INTEGER AUTO_INCREMENT,
+CREATE TABLE Chore (
+chore_datetime DATETIME,
+time INTEGER,
+title VARCHAR(40),
+description VARCHAR(280),
+choreId INTEGER AUTO_INCREMENT,
 houseId INTEGER NOT NULL,
 userId INTEGER NOT NULL,
-CONSTRAINT task_pk PRIMARY KEY(taskId),
+done BOOLEAN NOT NULL DEFAULT 0,
+CONSTRAINT chore_pk PRIMARY KEY(choreId),
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 FOREIGN KEY (userId) REFERENCES Person(userId));
 
@@ -68,7 +71,7 @@ shopping_listId INTEGER AUTO_INCREMENT,
 name VARCHAR(45) NOT NULL,
 houseId INTEGER NOT NULL,
 archived INTEGER(1) DEFAULT 0 NOT NULL,
-FOREIGN KEY (houseId) REFERENCES Household(houseId),
+FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE ,
 CONSTRAINT shopping_listId PRIMARY KEY (shopping_listId));
 
 CREATE TABLE Item (
@@ -77,8 +80,8 @@ name VARCHAR(45),
 checked BOOLEAN,
 checkedBy INTEGER,
   shopping_listId INTEGER,
-FOREIGN KEY (checkedBy) REFERENCES Person(UserId),
-FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId),
+FOREIGN KEY (checkedBy) REFERENCES Person(UserId) ON DELETE CASCADE,
+FOREIGN KEY (shopping_listId) REFERENCES Shopping_list(shopping_listId) ON DELETE CASCADE,
 CONSTRAINT item_pk PRIMARY KEY (itemId));
 
 CREATE TABLE Shopping_trip (
@@ -116,3 +119,15 @@ shopping_tripId INTEGER NOT NULL,
 CONSTRAINT user_shopping_trip_pk PRIMARY KEY(userId, shopping_tripId),
 FOREIGN KEY (userId) REFERENCES Person(userId),
 FOREIGN KEY (shopping_tripId) REFERENCES Shopping_trip(shopping_tripId));
+
+CREATE TABLE Notification (
+  userId INTEGER NOT NULL,
+  houseId INTEGER NOT NULL,
+  notificationId INTEGER AUTO_INCREMENT NOT NULL,
+  message VARCHAR(120),
+  notificationDateTime DATETIME NOT NULL,
+  isRead BOOLEAN NOT NULL DEFAULT FALSE,
+  CONSTRAINT notification PRIMARY KEY(notificationId),
+  FOREIGN KEY (userId) REFERENCES Person(userId) ON DELETE SET NULL ,
+  FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE
+);

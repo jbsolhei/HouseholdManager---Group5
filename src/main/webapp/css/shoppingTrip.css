@@ -1,0 +1,26 @@
+.scrollWhenFull.ST {
+   padding: 0px;
+}
+
+.STHeaderText {
+    margin-top: 3vh;
+    font-weight: bold;
+}
+
+#noCommentID {
+    color: grey;
+}
+
+.ST .nav-pills>li.active>a, .ST .nav-pills>li.active>a:focus, .ST .nav-pills>li.active>a:hover {
+    background-color: rgba(150, 19, 12, 0.1);
+    color: black;
+    border-radius: 0px;
+    width: 100%;
+}
+
+.ST .nav-pills>li>a:hover {
+    background-color: rgba(150, 19, 12, 0.05);
+    color: black;
+    border-radius: 0px;
+    width: 100%;
+}

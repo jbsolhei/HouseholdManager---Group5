@@ -1,12 +1,41 @@
 #buttonDiv {
     text-align: left;
 }
-#head {
-    overflow: auto;
+
+
+#shoppingSideMenu li {
+    width: 100%;
 }
 
-#headline {
-    float: left;
+a {
+    color: black;
+}
+
+.scrollWhenFull.SL {
+   padding: 0px;
+}
+
+.scrollWhenFull.SL td, .scrollWhenFull.SL th {
+    text-align: center;
+}
+
+.scrollWhenFull.SL .glyphicon-remove, .scrollWhenFull.SL .glyphicon-check {
+    cursor: pointer;
+}
+
+.SL .nav-pills>li.active>a, .SL .nav-pills>li.active>a:focus {
+    background-color: rgba(189, 87, 0, 0.1) !important;
+    color: black;
+    border-radius: 0 !important;
+    width: 100%;
+}
+
+.SL .nav-pills>li>a:hover {
+    background-color: rgba(189, 87, 0, 0.05) !important;
+    color: black;
+    border-radius: 0 !important;
+    width: 100%;
+    cursor: pointer;
 }
 
 #list_of_users_associated_with_shopping_list {
@@ -46,4 +75,28 @@
 #cancel_new_shopping_list_btn {
     margin-left: 10px;
     border-radius: 4px;
+}
+
+.footerWrapper, #headerInputWrapper {
+    height: 45px;
+}
+
+.panel-footer{
+    height: 100%;
+    padding: 5px;
+}
+
+#additem, #shoppingListItemInput {
+    border-radius: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    height: 45px;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+#emptyListText {
+    text-align: center;
 }
