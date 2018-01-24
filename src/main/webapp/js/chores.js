@@ -270,6 +270,8 @@ function getChoresForHousehold(id, handleData){
     });
 }
 
+
+//TODO: Fiks at det kommer opp et varsel hvis man har glemt å fylle ut noen felt.
 function postNewChore(chore){
     console.log("postNewCore()");
     ajaxAuth({
@@ -280,6 +282,7 @@ function postNewChore(chore){
         data: JSON.stringify(chore),
         success: function () {
             console.log("Mor di jobbe ikke her kis");
+            addNotification(chore.userId, getCurrentHousehold().houseId, "You have been added to the chore \"" + chore.title + "\", by " + getCurrentUser().name);
             selectedChore = undefined;
             readyChores();
             switchChoresContent(3);

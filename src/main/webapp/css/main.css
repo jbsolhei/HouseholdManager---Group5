@@ -6,6 +6,7 @@
 
 .navbar {
     border-radius: 0;!important;
+    height: 54px;
 }
 
 .navbar, a.navbar-brand {

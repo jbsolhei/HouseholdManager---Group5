@@ -61,6 +61,10 @@
     overflow-y: auto;
 }
 
+tr:hover {
+    background-color: rgba(0,0,0,0);
+}
+
 /* FOR MOBILE */
 @media (max-width: 767px) {
     .page-wrapper {

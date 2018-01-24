@@ -1,16 +1,23 @@
 <div id="choresMainContainer">
     <div class="row" id="choresMainRow">
-        <div class="col-sm-6 cOutCol">
-            <div id="topInnerRow" class="row">
-                <div class="col-sm-12 widgetCol">
-                    <div class="panel panel-default widget" id="choresLeftUpperPanel">
-                        <div class="cHeader panel-heading" id="choresLeftUpperPanelHeading">
-                            Your chores
-                            <a id="addTodoGlyphicon" onclick="switchChoresContent(1)" class="btn btn-md pull-right">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        </div>
-                        <div class="panel-body scrollWhenFull" id="choresLeftUpperPanelBody">
+        <div class="col-sm-6 widgetCol">
+            <div class="panel panel-default widget" id="choresLeftUpperPanel">
+                <div class="cHeader panel-heading" id="choresLeftUpperPanelHeading">
+                    Chores
+                    <a id="addTodoGlyphicon" onclick="switchChoresContent(1)" class="btn btn-md pull-right">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </div>
+
+                <div class="panel-body scrollWhenFull C">
+                    <ul class="nav nav-tabs">
+                        <li class="active choreTab"><a data-toggle="tab" href="#yourChoresTab">Your chores</a></li>
+                        <li class="choreTab" ><a data-toggle="tab" href="#householdChoresTab">Household Chores</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="yourChoresTab" class="tab-pane fade in active">
+                            <!-- Personal chores tab -->
                             <table class="table" id="choresLeftUpperTable">
                                 <thead id="choresLeftUpperTableHead">
                                 <tr>
@@ -23,16 +30,9 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div id="bottominnerRow" class="row">
-                <div class="col-sm-12 widgetCol">
-                    <div class="panel panel-default widget" id="choresLeftLowerPanel">
-                        <div class="cHeader panel-heading" id="choresLeftLowerPanelHeading">
-                            Household chores
-                        </div>
-                        <div class="panel-body scrollWhenFull" id="choresLeftLowerPanelBody">
+
+                        <div id="householdChoresTab" class="tab-pane fade panel-body">
+                            <!-- Household chores tab -->
                             <table class="table" id="choresLeftLowerTable">
                                 <thead id="choresLeftLowerTableHead">
                                 <tr>
@@ -47,8 +47,10 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
+
 
         <div id="widgetColChore" class="col-sm-6 widgetCol">
             <div class="panel panel-default widget" id="choresRightPanel">

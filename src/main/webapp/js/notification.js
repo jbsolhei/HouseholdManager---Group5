@@ -39,17 +39,17 @@ var dateTime =    currentdate.getFullYear() + "-"
 }
 
 /**
- * Used to set the notification status to read, so that it does not show up anymore for the user.
+ * Used to delete a notification from the database.
  * @param notificationId The id of the notification that you want to update.
  */
-function updateNotification(notificationId) {
+function deleteNotification(notificationId) {
     ajaxAuth({
-        url: "res/notification/" + notificationId + "/updateStatus",
-        type: "PUT",
+        url: "res/notification/" + notificationId + "/deleteNotification",
+        type: "DELETE",
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
-            console.log("Notification updated: " + result);
+            console.log("Notification deleted: " + result);
         },
         error: function (e) {
             console.log(e);
@@ -58,7 +58,7 @@ function updateNotification(notificationId) {
 }
 
 /**
- * Get all the notifications that hasn't been read by a user.
+ * Get all the user's notifications.
  * @param userId The id of the user.
  */
 function getNotifications(userId) {
@@ -68,6 +68,7 @@ function getNotifications(userId) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
+            console.log("notifications updated!");
             updateNotificationDropdown(result);
             updateNotificationBell();
             return result;
@@ -124,7 +125,7 @@ var opened = false;
 $(document).on('click', '.notificationElement', function () {
     var id = $(this).attr('id');
     id = id.slice(7);
-    updateNotification(id);
+    deleteNotification(id);
     $(this).remove();
 
     if (countNotifications() <= 0) {
@@ -150,15 +151,3 @@ $(document).on('click', 'body', function (e) {
         $('#notifyBellId').parent().toggleClass('open');
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
