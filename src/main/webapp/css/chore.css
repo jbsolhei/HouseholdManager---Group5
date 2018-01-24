@@ -1,0 +1,23 @@
+.clickableChore:hover{
+    background-color: cornflowerblue;
+}
+
+.checkedChoreListElement{
+    background-color: greenyellow;
+}
+.overdueChoreListElement{
+    background-color: orangered;
+}
+
+#addTodoGlyphicon {
+    padding: 0;
+}
+
+.cOutCol {
+    padding: 0;
+}
+
+#choresMainContainer {
+    padding-left: 2.0vh;
+    padding-right: 2.0vh;
+}
