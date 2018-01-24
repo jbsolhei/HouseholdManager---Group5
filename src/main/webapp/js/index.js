@@ -73,6 +73,24 @@ function setCurrentUser(id) {
     });
 }
 
+
+function updateCurrentUser(runThisAfter) {
+    ajaxAuth({
+        url: "res/user/"+getCurrentUser().userId,
+        type: "GET",
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            window.localStorage.setItem("user",JSON.stringify(data));
+            runThisAfter();
+        },
+        error: function () {
+            showLoadingScreen(false);
+            alert("Error loading user");
+        },
+        dataType: "json"
+    });
+}
+
 function getCurrentUser() {
     return JSON.parse(window.localStorage.getItem("user"));
 }
