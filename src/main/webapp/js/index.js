@@ -9,6 +9,7 @@ var news = "news.html";
 var profile = "profile.html";
 var stats = "stats.html";
 var activeSHL = 0;
+var archivedSHL = 0;
 var householdsLoaded = false;
 var activeChore = [0,0];
 
@@ -63,6 +64,24 @@ function setCurrentUser(id) {
             } else {
                 setCurrentHousehold(0);
             }
+        },
+        error: function () {
+            showLoadingScreen(false);
+            alert("Error loading user");
+        },
+        dataType: "json"
+    });
+}
+
+
+function updateCurrentUser(runThisAfter) {
+    ajaxAuth({
+        url: "res/user/"+getCurrentUser().userId,
+        type: "GET",
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            window.localStorage.setItem("user",JSON.stringify(data));
+            runThisAfter();
         },
         error: function () {
             showLoadingScreen(false);

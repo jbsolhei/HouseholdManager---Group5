@@ -129,8 +129,25 @@ function changePassword() {
                 '<strong>Weak password! </strong> Use at least 8 characters</div>';
         } else {
             if (newPassword === repeatPassword) {
-
+                var data = {"oldPassword": oldPassword, "newPassword" : newPassword}
                 ajaxAuth({
+                    url: "res/user/"+getCurrentUser().userId+"/updatePassword",
+                    type: 'PUT',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data),
+                    success: function (res) {
+                        if(res == "true") {
+                            saveInformation();
+                        } else {
+                            document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                                '<strong>Current password does not match</strong></div>';
+                        }
+                    },
+                    error: function (res) {
+                        console.log(res);
+                    }
+                });
+                /*ajaxAuth({
                     url: "res/user/"+getCurrentUser().userId+"/checkPassword",
                     type: 'POST',
                     contentType: 'text/plain; charset=utf-8',
@@ -145,7 +162,7 @@ function changePassword() {
                                 '<strong>Current password does not match</strong></div>';
                         }
                     }
-                });
+                });*/
             } else {
                 document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
                     '<strong>New password does not match</strong></div>';
@@ -155,7 +172,6 @@ function changePassword() {
 }
 
 function updatePassword(password) {
-    var data = {"name": "", "email": "", "telephone": "", "password": password};
     ajaxAuth({
         url: "res/user/"+getCurrentUser().userId+"/updatePassword",
         type: 'PUT',
@@ -192,6 +208,7 @@ function saveInformation() {
                     document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
                         '<strong>Your profile is changed</strong></div>';
                     setCurrentUser(getCurrentUser().userId);
+                    swapContent(profile);
                 } else {
                     document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
                         '<strong>Email already exists</strong></div>';

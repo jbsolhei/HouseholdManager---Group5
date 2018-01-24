@@ -153,3 +153,17 @@ body {
 #members {
     width: 100%;
 }
+
+.clickableChore:hover{
+    padding: 2px;
+    border: 2px;
+    margin: 2px;
+    background-color: cornflowerblue;
+}
+
+.checkedChoreListElement{
+    background-color: greenyellow;
+}
+.overdueChoreListElement{
+    background-color: orangered;
+}

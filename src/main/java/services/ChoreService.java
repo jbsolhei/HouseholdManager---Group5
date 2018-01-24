@@ -42,10 +42,11 @@ public class ChoreService {
     @PUT
     @Auth(AuthType.HOUSEHOLD)
     @Produces(MediaType.APPLICATION_JSON)
-    public void editChore(@PathParam("id") int houseId, Chore chore){
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int editChore(@PathParam("id") int houseId, Chore chore){
         chore.setTitle(StringEscapeUtils.escapeHtml4(chore.getTitle()));
         chore.setDescription(StringEscapeUtils.escapeHtml4(chore.getDescription()));
-        ChoreDAO.editChore(chore);
+        return ChoreDAO.editChore(chore);
     }
 
     @DELETE
