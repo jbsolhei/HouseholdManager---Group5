@@ -70,8 +70,8 @@ CREATE TABLE Shopping_list (
 shopping_listId INTEGER AUTO_INCREMENT,
 name VARCHAR(45) NOT NULL,
 houseId INTEGER NOT NULL,
-archived INTEGER DEFAULT 0,
-FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE,
+archived INTEGER(1) DEFAULT 0 NOT NULL,
+FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE ,
 CONSTRAINT shopping_listId PRIMARY KEY (shopping_listId));
 
 CREATE TABLE Item (
