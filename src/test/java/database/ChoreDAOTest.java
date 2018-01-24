@@ -74,7 +74,7 @@ public class ChoreDAOTest {
 
         ArrayList<Chore> chores = ChoreDAO.getChores(10);
 
-        assertEquals(1, chores.size());
+        assertEquals(3, chores.size());
         assertEquals("Ta ut søpla", chores.get(0).getTitle());
         assertEquals("Husk at grønn pose betyr restavfall!", chores.get(0).getDescription());
         assertEquals(51, chores.get(0).getUserId());
