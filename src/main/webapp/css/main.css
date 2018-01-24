@@ -131,8 +131,7 @@ body {
     text-align: left !important;
 }
 #profile-img {
-    width: 90%;
-    margin: 15px;
+    width: 100%;
 }
 #profile-footer {
     background-color: #984b43;
