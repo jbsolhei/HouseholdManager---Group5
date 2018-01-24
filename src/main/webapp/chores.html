@@ -50,8 +50,6 @@
             </div>
         </div>
 
-
-
         <div id="widgetColChore" class="col-sm-6 widgetCol">
             <div class="panel panel-default widget" id="choresRightPanel">
                 <div class="row" id="choresRightPanelFirstWindow">
@@ -59,157 +57,114 @@
                         <div class="cHeader panel-heading styled-heading" id ="choresRightUpperPanelHeading">
                         </div>
                         <div class="panel-body scrollWhenFull" id="choresRightUpperPanelBody">
-                            <div class="row choresContentRow" id="choresDetailsDescriptionRow">
-                                <div class="col-sm-3">
-                                    <h3>Description</h3>
-                                </div>
-                                <div class="col-sm-9">
-                                    <div id="choresDetailsDescriptionContent"></div>
-                                </div>
-                            </div>
-                            <div class="row choresContentRow" id="choresDetailsDateTimeRow">
-                                <div class="col-sm-3">
-                                    <h3>Date</h3>
-                                </div>
-                                <div class="col-sm-9">
-                                    <div id="choresDetailsDateTimeContent"></div>
-                                </div>
-                            </div>
-                            <div class="row choresContentRow" id="choresDetailsUserNameRow">
-                                <div class="col-sm-3">
-                                    <h3>Responsible</h3>
-                                </div>
-                                <div class="col-sm-9">
-                                    <div id="choresDetailsUserNameContent"></div>
-                                </div>
-                            </div>
-                            <div class="row choresContentRow" id="choresDetailsHouseholdRow">
-                                <div class="col-sm-3">
-                                    <h3>Household</h3>
-                                </div>
-                                <div class="col-sm-9">
-                                    <div id="choresDetailsHouseholdContent"></div>
-                                </div>
-                            </div>
-                            <div class="row choresContentRow" id="choresDetailsCheckedRow">
-                                <div class="col-sm-3">
-                                    <h3>Checked</h3>
-                                </div>
-                                <div class="col-sm-9">
-                                    <div id="choresDetailsCheckedContent"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <button onclick="checkSelectedChore(selectedChore)" id="checkSelectedChoreButton">Check/uncheck chore</button>
-                                </div>
-                                <div class="col-sm-4">
-                                    <button onclick="deleteSelectedChore(selectedChore.choreId)" id="deleteSelectedChoreButton">Delete chore</button>
-                                </div>
-                                <div class="col-sm-4">
-                                    <button onclick="editChore(selectedChore)">Edit chore</button>
-                                </div>
-                            </div>
+
+                            <table class="infoTabel">
+                                <tr>
+                                    <td><span class="choreDisc">Responsible</span></td>
+                                    <td><span class="text-right" id="choresDetailsUserNameContent"></span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="choreDisc">Date</span></td>
+                                    <td><span class="text-right" id="choresDetailsDateTimeContent"></span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="choreDisc">Checked</span></td>
+                                    <td><span class="text-right" id="choresDetailsCheckedContent"></span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="choreDisc">Description</span></td>
+                                    <td><span class="text-right" id="choresDetailsDescriptionContent"></span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="choreDisc">Options</span></td>
+                                    <td>
+                                        <button class="btn btn-default" onclick="checkSelectedChore(selectedChore)" id="checkSelectedChoreButton">Check/uncheck chore</button>
+                                        <button class="btn btn-default" onclick="editChore(selectedChore)">Edit chore</button>
+                                        <button class="btn btn-default" onclick="deleteSelectedChore(selectedChore.choreId)" id="deleteSelectedChoreButton">Delete chore</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            
                         </div>
                     </div>
                 </div>
-
-
 
                 <div class="row hide" id="choresRightPanelSecondWindow">
                     <div class="panel panel-default widget" id="choresRightSecondPanel">
-                        <div class="panel-heading styled-heading" id ="choresRightSecondPanelHeading">
+                        <div class="cHeader panel-heading styled-heading" id ="choresRightSecondPanelHeading">
                             <input class="form-control newChoreInput" id="newChoreTitleInput" type="text" placeholder="Chore title" style="font-size:18px">
                         </div>
                         <div class="panel-body scrollWhenFull HH" id="choresRightSecondPanelBody">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <h4>Description</h4>
-                                </div>
-                                <div class="col-sm-8">
 
-                                    <textarea class="newChoreInput" id="newChoreDescriptionInput" name="Text1" style="width:90%; height:10vw"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <h4>Date and time</h4>
-                                </div>
-                                <div class="col-sm-8">
-                                    <input class="newChoreInput" id="newChoreLocalTimeInput" type="datetime-local">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <h4>Subjected user</h4>
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="dropdown">
-                                        <button id="newChoreDropdownButton" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User
-                                            <span class="caret"></span></button>
-                                        <ul id="newChoreDropdownMenu" class="dropdown-menu">
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                </div>
-                                <div class="col-sm-3">
-                                    <button id="newChoreConfirmButton" onclick="newChoreButtonPressed()">Confirm</button>
-                                </div>
-                                <div class="col-sm-5">
-                                    <button id="newChoreCancelButton" onclick="switchChoresContent(0)">Cancel</button>
-                                </div>
-                            </div>
+                            <table class="infoTabel">
+                                <tr>
+                                    <td><span class="choreDisc">Date</span></td>
+                                    <td><input class="newChoreInput" id="newChoreLocalTimeInput" type="datetime-local"></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="choreDisc">Description</span></td>
+                                    <td><textarea class="newChoreInput" id="newChoreDescriptionInput" name="Text1" style="width:90%; height:10vw"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="choreDisc">Responsible</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button id="newChoreDropdownButton" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+                                                <span class="caret"></span></button>
+                                            <ul id="newChoreDropdownMenu" class="dropdown-menu">
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-default" id="newChoreConfirmButton" onclick="newChoreButtonPressed()">Confirm</button>
+                                        <button class="btn btn-default" id="newChoreCancelButton" onclick="switchChoresContent(0)">Cancel</button>
+                                    </td>
+                                </tr>
+                            </table>
+
                         </div>
                     </div>
                 </div>
+
                 <div class="row hide" id="choresRightPanelThirdWindow">
                     <div class="panel panel-default widget" id="choresRightThirdPanel">
-                        <div class="panel-heading styled-heading" id ="choresRightThirdPanelHeading">
+                        <div class="cHeader panel-heading styled-heading" id ="choresRightThirdPanelHeading">
                             <input class="form-control newChoreInput" id="editChoreTitleInput" type="text" placeholder="Chore title" style="font-size:18px">
                         </div>
                         <div class="panel-body scrollWhenFull HH" id="choresRightThirdPanelBody">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <h4>Description</h4>
-                                </div>
-                                <div class="col-sm-8">
-                                    <textarea class="newChoreInput" id="editChoreDescriptionInput" name="Text1" style="width:90%; height:10vw"></textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <h4>Date and time</h4>
-                                </div>
-                                <div class="col-sm-8">
-                                    <input class="newChoreInput" id="editChoreLocalTimeInput" type="datetime-local">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <h4>Subjected user</h4>
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="dropdown">
-                                        <button id="editChoreDropdownButton" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User
-                                            <span class="caret"></span></button>
-                                        <ul id="editChoreDropdownMenu" class="dropdown-menu">
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                </div>
-                                <div class="col-sm-3">
-                                    <button id="editChoreConfirmButton" onclick="editChoreButtonPressed()">Confirm</button>
-                                </div>
-                                <div class="col-sm-5">
-                                    <button id="editChoreCancelButton" onclick="showChoreInfo(selectedChore)">Cancel</button>
-                                </div>
-                            </div>
+
+                            <table class="infoTabel">
+                                <tr>
+                                    <td><span class="choreDisc">Date</span></td>
+                                    <td><input class="newChoreInput" id="editChoreLocalTimeInput" type="datetime-local"></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="choreDisc">Description</span></td>
+                                    <td><textarea class="newChoreInput" id="editChoreDescriptionInput" name="Text1" style="width:90%; height:10vw"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="choreDisc">Responsible</span></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button id="editChoreDropdownButton" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+                                                <span class="caret"></span></button>
+                                            <ul id="editChoreDropdownMenu" class="dropdown-menu">
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <button id="editChoreConfirmButton" onclick="editChoreButtonPressed()">Confirm</button>
+                                        <button id="editChoreCancelButton" onclick="showChoreInfo(selectedChore)">Cancel</button>
+                                    </td>
+                                </tr>
+                            </table>
+
                         </div>
                     </div>
                 </div>

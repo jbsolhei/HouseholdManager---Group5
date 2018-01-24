@@ -160,7 +160,7 @@ function switchChoresContent(num) {
         $("#choresRightPanelSecondWindow").removeClass("hide");
         $(".newChoreInput").val("");
         $("#newChoreTitleInput").focus();
-        $("#newChoreDropdownButton").html("No user");
+        $("#newChoreDropdownButton").html('No user <span class="caret"></span>');
         selectedUserForNewChore = null;
         var newChoreDropdownHTML = "";
         $.each(getCurrentHousehold().residents, function(i,val){
@@ -203,8 +203,8 @@ function newChoreButtonPressed(){
     postNewChore(newChore);
 }
 function setNewChorePersonFromDropdown(index){
-    $("#newChoreDropdownButton").html(getCurrentHousehold().residents[index].name);
-    $("#editChoreDropdownButton").html(getCurrentHousehold().residents[index].name);
+    $("#newChoreDropdownButton").html(getCurrentHousehold().residents[index].name + ' <span class="caret"></span>');
+    $("#editChoreDropdownButton").html(getCurrentHousehold().residents[index].name + ' <span class="caret"></span>');
     selectedUserForNewChore = index;
 }
 
@@ -212,7 +212,7 @@ function editChore(chore){
     switchChoresContent(2);
     $("#editChoreTitleInput").val(chore.title);
     $("#editChoreDescriptionInput").val(chore.description);
-    $("#editChoreDropdownButton").html(chore.user==null?"No user":chore.user.name);
+    $("#editChoreDropdownButton").html(chore.user==null?"No user <span class=\"caret\"></span>":chore.user.name + ' <span class="caret"></span>');
     document.getElementById("editChoreLocalTimeInput").value = (chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
     console.log(chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
 }

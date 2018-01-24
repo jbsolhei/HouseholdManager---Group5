@@ -21,3 +21,15 @@
     padding-left: 2.0vh;
     padding-right: 2.0vh;
 }
+
+.choreDisc {
+    font-weight: bold;
+}
+
+.infoTabel td:hover, .infoTabel tr:hover {
+    background-color: rgba(0,0,0,0);
+}
+
+.infoTabel {
+    width: 100%
+}
