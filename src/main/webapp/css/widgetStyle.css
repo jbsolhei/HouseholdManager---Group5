@@ -198,8 +198,7 @@
 
 /* CHORE WIDGET */
 #choresPanelId .scrollWhenFull {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
+    padding: 0 !important;
 }
 
 /* For header colors*/
