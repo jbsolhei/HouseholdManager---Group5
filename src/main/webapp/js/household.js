@@ -67,6 +67,7 @@ function buildMemberTable(){
         btnOkIcon: "glyphicon glyphicon-trash",
         btnCancelClass: "btn-sm btn-default",
         onConfirm: function () {
+            showLoadingScreen(true);
             var remove = $(this).data("remove");
             console.log("Confirm clicked! Removing " + remove);
             if (remove === "self") {
@@ -91,6 +92,7 @@ function removeMyselfFromHousehold() {
             dataType: "json",
             success: function (response) {
                 if (response.success === true) {
+                    window.localStorage.removeItem("house");
                     window.location.reload();
                 }
             }
@@ -107,12 +109,9 @@ function removeUserFromHousehold(userId) {
                 if (response.success === true) {
                     updateCurrentHousehold(undefined, buildMemberTable);
                 }
-            },
-            error: function (xhr) {
-                if (xhr.status === 403) {
-                    console.log("Du har ikke tilgang til å gjøre dette. FY SKAMME SEG!");
-                }
             }
+        }).always(function() {
+            showLoadingScreen(false)
         });
     }
 }

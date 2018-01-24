@@ -15,13 +15,15 @@ function createPage() {
             error: function (result) {
             }
         });
+        $("#sel1").html(
+            $("<option>").attr("id", "trip-0").data("trip-id", 0).text("-None-")
+        );
         ajaxAuth({
             url: "res/household/" + getCurrentHousehold().houseId + "/shopping_lists",//Må byttes ut med currentHousehold!!!!
             type: 'get',
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                console.log(data);
                 addShoppinglists(data);
             },
             error: function (result) {
@@ -41,9 +43,13 @@ function addMembers(members) {
     }
 }
 function addShoppinglists(data) {
-    $("#sel1").html("<option id='trip-0'>-None-</option>");
     for(var i=0; i<data.length; i++) {
-        $("#sel1").append("<option id='trip-"+data[i].shoppingListId+"'>"+data[i].name+"</option>");
+        $("#sel1").append(
+            $("<option>")
+                .attr("id", "trip-" + data[i].shoppingListId)
+                .data("trip-id", data[i].shoppingListId)
+                .text(data[i].name)
+        );
     }
 }
 
@@ -53,7 +59,7 @@ function addShoppingTrip() {
     var sum = $("#trip-sum").val();
     var contributors = [];
     var shoppingList = $("#sel1").val()-1;
-    var id = $("#sel1 option:selected").attr('id').split("trip-")[1];
+    var id = $("#sel1 option:selected").data("trip-id");
 
     for(var i=0; i<result.length; i++) {
         if($("#check-" + i).is(":checked")) {
