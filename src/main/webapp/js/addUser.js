@@ -8,14 +8,7 @@ var password;
 var testPassword;
 var person;
 
-
-function submitNewUser() {
-    name = $("#name").val();
-    phone = $("#telephone").val();
-    email = $("#email1").val();
-    password = $("#pwd").val();
-    testPassword = $("#pwd2").val();
-
+function showPicture() {
     var filesSelected = document.getElementById("profile_picture").files;
     if (filesSelected.length > 0)
     {
@@ -28,11 +21,21 @@ function submitNewUser() {
             fileReader.onload = function(fileLoadedEvent)
             {
                 $("#show_profile_pic").html("");
-                $("#show_profile_pic").html("<img src='"+fileLoadedEvent.target.result+"'>");
+                $("#show_profile_pic").html("<img src='"+fileLoadedEvent.target.result+"' style='width: 100%'>");
             };
             fileReader.readAsDataURL(fileToLoad);
         }
     }
+}
+
+
+function submitNewUser() {
+    name = $("#name").val();
+    phone = $("#telephone").val();
+    email = $("#email1").val();
+    password = $("#pwd").val();
+    testPassword = $("#pwd2").val();
+
 
     confirm();
 }
