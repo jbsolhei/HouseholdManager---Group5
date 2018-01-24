@@ -33,3 +33,8 @@
 .infoTabel {
     width: 100%
 }
+
+.C {
+    min-height: 80vh !important;
+    max-height: 80vh !important;
+}
