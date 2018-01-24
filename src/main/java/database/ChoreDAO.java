@@ -15,7 +15,6 @@ public class ChoreDAO {
 
         String query = "INSERT INTO Chore (description, chore_datetime, houseId, userId, done, title) VALUES (?, ?, ?, ?, ?, ?);";
 
-        System.out.println("Postchore");
         try (DBConnector dbc = new DBConnector();
             Connection conn = dbc.getConn();
             PreparedStatement st = conn.prepareStatement(query)){
@@ -25,7 +24,6 @@ public class ChoreDAO {
             st.setTimestamp(2, Timestamp.valueOf(chore.getTime()));
 
             st.setInt(3, chore.getHouseId());
-            System.out.println(chore.getUserId());
             st.setInt(4, chore.getUserId());
             if(chore.isDone()) {
                 st.setInt(5, 1);
@@ -54,7 +52,7 @@ public class ChoreDAO {
     public static ArrayList<Chore> getChores(int householdId){
         ArrayList<Chore> chores = new ArrayList<>();
         Chore chore;
-        String query = "SELECT * FROM Chore WHERE houseId = ? AND chore_datetime >= NOW();";
+        String query = "SELECT * FROM Chore WHERE houseId = ?;";
 
         try (DBConnector dbc = new DBConnector();
             Connection conn = dbc.getConn();
@@ -93,7 +91,7 @@ public class ChoreDAO {
 
     public static ArrayList<Chore> getUserChores(int userId){
         ArrayList<Chore> chores = new ArrayList<>();
-        Chore chore;
+
 
         String query = "SELECT * FROM Chore WHERE userId = ?;";
 
@@ -106,6 +104,7 @@ public class ChoreDAO {
             try(ResultSet rs = st.executeQuery()) {
 
                 while (rs.next()) {
+                    Chore chore;
                     chore = new Chore();
                     chore.setTitle(rs.getString("title"));
                     chore.setDescription(rs.getString("description"));
@@ -119,7 +118,7 @@ public class ChoreDAO {
                     } else {
                         chore.setDone(false);
                     }
-                    chore.setUserId(userId);
+                    chore.setUser(UserDAO.getUser(userId));
                     chores.add(chore);
                 }
 
@@ -157,7 +156,7 @@ public class ChoreDAO {
      * Updates the chore in the database with the same id as the chore in param.
      * @param chore
      */
-    public static void editChore(Chore chore){
+    public static int editChore(Chore chore){
 
         String query = "UPDATE Chore SET title = ?, description = ?, chore_datetime = ?, userId = ?, done = ? WHERE choreId = ?;";
         try (DBConnector dbc = new DBConnector();
@@ -168,6 +167,8 @@ public class ChoreDAO {
             st.setString(2, chore.getDescription());
             st.setTimestamp(3, Timestamp.valueOf(chore.getTime()));
             st.setInt(4, chore.getUserId());
+            System.out.println(chore.getUserId());
+            System.out.println(chore.getChoreId());
             if (chore.isDone()) {
                 st.setInt(5, 1);
             } else {
@@ -175,10 +176,11 @@ public class ChoreDAO {
             }
             st.setInt(6, chore.getChoreId());
 
-            st.executeUpdate();
+            return st.executeUpdate();
 
         }catch(SQLException e){
             e.printStackTrace();
         }
+        return -1;
     }
 }

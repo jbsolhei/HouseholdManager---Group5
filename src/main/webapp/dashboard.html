@@ -1,74 +1,80 @@
 <div id="dashboardId" class="container-fluid">
-    <div id="dbTopRow" class="row">
-        <div id="choresPanelId" class="col-md-8 widgetCol">
-            <div class="panel panel-default widget">
-                <div class="panel-heading cursorPointer">Household chores</div>
-                <div class="panel-body scrollWhenFull">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th>Initiator</th>
-                        </tr>
-                        </thead>
-                        <tbody id="dashboard_chores_table_body"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div id="shoppinglistPanelId" class="col-md-4 widgetCol">
-            <div class="panel panel-default widget">
-                <div class="panel-heading cursorPointer" onclick="navToShoppingList(activeSHL)">Shoppinglists</div>
-                <div class="panel-body scrollWhenFull">
-                    <ul id="dashboard_shopping_list_unordered_list" class="list-group"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="dbBottomRow" class="row">
-        <div id="debtPanelId" class="col-md-4 widgetCol">
-            <div class="panel panel-default widget">
-                <div class="panel-heading cursorPointer">Debt</div>
-                <div class="panel-body scrollWhenFull nopadding debt-widget">
-                    <div class="row debt-row bg-danger padding" id="debtRowOutgoing">
-                        <div class="col-xs-9 nopadding">You owe people in total:</div>
-                        <div class="col-xs-3 nopadding debt-sum" id="debtSumOutgoing">120 kr</div>
-                    </div>
-                    <div class="row debt-row bg-success padding" id="debtRowIncoming">
-                        <div class="col-xs-9 nopadding">People owe you in total:</div>
-                        <div class="col-xs-3 nopadding debt-sum" id="debtSumIncoming">30 kr</div>
+
+    <div class="row">
+        <div class="col-md-8 outerCol">
+            <div id="dbTopRow" class="row">
+                <div id="choresPanelId" class="col-md-12 widgetCol">
+                    <div class="panel panel-default widget">
+                        <div class="cHeader panel-heading cursorPointer" onclick="swapContent(chores)">Household chores</div>
+                        <div class="panel-body scrollWhenFull">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Initiator</th>
+                                </tr>
+                                </thead>
+                                <tbody id="dashboard_chores_table_body"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="newsPanelId" class="col-md-4 widgetCol">
-            <div class="panel panel-default widget">
-                <div class="panel-heading">Household news</div>
-                <div class="panel-body scrollWhenFull">
-                    <div class="messages-container">
-                        <div class="well well-sm clickable" onclick="toggleTeaser($(this))">
-                            <div class="message-heading">
-                                <b>Name</b>
-                                <div style="float: right">
-                                    -date-
-                                </div>
+
+            <div id="dbBottomRow" class="row">
+                <div id="debtPanelId" class="col-md-6 widgetCol">
+                    <div class="panel panel-default widget">
+                        <div class="panel-heading cursorPointer" onclick="swapContent(finance)">Finance</div>
+                        <div class="panel-body scrollWhenFull nopadding debt-widget">
+                            <div class="row debt-row bg-danger padding" id="debtRowOutgoing">
+                                <div class="col-xs-9 nopadding">You owe people in total:</div>
+                                <div class="col-xs-3 nopadding debt-sum" id="debtSumOutgoing"></div>
                             </div>
-                            <div class="message-teaser">First few words of the message... (show more)</div>
-                            <div class="message-body">First few words of the message and this is the rest of it, can you believe it. Tchnology nowadays has no limits, godamn. aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                            <div class="row debt-row bg-success padding" id="debtRowIncoming">
+                                <div class="col-xs-9 nopadding">People owe you in total:</div>
+                                <div class="col-xs-3 nopadding debt-sum" id="debtSumIncoming"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="shoppinglistPanelId" class="col-md-6 widgetCol">
+                    <div class="panel panel-default widget">
+                        <div class="slHeader panel-heading cursorPointer" onclick="navToShoppingList(activeSHL)">Shoppinglists</div>
+                        <div class="panel-body scrollWhenFull">
+                            <ul id="dashboard_shopping_list_unordered_list" class="list-group"></ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="statisticsPanelId" class="col-md-4 widgetCol">
-            <div  class="panel panel-default widget">
-                <div class="panel-heading cursorPointer">Statistics</div>
-                <div class="panel-body scrollWhenFull">Statistics here</div>
+
+        <div class="col-md-4 outerCol">
+            <div id="newsPanelId" class="col-md-12 widgetCol">
+                <div class="panel panel-default widget">
+                    <div class="nHeader panel-heading" onclick="swapContent(news)">Household news</div>
+                    <div class="panel-body scrollWhenFull N">
+                        <div class="messages-container">
+                            <div class="well well-sm clickable" onclick="toggleTeaser($(this))">
+                                <div class="message-heading">
+                                    <b>Name</b>
+                                    <div style="float: right">
+                                        -date-
+                                    </div>
+                                </div>
+                                <div class="message-teaser">First few words of the message... (show more)</div>
+                                <div class="message-body">First few words of the message and this is the rest of it, can you believe it. Tchnology nowadays has no limits, godamn. aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 </div>
+
 <script>
     /*
     function makeDraggable(id) {
@@ -87,7 +93,6 @@
     makeDraggable('shoppinglistPanelId');
     makeDraggable('choresPanelId');
 */
-
     loadDashboard();
     checkWelcome();
 

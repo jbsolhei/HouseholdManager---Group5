@@ -1,9 +1,9 @@
 /**
  * Created by Simen Moen Storvik on 11.01.2018.
  */
-
+var currUs;
 function loadUser(){
-    var currUs = getCurrentUser();
+    currUs = getCurrentUser();
     printInfoToWall(currUs);
     printHouseholdsToWall(currUs.userId);
     printTasksToWall(currUs.userId);
@@ -84,4 +84,140 @@ function printTasksToWall(id){
             $("#profile_todos_body").append("No todos for you!");
         }
     });*/
+}
+
+function editUserInfo() {
+    $("#edit_profile_name").html("");
+    $("#edit_profile_name").html("<h3><input class='form-control' type='text' id='edit_profile_information_name'" +
+        "value='"+currUs.name+"' placeholder='Name'></h3>");
+
+    $("#edit_profile_email").html("");
+    $("#edit_profile_email").html("<input class='form-control' type='email' id='edit_profile_information_email'" +
+        "value='"+currUs.email+"' placeholder='Email'>");
+
+    $("#edit_profile_phone").html("");
+    $("#edit_profile_phone").html("<input class='form-control' type='number' id='edit_profile_information_phone' " +
+        "value='"+currUs.telephone+"' placeholder='Telephone'>");
+
+    $("#changePassword").html("<label>Change password:</label><div class='form-group'><label class='control-label col-md-3 profile_labels' for=''>Current password:</label>"+
+        "<div class='col-md-9'>" +
+        "<input class='form-control' type='password' id='currentPassword'></div></div>" +
+        "<div class='form-group'><label class='control-label col-md-3 profile_labels' for=''>New password:</label>"+
+        "<div class='col-md-9'>" +
+        "<input class='form-control' type='password' id='newPassword'></div></div>" +
+        "<div class='form-group'><label class='control-label col-md-3 profile_labels' for=''>Repeat password:</label>"+
+        "<div class='col-md-9'>" +
+        "<input class='form-control' type='password' id='repeatPassword'></div></div>");
+
+    $("#edit_button").html("");
+    $("#edit_button").html("<div onclick='changePassword()' class='panel-footer cursorPointer' id='profile-footer'>Save information</div>");
+
+}
+
+function changePassword() {
+    var oldPassword = $("#currentPassword").val();
+    var newPassword = $("#newPassword").val();
+    var repeatPassword = $("#repeatPassword").val();
+
+    console.log(oldPassword);
+
+    if(oldPassword == "") {
+        saveInformation();
+    } else {
+        if(newPassword.length < 8) {
+            document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                '<strong>Weak password! </strong> Use at least 8 characters</div>';
+        } else {
+            if (newPassword === repeatPassword) {
+                var data = {"oldPassword": oldPassword, "newPassword" : newPassword}
+                ajaxAuth({
+                    url: "res/user/"+getCurrentUser().userId+"/updatePassword",
+                    type: 'PUT',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data),
+                    success: function (res) {
+                        if(res == "true") {
+                            saveInformation();
+                        } else {
+                            document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                                '<strong>Current password does not match</strong></div>';
+                        }
+                    },
+                    error: function (res) {
+                        console.log(res);
+                    }
+                });
+                /*ajaxAuth({
+                    url: "res/user/"+getCurrentUser().userId+"/checkPassword",
+                    type: 'POST',
+                    contentType: 'text/plain; charset=utf-8',
+                    data: oldPassword,
+                    success: function (res) {
+                        console.log(res);
+                        if (res == "true") {
+                            updatePassword(newPassword);
+                           // saveInformation();
+                        } else {
+                            document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                                '<strong>Current password does not match</strong></div>';
+                        }
+                    }
+                });*/
+            } else {
+                document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                    '<strong>New password does not match</strong></div>';
+            }
+        }
+    }
+}
+
+function updatePassword(password) {
+    ajaxAuth({
+        url: "res/user/"+getCurrentUser().userId+"/updatePassword",
+        type: 'PUT',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(data),
+        success: function (res) {
+            console.log(res);
+            saveInformation();
+        },
+        error: function (res) {
+            console.log(res);
+        }
+    });
+}
+
+function saveInformation() {
+    var newName = $("#edit_profile_information_name").val();
+    var newEmail = $("#edit_profile_information_email").val();
+    var newPhone = $("#edit_profile_information_phone").val();
+
+
+    if(newEmail == "" || newPhone == "" || newName == "") {
+        document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+            '<strong>Please fill in all the information</strong></div>';
+    } else {
+        var editUser = {"name": newName, "email": newEmail, "telephone": newPhone};
+        ajaxAuth({
+            url: "res/user/" + getCurrentUser().userId,
+            type: 'PUT',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(editUser),
+            success: function (result) {
+                if (result == "true") {
+                    document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
+                        '<strong>Your profile is changed</strong></div>';
+                    setCurrentUser(getCurrentUser().userId);
+                    swapContent(profile);
+                } else {
+                    document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                        '<strong>Email already exists</strong></div>';
+                }
+
+            },
+            error: function (result) {
+            }
+        });
+    }
+
 }

@@ -2,7 +2,9 @@ DROP TABLE IF EXISTS Notification;
 DROP TABLE IF EXISTS Item;
 DROP TABLE IF EXISTS Invite_token;
 DROP TABLE IF EXISTS Finance;
-DROP TABLE IF EXISTS Shopping_tour;
+DROP TABLE IF EXISTS User_Shopping_list;
+DROP TABLE IF EXISTS User_Shopping_trip;
+DROP TABLE IF EXISTS Shopping_trip;
 DROP TABLE IF EXISTS Shopping_list;
 DROP TABLE IF EXISTS Message;
 DROP TABLE IF EXISTS Chore;
@@ -22,12 +24,17 @@ email VARCHAR(45) NOT NULL,
 name VARCHAR(45) NOT NULL,
 password VARCHAR(100) NOT NULL,
 telephone VARCHAR(20),
+bio VARCHAR(150),
+gender BOOL,
+relationship VARCHAR (30),
+image LONGBLOB,
 CONSTRAINT user_pk PRIMARY KEY(userId));
 
 CREATE TABLE House_user (
 houseId INTEGER NOT NULL,
 userId INTEGER NOT NULL,
 isAdmin BOOL,
+roomNumber INTEGER,
 CONSTRAINT house_user_pk PRIMARY KEY(houseId, userId),
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 FOREIGN KEY (userId) REFERENCES Person(userId)
@@ -68,8 +75,8 @@ CREATE TABLE Shopping_list (
 shopping_listId INTEGER AUTO_INCREMENT,
 name VARCHAR(45) NOT NULL,
 houseId INTEGER NOT NULL,
-archived INTEGER DEFAULT 0,
-FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE,
+archived INTEGER(1) DEFAULT 0 NOT NULL,
+FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE ,
 CONSTRAINT shopping_listId PRIMARY KEY (shopping_listId));
 
 CREATE TABLE Item (
@@ -126,6 +133,6 @@ CREATE TABLE Notification (
   notificationDateTime DATETIME NOT NULL,
   isRead BOOLEAN NOT NULL DEFAULT FALSE,
   CONSTRAINT notification PRIMARY KEY(notificationId),
-  FOREIGN KEY (userId) REFERENCES Person(userId),
-  FOREIGN KEY (houseId) REFERENCES Household(houseId)
+  FOREIGN KEY (userId) REFERENCES Person(userId) ON DELETE SET NULL ,
+  FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE
 );

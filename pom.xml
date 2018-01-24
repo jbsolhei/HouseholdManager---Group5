@@ -111,6 +111,11 @@
       <artifactId>google-api-client</artifactId>
       <version>1.23.0</version>
     </dependency>
+      <dependency>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+          <version>3.4</version>
+      </dependency>
   </dependencies>
 
 
@@ -149,6 +154,24 @@
       </executions>
     </plugin>
 
+    <!--
+    <plugin>
+      <groupId>com.sebastian-daschner</groupId>
+      <artifactId>jaxrs-analyzer-maven-plugin</artifactId>
+      <version>0.16</version>
+      <executions>
+        <execution>
+          <goals>
+            <goal>analyze-jaxrs</goal>
+          </goals>
+          <configuration>
+            <backend>swagger</backend>
+            <deployedDomain>example.com</deployedDomain>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>-->
+
     <plugin>
       <groupId>org.codehaus.mojo</groupId>
       <artifactId>cobertura-maven-plugin</artifactId>
@@ -174,8 +197,6 @@
 
                 <exclude>**/database/ShoppingListDAOTest.java</exclude>
                 <exclude>**/database/ShoppingTripDAOTest.java</exclude>
-              <exclude>**/database/ShoppingListDAOTest.java</exclude>
-              <exclude>**/database/ShoppingTripDAOTest.java</exclude>
               <exclude>**/database/NewsDAOTest.java</exclude>
               <exclude>**/database/FinanceDAOTest.java</exclude>
               <exclude>**/database/ChoreDAOTest.java</exclude>

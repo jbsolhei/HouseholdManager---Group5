@@ -12,9 +12,9 @@ import java.util.List;
 
 public class FinanceDAO {
 
-    public static ArrayList<Debt> getDept(int userId) {
-        ArrayList<Debt> depts = new ArrayList<>();
-        int fromPerson = 0;
+    public static ArrayList<Debt> getDebt(int userId) {
+        ArrayList<Debt> debts = new ArrayList<>();
+        int toPerson = 0;
         double value = 0;
         User theOtherUser;
         String query = "SELECT * FROM Finance WHERE fromPerson = ?";
@@ -27,16 +27,16 @@ public class FinanceDAO {
             try (ResultSet rs = st.executeQuery()) {
 
                 while (rs.next()) {
-                    fromPerson = rs.getInt("toPerson");
+                    toPerson = rs.getInt("toPerson");
                     value = rs.getDouble("value");
 
                     theOtherUser = new User();
-                    theOtherUser.setUserId(userId);
-                    depts.add(new Debt(value, theOtherUser));
+                    theOtherUser.setUserId(toPerson);
+                    debts.add(new Debt(value, theOtherUser));
 
                 }
             }
-            return depts;
+            return debts;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,6 +77,23 @@ public class FinanceDAO {
         }
 
         return null;
+    }
+
+    public static void deleteDebt(int fromUser, int toUser) {
+        String query = "DELETE FROM Finance WHERE fromPerson = ? AND toPerson = ?;";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, fromUser);
+            st.setInt(2, toUser);
+
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+
+        }
     }
 
     /**

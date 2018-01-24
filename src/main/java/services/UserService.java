@@ -1,18 +1,21 @@
 package services;
 
 import auth.*;
-import classes.Chore;
-import classes.Debt;
-import classes.Household;
-import classes.User;
+import classes.*;
 import auth.Auth;
 import auth.AuthType;
 import auth.Session;
 import auth.UserAuth;
-import classes.*;
+import classes.Chore;
+import classes.Debt;
+import classes.Household;
+import classes.User;
+import database.ChoreDAO;
 import database.FinanceDAO;
 import database.NotificationDAO;
 import database.UserDAO;
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
@@ -37,6 +40,8 @@ public class UserService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean addUser(User newUser) {
+        newUser.setName(StringEscapeUtils.escapeHtml4(newUser.getName()));
+        newUser.setTelephone(StringEscapeUtils.escapeHtml4(newUser.getTelephone()));
         return UserDAO.addNewUser(newUser);
     }
 
@@ -53,15 +58,28 @@ public class UserService {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean updateUser(@PathParam("id") int id, User user) {
+        user.setName(StringEscapeUtils.escapeHtml4(user.getName()));
+        user.setTelephone(StringEscapeUtils.escapeHtml4(user.getTelephone()));
         return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName());
+    }
+
+    @POST
+    @Path("/{id}/checkPassword")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public boolean getPasswordMatch(@PathParam("id") int id, String password) {
+        return UserDAO.getPasswordMatch(id, password);
     }
 
     @PUT
     @Auth(AuthType.USER_MODIFY)
-    @Path("/{id}/password")
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean updatePassword(@PathParam("id") int id,String pwd) {
-        return UserDAO.updatePassword(id,pwd);
+    @Path("/{id}/updatePassword")
+    public boolean updatePassword(@PathParam("id") int id, ChangePasswordContainer changePasswordContainer) {
+        if(UserDAO.getPasswordMatch(id, changePasswordContainer.getOldPassword())) {
+            return UserDAO.updatePassword(id, changePasswordContainer.getNewPassword());
+        } else {
+            return false;
+        }
     }
 
 
@@ -144,7 +162,7 @@ public class UserService {
     @Path("/{id}/chores")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Chore> todos(@PathParam("id") int id) {
-        return UserDAO.getChores(id);
+        return ChoreDAO.getUserChores(id);
     }
 
     @POST
@@ -155,19 +173,27 @@ public class UserService {
     }
 
     @GET
-    @Path("/{id}/dept")
+    @Auth(AuthType.USER_MODIFY)
+    @Path("/{id}/debt")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Debt> getDebt(@PathParam("id") int id){
-        return FinanceDAO.getDept(id);
+        return FinanceDAO.getDebt(id);
     }
 
     @GET
+    @Auth(AuthType.USER_MODIFY)
     @Path("/{id}/income")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Debt> getIncome(@PathParam("id") int id){
         return FinanceDAO.getIncome(id);
     }
 
+    @DELETE
+    @Path("/{id}/debt/{toUser}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void settlePayment(@PathParam("id") int fromUser, @PathParam("toUser") int toUser){
+       FinanceDAO.deleteDebt(fromUser, toUser);
+    }
 
     @GET
     @Path("/{id}/notifications")

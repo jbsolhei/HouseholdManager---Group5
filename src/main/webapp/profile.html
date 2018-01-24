@@ -1,143 +1,47 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
             <div class="panel row" id="profile-panel-info">
                 <div class="panel-body">
                     <div class="col-sm-5">
                         <img src="https://i.pinimg.com/736x/a2/e1/8c/a2e18cbfbcaa8756fe5b40f472eeff45--profile-picture-profile-pics.jpg" id="profile-img">
                     </div>
                     <div class="col-sm-7">
-                        <h3 id="profile_information_list_name"></h3>
+                        <div id="edit_profile_name">
+                            <h3 id="profile_information_list_name"></h3>
+                        </div>
                         <hr>
-                        <div class="container">
-                        <form class="form-horizontal">
+                        <div class="container" style="width: 100%;">
+                        <form class="form-horizontal" style="width: 100%;">
                             <div class="form-group">
-                                <label class="control-label col-sm-2 profile_labels" for="profile_information_list_email">Email:</label>
-                                <div class="col-sm-10">
+                                <label class="control-label col-md-3 profile_labels" for="profile_information_list_email">Email:</label>
+                                <div class="col-md-9" id="edit_profile_email">
                                     <p class="form-control-static" id="profile_information_list_email"></p>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2 profile_labels" for="profile_information_list_phone">Phone:</label>
-                                <div class="col-sm-10">
+                                <label class="control-label col-md-3 profile_labels" for="profile_information_list_phone">Phone:</label>
+                                <div class="col-md-9" id="edit_profile_phone">
                                     <p class="form-control-static" id="profile_information_list_phone">
                                 </div>
                             </div>
+                            <br>
+                            <div id="changePassword">
+                            </div>
                         </form>
                         </div>
+                        <p id="alertbox"></p>
                     </div>
                 </div>
-                <div class="panel-footer" id="profile-footer">Edit information</div>
+                <div id="edit_button">
+                    <div onclick="editUserInfo()" class="panel-footer cursorPointer" id="profile-footer">Edit information</div>
+                </div>
             </div>
 
         </div>
-        <div class="col-sm-2"></div>
+        <div class="col-sm-1"></div>
     </div>
-
-    <!--<div class="row">
-        <div class="col-sm-6">
-
-            <br>
-            <h3 id="profile_information_list_name"></h3>
-            <br>
-            <h4 id="profile_information_list_email"></h4>
-            <br>
-            <h4 id="profile_information_list_phone"></h4>
-
-
-        </div>
-        <div class="col-sm-6" id="profile_todos_container">
-            <div class="panel panel-default">
-                <div class="panel-heading styled-heading">Todos</div>
-                <div class="panel-body long-scroll-panel-2" id="profile_todos_body">
-                    <table class="table table-striped" id="profile_todos_table">
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody id="profile_todos_table_body"></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-                <!--<div class="row" id="profile_row_1">
-                    <div class="col-md-2" id="profile_pic_container">
-                        &lt;!&ndash;
-                        <img id="profile_pic_img" class="img-responsive" src="https://worldarts2015.s3-us-west-2.amazonaws.com/images/default-profile-picture.jpg?cache=1473463677">
-                        &ndash;&gt;
-                    </div>
-                    <div class="col-md-5" id="profile_info_container">
-                        <div class="panel panel-info">
-                            <div class="panel-heading styled-heading" id="profile_information_list_name"></div>
-                            <div class="panel-body long-scroll-panel-2">
-                                <dl id="profile_information_descriptive_list">
-                                    <dd id="profile_information_list_phone"></dd>
-                                    <dd id="profile_information_list_email"></dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-        <div class="row">
-
-            <div class="col-md-3" id="profile_statistics">
-                <div class="panel panel-default">
-                    <div class="panel-heading styled-heading">Statistics</div>
-                    <div class="panel-body long-scroll-panel-2" id="profile_statistics_container">
-                        Dette er en tekst.
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5" id="profile_economics_container">
-                <div class="panel panel-default">
-                    <div class="panel-heading styled-heading">Economics</div>
-                    <div class="panel-body long-scroll-panel-2">
-                        <table class="table table-bordered" id = "profile_payment_table">
-                            <thead>
-                            <tr>
-                                <th>Household</th>
-                                <th>Payments</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>--Household 1--</td>
-                                <td>
-                                    <table class="table table-striped" id="example_payment_table">
-                                        <thead>
-                                        <tr>
-                                            <th>Person</th>
-                                            <th>Payment</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Leif</td>
-                                            <td>200,-</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gunnar</td>
-                                            <td>-300,-</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Kåre</td>
-                                            <td>400,-</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>-->
 </div>
 <script>
     loadUser();

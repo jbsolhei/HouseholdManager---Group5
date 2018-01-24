@@ -2,9 +2,6 @@
     text-align: left;
 }
 
-#shoppingSideMenu a:hover {
-    color: white;
-}
 
 #shoppingSideMenu li {
     width: 100%;
@@ -26,31 +23,58 @@ a {
     cursor: pointer;
 }
 
-#shoppingSideMenu li:hover, #shoppingSideMenu a:hover {
-    background-color: #556B72;
-}
-
-#shoppingSideMenu li:active, #shoppingSideMenu a:active {
-    background-color: #3C5158;
-    color: white;
-}
-
-.nav-pills>li.active>a, .nav-pills>li.active>a:focus {
-    background-color: #3C5158;
-    color: white;
-    border-radius: 0px;
+.SL .nav-pills>li.active>a, .SL .nav-pills>li.active>a:focus {
+    background-color: rgba(189, 87, 0, 0.1) !important;
+    color: black;
+    border-radius: 0 !important;
     width: 100%;
 }
 
-.nav-pills>li.active>a:hover {
-    background-color: #556B72;
-    color: white;
+.SL .nav-pills>li>a:hover {
+    background-color: rgba(189, 87, 0, 0.05) !important;
+    color: black;
+    border-radius: 0 !important;
+    width: 100%;
+    cursor: pointer;
 }
 
-#edit_shopping_list_btn {
+#list_of_users_associated_with_shopping_list {
+    display: none;
+    transition: height 1.5s;
+}
+
+#edit_share_shopping_list_btn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#deleteButton {
     float: right;
-    margin: 10px 0;
-    box-sizing: border-box;
+}
+
+.item-is-checked {
+    text-decoration: line-through;
+}
+
+#panel_header {
+    display: block;
+}
+
+#input_header {
+    display: none;
+}
+
+#ok_new_shopping_list_btn, #share_new_shopping_list_btn {
+    border-radius: 0;
+}
+
+#share_new_shopping_list_btn {
+    border-radius: 0 4px 4px 0;
+}
+
+#cancel_new_shopping_list_btn {
+    margin-left: 10px;
+    border-radius: 4px;
 }
 
 .footerWrapper, #headerInputWrapper {
