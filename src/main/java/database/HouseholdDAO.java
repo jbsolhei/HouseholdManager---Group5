@@ -373,7 +373,7 @@ public class HouseholdDAO {
                 Email.sendMail(to, "Household Manager Invitation",
                         "You have been invited to " + house.getName() + "!\n" +
                                 "Click here to accept:\n" +
-                                "http://localhost:8080/hhapp/login.html?invite=" + tokens.get(i));
+                                "http://localhost:8080/hhapp/OpeningPage.html?invite=" + tokens.get(i));
             }
         }
         return emails.size();
