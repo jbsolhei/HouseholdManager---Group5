@@ -74,8 +74,12 @@ public class UserService {
     @Auth(AuthType.USER_MODIFY)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/{id}/updatePassword")
-    public boolean updatePassword(@PathParam("id") int id,User user) {
-        return UserDAO.updatePassword(id, user.getPassword());
+    public boolean updatePassword(@PathParam("id") int id, ChangePasswordContainer changePasswordContainer) {
+        if(UserDAO.getPasswordMatch(id, changePasswordContainer.getOldPassword())) {
+            return UserDAO.updatePassword(id, changePasswordContainer.getNewPassword());
+        } else {
+            return false;
+        }
     }
 
 
