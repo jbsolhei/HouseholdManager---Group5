@@ -35,9 +35,9 @@ INSERT INTO Person (userId, email, name, password, telephone) VALUES (51, 'gubbe
 INSERT INTO Household (houseId, house_name, house_address) VALUES (10, 'Kollektivet', 'Sverres gate 1');
 INSERT INTO House_user (houseId, userId, isAdmin) VALUES (10, 50, TRUE);
 INSERT INTO House_user (houseId, userId, isAdmin) VALUES (10, 51, TRUE);
-/*INSERT INTO Task (date, time, description, taskId, houseId, userId) VALUES ('2018-01-20', '10:00:00', 'Vask badet', 100, 10, 50);
-INSERT INTO Task (date, time, description, taskId, houseId, userId) VALUES ('2018-01-21', '11:00:00', 'Vask gulvet', 110, 1, 1);
-*/INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (10, 'Dagligvarer', 10);
+INSERT INTO Chore (chore_datetime, description, choreId, houseId, userId) VALUES ('2018-01-20 10:00:00', 'Vask badet', 100, 10, 50);
+INSERT INTO Chore (chore_datetime, description, choreId, houseId, userId) VALUES ('2018-01-21 11:00:00', 'Vask gulvet', 110, 1, 1);
+INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (10, 'Dagligvarer', 10);
 INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (11, 'Fredagstaco', 1);
 
 INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test', '2014-10-12', '', 50, 1, NULL);
