@@ -6,7 +6,7 @@
                 <div id="choresPanelId" class="col-md-12 widgetCol">
                     <div class="panel panel-default widget">
                         <div class="cHeader panel-heading cursorPointer" onclick="swapContent(chores)">Household chores</div>
-                        <div class="panel-body scrollWhenFull">
+                        <div class="panel-body scrollWhenFull" onclick="swapContent(chores)">
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -26,7 +26,7 @@
                 <div id="debtPanelId" class="col-md-6 widgetCol">
                     <div class="panel panel-default widget">
                         <div class="panel-heading cursorPointer" onclick="swapContent(finance)">Finance</div>
-                        <div class="panel-body scrollWhenFull nopadding debt-widget">
+                        <div class="panel-body scrollWhenFull nopadding debt-widget" onclick="swapContent(finance)">
                             <div class="row debt-row bg-danger padding" id="debtRowOutgoing">
                                 <div class="col-xs-9 nopadding">You owe people in total:</div>
                                 <div class="col-xs-3 nopadding debt-sum" id="debtSumOutgoing"></div>
@@ -95,18 +95,6 @@
 */
     loadDashboard();
     checkWelcome();
-
-    function toggleTeaser(msg){
-        var teaser = msg.find('.message-teaser');
-        var body = msg.find('.message-body');
-        if (teaser[0].style.display === "none"){
-            teaser.css('display','block');
-            body.css('display','none');
-        } else {
-            teaser.css('display','none');
-            body.css('display','block');
-        }
-    }
 </script>
 <style>
     .row.equal {

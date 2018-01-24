@@ -154,7 +154,7 @@ function setCurrentHousehold(hid) {
             success: function (data) {
                 if (data.length!==null) {
                     window.localStorage.setItem("house", JSON.stringify(data));
-                    window.location.replace("index.html")
+                    window.location.replace("index.html");
                 } else {
                     showLoadingScreen(false);
                     callModal("modals/addHousehold.html");
