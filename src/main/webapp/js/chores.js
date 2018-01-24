@@ -194,7 +194,7 @@ function newChoreButtonPressed(){
         newChoreUserId = getCurrentHousehold().residents[selectedUserForNewChore].userId;
         selectedUserForNewChore = null;
     }else{
-        newChoreUserId = selectedChore.userId;
+        newChoreUserId = 0;
     }
     var newHouseId = getCurrentHousehold().houseId;
     var checked = false;
