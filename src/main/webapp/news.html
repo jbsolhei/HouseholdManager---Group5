@@ -1,6 +1,12 @@
 <script>
     $(function () {
         updateNewsList();
+        if(getCurrentUser().profileImage != "" && getCurrentUser().profileImage != null) {
+            $("#profile_pic_topnews").html("<img class='img-responsive img-pic1'' src='"+getCurrentUser().profileImage+"'>")
+        } else {
+            $("#profile_pic_topnews").html("<img class='img-responsive img-pic1' src='http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png'>")
+        }
+
     });
     function updateNewsList () {
 
@@ -10,13 +16,19 @@
             $("#list_of_news").html("");
             for(var i=0; i<listOfNews.length; i++) {
                 var time;
+                var image;
                 if(listOfNews[i].time.minute < 10) {
                     time = "0"+listOfNews[i].time.minute;
                 } else {
                     time = listOfNews[i].time.minute;
                 }
+                if(listOfNews[i].user.profileImage != "" &&  listOfNews[i].user.profileImage != null) {
+                    image = listOfNews[i].user.profileImage;
+                } else {
+                    image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
+                }
                 $("#list_of_news").append("<hr><div class='row'>" +
-                    "<div class='col-sm-2'><div class=\"img-circle\"><img class=\"img-responsive img-pic\" src=\"http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg\"><br></div>" +
+                    "<div class='col-sm-2'><div class=\"img-circle\"><img class=\"img-responsive img-pic\" src='"+image+"'><br></div>" +
                     "</div><div class='col-sm-10'><label>"+listOfNews[i].user.name+"</label><small style='float: right'>   --"+listOfNews[i].time.dayOfMonth+". "+listOfNews[i].time.month+" "+
                     listOfNews[i].time.year+". "+listOfNews[i].time.hour+":"+time+" --</small>" +
                     "<br><p style=\"word-wrap: break-word\">"+listOfNews[i].message+"</p></div></div>");
@@ -32,7 +44,7 @@
                 <div id="add_news" style="padding: 15px">
                     <div class="row">
                         <div class="col-sm-2">
-                            <div class="img-circle1"><img class="img-responsive img-pic1" src="http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg"></div>
+                            <div class="img-circle1" id="profile_pic_topnews"><img class="img-responsive img-pic1" src="http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg"></div>
                             <br>
                         </div>
                         <div class="col-sm-10">
