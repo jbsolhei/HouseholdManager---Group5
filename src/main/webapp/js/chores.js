@@ -210,8 +210,8 @@ function setNewChorePersonFromDropdown(index){
 
 function editChore(chore){
     switchChoresContent(2);
-    $("#editChoreTitleInput").val(chore.title);
-    $("#editChoreDescriptionInput").val(chore.description);
+    $("#editChoreTitleInput").val(he.unescape(chore.title));
+    $("#editChoreDescriptionInput").val(he.unescape(chore.description));
     $("#editChoreDropdownButton").html(chore.user==null?"No user":chore.user.name);
     document.getElementById("editChoreLocalTimeInput").value = (chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
     console.log(chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
@@ -293,6 +293,7 @@ function postNewChore(chore){
 
 function updateChore(chore){
     console.log("updateChore()");
+    console.log(chore);
     ajaxAuth({
         url: "res/household/"+getCurrentHousehold().houseId+"/chores",
         type: "PUT",

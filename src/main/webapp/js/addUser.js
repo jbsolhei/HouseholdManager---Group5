@@ -8,7 +8,14 @@ var password;
 var testPassword;
 var person;
 
-function showPicture() {
+
+function submitNewUser() {
+    name = $("#name").val();
+    phone = $("#telephone").val();
+    email = $("#email1").val();
+    password = $("#pwd").val();
+    testPassword = $("#pwd2").val();
+
     var filesSelected = document.getElementById("profile_picture").files;
     if (filesSelected.length > 0)
     {
@@ -25,17 +32,9 @@ function showPicture() {
             };
             fileReader.readAsDataURL(fileToLoad);
         }
+
+        var postableImageString = btoa(filesSelected[0].toLocaleString());
     }
-}
-
-
-function submitNewUser() {
-    name = $("#name").val();
-    phone = $("#telephone").val();
-    email = $("#email1").val();
-    password = $("#pwd").val();
-    testPassword = $("#pwd2").val();
-
 
     confirm();
 }
