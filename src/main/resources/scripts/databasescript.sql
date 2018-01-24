@@ -22,12 +22,17 @@ email VARCHAR(45) NOT NULL,
 name VARCHAR(45) NOT NULL,
 password VARCHAR(100) NOT NULL,
 telephone VARCHAR(20),
+bio VARCHAR(150),
+gender BOOL,
+relationship VARCHAR (30),
+image LONGBLOB,
 CONSTRAINT user_pk PRIMARY KEY(userId));
 
 CREATE TABLE House_user (
 houseId INTEGER NOT NULL,
 userId INTEGER NOT NULL,
 isAdmin BOOL,
+roomNumber INTEGER,
 CONSTRAINT house_user_pk PRIMARY KEY(houseId, userId),
 FOREIGN KEY (houseId) REFERENCES Household(houseId),
 FOREIGN KEY (userId) REFERENCES Person(userId)

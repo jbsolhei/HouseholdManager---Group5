@@ -15,6 +15,25 @@ function submitNewUser() {
     email = $("#email1").val();
     password = $("#pwd").val();
     testPassword = $("#pwd2").val();
+
+    var filesSelected = document.getElementById("profile_picture").files;
+    if (filesSelected.length > 0)
+    {
+        var fileToLoad = filesSelected[0];
+        console.log(fileToLoad);
+
+        if (fileToLoad.type.match("image.*"))
+        {
+            var fileReader = new FileReader();
+            fileReader.onload = function(fileLoadedEvent)
+            {
+                $("#show_profile_pic").html("");
+                $("#show_profile_pic").html("<img src='"+fileLoadedEvent.target.result+"'>");
+            };
+            fileReader.readAsDataURL(fileToLoad);
+        }
+    }
+
     confirm();
 }
 
