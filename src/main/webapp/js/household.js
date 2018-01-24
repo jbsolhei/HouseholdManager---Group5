@@ -120,6 +120,12 @@ function showMiniProfile(index){
     var members = getCurrentHousehold().residents;
     $("#members").fadeOut(500);
     setTimeout(function(){
+        if(members[index].userId === getCurrentUser().userId){
+            $("#toEditProfileButton").show();
+            //document.getElementById("#toEditProfileButton").innerHTML = '';
+        }else {
+            $("#toEditProfileButton").hide();
+        }
         document.getElementById("miniProfile-name").innerHTML = '<p id="miniProfile-name">' + members[index].name + '</p>';
         document.getElementById("miniProfile-email").innerHTML = '<p id="miniProfile-email">' + members[index].email + '</p>';
         document.getElementById("miniProfile-telephone").innerHTML = '<p id="miniProfile-telephone">' + members[index].telephone + '</p>';
@@ -147,6 +153,7 @@ function showMiniProfile(index){
             $("#miniProfile-label-bio").hide();
         }
 
+        $("#hideMiniProfileButton").removeClass("hide");
         $("#miniProfile").removeClass("hide");
 
     }, 500);
@@ -155,6 +162,12 @@ function showMiniProfile(index){
 function hideMiniProfile(){
     $("#members").fadeIn(500);
     $("#miniProfile").addClass("hide");
+}
+
+function editProfile(){
+    swapContent(profile);
+    $("#profile-footer").click();
+    //document.getElementById("profile-footer").click();
 }
 
 /*
