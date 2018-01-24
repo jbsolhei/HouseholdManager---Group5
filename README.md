@@ -6,7 +6,7 @@ master: [![Build Status](https://travis-ci.org/StamosUltra/HouseholdManager---Gr
 
 Code coverage: ![Code Coverage](https://codecov.io/gh/StamosUltra/HouseholdManager---Group5/branch/master/graph/badge.svg)
 
-
+---
 Joakim-branch: [![Build Status](https://travis-ci.org/StamosUltra/HouseholdManager---Group5.svg?branch=Joakim-Branch)](https://travis-ci.org/StamosUltra/HouseholdManager---Group5)
 
 CamillaBranch: [![Build Status](https://travis-ci.org/StamosUltra/HouseholdManager---Group5.svg?branch=CamillaBranch)](https://travis-ci.org/StamosUltra/HouseholdManager---Group5)
