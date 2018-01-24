@@ -13,17 +13,17 @@ function printInfoToWall(current_user){
     $("#profile_information_list_name").html(current_user.name);
     $("#profile_information_list_email").html(current_user.email);
     $("#profile_information_list_phone").html(current_user.telephone);
-    if(currUs.bio != ""){
+    if(currUs.bio != "" && currUs.bio != null){
         $("#profile_information_list_bio").html(currUs.bio);
     } else {
         $("#profile_information_list_bio").html("Missing info");
     }
-    if(currUs.relationship != ""){
+    if(currUs.relationship != "" && currUs.relationship != null){
         $("#profile_information_list_relationship").html(currUs.relationship);
     } else {
         $("#profile_information_list_relationship").html("Missing info");
     }
-    if(currUs.gender != ""){
+    if(currUs.gender != "" && currUs.gender != null){
         $("#profile_information_list_gender").html(currUs.gender);
     } else {
         $("#profile_information_list_gender").html("Missing info");
