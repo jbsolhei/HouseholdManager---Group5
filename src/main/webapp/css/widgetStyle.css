@@ -1,6 +1,5 @@
 /* GENERAL CSS FOR WIDGETS */
 .panel-default>.panel-heading {
-    /* background-color: #7D2E26; Den gamle fargen */
     background-color: rgba(150, 19, 12, 0.3);
     font-family: 'Raleway', sans-serif;
     font-size: 1.0em;
