@@ -93,8 +93,6 @@ function getSelectedChoreFromUpdatedTotal(){
     });
 }
 function checkSelectedChore(chore){
-    console.log("checkChore()");
-    console.log(chore);
     chore.done = !chore.done;
     chore.time = chore.time.year + "-" + pad(chore.time.monthValue) + "-" + pad(chore.time.dayOfMonth) + "T" + pad(chore.time.hour) + ":" + pad(chore.time.minute);
     selectedChore = undefined;
@@ -111,8 +109,9 @@ function deleteSelectedChore(id){
             selectedChore = undefined;
             readyChores();
         },
-        error: function(){
+        error: function(data){
             console.log("Error in deleteSelectedChore()");
+            console.log(data);
         }
     })
 }
@@ -128,7 +127,6 @@ function selectChoreInfo(from, choreId){
 }
 function showChoreInfo(chore){
     console.log("showChoreInfo");
-    console.log(chore);
     if(chore!==undefined){
         switchChoresContent(0);
         $("#choresRightUpperPanelHeading").html(chore.title);
@@ -205,7 +203,6 @@ function newChoreButtonPressed(){
     postNewChore(newChore);
 }
 function setNewChorePersonFromDropdown(index){
-    console.log("New person = " + index);
     $("#newChoreDropdownButton").html(getCurrentHousehold().residents[index].name);
     $("#editChoreDropdownButton").html(getCurrentHousehold().residents[index].name);
     selectedUserForNewChore = index;
@@ -220,10 +217,6 @@ function editChore(chore){
     console.log(chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
 }
 function editChoreButtonPressed(){
-    console.log("SELECTED CHORE:::");
-    console.log(selectedChore);
-    console.log(selectedUserForNewChore);
-
     var editedChoreTitle = $("#editChoreTitleInput").val();
     var editedChoreDescription = $("#editChoreDescriptionInput").val();
     var editedChoreDate = $("#editChoreLocalTimeInput").val();
@@ -251,7 +244,6 @@ function getChoresForUser(id, handleData){
         contentType: "application/json; charset=utf-8",
         success: function(data){
             console.log("Success in getChoresForUser()");
-            console.log(data);
             handleData(data);
         },
         error: function(data){
@@ -269,7 +261,6 @@ function getChoresForHousehold(id, handleData){
         contentType:"application/json; charset=utf-8",
         success: function(data){
             console.log("Success in getChoresForHousehold()");
-            console.log(data);
             handleData(data);
         },
         error: function(data){
@@ -281,7 +272,6 @@ function getChoresForHousehold(id, handleData){
 
 function postNewChore(chore){
     console.log("postNewCore()");
-    console.log(chore);
     ajaxAuth({
         url: "res/household/"+getCurrentHousehold().houseId+"/chores",
         type: "POST",
@@ -303,10 +293,6 @@ function postNewChore(chore){
 
 function updateChore(chore){
     console.log("updateChore()");
-    /*if(chore.user !==null&&chore.user!==undefined){
-        chore.userId = chore.user.userId;
-    }*/
-    console.log(chore);
     ajaxAuth({
         url: "res/household/"+getCurrentHousehold().houseId+"/chores",
         type: "PUT",
