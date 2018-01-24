@@ -51,20 +51,25 @@
         <div class="col-md-8 widgetCol">
             <div class="panel panel-default widget">
                 <div id="head" class="panel-heading">
-                    <div class="row">
+                    <div id="title_header" class="row">
                         <h4 id="headline" class="col-md-10"></h4>
                         <button id="edit_share_shopping_list_btn"  class="col-md-2 btn-info" onclick="toggleListOfAssociatedUsers()">Share</button>
+                    </div>
+                    <div id="input_header">
                         <div class="input-group">
-                            <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
-                            <!--
-                            <span id="okButton" onclick="addNewShoppingList()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
-                            -->
-                            <span class="input-group-btn">
-                                <button id="okButton" onclick="addNewShoppingList()" class="btn btn-success hide">Ok</button>
-                            </span>
-                            <span class="input-group-btn">
-                                <button id="privateButton" onclick="setPrivate()" class="btn btn-secondary hide" type="button">Private</button>
-                            </span>
+                                <input class="form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
+                                <!--
+                                <span id="okButton" onclick="addNewShoppingList()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
+                                -->
+                                <span class="input-group-btn">
+                                    <button id="ok_new_shopping_list_btn" onclick="addNewShoppingList()" class="btn btn-success">Ok</button>
+                                </span>
+                                <span class="input-group-btn">
+                                    <button id="share_new_shopping_list_btn" onclick="setPrivate()" class="btn btn-info" type="button">Share</button>
+                                </span>
+                                <span class="input-group-btn">
+                                    <button id="cancel_new_shopping_list_btn" onclick="" class="btn btn-danger" type="button">Cancel</button>
+                                </span>
                         </div>
                     </div>
                 </div>
@@ -72,9 +77,15 @@
                     <table id="associated_users_table" class="table">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th><button class="btn glyphicon glyphicon-unchecked"></button> Select All</th>
                                 <th>Users that can view this list</th>
                             </tr>
+                        </thead>
+                        <thead>
+                        <tr>
+                            <th><span class="glyphicon glyphicon-check"></span></th>
+                            <th></th>
+                        </tr>
                         </thead>
                     </table>
                 </div>
@@ -100,7 +111,7 @@
                 </div>
                 <div class="panel-footer">
                     <div id="buttonDiv">
-                        <a onclick="createNewList('ThisIsANewList')" class="btn btn-success btn-sm">
+                        <a onclick="changePanelHeader()" class="btn btn-success btn-sm">
                             <span class="glyphicon glyphicon-plus"></span> Create new list
                         </a>
                         <a id="archiveButton" onclick="archiveList()" class="btn btn-warning btn-sm">

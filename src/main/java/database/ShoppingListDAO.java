@@ -98,11 +98,13 @@ public class ShoppingListDAO {
                     shoppingList.setItems(toItemArray(items));
                     shoppingLists.add(shoppingList);
 
+                    /*
                     for (ShoppingList sl : shoppingLists) {
                         User[] users = ShoppingListDAO.getUsersInShoppingList(sl.getShoppingListId());
                         sl.setUsers(users);
                     }
                     return toShoppingListArray(shoppingLists);
+                    */
                 }
             }
         } catch (SQLException e) {
@@ -183,10 +185,12 @@ public class ShoppingListDAO {
                 shoppingLists.add(sl);
                 users.clear();
 
+                /*
                 for (ShoppingList shoppingList : shoppingLists) {
                     Item[] items = getItems(shoppingList.getShoppingListId());
                     shoppingList.setItems(items);
                 }
+                */
                 return toShoppingListArray(shoppingLists);
             } else {
                 return null;

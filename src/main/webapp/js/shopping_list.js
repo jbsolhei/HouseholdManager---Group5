@@ -350,7 +350,7 @@ function toggleListOfAssociatedUsers() {
         $("#associated_users_table").empty();
         ajax_getShoppingListUsers(shoppingListId, function (users) {
             console.log(users);
-            $("#associated_users_table").append('<thead><tr><th></th><th>' + "Users that can view this list" + '</th></tr></thead>');
+            $("#associated_users_table").append('<thead><tr><th><button class="btn glyphicon glyphicon-unchecked"></button> Select All</th><th>' + "Users that can view this list" + '</th></tr></thead>');
             $.each(householdUsers, function (i, val) {
                 $("#associated_users_table").append('<tbody><tr><td id="associated_user_id_' + val.userId + '" onclick="checkAssociatedUser(' + val.userId + ')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr></tbody>');
             });
@@ -418,6 +418,7 @@ function uncheckItem(itemId) {
  */
 function checkAssociatedUser(userId) {
     console.log("check user:" + userId);
+    $("#associated_user_id_" + userId).addClass("glyphicon-refresh").removeClass("glyphicon-unchecked");
     ajax_insertUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
         if (data) {
             $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="uncheckAssociatedUser('+ userId +')" class="glyphicon glyphicon-check"></td>')
@@ -431,6 +432,7 @@ function checkAssociatedUser(userId) {
  */
 function uncheckAssociatedUser(userId) {
     console.log("uncheck user:" + userId);
+    $("#associated_user_id_" + userId).addClass("glyphicon-refresh").removeClass("glyphicon-check");
     ajax_deleteUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
         if (data) {
             $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="checkAssociatedUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td>')
@@ -468,4 +470,13 @@ function addItem() {
             }
         })
     }
+}
+
+/**
+ * Method to reveal the input field in the header, and set the headline as active
+ */
+function changePanelHeader() {
+    $("#title_header").css('display', 'none');
+    $("#input_header").css('display', 'block');
+    $("#headlineInput").focus();
 }
