@@ -93,16 +93,16 @@ public class ShoppingListService {
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteShoppingList(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id){
-        ShoppingListDAO.deleteShoppingList(houseId, shopping_list_id);
+    public boolean deleteShoppingList(@PathParam("id") int houseId, @PathParam("shopping_list_id") int shopping_list_id){
+        return (ShoppingListDAO.deleteShoppingList(houseId, shopping_list_id) != -1);
     }
 
     @POST
     @Auth(AuthType.HOUSEHOLD)
-    @Path("/{id}/shopping_lists/{shopping_list_id}/items")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void addItems(@PathParam("shopping_list_id") int shopping_list_id, String itemName){
-        ShoppingListDAO.addItem(StringEscapeUtils.escapeHtml4(itemName), shopping_list_id);
+    @Path("/{shopping_list_id}/items")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public boolean addItems(@PathParam("shopping_list_id") int shopping_list_id, String itemName){
+        return (ShoppingListDAO.addItem(StringEscapeUtils.escapeHtml4(itemName), shopping_list_id) != -1);
     }
 
     @DELETE
@@ -158,8 +158,9 @@ public class ShoppingListService {
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}")
     @Consumes(MediaType.TEXT_PLAIN)
-    public void updateArchived(@PathParam("shopping_list_id") int shoppingListId, String archived) {
-        ShoppingListDAO.updateArchived(shoppingListId,Boolean.parseBoolean(archived));
+    public boolean updateArchived(@PathParam("shopping_list_id") int shoppingListId, String archived) {
+        System.out.println("shoppingListId: " + shoppingListId + ". archived = " + archived);
+        return (ShoppingListDAO.updateArchived(shoppingListId, Boolean.parseBoolean(archived)) != -1);
     }
 
     /**
