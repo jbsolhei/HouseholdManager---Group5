@@ -100,3 +100,7 @@ a {
 #emptyListText {
     text-align: center;
 }
+
+#shopping_list_white_space {
+    padding: 25px 0 25px 0;
+}

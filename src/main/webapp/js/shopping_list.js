@@ -2,6 +2,7 @@
 var SHL_active;
 var SHL_archived;
 var current_SHL_index;
+var userIdsNewShoppingList = [];
 
 /* --- Ajax- methods --- */
 
@@ -322,6 +323,7 @@ function loadSideMenu(){
  */
 function showListFromMenu(SLIndex, isArchived){
     closeListOfAssociatedUsers();
+    hideInputHeader();
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
     console.log("SLIndex: " + SLIndex);
     ajax_getShoppingList(SHL[SLIndex].shoppingListId, function (shoppingList) {
@@ -501,9 +503,13 @@ function addItemToShoppingList() {
  * Method to reveal the input field in the header, and set the headline as active
  */
 function showInputHeader() {
+    hidePanelBody();
     $("#title_header").css('display', 'none');
     $("#input_header").css('display', 'block');
     $("#headlineInput").focus();
+    $.each(getCurrentHousehold().residents, function (i, val) {
+        userIdsNewShoppingList.push(val.userId);
+    });
 }
 
 /**
@@ -513,6 +519,8 @@ function hideInputHeader() {
     if ($("#input_header").css('display') === 'block') {
         $("#input_header").css('display', 'none');
         $("#title_header").css('display', 'block');
+        $("#shopping_list_white_space").addClass("hide");
+        $("#shopping_list_data_panel").removeClass("hide");
     }
 }
 
@@ -520,14 +528,10 @@ function hideInputHeader() {
  * Function to create a new shoppingList
  * Automatically adds all users in the household to the list automatically
  */
-function createNewShoppingList() {
+function createNewShoppingList(userIds) {
     hideInputHeader();
     console.log($("#text_input_new_shopping_list").val());
     var shoppingListName = $("#text_input_new_shopping_list").val();
-    var userIds = [];
-    $.each(getCurrentHousehold().residents, function(i,val){
-       userIds.push(val.userId);
-    });
     if (shoppingListName !== null || shoppingListName !== '') {
         ajax_createNewList(shoppingListName, function (shoppingListId) {
             if (shoppingListId) {
@@ -556,6 +560,9 @@ function deleteShoppingList() {
     })
 }
 
+/**
+ * function to mark a shopping list as archived
+ */
 function archiveShoppingList() {
     var shoppingListId = SHL[activeSHL].shoppingListId;
     ajax_updateArchived(shoppingListId, "true", function (data) {
@@ -563,4 +570,68 @@ function archiveShoppingList() {
             loadSideMenu();
         }
     })
+}
+
+/**
+ * function to hide the panel body
+ */
+function hidePanelBody() {
+    $("#shopping_list_data_panel").addClass("hide");
+    $("#shopping_list_white_space").removeClass("hide");
+}
+
+/**
+ * function to assign users to a new shopping list
+ * function uses the global variable userIdsNewShoppingList
+ */
+function toggleListOfAssociatedUsersToNewShoppingList() {
+    if ($("#list_of_users_associated_with_shopping_list").css('display') === "none") {
+
+        var householdUsers = getCurrentHousehold().residents;
+        $("#associated_users_table").empty();
+        $("#associated_users_table").append('<thead><tr><th><button class="btn glyphicon glyphicon-unchecked"></button> Select All</th><th>' + "Users that can view this list" + '</th></tr></thead>');
+        $.each(householdUsers, function (i, val) {
+            $("#associated_users_table").append('<tbody><tr><td id="associated_user_id_' + val.userId + '" onclick="checkUserInNewShoppingList(' + val.userId + ')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr></tbody>');
+
+        });
+        console.log(userIdsNewShoppingList);
+        $.each(userIdsNewShoppingList, function (i, val) {
+            console.log(val);
+            $("#associated_user_id_" + val).replaceWith('<td id="associated_user_id_' + val + '" onclick="uncheckUserInNewShoppingList(' + val + ')" class="glyphicon glyphicon-check"></td>')
+        });
+        $("#list_of_users_associated_with_shopping_list").css('display', 'block');
+    }
+    else {
+        $("#list_of_users_associated_with_shopping_list").css('display', 'none');
+    }
+}
+
+/**
+ * function to check off a user to be added to the new shopping list
+ * @param userId the user ID. Is automatically generated in the toggleListOfAssociatedUsersToNewShoppingList
+ */
+function checkUserInNewShoppingList(userId) {
+    userIdsNewShoppingList.push(userId);
+    $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId + '" onclick="uncheckUserInNewShoppingList(' + userId + ')" class="glyphicon glyphicon-check"></td>');
+    console.log(userIdsNewShoppingList);
+}
+
+/**
+ * function to uncheck a user to be added to the new shopping list
+ * @param userId the user ID. Is automatically generated in the toggleListOfAssociatedUsersToNewShoppingList
+ */
+function uncheckUserInNewShoppingList(userId) {
+    removeObjectArray(userIdsNewShoppingList, userId);
+    $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId + '" onclick="checkUserInNewShoppingList(' + userId + ')" class="glyphicon glyphicon-unchecked"></td>');
+    console.log(userIdsNewShoppingList);
+}
+
+/**
+ * An helping function to remove an item from an array
+ * @param array
+ * @param element
+ */
+function removeObjectArray(array, element) {
+    const index = array.indexOf(element);
+    array.splice(index, 1);
 }

@@ -58,7 +58,7 @@
                             <button id="ok_new_shopping_list_btn" onclick="createNewShoppingList()" class="btn btn-success">Ok</button>
                         </span>
                         <span class="input-group-btn">
-                                <button id="share_new_shopping_list_btn" onclick="setPrivate()" class="btn btn-info" type="button">Share</button>
+                                <button id="share_new_shopping_list_btn" onclick="toggleListOfAssociatedUsersToNewShoppingList()" class="btn btn-info" type="button">Share</button>
                         </span>
                         <span class="input-group-btn">
                                 <button id="cancel_new_shopping_list_btn" onclick="hideInputHeader()" class="btn btn-danger" type="button">Cancel</button>
@@ -95,6 +95,7 @@
                     </div>
                     <p id="emptyListText" class="hide">Your shopping list is empty..</p>
                 </div>
+                <div id="shopping_list_white_space" class="hide"></div>
                 <div class="footerWrapper">
                     <div class="panel-footer">
                         <div id="buttonDiv">
