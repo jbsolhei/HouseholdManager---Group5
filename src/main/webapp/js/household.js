@@ -67,6 +67,7 @@ function buildMemberTable(){
         btnOkIcon: "glyphicon glyphicon-trash",
         btnCancelClass: "btn-sm btn-default",
         onConfirm: function () {
+            showLoadingScreen(true);
             var remove = $(this).data("remove");
             console.log("Confirm clicked! Removing " + remove);
             if (remove === "self") {
@@ -91,6 +92,7 @@ function removeMyselfFromHousehold() {
             dataType: "json",
             success: function (response) {
                 if (response.success === true) {
+                    window.localStorage.removeItem("house");
                     window.location.reload();
                 }
             }
@@ -107,12 +109,9 @@ function removeUserFromHousehold(userId) {
                 if (response.success === true) {
                     updateCurrentHousehold(undefined, buildMemberTable);
                 }
-            },
-            error: function (xhr) {
-                if (xhr.status === 403) {
-                    console.log("Du har ikke tilgang til å gjøre dette. FY SKAMME SEG!");
-                }
             }
+        }).always(function() {
+            showLoadingScreen(false)
         });
     }
 }
@@ -121,9 +120,40 @@ function showMiniProfile(index){
     var members = getCurrentHousehold().residents;
     $("#members").fadeOut(500);
     setTimeout(function(){
+        if(members[index].userId === getCurrentUser().userId){
+            $("#toEditProfileButton").show();
+            //document.getElementById("#toEditProfileButton").innerHTML = '';
+        }else {
+            $("#toEditProfileButton").hide();
+        }
         document.getElementById("miniProfile-name").innerHTML = '<p id="miniProfile-name">' + members[index].name + '</p>';
         document.getElementById("miniProfile-email").innerHTML = '<p id="miniProfile-email">' + members[index].email + '</p>';
         document.getElementById("miniProfile-telephone").innerHTML = '<p id="miniProfile-telephone">' + members[index].telephone + '</p>';
+        if(members[index].gender != "" && members[index].gender != null){
+            document.getElementById("miniProfile-gender").innerHTML = '<p id="miniProfile-gender">' + members[index].gender + '</p>';
+            $("#miniProfile-label-gender").show();
+        } else {
+            document.getElementById("miniProfile-gender").innerHTML = '<p id="miniProfile-gender"></p>';
+            $("#miniProfile-label-gender").hide();
+        }
+
+        if(members[index].relationship != "" && members[index].relationship != null) {
+            document.getElementById("miniProfile-relationship").innerHTML = '<p id="miniProfile-relationship">' + members[index].relationship + '</p>';
+            $("#miniProfile-label-relationship").show();
+        } else {
+            document.getElementById("miniProfile-relationship").innerHTML = '<p id="miniProfile-relationship"></p>';
+            $("#miniProfile-label-relationship").hide();
+        }
+
+        if(members[index].bio != "" && members[index].bio != null) {
+            document.getElementById("miniProfile-bio").innerHTML = '<p id="miniProfile-bio">' + members[index].bio + '</p>';
+            $("#miniProfile-label-bio").show();
+        }else {
+            document.getElementById("miniProfile-bio").innerHTML = '<p id="miniProfile-bio"></p>';
+            $("#miniProfile-label-bio").hide();
+        }
+
+        $("#hideMiniProfileButton").removeClass("hide");
         $("#miniProfile").removeClass("hide");
 
     }, 500);
@@ -132,6 +162,12 @@ function showMiniProfile(index){
 function hideMiniProfile(){
     $("#members").fadeIn(500);
     $("#miniProfile").addClass("hide");
+}
+
+function editProfile(){
+    swapContent(profile);
+    $("#profile-footer").click();
+    //document.getElementById("profile-footer").click();
 }
 
 /*

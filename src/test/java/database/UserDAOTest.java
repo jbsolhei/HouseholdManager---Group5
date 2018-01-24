@@ -81,7 +81,7 @@ public class UserDAOTest {
     @Test
     public void updateUser() throws Exception {
         String newName = "Frederic";
-        UserDAO.updateUser(1, "OleH@gmail.com", "11223344", newName);
+        UserDAO.updateUser(1, "OleH@gmail.com", "11223344", newName, "hei", "Single", "Male");
 
         String query = "SELECT * FROM Person WHERE userId=1";
         ResultSet rs = st.executeQuery(query);

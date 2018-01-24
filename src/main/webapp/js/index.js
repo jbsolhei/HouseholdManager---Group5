@@ -9,6 +9,7 @@ var news = "news.html";
 var profile = "profile.html";
 var stats = "stats.html";
 var activeSHL = 0;
+var archivedSHL = 0;
 var householdsLoaded = false;
 var activeChore = [0,0];
 
@@ -22,7 +23,7 @@ function ajaxAuth(attr) {
     attributes.headers.Authorization = "Bearer " + window.localStorage.getItem("sessionToken");
 
     attributes.error = function (xhr, textStatus, exceptionThrown) {
-        console.log("Error: " + xhr.status);
+        console.log("[AjaxAuth] Error: " + xhr.status);
 
         if (typeof attr.error === "function") {
             attr.error(xhr, textStatus, exceptionThrown);
@@ -63,6 +64,24 @@ function setCurrentUser(id) {
             } else {
                 setCurrentHousehold(0);
             }
+        },
+        error: function () {
+            showLoadingScreen(false);
+            alert("Error loading user");
+        },
+        dataType: "json"
+    });
+}
+
+
+function updateCurrentUser(runThisAfter) {
+    ajaxAuth({
+        url: "res/user/"+getCurrentUser().userId,
+        type: "GET",
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            window.localStorage.setItem("user",JSON.stringify(data));
+            runThisAfter();
         },
         error: function () {
             showLoadingScreen(false);
@@ -135,7 +154,7 @@ function setCurrentHousehold(hid) {
             success: function (data) {
                 if (data.length!==null) {
                     window.localStorage.setItem("house", JSON.stringify(data));
-                    window.location.replace("index.html")
+                    window.location.replace("index.html");
                 } else {
                     showLoadingScreen(false);
                     callModal("modals/addHousehold.html");
@@ -279,4 +298,13 @@ function getLocalResident(userId){
             return val;
         }
     });
+}
+
+//Set show to true if you want to show loadingscreen and false if you want to hide it
+function showLoadingScreen(show) {
+    if (show) {
+        $("#coverScreen").css('display', 'block');
+    } else {
+        $("#coverScreen").css('display', 'none');
+    }
 }

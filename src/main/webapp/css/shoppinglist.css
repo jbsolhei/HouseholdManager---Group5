@@ -38,10 +38,43 @@ a {
     cursor: pointer;
 }
 
-#edit_shopping_list_btn {
+#list_of_users_associated_with_shopping_list {
+    display: none;
+    transition: height 1.5s;
+}
+
+#edit_share_shopping_list_btn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#delete_shopping_list_btn {
     float: right;
-    margin: 10px 0;
-    box-sizing: border-box;
+}
+
+.item-is-checked {
+    text-decoration: line-through;
+}
+
+#panel_header {
+    display: block;
+}
+
+#input_header {
+    display: none;
+}
+
+#ok_new_shopping_list_btn, #share_new_shopping_list_btn {
+    border-radius: 0;
+}
+
+#share_new_shopping_list_btn {
+    border-radius: 0 4px 4px 0;
+}
+
+#cancel_new_shopping_list_btn {
+    margin-left: 10px;
+    border-radius: 4px;
 }
 
 .footerWrapper, #headerInputWrapper {

@@ -47,7 +47,7 @@ public class DBConnector implements AutoCloseable {
             pool.setAcquireIncrement(1);
             pool.setInitialPoolSize(1);
             pool.setMaxStatementsPerConnection(15);
-            pool.setIdleConnectionTestPeriod(240);
+            pool.setIdleConnectionTestPeriod(120);
 
             // TODO Fjern disse i prod!
             //pool.setUnreturnedConnectionTimeout(30);

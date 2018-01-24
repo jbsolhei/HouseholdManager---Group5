@@ -109,14 +109,17 @@ function showList(SLIndex){
     }else{
         $("#emptyListText").addClass("hide");
         $.each(currentItemList,function(i,val){
-            console.log(typeof val.checkedBy);
-            var checkedBy;
-            if(val.checkedBy === null) {
-                checkedBy="";
-                $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
-            } else {
-                checkedBy = val.checkedBy.name;
-                $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="unCheck(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td>' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+            console.log('val.itemId: ' + val.itemId);
+            if (val.itemId !== 0) {
+                console.log(typeof val.checkedBy);
+                var checkedBy;
+                if (val.checkedBy === null) {
+                    checkedBy = "";
+                    $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="check(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td>' + val.name + '</td><td id="checkedBy' + val.itemId + '">' + checkedBy + '</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                } else {
+                    checkedBy = val.checkedBy.name;
+                    $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="unCheck(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td>' + val.name + '</td><td id="checkedBy' + val.itemId + '">' + checkedBy + '</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                }
             }
         });
     }$("#headline").replaceWith('<p id="headline">' + SHL[SLIndex].name + '</p>');
@@ -230,7 +233,7 @@ function updateUsers() {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("List successfully added to database")
+            console.log("List successfully added to database");
         },
         error: function (result) {
             console.log(result);
@@ -239,7 +242,9 @@ function updateUsers() {
 }
 
 function updateUsersAjax(shoppingListId, users) {
+    console.log("!!! - shoppingListId: " + shoppingListId +  " houseId: " + getCurrentHousehold().houseId);
     console.log(JSON.stringify({'userids': users}));
+
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_list/' + shoppingListId + '/users',

@@ -75,6 +75,7 @@
         <link href="css/scrollBar.css" rel="stylesheet">
         <link href="css/notification.css" rel="stylesheet">
 
+        <script src="js/he.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/jquery-ui.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -83,7 +84,7 @@
         <script src="js/addMembersToHouseholdModal.js"></script>
         <script src="js/index.js"></script>
         <script src="js/dashboard.js"></script>
-        <script src="js/shoppingList.js"></script>
+        <script src="js/shoppinglist.js"></script>
         <script src="js/profile.js"></script>
         <script src="js/household.js"></script>
         <script src="js/shoppingTrip.js"></script>
@@ -117,7 +118,7 @@
                         <li><a class="visible-xs" onclick="swapContent(household)">Household</a></li>
                         <li><a class="visible-xs" onclick="swapContent(shoppinglists)">Shopping lists</a></li>
                         <li><a class="visible-xs" onclick="swapContent(shoppingtrips)">Shopping trip</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(chores)">To Do</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(chores)">Chores</a></li>
                         <li><a class="visible-xs" onclick="swapContent(statistics)">Statistics</a></li>
                         <li><a class="visible-xs" onclick="swapContent(news)">News</a></li>
 
@@ -135,7 +136,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul id="listOfHouseholds" class="dropdown-menu">
-                                <li data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#"><strong>New Household</strong></a></li>
+                                <li style="border-top: 1px solid #e8e8e8;"data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#"><strong>New Household   <span class="glyphicon glyphicon-plus"></span></strong></a></li>
                             </ul>
                         </li>
                         <li><a id="myPageId" onclick="swapContent(profile)">My Page</a></li>

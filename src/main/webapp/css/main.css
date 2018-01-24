@@ -131,8 +131,7 @@ body {
     text-align: left !important;
 }
 #profile-img {
-    width: 90%;
-    margin: 15px;
+    width: 100%;
 }
 #profile-footer {
     background-color: #984b43;
@@ -148,4 +147,18 @@ body {
 #verticalLine {
     border-right: 1px solid black;
     height: auto;
+}
+
+.clickableChore:hover{
+    padding: 2px;
+    border: 2px;
+    margin: 2px;
+    background-color: cornflowerblue;
+}
+
+.checkedChoreListElement{
+    background-color: greenyellow;
+}
+.overdueChoreListElement{
+    background-color: orangered;
 }
