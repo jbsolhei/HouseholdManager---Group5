@@ -163,3 +163,8 @@ body {
 .overdueChoreListElement{
     background-color: orangered;
 }
+
+div.miniprofile {
+    padding-right: 15px;
+    padding-left: 15px;
+}

@@ -81,7 +81,9 @@ function updateCurrentUser(runThisAfter) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
-            runThisAfter();
+            if (typeof runThisAfter === "function") {
+                runThisAfter();
+            }
         },
         error: function () {
             showLoadingScreen(false);
