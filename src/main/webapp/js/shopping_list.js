@@ -5,6 +5,24 @@ var current_SHL_index;
 
 /* --- Ajax- methods --- */
 
+function ajax_getShoppingLists(handleData) {
+    console.log('ajax_getShoppingLists()');
+    ajaxAuth({
+        type: 'GET',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/user/' + getCurrentUser().userId,
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            console.log("success: ajax_getShoppingLists()");
+            handleData(data);
+        },
+        error: function (data) {
+            console.log("error: ajax_getShoppingLists()");
+            console.log(data);
+        }
+    })
+}
+
 /**
  * Ajax-method to create a new Shopping List given a shopping list name
  *
@@ -12,7 +30,7 @@ var current_SHL_index;
  * @param userIds, an array of users you want to be associated with the new list
  * @success returns the generated shopping list ID, and updates users
  */
-function ajax_createNewList(shoppingListName, userIds) {
+function ajax_createNewList(shoppingListName, handleData) {
     console.log('ajax_createNewList()');
     console.log('data:' + shoppingListName);
     ajaxAuth({
@@ -21,8 +39,8 @@ function ajax_createNewList(shoppingListName, userIds) {
         data: shoppingListName,
         contentType: 'text/plain',
         success: function (shoppingListId) {
-            console.log("success: ajax_createNewList(). data: " + shoppingListId);
-            ajax_updateUsers(userIds, shoppingListId);
+            console.log("success: ajax_createNewList(). shoppingListId: " + shoppingListId);
+            handleData(shoppingListId);
         },
         error: function () {
             console.log("error: ajax_createNewList()");
@@ -36,7 +54,7 @@ function ajax_createNewList(shoppingListName, userIds) {
  * @param userIds, an array of user IDs that are associated with the shopping list
  * @param shoppingListId, the shopping list ID
  */
-function ajax_updateUsers (userIds, shoppingListId) {
+function ajax_updateUsers (userIds, shoppingListId, handleData) {
     console.log('ajax_updateUsers()');
     console.log(JSON.stringify(userIds));
     ajaxAuth({
@@ -44,8 +62,9 @@ function ajax_updateUsers (userIds, shoppingListId) {
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/users',
         data: JSON.stringify(userIds),
         contentType: 'application/json; charset=utf-8',
-        success: function () {
+        success: function (data) {
             console.log("success: ajax_updateUsers()");
+            handleData(data)
         },
         error: function () {
             console.log("error: ajax_updateUsers()");
@@ -104,13 +123,14 @@ function ajax_updateCheckedBy(itemId, userId, handleData) {
  *
  * @param shoppingListId, the shopping list ID
  */
-function ajax_deleteShoppingList(shoppingListId) {
+function ajax_deleteShoppingList(shoppingListId, handleData) {
     console.log('ajax_deleteShoppingList()');
     ajaxAuth({
         type: 'DELETE',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId,
-        success: function () {
+        success: function (data) {
             console.log("success: ajax_deleteShoppingList()");
+            handleData(data);
         },
         error: function (result) {
             console.log("error: ajax_deleteShoppingList()");
@@ -125,15 +145,16 @@ function ajax_deleteShoppingList(shoppingListId) {
  * @param shoppingListId, the shopping list ID
  * @param archived, the wanted value of archived
  */
-function ajax_updateArchived(shoppingListId, archived){
-    console.log('ajax_updateArchived()');
+function ajax_updateArchived(shoppingListId, archived, handleData){
+    console.log('ajax_updateArchived(). shoppingListId: ' + shoppingListId + '. archived: ' + archived);
     ajaxAuth({
         type: 'PUT',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId,
         data: archived,
         contentType: 'text/plain',
-        success: function () {
+        success: function (data) {
             console.log("success: ajax_updateArchived()");
+            handleData(data);
         },
         error: function (result) {
             console.log("error: ajax_updateArchived()");
@@ -261,36 +282,38 @@ function readyShoppingList(){
  * Function to load the side menu
  */
 function loadSideMenu(){
-    SHL = getCurrentHousehold().shoppingLists;
-    console.log(SHL);
-    if(SHL!==null&&SHL!==undefined)numberOfLists = SHL.length;
-    if(numberOfLists>0){
-        var firstActive = true;
-        var firstArchived = true;
-        var inputStringActive = "<ul id=\"shopping-list-active-side-menu\" class=\"nav nav-pills nav-stacked\">";
-        var inputStringArchived = "<ul id=\"shopping-list-archived-side-menu\" class=\"nav nav-pills nav-stacked\">";
-        $.each(SHL, function(i,val){
-            if (val.archived) {
-                if (firstActive) {
-                    activeSHL = i;
-                    firstActive = false;
-                }
-                inputStringArchived += '<li onclick="showListFromMenu(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
+    ajax_getShoppingLists(function (ShoppingLists) {
+        console.log(ShoppingLists);
+        SHL = ShoppingLists;
+        if(SHL!==null&&SHL!==undefined)numberOfLists = SHL.length;
+        if(numberOfLists>0){
+            var firstActive = true;
+            var firstArchived = true;
+            var inputStringActive = "<ul id=\"shopping-list-active-side-menu\" class=\"nav nav-pills nav-stacked\">";
+            var inputStringArchived = "<ul id=\"shopping-list-archived-side-menu\" class=\"nav nav-pills nav-stacked\">";
+            $.each(SHL, function(i,val){
+                if (val.archived) {
+                    if (firstActive) {
+                        activeSHL = i;
+                        firstActive = false;
+                    }
+                    inputStringArchived += '<li onclick="showListFromMenu(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
 
-            } else {
-                if (firstArchived) {
-                    archivedSHL = i;
-                    firstArchived = false;
+                } else {
+                    if (firstArchived) {
+                        archivedSHL = i;
+                        firstArchived = false;
+                    }
+                    inputStringActive += '<li onclick="showListFromMenu(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
                 }
-                inputStringActive += '<li onclick="showListFromMenu(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
-            }
-        });
-        inputStringActive += '</ul>';
-        inputStringArchived += '</ul>';
-        $("#shopping-list-active-tab").html(inputStringActive);
-        $("#shopping-list-archived-tab").html(inputStringArchived);
-    }
-    $("#shoppingList" + activeSHL).addClass("active");
+            });
+            inputStringActive += '</ul>';
+            inputStringArchived += '</ul>';
+            $("#shopping_list_active_tab").html(inputStringActive);
+            $("#shopping_list_archived_tab").html(inputStringArchived);
+        }
+        $("#shoppingList" + activeSHL).addClass("active");
+    })
 }
 
 /**
@@ -319,7 +342,7 @@ function showListFromMenu(SLIndex, isArchived){
                 }
             });
         }
-        $("#headline").replaceWith('<h4 id="headline" class="col-md-10">' + shoppingList.name + '</h4>');
+        $("#headline").replaceWith('<p id="headline" class="col-md-10">' + shoppingList.name + '</p>');
         $("#shoppingListItemInput").focus();
         $("#shoppingList" + activeSHL).removeClass("active");
         $("#shoppingList" + SLIndex).addClass("active");
@@ -375,6 +398,7 @@ function closeListOfAssociatedUsers() {
  * @param itemId, the item ID
  */
 function checkItem(itemId) {
+    console.log("The right function is being called :D");
     $("#unchecked" + itemId).addClass("glyphicon-refresh").removeClass("glyphicon-unchecked");
     ajax_updateCheckedBy(itemId, getCurrentUser().userId, function (data) {
         if (data === true) {
@@ -396,6 +420,7 @@ function checkItem(itemId) {
  * @param itemId, the item ID
  */
 function uncheckItem(itemId) {
+    console.log("The right function is being called :D");
     $("#checked" + itemId).addClass("glyphicon-refresh").removeClass("glyphicon-unchecked");
     ajax_updateCheckedBy(itemId, 0, function (data) {
         if (data === true) {
@@ -459,14 +484,14 @@ function deleteItem(itemId) {
  * The shopping list ID is pulled from SHL[activeSHL]
  * The shopping list name is pulled from $("#emptyListText")
  */
-function addItem() {
+function addItemToShoppingList() {
     var itemName = $("#shoppingListItemInput").val();
+    $("#shoppingListItemInput").replaceWith('<input id="shoppingListItemInput" type="text" class="form-control" name="item" placeholder="Item">');
     if(itemName !== "" && itemName !== null) {
         $("#emptyListText").addClass("hide");
         ajax_addItem(SHL[activeSHL].shoppingListId, itemName, function (data) {
             if (data) {
-                console.log("actove: " + activeSHL);
-                showListFromMenu(activeSHL, false);
+                showListFromMenu(activeSHL)
             }
         })
     }
@@ -475,8 +500,67 @@ function addItem() {
 /**
  * Method to reveal the input field in the header, and set the headline as active
  */
-function changePanelHeader() {
+function showInputHeader() {
     $("#title_header").css('display', 'none');
     $("#input_header").css('display', 'block');
     $("#headlineInput").focus();
+}
+
+/**
+ * Method to hide the input field in the header
+ */
+function hideInputHeader() {
+    if ($("#input_header").css('display') === 'block') {
+        $("#input_header").css('display', 'none');
+        $("#title_header").css('display', 'block');
+    }
+}
+
+/**
+ * Function to create a new shoppingList
+ * Automatically adds all users in the household to the list automatically
+ */
+function createNewShoppingList() {
+    hideInputHeader();
+    console.log($("#text_input_new_shopping_list").val());
+    var shoppingListName = $("#text_input_new_shopping_list").val();
+    var userIds = [];
+    $.each(getCurrentHousehold().residents, function(i,val){
+       userIds.push(val.userId);
+    });
+    if (shoppingListName !== null || shoppingListName !== '') {
+        ajax_createNewList(shoppingListName, function (shoppingListId) {
+            if (shoppingListId) {
+                ajax_updateUsers(userIds, shoppingListId, function () {
+                    $("#headline").replaceWith('<p id="headline" class="col-md-10">' + shoppingListName + '</p>');
+                    loadSideMenu();
+                })
+            }
+        })
+    }
+}
+
+/**
+ * Function to delete a shopping list
+ * The shopping list ID is automatically pulled from the SHL variable
+ */
+function deleteShoppingList() {
+    var shoppingListId = SHL[activeSHL].shoppingListId;
+    ajax_deleteShoppingList(shoppingListId, function (data) {
+        if (data) {
+            ajax_getShoppingLists(function (shoppingLists) {
+                SHL = shoppingLists;
+                loadSideMenu();
+            })
+        }
+    })
+}
+
+function archiveShoppingList() {
+    var shoppingListId = SHL[activeSHL].shoppingListId;
+    ajax_updateArchived(shoppingListId, "true", function (data) {
+        if (data) {
+            loadSideMenu();
+        }
+    })
 }
