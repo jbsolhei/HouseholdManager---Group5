@@ -43,12 +43,18 @@ function buildMemberTable(){
             removeTd = "<td><span class='glyphicon glyphicon-remove remove' " +
                 "data-toggle='confirm' data-remove='" + user.userId + "'></span></td>";
         }
+        var image;
+        if(user.profileImage != "" && user.profileImage != null) {
+            image = user.profileImage;
+        } else {
+            image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
+        }
 
         $("table#members tbody").append(
             "<tr onclick=\"showMiniProfile(" + i + ")\">\n" +
             adminTd + "\n" +
             "<td><div class=\"img-circle\">" +
-            "<img class=\"img-responsive img-pic\" src=\"http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg\">" +
+            "<img class=\"img-responsive img-pic\" src='"+image+"'>" +
             "</div></td>\n" +
             "<td>" + user.name + "</td>\n" +
             "<td>" + user.email + "</td>\n" +
