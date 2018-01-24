@@ -126,22 +126,22 @@ function editUserInfo() {
     $("#edit_profile_relationship").html('<select class="form-control" id="edit_profile_information_relationship" value="' + currUs.relationship + '">\n' +
         '            <option value="">--Chose an option--</option>\n' +
         '            <option value="Single">Single</option>\n' +
-        '            <option value="Taken">Taken</option>\n' +
+        '            <option value="In a relationship">In a relationship</option>\n' +
         '            <option value="Its complicated">Its complicated</option>\n' +
-        '            <option id="MarriedId" value="Married">Married</option>\n' +
-        '            <option value="Fuck love get money">Fuck love get money</option>\n' +
+        '            <option value="Married">Married</option>\n' +
+        '            <option value="Fuck bitches get money">Fuck bitches get money</option>\n' +
         '        </select>');
 
     var selected_relationship = 0;
     if(currUs.relationship === "Single"){
         selected_relationship = 1;
-    } else if (currUs.relationship === "Taken"){
+    } else if (currUs.relationship === "In a relationship"){
         selected_relationship = 2;
     } else if(currUs.relationship === "Its complicated"){
         selected_relationship = 3;
     } else if(currUs.relationship === "Married"){
         selected_relationship = 4;
-    } else if(currUs.relationship === "Fuck love get money"){
+    } else if(currUs.relationship === "Fuck bitches get money"){
         selected_relationship = 5;
     }
     document.getElementById("edit_profile_information_relationship").options[selected_relationship].selected = true;
@@ -151,7 +151,9 @@ function editUserInfo() {
         '            <option value="">--Chose an option--</option>\n' +
         '            <option value="Female">Female</option>\n' +
         '            <option value="Male">Male</option>\n' +
-        '            <option value="Hen">Hen</option>\n' +
+        '            <option value="Non binary">Non binary</option>\n' +
+        '            <option value="Gender fluid">Gender fluid</option>\n' +
+        '            <option value="Other">Other</option>\n' +
         '        </select>');
 
     var selected_gender = 0;
@@ -159,8 +161,12 @@ function editUserInfo() {
         selected_gender = 1;
     } else if (currUs.gender === "Male"){
         selected_gender = 2;
-    } else if(currUs.gender === "Hen"){
+    }else if(currUs.gender === "Non binary"){
         selected_gender = 3;
+    } else if(currUs.gender === "Gender fluid") {
+        selected_gender = 4;
+    } else if(currUs.gender === "Other") {
+        selected_gender = 5;
     }
     document.getElementById("edit_profile_information_gender").options[selected_gender].selected = true;
 
