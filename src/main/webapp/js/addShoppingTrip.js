@@ -1,44 +1,55 @@
 var result;
 
 function createPage() {
-    console.log(getCurrentHousehold());
-    ajaxAuth({
-        url: "res/household/"+getCurrentHousehold().houseId+"/users",//Må byttes ut med currentHousehold!!!!
-        type: 'get',
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function(data) {
-            console.log(data);
-            result = data;
-            addMembers(data);
-        },
-        error: function(result) {
-        }
-    });
-    ajaxAuth({
-        url: "res/household/"+getCurrentHousehold().houseId+"/shopping_lists",//Må byttes ut med currentHousehold!!!!
-        type: 'get',
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
-        success: function(data) {
-            console.log(data);
-            addShoppinglists(data);
-        },
-        error: function(result) {
-        }
-    });
+    if (getCurrentHousehold() !== null || getCurrentHousehold() !==  undefined) {
+        ajaxAuth({
+            url: "res/household/" + getCurrentHousehold().houseId + "/users",//Må byttes ut med currentHousehold!!!!
+            type: 'get',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                console.log(data);
+                result = data;
+                addMembers(data);
+            },
+            error: function (result) {
+            }
+        });
+        $("#sel1").html(
+            $("<option>").attr("id", "trip-0").data("trip-id", 0).text("-None-")
+        );
+        ajaxAuth({
+            url: "res/household/" + getCurrentHousehold().houseId + "/shopping_lists",//Må byttes ut med currentHousehold!!!!
+            type: 'get',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                addShoppinglists(data);
+            },
+            error: function (result) {
+            }
+        });
+    }
 }
-function addMembers(data) {
-    $("#members").html("");
-    for(var i=0; i<data.length; i++) {
-        $("#members").append("<label style='float: left; margin-left: 5px'><input type='checkbox' id=check-"+i+" value=''>"+data[i].name+"</label><br>");
+function addMembers(members) {
+    $("#members").empty();
+    for(var i=0; i<members.length; i++) {
+        $("#members").append(
+            "<div class='shopping-list-member-line'>" +
+            "<label style='margin-left: 5px'>" +
+            "<input type='checkbox' id='check-" + i + "'>" + members[i].name + "</label>" +
+            "</div>"
+        );
     }
 }
 function addShoppinglists(data) {
-    $("#sel1").html("");
-    $("#sel1").append("<option id='trip-0'>-None-</option>");
     for(var i=0; i<data.length; i++) {
-        $("#sel1").append("<option id='trip-"+data[i].shoppingListId+"'>"+data[i].name+"</option>");
+        $("#sel1").append(
+            $("<option>")
+                .attr("id", "trip-" + data[i].shoppingListId)
+                .data("trip-id", data[i].shoppingListId)
+                .text(data[i].name)
+        );
     }
 }
 
@@ -48,7 +59,7 @@ function addShoppingTrip() {
     var sum = $("#trip-sum").val();
     var contributors = [];
     var shoppingList = $("#sel1").val()-1;
-    var id = $("#sel1 option:selected").attr('id').split("trip-")[1];
+    var id = $("#sel1 option:selected").data("trip-id");
 
     for(var i=0; i<result.length; i++) {
         if($("#check-" + i).is(":checked")) {
@@ -63,11 +74,11 @@ function addShoppingTrip() {
         addNotification(contributors[i].userId, getCurrentHousehold().houseId, getCurrentUser().name + " have added you to a new Shopping Trip, " +name);
     }
 
-    if(name === "" || comment == "" || sum == "" ||
-        shoppingList == "" || id == "" ||
-        contributors.length == 0) {
+    if(name === "" || comment === "" || sum === "" ||
+        shoppingList === "" || id === "" ||
+        contributors.length === 0) {
         document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-            '<strong>Failed to create user.</strong> Please fill in all the forms. </div>';
+            '<strong>Please fill in all the forms. </div>';
 
     } else {
         var data = {"name" : name, "expence" : sum, "comment" : comment, "userId" : getCurrentUser().userId,

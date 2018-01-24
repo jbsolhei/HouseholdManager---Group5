@@ -124,6 +124,9 @@ public class HouseholdDAO {
                     toAdd.setEmail(rs.getString("email"));
                     toAdd.setUserId(rs.getInt("userId"));
                     toAdd.setTelephone(rs.getString("telephone"));
+                    toAdd.setRelationship(rs.getString("relationship"));
+                    toAdd.setBio(rs.getString("bio"));
+                    toAdd.setGender(rs.getString("gender"));
                     users.add(toAdd);
                     if (rs.getBoolean("isAdmin")){
                         admins.add(toAdd);
@@ -373,7 +376,7 @@ public class HouseholdDAO {
                 Email.sendMail(to, "Household Manager Invitation",
                         "You have been invited to " + house.getName() + "!\n" +
                                 "Click here to accept:\n" +
-                                "http://localhost:8080/hhapp/login.html?invite=" + tokens.get(i));
+                                "http://localhost:8080/hhapp/OpeningPage.html?invite=" + tokens.get(i));
             }
         }
         return emails.size();

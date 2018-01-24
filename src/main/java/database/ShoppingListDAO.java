@@ -58,18 +58,12 @@ public class ShoppingListDAO {
      */
     public static ShoppingList[] getShoppingListsAdmin(int houseId) {
         ArrayList<ShoppingList> shoppingLists = new ArrayList<>();
-        ArrayList<User> users = new ArrayList<>();
+        ShoppingList shoppingList = null;
         int shoppingListId = 0;
-        int shoppingListId2 = 0;
         String shoppingListName = "";
-        int userId = 0;
-        String personName = "";
-        String email = "";
-        String telephone = "";
         boolean isArchved = false;
-        boolean thereAreLists = false;
 
-        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.archived, User_Shopping_list.userId, Person.name, Person.email, Person.telephone FROM Shopping_list LEFT JOIN User_Shopping_list ON Shopping_list.shopping_listId = User_Shopping_list.shopping_listId LEFT JOIN Person ON User_Shopping_list.userId = Person.userId WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
+        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.archived FROM Shopping_list WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
@@ -77,62 +71,22 @@ public class ShoppingListDAO {
             st.setInt(1, houseId);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
-                    thereAreLists = true;
-                    shoppingListId = rs.getInt("shopping_listId");
+                    shoppingList = new ShoppingList();
 
-                    if (shoppingListId != shoppingListId2 && shoppingListId2 != 0) {
-                        ShoppingList sl = new ShoppingList();
-                        sl.setName(shoppingListName);
-                        sl.setArchived(isArchved);
-                        sl.setUsers(toUserArray(users));
-                        sl.setShoppingListId(shoppingListId2);
-                        shoppingLists.add(sl);
-                        users.clear();
-                    }
+                    shoppingListId = rs.getInt("shopping_listId");
                     shoppingListName = rs.getString("shopping_list.name");
                     isArchved = rs.getBoolean("Shopping_list.archived");
 
-                    userId = rs.getInt("userId");
+                    shoppingList.setShoppingListId(shoppingListId);
+                    shoppingList.setName(shoppingListName);
+                    shoppingList.setArchived(isArchved);
 
-                    if (userId != 0) {
-                        personName = rs.getString("Person.name");
-                        email = rs.getString("email");
-                        telephone = rs.getString("telephone");
-
-                        User user = new User();
-                        user.setUserId(userId);
-                        user.setName(personName);
-                        user.setEmail(email);
-                        user.setTelephone(telephone);
-
-                        users.add(user);
-                    }
-
-                    shoppingListId2 = shoppingListId;
+                    shoppingLists.add(shoppingList);
                 }
             }
-
-            if (thereAreLists) {
-                ShoppingList sl = new ShoppingList();
-                sl.setName(shoppingListName);
-                sl.setArchived(isArchved);
-                sl.setUsers(toUserArray(users));
-                sl.setShoppingListId(shoppingListId2);
-                shoppingLists.add(sl);
-                users.clear();
-
-                /*
-                for (ShoppingList shoppingList : shoppingLists) {
-                    Item[] items = getItems(shoppingList.getShoppingListId());
-                    shoppingList.setItems(items);
-                }
-                */
                 return toShoppingListArray(shoppingLists);
-            } else {
-                return null;
-            }
-
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
 
