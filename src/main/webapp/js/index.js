@@ -267,6 +267,10 @@ function getNews(runThisAfter){
 
 function postNews(text,runThisAfter){
     var message = {"message":text};
+    var residents = getCurrentHousehold().residents;
+    for (i = 0; i < residents.length; i++) {
+        if (residents[i].userId !== getCurrentUser().userId) addNotification(residents[i].userId, getCurrentHousehold().houseId, getCurrentUser().name + " has posted news.")
+    }
     ajaxAuth({
         url:"res/household/"+getCurrentHousehold().houseId+"/news",
         type: "POST",
