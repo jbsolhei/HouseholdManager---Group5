@@ -103,3 +103,15 @@ function printNewsToDashboard(){
         $('.message-body').css('display','none');
     });
 }
+
+function toggleTeaser(msg){
+    var teaser = msg.find('.message-teaser');
+    var body = msg.find('.message-body');
+    if (teaser[0].style.display === "none"){
+        teaser.css('display','block');
+        body.css('display','none');
+    } else {
+        teaser.css('display','none');
+        body.css('display','block');
+    }
+}
