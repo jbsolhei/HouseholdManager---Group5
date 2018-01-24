@@ -1,7 +1,6 @@
 package database;
 
 import classes.*;
-import com.sun.mail.iap.ByteArray;
 
 import java.security.SecureRandom;
 import java.sql.*;
