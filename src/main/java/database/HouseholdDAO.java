@@ -140,7 +140,10 @@ public class HouseholdDAO {
                     adminList[i] = admins.get(i);
                 }
                 household.setAdmins(adminList);
-                household.setShoppingLists(ShoppingListDAO.getShoppingLists(id,uid));
+
+                // If the user is an admin, all shopping lists related to the household will be shown, if not then only those who are visible to the user will be shown
+                if (UserDAO.isAdmin(id, uid)) household.setShoppingLists(ShoppingListDAO.getShoppingListsAdmin(id));
+                else household.setShoppingLists(ShoppingListDAO.getShoppingListsUser(id, uid));
                 return household;
             }
 
