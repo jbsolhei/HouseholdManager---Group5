@@ -149,3 +149,7 @@ body {
     border-right: 1px solid black;
     height: auto;
 }
+
+#members {
+    width: 100%;
+}

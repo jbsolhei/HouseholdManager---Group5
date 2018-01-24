@@ -1,20 +1,23 @@
 /* GENERAL CSS FOR WIDGETS */
-.panel-default>.panel-heading{
+.panel-default>.panel-heading {
     /* background-color: #7D2E26; Den gamle fargen */
     background-color: rgba(150, 19, 12, 0.3);
 
-    font-size: 17px;
+    font-size: 1.0em;
     font-weight: bold;
     color: black;
     letter-spacing: 1px;
-    max-height: 45px;
-    min-height: 45px;
+    max-height: 4.5vh;
+    min-height: 4.5vh;
     overflow: hidden;
-    border: 0px;
+    border: none;
+    outline: none;
+    display: table;
+    width: 100%;
 }
 
 .panel-default>.panel-footer {
-    max-height: 45px;
+    height: 45px;
 }
 
 .cursorPointer:hover {
@@ -32,7 +35,7 @@
 }
 
 .widgetCol {
-    padding: 20px;
+    padding: 2.0vh;
     height: 100%;
 }
 
@@ -48,6 +51,8 @@
 .widget {
     height: 100%;
     width: 100% !important;
+    outline: none;
+    border: none;
 }
 
 .scrollWhenFull {

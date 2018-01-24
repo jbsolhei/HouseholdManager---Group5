@@ -72,7 +72,7 @@ function printNewsToDashboard(){
     getNews(function (data) {
         var html = "";
         var loops = data.length;
-        if (loops>6)loops=6;
+        if (loops>50)loops=50;
         for (var i = 0;i<loops;i++) {
             var post = data[i];
             var time = post.time.dayOfMonth+"."+post.time.monthValue+" "+post.time.hour+":"+post.time.minute;
