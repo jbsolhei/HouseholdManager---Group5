@@ -9,6 +9,7 @@ var news = "news.html";
 var profile = "profile.html";
 var stats = "stats.html";
 var activeSHL = 0;
+var archivedSHL = 0;
 var householdsLoaded = false;
 var activeChore = [0,0];
 

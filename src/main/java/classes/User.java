@@ -11,6 +11,9 @@ public class User {
     private String relationship;
     private String gender;
     private String password;
+    private String bio;
+    private boolean female;
+    private String relationship;
     private ArrayList<Debt> debts;
     private ArrayList<Debt> income;
     private ArrayList<Household> associatedHouseholds;
@@ -136,5 +139,29 @@ public class User {
 
     public void setAssociatedHouseholds(ArrayList<Household> associatedHouseholds) {
         this.associatedHouseholds = associatedHouseholds;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public boolean isFemale() {
+        return female;
+    }
+
+    public void setFemale(boolean female) {
+        this.female = female;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
     }
 }
