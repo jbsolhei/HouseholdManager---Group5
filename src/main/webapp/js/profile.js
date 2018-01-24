@@ -5,14 +5,33 @@ var currUs;
 function loadUser(){
     currUs = getCurrentUser();
     printInfoToWall(currUs);
-    printHouseholdsToWall(currUs.userId);
-    printTasksToWall(currUs.userId);
+    //printHouseholdsToWall(currUs.userId);
+    //printTasksToWall(currUs.userId);
 }
 
 function printInfoToWall(current_user){
     $("#profile_information_list_name").html(current_user.name);
     $("#profile_information_list_email").html(current_user.email);
     $("#profile_information_list_phone").html(current_user.telephone);
+    if(currUs.bio != ""){
+        $("#profile_information_list_bio").html(currUs.bio);
+    } else {
+        $("#profile_information_list_bio").html("Missing info");
+    }
+    if(currUs.relationship != ""){
+        $("#profile_information_list_relationship").html(currUs.relationship);
+    } else {
+        $("#profile_information_list_relationship").html("Missing info");
+    }
+    if(currUs.gender != ""){
+        $("#profile_information_list_gender").html(currUs.gender);
+    } else {
+        $("#profile_information_list_gender").html("Missing info");
+    }
+
+
+
+
     console.log(getCurrentUser());
 }
 function printHouseholdsToWall(id) {
@@ -99,6 +118,54 @@ function editUserInfo() {
     $("#edit_profile_phone").html("<input class='form-control' type='number' id='edit_profile_information_phone' " +
         "value='"+currUs.telephone+"' placeholder='Telephone'>");
 
+    $("#edit_profile_bio").html("");
+    $("#edit_profile_bio").html("<textarea class='form-control' rows='3' type='text' id='edit_profile_information_bio' " +
+    "placeholder='Bio'>" + currUs.bio + "</textarea>");
+
+    $("#edit_profile_relationship").html("");
+    $("#edit_profile_relationship").html('<select class="form-control" id="edit_profile_information_relationship" value="' + currUs.relationship + '">\n' +
+        '            <option value="">--Chose an option--</option>\n' +
+        '            <option value="Single">Single</option>\n' +
+        '            <option value="Taken">Taken</option>\n' +
+        '            <option value="Its complicated">Its complicated</option>\n' +
+        '            <option id="MarriedId" value="Married">Married</option>\n' +
+        '            <option value="Fuck love get money">Fuck love get money</option>\n' +
+        '        </select>');
+
+    var selected_relationship = 0;
+    if(currUs.relationship === "Single"){
+        selected_relationship = 1;
+    } else if (currUs.relationship === "Taken"){
+        selected_relationship = 2;
+    } else if(currUs.relationship === "Its complicated"){
+        selected_relationship = 3;
+    } else if(currUs.relationship === "Married"){
+        selected_relationship = 4;
+    } else if(currUs.relationship === "Fuck love get money"){
+        selected_relationship = 5;
+    }
+    document.getElementById("edit_profile_information_relationship").options[selected_relationship].selected = true;
+
+    $("#edit_profile_gender").html("");
+    $("#edit_profile_gender").html('<select class="form-control" id="edit_profile_information_gender" value="' + currUs.gender + '">\n' +
+        '            <option value="">--Chose an option--</option>\n' +
+        '            <option value="Female">Female</option>\n' +
+        '            <option value="Male">Male</option>\n' +
+        '            <option value="Hen">Hen</option>\n' +
+        '        </select>');
+
+    var selected_gender = 0;
+    if(currUs.gender === "Female"){
+        selected_gender = 1;
+    } else if (currUs.gender === "Male"){
+        selected_gender = 2;
+    } else if(currUs.gender === "Hen"){
+        selected_gender = 3;
+    }
+    document.getElementById("edit_profile_information_gender").options[selected_gender].selected = true;
+
+
+
     $("#changePassword").html("<label>Change password:</label><div class='form-group'><label class='control-label col-md-3 profile_labels' for=''>Current password:</label>"+
         "<div class='col-md-9'>" +
         "<input class='form-control' type='password' id='currentPassword'></div></div>" +
@@ -175,13 +242,23 @@ function saveInformation() {
     var newName = $("#edit_profile_information_name").val();
     var newEmail = $("#edit_profile_information_email").val();
     var newPhone = $("#edit_profile_information_phone").val();
+    var newBio = $("#edit_profile_information_bio").val();
+    var newRelationship = $("#edit_profile_information_relationship").val();
+    var newGender = $("#edit_profile_information_gender").val();
 
 
     if(newEmail == "" || newPhone == "" || newName == "") {
         document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
             '<strong>Please fill in all the information</strong></div>';
     } else {
-        var editUser = {"name": newName, "email": newEmail, "telephone": newPhone};
+        var editUser = {
+            "name": newName,
+            "email": newEmail,
+            "telephone": newPhone,
+            "relationship": newRelationship,
+            "bio": newBio,
+            "gender": newGender
+        };
         ajaxAuth({
             url: "res/user/" + getCurrentUser().userId,
             type: 'PUT',
@@ -193,8 +270,6 @@ function saveInformation() {
                         '<strong>Your profile is changed</strong></div>';
                     updateCurrentUser(getCurrentUser().userId);
                     $("#myPageId").click();
-
-
                 } else {
                     document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
                         '<strong>Email already exists</strong></div>';

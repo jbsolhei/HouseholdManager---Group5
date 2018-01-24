@@ -7,6 +7,9 @@ public class User {
     private String name;
     private String email;
     private String telephone;
+    private String bio;
+    private String relationship;
+    private String gender;
     private String password;
     private ArrayList<Debt> debts;
     private ArrayList<Debt> income;
@@ -79,6 +82,18 @@ public class User {
         return telephone;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -97,6 +112,18 @@ public class User {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
     }
 
     public void setPassword(String password) {
