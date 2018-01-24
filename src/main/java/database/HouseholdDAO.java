@@ -140,7 +140,10 @@ public class HouseholdDAO {
                     adminList[i] = admins.get(i);
                 }
                 household.setAdmins(adminList);
-                household.setShoppingLists(ShoppingListDAO.getShoppingLists(id,uid));
+
+                // If the user is an admin, all shopping lists related to the household will be shown, if not then only those who are visible to the user will be shown
+                if (UserDAO.isAdmin(id, uid)) household.setShoppingLists(ShoppingListDAO.getShoppingListsAdmin(id));
+                else household.setShoppingLists(ShoppingListDAO.getShoppingListsUser(id, uid));
                 return household;
             }
 
@@ -370,7 +373,7 @@ public class HouseholdDAO {
                 Email.sendMail(to, "Household Manager Invitation",
                         "You have been invited to " + house.getName() + "!\n" +
                                 "Click here to accept:\n" +
-                                "http://localhost:8080/hhapp/login.html?invite=" + tokens.get(i));
+                                "http://localhost:8080/hhapp/OpeningPage.html?invite=" + tokens.get(i));
             }
         }
         return emails.size();

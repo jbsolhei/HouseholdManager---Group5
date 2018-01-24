@@ -1,3 +1,8 @@
+<link href="css/shopping_list.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="js/shoppinglist.js"></script> -->
+<script src="js/shopping_list.js"></script>
+
 <div id="shoppingListId" class="container-fluid">
     <div id="mainRow" class="row content">
         <div class="col-md-3 widgetCol">
@@ -53,12 +58,12 @@
                     <div class="row content">
                         <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th class="col-md-1">Checked</th>
-                                    <th class="col-md-5">Item</th>
-                                    <th class="col-md-5">Bought by</th>
-                                    <th class="col-md-1">Remove</th>
-                                </tr>
+                            <tr>
+                                <th class="col-md-1">Checked</th>
+                                <th class="col-md-5">Item</th>
+                                <th class="col-md-5">Bought by</th>
+                                <th class="col-md-1">Remove</th>
+                            </tr>
                             </thead>
                             <tbody id="newItem"></tbody>
                         </table>
@@ -83,7 +88,7 @@
 </div>
 
 <script>
-    readyShoppingList();
+    loadSideMenu();
 </script>
 
 <!-- Denne må være her, trengs aldri å endres -->

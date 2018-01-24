@@ -72,3 +72,5 @@ VALUES ('Ta ut søpla', 'Husk at grønn pose betyr restavfall!', '2017-02-15 10:
 INSERT INTO Person (userId, email, name, password, telephone) VALUES (200, 'trym@gmail.com', 'trym', '123', '88888888');
 INSERT INTO House_user (houseId, userId, isAdmin) VALUES (1, 200, 0);
 INSERT INTO Notification (userId, houseId, message, notificationDateTime) VALUES (200, 1, 'Du må være snill!', '2018-01-01');
+
+INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (50, 1);

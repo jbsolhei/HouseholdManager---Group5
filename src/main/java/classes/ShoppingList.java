@@ -6,6 +6,7 @@ public class ShoppingList {
     private String name;
     private User[] users;
     private Item[] items;
+    private boolean isArchived;
     private boolean isPrivate;
 
     public ShoppingList(){}
@@ -48,5 +49,13 @@ public class ShoppingList {
 
     public void setItems(Item[] items) {
         this.items = items;
+    }
+
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        isArchived = archived;
     }
 }

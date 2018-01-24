@@ -162,4 +162,9 @@ public class UserAuth {
             }
         }
     }
+
+    public static void main(String[] args) {
+        Session session = authenticateLogin("joaki.xamooz@gmail.com", "2");
+        System.out.println("stop");
+    }
 }
