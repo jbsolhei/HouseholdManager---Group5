@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="panel-body scrollWhenFull HH2" id="choresLeftUpperPanelBody">
-                    <table class="table table-striped" id="choresLeftUpperTable">
+                    <table class="table" id="choresLeftUpperTable">
                         <thead id="choresLeftUpperTableHead">
                         <tr>
                             <th>Title</th>
@@ -24,11 +24,6 @@
                         </tr>
                         </thead>
                         <tbody id="choresLeftUpperTableBody">
-                        <tr onclick="swapContent(dashboard)">
-                            <td>Navn på todo</td>
-                            <td>Navn på ansvarshavende</td>
-                            <td>Dato for utføring</td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -42,7 +37,7 @@
                     </div>
                 </div>
                 <div class="panel-body scrollWhenFull HH2" id="choresLeftLowerPanelBody">
-                    <table class="table table-striped" id="choresLeftLowerTable">
+                    <table class="table" id="choresLeftLowerTable">
                         <thead id="choresLeftLowerTableHead">
                         <tr>
                             <th>Title</th>
@@ -51,11 +46,6 @@
                         </tr>
                         </thead>
                         <tbody id="choresLeftLowerTableBody">
-                        <tr onclick="swapContent(dashboard)">
-                            <td>Navn på todo</td>
-                            <td>Navn på ansvarshavende</td>
-                            <td>Dato for utføring</td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -111,10 +101,13 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <button onclick="checkSelectedChore(selectedChore)" id="checkSelectedChoreButton"></button>
+                                    <button onclick="checkSelectedChore(selectedChore)" id="checkSelectedChoreButton">Check/uncheck chore</button>
                                 </div>
                                 <div class="col-sm-4">
-                                    <button onclick="deleteSelectedChore(selectedChore.choreId)" id="deleteSelectedChoreButton"></button>
+                                    <button onclick="deleteSelectedChore(selectedChore.choreId)" id="deleteSelectedChoreButton">Delete chore</button>
+                                </div>
+                                <div class="col-sm-4">
+                                    <button onclick="editChore(selectedChore)">Edit chore</button>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +138,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <h4>User to blame if shit hits the fan</h4>
+                                    <h4>Subjected user</h4>
                                 </div>
                                 <div class="col-sm-8">
                                     <div class="dropdown">
@@ -164,6 +157,55 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <button id="newChoreCancelButton" onclick="switchChoresContent(0)">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row hide" id="choresRightPanelThirdWindow">
+                    <div class="panel panel-default widget" id="choresRightThirdPanel">
+                        <div class="panel-heading styled-heading" id ="choresRightThirdPanelHeading">
+                            <input class="form-control newChoreInput" id="editChoreTitleInput" type="text" placeholder="Chore title" style="font-size:18px">
+                        </div>
+                        <div class="panel-body scrollWhenFull HH" id="choresRightThirdPanelBody">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h4>Description</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <!--<input class="form-control" type="text" placeholder="Chore title" maxlength="280">-->
+                                    <textarea class="newChoreInput" id="editChoreDescriptionInput" name="Text1" style="width:90%; height:10vw"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h4>Date and time</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input class="newChoreInput" id="editChoreLocalTimeInput" type="datetime-local">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h4>Subjected user</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="dropdown">
+                                        <button id="editChoreDropdownButton" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">User
+                                            <span class="caret"></span></button>
+                                        <ul id="editChoreDropdownMenu" class="dropdown-menu">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                </div>
+                                <div class="col-sm-3">
+                                    <button id="editChoreConfirmButton" onclick="editChoreButtonPressed()">Confirm</button>
+                                </div>
+                                <div class="col-sm-5">
+                                    <button id="editChoreCancelButton" onclick="showChoreInfo(selectedChore)">Cancel</button>
                                 </div>
                             </div>
                         </div>

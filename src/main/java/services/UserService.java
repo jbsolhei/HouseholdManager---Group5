@@ -2,6 +2,15 @@ package services;
 
 import auth.*;
 import classes.*;
+import auth.Auth;
+import auth.AuthType;
+import auth.Session;
+import auth.UserAuth;
+import classes.Chore;
+import classes.Debt;
+import classes.Household;
+import classes.User;
+import database.ChoreDAO;
 import database.FinanceDAO;
 import database.NotificationDAO;
 import database.UserDAO;
@@ -149,7 +158,7 @@ public class UserService {
     @Path("/{id}/chores")
     @Produces(MediaType.APPLICATION_JSON)
     public ArrayList<Chore> todos(@PathParam("id") int id) {
-        return UserDAO.getChores(id);
+        return ChoreDAO.getUserChores(id);
     }
 
     @POST
