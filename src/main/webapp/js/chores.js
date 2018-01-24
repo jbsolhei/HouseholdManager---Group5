@@ -3,7 +3,7 @@
  */
 
 //TODO: Replace this variable with something smoother:
-var selectedUserForNewChore;
+var selectedUserForNewChore = null;
 var userChoreList;
 var householdChoreList;
 var selectedChore;
@@ -12,16 +12,6 @@ function readyChores(){
     console.log("readyChores()");
     switchChoresContent(3);
     listUserChores();
-
-
-
-    //Display selected household chore if selected from dashboard:
-    /*if(activeChore[0]===1){
-        selectChoreInfo(householdChoreList[activeChore[1]]);
-        activeChore[0]=0;
-    }else if(selectedChore!==undefined){
-        selectChoreInfo(selectedChore);
-    }*/
 }
 
 function listUserChores(){
@@ -51,7 +41,7 @@ function listUserChores(){
 
 function toJSDate(ltd) {
     var y = ltd.year;
-    var mon = ltd.monthValue;
+    var mon = ltd.monthValue-1;
     var d = ltd.dayOfMonth;
     var h = ltd.hour;
     var min = ltd.minute;
@@ -59,17 +49,17 @@ function toJSDate(ltd) {
 }
 
 function listHouseholdChores() {
-    console.log("listHouseholdChores");
+    console.log("listHouseholdChores()");
     getChoresForHousehold(getCurrentHousehold().houseId, function(data){
         householdChoreList = data;
         var leftLowerTableBodyHTML = "";
         $.each(data,function(i,val){
-            console.log("It LOOPS!!");
-            if(Date.now()>toJSDate(val.time)&&!val.done){
+            var today = new Date;
+            if(today>toJSDate(val.time)&&!val.done){
                 leftLowerTableBodyHTML+="<tr class='clickableChore overdueChoreListElement'";
-            }else if(Date.now()>toJSDate(val.time)&&val.done){
+            }else if(today>toJSDate(val.time)&&val.done){
                 leftLowerTableBodyHTML += "<tr class='hide'";
-            }else if(Date.now()<toJSDate(val.time)&&val.done){
+            }else if(today<toJSDate(val.time)&&val.done){
                 leftLowerTableBodyHTML+="<tr class='clickableChore checkedChoreListElement'";
             }else{
                 leftLowerTableBodyHTML += "<tr class='clickableChore'";
@@ -151,6 +141,9 @@ function showChoreInfo(chore){
         }else{
             $("#choresDetailsCheckedContent").html("&#9744");
         }
+        if(chore.user!==null&&chore.user!==undefined){
+            chore.userId = chore.user.userId;
+        }
     }else{
         switchChoresContent(3);
     }
@@ -158,7 +151,7 @@ function showChoreInfo(chore){
 }
 
 function switchChoresContent(num) {
-    //TODO: This needs to be updated with a parameter and more body.
+
     if(num===0){
         $("#choresRightPanelSecondWindow").addClass("hide");
         $("#choresRightPanelThirdWindow").addClass("hide");
@@ -169,8 +162,9 @@ function switchChoresContent(num) {
         $("#choresRightPanelSecondWindow").removeClass("hide");
         $(".newChoreInput").val("");
         $("#newChoreTitleInput").focus();
+        $("#newChoreDropdownButton").html("No user");
+        selectedUserForNewChore = null;
         var newChoreDropdownHTML = "";
-
         $.each(getCurrentHousehold().residents, function(i,val){
             newChoreDropdownHTML+="<li id='newChoreDropdownElement"+i+"' onclick='setNewChorePersonFromDropdown("+i+")'><a href='#'>"+val.name+"</a></li>";
         });
@@ -198,12 +192,11 @@ function newChoreButtonPressed(){
     var newChoreDescription = $("#newChoreDescriptionInput").val();
     var newChoreDate = $("#newChoreLocalTimeInput").val();
     var newChoreUserId;
-    if(selectedUserForNewChore!==undefined){
+    if(selectedUserForNewChore!==null){
         newChoreUserId = getCurrentHousehold().residents[selectedUserForNewChore].userId;
-        selectedUserForNewChore = undefined;
+        selectedUserForNewChore = null;
     }else{
-        newChoreUserId = null;
-
+        newChoreUserId = selectedChore.userId;
     }
     var newHouseId = getCurrentHousehold().houseId;
     var checked = false;
@@ -212,6 +205,7 @@ function newChoreButtonPressed(){
     postNewChore(newChore);
 }
 function setNewChorePersonFromDropdown(index){
+    console.log("New person = " + index);
     $("#newChoreDropdownButton").html(getCurrentHousehold().residents[index].name);
     $("#editChoreDropdownButton").html(getCurrentHousehold().residents[index].name);
     selectedUserForNewChore = index;
@@ -222,20 +216,23 @@ function editChore(chore){
     $("#editChoreTitleInput").val(chore.title);
     $("#editChoreDescriptionInput").val(chore.description);
     $("#editChoreDropdownButton").html(chore.user==null?"No user":chore.user.name);
-    document.getElementById("editChoreLocalTimeInput").defaultValue = (chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
+    document.getElementById("editChoreLocalTimeInput").value = (chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
     console.log(chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
 }
 function editChoreButtonPressed(){
+    console.log("SELECTED CHORE:::");
+    console.log(selectedChore);
+    console.log(selectedUserForNewChore);
 
     var editedChoreTitle = $("#editChoreTitleInput").val();
     var editedChoreDescription = $("#editChoreDescriptionInput").val();
     var editedChoreDate = $("#editChoreLocalTimeInput").val();
     var editedChoreUserId;
-    if(selectedUserForNewChore!==undefined){
+    if(selectedUserForNewChore!==null){
         editedChoreUserId = getCurrentHousehold().residents[selectedUserForNewChore].userId;
-        selectedUserForNewChore = undefined;
+        selectedUserForNewChore = null;
     }else{
-        editedChoreUserId = selectedChore.user.userId;
+        editedChoreUserId = selectedChore.userId;
     }
     var editedChoreDone = selectedChore.done;
     var editedChore = {choreId:selectedChore.choreId, title:editedChoreTitle, description:editedChoreDescription, time: editedChoreDate, userId: editedChoreUserId, done:editedChoreDone};
@@ -295,7 +292,7 @@ function postNewChore(chore){
             console.log("Mor di jobbe ikke her kis");
             selectedChore = undefined;
             readyChores();
-            switchChoresContent(0);
+            switchChoresContent(3);
         },
         error:function(data) {
             console.log("Error in postNewChore()");
@@ -306,7 +303,9 @@ function postNewChore(chore){
 
 function updateChore(chore){
     console.log("updateChore()");
-    if(chore.user !==null&&chore.user!==undefined)chore.userId = chore.user.userId;
+    /*if(chore.user !==null&&chore.user!==undefined){
+        chore.userId = chore.user.userId;
+    }*/
     console.log(chore);
     ajaxAuth({
         url: "res/household/"+getCurrentHousehold().houseId+"/chores",
