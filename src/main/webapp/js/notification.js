@@ -105,7 +105,6 @@ function updateNotificationDropdown() {
  */
 function countNotifications() {
     var notifications = $('#notifyDropdownListId').children('li').length;
-    console.log(notifications);
     return notifications;
 }
 
