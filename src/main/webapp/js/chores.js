@@ -105,7 +105,7 @@ function checkSelectedChore(chore){
     chore.done = !chore.done;
     chore.time = chore.time.year + "-" + pad(chore.time.monthValue) + "-" + pad(chore.time.dayOfMonth) + "T" + pad(chore.time.hour) + ":" + pad(chore.time.minute);
     selectedChore = undefined;
-    updateChore(chore);
+    checkChore(chore);
 }
 
 function deleteSelectedChore(id){
@@ -136,7 +136,6 @@ function selectChoreInfo(from, choreId){
 }
 function showChoreInfo(chore){
     console.log("showChoreInfo");
-    $(".activeChoreTab").removeClass("activeChoreTab");
     if(chore!==undefined){
         switchChoresContent(0);
         $("#choresRightUpperPanelHeading").html(chore.title);
@@ -170,7 +169,7 @@ function switchChoresContent(num) {
         $("#choresRightPanelSecondWindow").removeClass("hide");
         $(".newChoreInput").val("");
         $("#newChoreTitleInput").focus();
-        $("#newChoreDropdownButton").html("No user");
+        $("#newChoreDropdownButton").html('No user <span class="caret"></span>');
         selectedUserForNewChore = null;
         var newChoreDropdownHTML = "";
         $.each(getCurrentHousehold().residents, function(i,val){
@@ -213,8 +212,8 @@ function newChoreButtonPressed(){
     postNewChore(newChore);
 }
 function setNewChorePersonFromDropdown(index){
-    $("#newChoreDropdownButton").html(getCurrentHousehold().residents[index].name);
-    $("#editChoreDropdownButton").html(getCurrentHousehold().residents[index].name);
+    $("#newChoreDropdownButton").html(getCurrentHousehold().residents[index].name + ' <span class="caret"></span>');
+    $("#editChoreDropdownButton").html(getCurrentHousehold().residents[index].name + ' <span class="caret"></span>');
     selectedUserForNewChore = index;
 }
 
@@ -222,7 +221,7 @@ function editChore(chore){
     switchChoresContent(2);
     $("#editChoreTitleInput").val(he.unescape(chore.title));
     $("#editChoreDescriptionInput").val(he.unescape(chore.description));
-    $("#editChoreDropdownButton").html(chore.user==null?"No user":chore.user.name);
+    $("#editChoreDropdownButton").html(chore.user==null?"No user <span class=\"caret\"></span>":chore.user.name + ' <span class="caret"></span>');
     document.getElementById("editChoreLocalTimeInput").value = (chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
     console.log(chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
 }
@@ -280,6 +279,8 @@ function getChoresForHousehold(id, handleData){
     });
 }
 
+
+//TODO: Fiks at det kommer opp et varsel hvis man har glemt å fylle ut noen felt.
 function postNewChore(chore){
     console.log("postNewCore()");
     ajaxAuth({
@@ -290,6 +291,7 @@ function postNewChore(chore){
         data: JSON.stringify(chore),
         success: function () {
             console.log("Mor di jobbe ikke her kis");
+            addNotification(chore.userId, getCurrentHousehold().houseId, "You have been added to the chore \"" + chore.title + "\", by " + getCurrentUser().name);
             selectedChore = undefined;
             readyChores();
             switchChoresContent(3);
@@ -303,7 +305,6 @@ function postNewChore(chore){
 
 function updateChore(chore){
     console.log("updateChore()");
-    console.log(chore);
     ajaxAuth({
         url: "res/household/"+getCurrentHousehold().houseId+"/chores",
         type: "PUT",
@@ -318,6 +319,22 @@ function updateChore(chore){
         },
         error: function(data){
             console.log("error in updateChore()");
+            console.log(data);
+        }
+    });
+}
+
+function checkChore(chore){
+    ajaxAuth({
+        url: "res/household/"+getCurrentHousehold().houseId+"/chores/check",
+        type: "PUT",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: JSON.stringify(chore),
+        success: function(data){
+            readyChores();
+        },
+        error: function(data){
             console.log(data);
         }
     });

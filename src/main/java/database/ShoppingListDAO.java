@@ -22,7 +22,7 @@ public class ShoppingListDAO {
         int shoppingListId = 0;
         String shoppingListName = "";
         boolean isArchived = false;
-        String query = "SELECT User_Shopping_list.userId, Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.houseId, Shopping_list.archived FROM User_Shopping_list RIGHT JOIN Shopping_list ON User_Shopping_list.shopping_listId=Shopping_list.shopping_listId WHERE Shopping_list.houseId = ? AND User_Shopping_list.userId = ?;";
+        String query = "SELECT User_Shopping_list.userId, Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.houseId, Shopping_list.archived FROM User_Shopping_list RIGHT JOIN Shopping_list ON User_Shopping_list.shopping_listId=Shopping_list.shopping_listId WHERE Shopping_list.houseId = ? AND User_Shopping_list.userId = ? ORDER BY shopping_listId DESC;";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
@@ -63,7 +63,7 @@ public class ShoppingListDAO {
         String shoppingListName = "";
         boolean isArchved = false;
 
-        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.archived FROM Shopping_list WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId;";
+        String query = "SELECT Shopping_list.shopping_listId, Shopping_list.name, Shopping_list.archived FROM Shopping_list WHERE Shopping_list.houseId = ? ORDER BY Shopping_list.shopping_listId DESC;";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
@@ -273,7 +273,7 @@ public class ShoppingListDAO {
      * @param houseId
      * @param shopping_list_id
      */
-    public static void deleteShoppingList(int houseId, int shopping_list_id) {
+    public static int deleteShoppingList(int houseId, int shopping_list_id) {
         String query = "DELETE FROM Shopping_list WHERE houseId = ? AND shopping_listId = ?";
 
         try (DBConnector dbc = new DBConnector();
@@ -283,10 +283,11 @@ public class ShoppingListDAO {
             st.setInt(2, shopping_list_id);
             st.setInt(1, houseId);
 
-            st.executeUpdate();
+            return st.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return -1;
         }
     }
 
@@ -405,7 +406,7 @@ public class ShoppingListDAO {
      * @param shoppingListId the shopping list ID
      * @param archived the wanted column value
      */
-    public static void updateArchived(int shoppingListId, boolean archived) {
+    public static int updateArchived(int shoppingListId, boolean archived) {
         String query = "UPDATE Shopping_list SET archived = ? WHERE shopping_listId = ?;";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -414,10 +415,11 @@ public class ShoppingListDAO {
             st.setBoolean(1, archived);
             st.setInt(2, shoppingListId);
 
-            st.executeUpdate();
+            return st.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return -1;
         }
     }
 
@@ -475,7 +477,7 @@ public class ShoppingListDAO {
     }
 
     public static void main (String[] args) {
-        ShoppingList[] rtn = ShoppingListDAO.getShoppingListsUser(1, 28);
+        int rtn = ShoppingListDAO.updateArchived(69, false);
         System.out.println("stop");
     }
 }

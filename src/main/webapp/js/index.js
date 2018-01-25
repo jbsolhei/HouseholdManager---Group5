@@ -23,7 +23,7 @@ function ajaxAuth(attr) {
     attributes.headers.Authorization = "Bearer " + window.localStorage.getItem("sessionToken");
 
     attributes.error = function (xhr, textStatus, exceptionThrown) {
-        console.log("Error: " + xhr.status);
+        console.log("[AjaxAuth] Error: " + xhr.status);
 
         if (typeof attr.error === "function") {
             attr.error(xhr, textStatus, exceptionThrown);
@@ -267,6 +267,10 @@ function getNews(runThisAfter){
 
 function postNews(text,runThisAfter){
     var message = {"message":text};
+    var residents = getCurrentHousehold().residents;
+    for (i = 0; i < residents.length; i++) {
+        if (residents[i].userId !== getCurrentUser().userId) addNotification(residents[i].userId, getCurrentHousehold().houseId, getCurrentUser().name + " has posted news.")
+    }
     ajaxAuth({
         url:"res/household/"+getCurrentHousehold().houseId+"/news",
         type: "POST",
@@ -298,4 +302,13 @@ function getLocalResident(userId){
             return val;
         }
     });
+}
+
+//Set show to true if you want to show loadingscreen and false if you want to hide it
+function showLoadingScreen(show) {
+    if (show) {
+        $("#coverScreen").css('display', 'block');
+    } else {
+        $("#coverScreen").css('display', 'none');
+    }
 }

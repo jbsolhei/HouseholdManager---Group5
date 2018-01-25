@@ -8,13 +8,15 @@
     background-color: #233237;
     overflow-x: hidden;
     transition: 0.2s;
-    padding-top: 60px;
+    padding-top: 54px;
 }
 
 .btn-sidebar, .sidebar {
     background-color: #233237;
     border-color: #233237;
     color: white;
+    margin-top: 0 !important;
+    margin-bottom: 5px;
 }
 
 #currentHouseholdId:focus {

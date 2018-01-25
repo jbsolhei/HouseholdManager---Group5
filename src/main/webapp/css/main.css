@@ -6,6 +6,7 @@
 
 .navbar {
     border-radius: 0;!important;
+    height: 54px;
 }
 
 .navbar, a.navbar-brand {
@@ -131,8 +132,7 @@ body {
     text-align: left !important;
 }
 #profile-img {
-    width: 90%;
-    margin: 15px;
+    width: 100%;
 }
 #profile-footer {
     background-color: #984b43;
@@ -150,16 +150,6 @@ body {
     height: auto;
 }
 
-.clickableChore:hover{
-    padding: 2px;
-    border: 2px;
-    margin: 2px;
-    background-color: cornflowerblue;
-}
-
-.checkedChoreListElement{
-    background-color: greenyellow;
-}
-.overdueChoreListElement{
-    background-color: orangered;
+#members {
+    width: 100%;
 }

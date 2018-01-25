@@ -43,12 +43,18 @@ function buildMemberTable(){
             removeTd = "<td><span class='glyphicon glyphicon-remove remove' " +
                 "data-toggle='confirm' data-remove='" + user.userId + "'></span></td>";
         }
+        var image;
+        if(user.profileImage != "" && user.profileImage != null) {
+            image = user.profileImage;
+        } else {
+            image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
+        }
 
         $("table#members tbody").append(
             "<tr onclick=\"showMiniProfile(" + i + ")\">\n" +
             adminTd + "\n" +
             "<td><div class=\"img-circle\">" +
-            "<img class=\"img-responsive img-pic\" src=\"http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg\">" +
+            "<img class=\"img-responsive img-pic\" src='"+image+"'>" +
             "</div></td>\n" +
             "<td>" + user.name + "</td>\n" +
             "<td>" + user.email + "</td>\n" +
@@ -67,6 +73,7 @@ function buildMemberTable(){
         btnOkIcon: "glyphicon glyphicon-trash",
         btnCancelClass: "btn-sm btn-default",
         onConfirm: function () {
+            showLoadingScreen(true);
             var remove = $(this).data("remove");
             console.log("Confirm clicked! Removing " + remove);
             if (remove === "self") {
@@ -91,6 +98,7 @@ function removeMyselfFromHousehold() {
             dataType: "json",
             success: function (response) {
                 if (response.success === true) {
+                    window.localStorage.removeItem("house");
                     window.location.reload();
                 }
             }
@@ -107,12 +115,9 @@ function removeUserFromHousehold(userId) {
                 if (response.success === true) {
                     updateCurrentHousehold(undefined, buildMemberTable);
                 }
-            },
-            error: function (xhr) {
-                if (xhr.status === 403) {
-                    console.log("Du har ikke tilgang til å gjøre dette. FY SKAMME SEG!");
-                }
             }
+        }).always(function() {
+            showLoadingScreen(false)
         });
     }
 }
@@ -121,6 +126,19 @@ function showMiniProfile(index){
     var members = getCurrentHousehold().residents;
     $("#members").fadeOut(500);
     setTimeout(function(){
+        if(members[index].userId === getCurrentUser().userId){
+            $("#toEditProfileButton").show();
+            //document.getElementById("#toEditProfileButton").innerHTML = '';
+        }else {
+            $("#toEditProfileButton").hide();
+        }
+        var image;
+        if(members[index].profileImage != "" && members[index].profileImage != null) {
+            image = members[index].profileImage;
+        } else {
+            image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
+        }
+        $("#place_for_profile_pic").html("<img src='"+image+"' id='profile-img'>");
         document.getElementById("miniProfile-name").innerHTML = '<p id="miniProfile-name">' + members[index].name + '</p>';
         document.getElementById("miniProfile-email").innerHTML = '<p id="miniProfile-email">' + members[index].email + '</p>';
         document.getElementById("miniProfile-telephone").innerHTML = '<p id="miniProfile-telephone">' + members[index].telephone + '</p>';
@@ -148,6 +166,7 @@ function showMiniProfile(index){
             $("#miniProfile-label-bio").hide();
         }
 
+        $("#hideMiniProfileButton").removeClass("hide");
         $("#miniProfile").removeClass("hide");
 
     }, 500);
@@ -156,6 +175,12 @@ function showMiniProfile(index){
 function hideMiniProfile(){
     $("#members").fadeIn(500);
     $("#miniProfile").addClass("hide");
+}
+
+function editProfile(){
+    swapContent(profile);
+    $("#profile-footer").click();
+    //document.getElementById("profile-footer").click();
 }
 
 /*

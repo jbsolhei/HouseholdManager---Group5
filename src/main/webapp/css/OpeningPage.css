@@ -14,21 +14,27 @@ html {
 }
 
 .navbar {
-    margin-bottom: 0px;
+    margin-bottom: 0;
+    height: 6vh;
     z-index: 1000;
+}
+
+#myNavbar a {
+    font-size: 2.5vh;
+    max-height: 6vh;
 }
 
 .navbar-brand {
     width: auto;
     height: 100%;
-    padding: 5px;
+    padding: 0.5vh;
 }
 
 .navbar-brand>img {
     width: auto;
     height: 4.5vh;
     padding: 0px;
-    margin-left: 12px;
+    margin-left: 1.2vh;
 }
 
 #myNavbar>ul{
@@ -37,14 +43,15 @@ html {
 }
 
 #email, #password {
-    border-radius: 17px;
+    border-radius: 17vh;
+    height: 4vh;
 }
 
 #passwordInputId, #emailInputId {
-    margin-top: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    height: 10px;
+    margin-top: 1.2vh;
+    margin-right: 1.2vh;
+    margin-bottom: 1.2vh;
+    height: 1vh;
     color: black;
 }
 
@@ -55,7 +62,9 @@ html {
 
 #mainOpeningPageDivId {
     height: 100vh;
-    background: url("../images/opgbPicWL.png") center;
+    background: url("../images/longAssPhoto.png") no-repeat;
+    background-size: 100%, 100%;
+    background-color: #f6f9f9;
 }
 
 #loginButton:hover {
@@ -76,23 +85,15 @@ html {
 #opTextId {
     font-family: 'Raleway', sans-serif;
     color: #233237;
-    font-size: 2.5em;
+    font-size: 4.5vh;
     text-align: left;
-    margin: 0px;
-}
-
-.joinNowBtnRow {
-    /*
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    */
+    margin: 0;
 }
 
 #joinNowBtnId {
-    height: 70px;
-    width: 200px;
-    border-radius: 35px;
+    height: 7vh;
+    width: 21vh;
+    border-radius: 3.5vh;
     background-color: rgba(95,169,211, 0.7);
     border-color: white;
 }
@@ -108,23 +109,23 @@ html {
 
 #btnTextId {
     font-family: 'Raleway', sans-serif;
-    font-size: 2.6em;
+    font-size: 3.5vh;
     color: white;
     font-weight: bold;
 }
 
 .opTextRow, .joinNowBtnRow {
-    padding: 10px;
+    padding: 1vh;
     height: 50%;
 }
 
 /* FOR THE LOADING SCREEN */
 .loader {
-    border: 16px solid #f3f3f3;
+    border: 1.6vh solid #f3f3f3;
     border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 120px;
-    height: 120px;
+    border-top: 1.6vh solid #3498db;
+    width: 12.0vh;
+    height: 12.0vh;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
 }
@@ -141,10 +142,10 @@ html {
 }
 
 #coverScreen {
-    margin: 0px;
+    margin: 0;
     display: none;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -166,10 +167,10 @@ html {
         background-color: rgba(255, 165, 0, 0.0);
         width: 100%;
         height: auto;
-        transform: translate(-50%, -10%);
+        transform: translate(-50%, -50%);
         border: none;
-        padding-right: 10px;
-        padding-left: 10px;
+        padding-right: 3.5vh;
+        padding-left: 3.5vh;
     }
 
     .joinNowBtnRow {
