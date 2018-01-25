@@ -295,6 +295,8 @@ function showMiniProfile(index){
         var members = getCurrentHousehold().residents;
         $("#members").fadeOut(500);
         setTimeout(function () {
+            $("#panel-heading-text").replaceWith("<span id=\"panel-heading-button\" onclick=\"hideMiniProfile()\"><span class=\"glyphicon glyphicon-chevron-left\"></span> Back</span>");
+
             if (members[index].userId === getCurrentUser().userId) {
                 $("#toEditProfileButton").show();
                 //document.getElementById("#toEditProfileButton").innerHTML = '';
@@ -344,6 +346,7 @@ function showMiniProfile(index){
 }
 
 function hideMiniProfile(){
+    $("#panel-heading-button").replaceWith("<span id=\"panel-heading-text\">Members</span>");
     $("#members").fadeIn(500);
     $("#miniProfile").addClass("hide");
 }

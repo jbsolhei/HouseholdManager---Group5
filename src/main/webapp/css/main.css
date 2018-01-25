@@ -220,3 +220,8 @@ div.miniprofile {
 #miniProfile-profile-img{
     max-width: 100%;
 }
+
+#panel-heading-button:hover{
+    cursor: pointer;
+    color: #fff;
+}
