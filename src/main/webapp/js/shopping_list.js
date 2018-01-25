@@ -527,10 +527,11 @@ function hideInputHeader() {
 
 /**
  * Function to create a new shoppingList
- * Automatically adds all users in the household to the list automatically
+ * Pulls users to be added from the userIdsNewShoppingList variable
  */
 function createNewShoppingList() {
     hideInputHeader();
+    closeListOfAssociatedUsersToNewShoppingList();
     console.log($("#text_input_new_shopping_list").val());
     var shoppingListName = $("#text_input_new_shopping_list").val();
     if (shoppingListName !== null || shoppingListName !== '') {
@@ -603,6 +604,12 @@ function toggleListOfAssociatedUsersToNewShoppingList() {
         $("#list_of_users_associated_with_shopping_list").css('display', 'block');
     }
     else {
+        $("#list_of_users_associated_with_shopping_list").css('display', 'none');
+    }
+}
+
+function closeListOfAssociatedUsersToNewShoppingList() {
+    if ($("#list_of_users_associated_with_shopping_list").css('display') === "block") {
         $("#list_of_users_associated_with_shopping_list").css('display', 'none');
     }
 }
