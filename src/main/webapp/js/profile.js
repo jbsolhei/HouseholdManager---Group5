@@ -13,7 +13,7 @@ function printInfoToWall(){
     $("#profile_information_list_name").html(currUs.name);
     $("#profile_information_list_email").html(currUs.email);
     $("#profile_information_list_phone").html(currUs.telephone);
-    if(currUs.bio != "" && currUs.bio != null){
+    if(currUs.bio != "" && currUs.bio != null && currUs.bio != "null"){
         $("#profile_information_list_bio").html(currUs.bio);
     } else {
         $("#profile_information_list_bio").html("Missing info");
@@ -108,9 +108,15 @@ function printTasksToWall(id){
 
 function editUserInfo() {
     $("#edit_profile_picture").html("");
+    var img;
+    if(currUs.profileImage != null) {
+        img = currUs.profileImage;
+    } else {
+        img = "";
+    }
     $("#edit_profile_picture").html("<br><label class='control-label profile_labels' for='profile_information_list_picture'>Profile picture:</label>" +
     "<input class='form-control' type='text' id='edit_profile_information_picture'" +
-        "value='"+currUs.profileImage+"' placeholder='Profile picture url..'>");
+        "value='"+img+"' placeholder='Profile picture url..'>");
 
     $("#edit_profile_name").html("");
     $("#edit_profile_name").html("<h3><input class='form-control' type='text' id='edit_profile_information_name'" +
@@ -125,8 +131,15 @@ function editUserInfo() {
         "value='"+currUs.telephone+"' placeholder='Telephone'>");
 
     $("#edit_profile_bio").html("");
+    var bio;
+    if(currUs.bio != null && currUs.bio != "null") {
+        bio = currUs.bio;
+    } else {
+        bio = "";
+    }
+    console.log(bio);
     $("#edit_profile_bio").html("<textarea class='form-control' rows='3' type='text' id='edit_profile_information_bio' " +
-    "placeholder='Bio'>" + currUs.bio + "</textarea>");
+    "placeholder='Bio'>"+bio+"</textarea>");
 
     $("#edit_profile_relationship").html("");
     $("#edit_profile_relationship").html('<select class="form-control" id="edit_profile_information_relationship" value="' + currUs.relationship + '">\n' +
@@ -267,13 +280,13 @@ function updatePassword(password) {
 }
 
 function saveInformation() {
-    var newName = $("#edit_profile_information_name").val();
-    var newEmail = $("#edit_profile_information_email").val();
+    var newName = he.encode($("#edit_profile_information_name").val());
+    var newEmail = he.encode($("#edit_profile_information_email").val());
     var newPhone = $("#edit_profile_information_phone").val();
-    var newBio = $("#edit_profile_information_bio").val();
+    var newBio = he.encode($("#edit_profile_information_bio").val());
     var newRelationship = $("#edit_profile_information_relationship").val();
     var newGender = $("#edit_profile_information_gender").val();
-    var image = $("#edit_profile_information_picture").val();
+    var image = encodeURI($("#edit_profile_information_picture").val());
 
 
     if(newEmail == "" || newPhone == "" || newName == "") {
