@@ -150,6 +150,7 @@ public class ShoppingTripDAO {
                     }
                 }
             }
+            shoppingTrip.setExpencePerPerson();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,8 @@ package classes;
 import java.time.*;
 import java.util.List;
 
+import static jdk.nashorn.internal.objects.NativeMath.round;
+
 /**
  * Created by Camilla Velvin on 12.01.2018.
  */
@@ -18,6 +20,7 @@ public class ShoppingTrip {
     private int houseId;
     private int shopping_listId;
     private String shopping_listName;
+    private double expencePerPerson;
 
     public ShoppingTrip() {
     }
@@ -108,5 +111,13 @@ public class ShoppingTrip {
 
     public void setShopping_listName(String shopping_listName) {
         this.shopping_listName = shopping_listName;
+    }
+
+    public void setExpencePerPerson() {
+        this.expencePerPerson = Math.round(expence / contributors.size());
+    }
+
+    public double getExpencePerPerson() {
+        return expencePerPerson;
     }
 }
