@@ -1,9 +1,9 @@
-var result;
+/*var result;
 
-function createPage() {
+function createPageAddShoppingTrip() {
     if (getCurrentHousehold() !== null || getCurrentHousehold() !==  undefined) {
         ajaxAuth({
-            url: "res/household/" + getCurrentHousehold().houseId + "/users",//Må byttes ut med currentHousehold!!!!
+            url: "res/household/" + getCurrentHousehold().houseId + "/users",
             type: 'get',
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
@@ -131,4 +131,4 @@ function addShoppingTrip() {
 
         });
     }
-}
+}*/
