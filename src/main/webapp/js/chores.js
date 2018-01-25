@@ -1,8 +1,6 @@
 /**
  * Created by Simen Moen Storvik on 19.01.2018.
  */
-
-//TODO: Replace this variable with something smoother:
 var selectedUserForNewChore = null;
 var userChoreList;
 var householdChoreList;
@@ -151,10 +149,7 @@ function getSelectedChoreFromUpdatedTotal(id){
 }
 function checkSelectedChore(chore){
     console.log("checkSelectedChore():");
-    console.log(chore.time);
     chore.done = !chore.done;
-    //selectedChore = undefined;
-    console.log(chore.time);
     checkChore(chore);
 }
 
@@ -356,8 +351,6 @@ function getChoresForHousehold(id, handleData){
     });
 }
 
-
-//TODO: Fiks at det kommer opp et varsel hvis man har glemt å fylle ut noen felt.
 function postNewChore(chore){
     console.log("postNewCore()");
     ajaxAuth({
