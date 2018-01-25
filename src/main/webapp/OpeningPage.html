@@ -11,6 +11,7 @@
     <link href="css/logon.css" rel="stylesheet">
     <script src="js/login.js"></script>
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/forgotPassword.js"></script>
     <script src="js/test-hash.js"></script>
@@ -40,7 +41,8 @@
                 <li class="opNav"><a href="#">Help</a></li>
                 <li class="opNav"><a href="#">Contact</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" id="login-form">
+                <li id="wrong-credentials-message"><a>Wrong email or password</a></li>
                 <li id="emailInputId"><input placeholder="Email" class="form-control" type="email" id="email" name="email"/></li>
                 <li id="passwordInputId"><input placeholder="Password" class="form-control" type="password" id="password" name="password"/></li>
                 <li id="loginButton"><a onclick="login($('#email').val(),$('#password').val()); showLoadingScreen(true)"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>

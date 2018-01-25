@@ -23,6 +23,15 @@
             </div>
 
             <div id="dbBottomRow" class="row">
+
+                <div id="shoppinglistPanelId" class="col-md-6 widgetCol">
+                    <div class="panel panel-default widget">
+                        <div class="slHeader panel-heading cursorPointer" onclick="navToShoppingList(activeSHL)">Shoppinglists</div>
+                        <div class="panel-body scrollWhenFull">
+                            <ul id="dashboard_shopping_list_unordered_list" class="list-group"></ul>
+                        </div>
+                    </div>
+                </div>
                 <div id="debtPanelId" class="col-md-6 widgetCol">
                     <div class="panel panel-default widget">
                         <div class="panel-heading cursorPointer" onclick="swapContent(finance)">Finance</div>
@@ -35,15 +44,6 @@
                                 <div class="col-xs-9 nopadding">People owe you in total:</div>
                                 <div class="col-xs-3 nopadding debt-sum" id="debtSumIncoming"></div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="shoppinglistPanelId" class="col-md-6 widgetCol">
-                    <div class="panel panel-default widget">
-                        <div class="slHeader panel-heading cursorPointer" onclick="navToShoppingList(activeSHL)">Shoppinglists</div>
-                        <div class="panel-body scrollWhenFull">
-                            <ul id="dashboard_shopping_list_unordered_list" class="list-group"></ul>
                         </div>
                     </div>
                 </div>
