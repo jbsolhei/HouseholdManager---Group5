@@ -195,3 +195,7 @@ div.miniprofile {
 #headingShoppingTrip{
     /*border: 15px solid transparent;*/
 }
+
+#miniProfile-profile-img{
+    max-width: 100%;
+}
