@@ -75,3 +75,7 @@
     background-color: rgba(145, 0, 0, 0.2) !important;
     cursor: pointer;
 }
+
+.missingChoreInput{
+    background-color: tomato;
+}
