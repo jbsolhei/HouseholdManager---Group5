@@ -62,7 +62,7 @@ function showExpenseStats() {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'Money Spent'
+                        labelString: 'Money Spent (NOK)'
                     }
                 }],
                 xAxes: [{
@@ -98,7 +98,6 @@ function drawChoreStats() {
 }
 
 function showChoreStats(data) {
-
     var sets = [];
 
     for (i = 0; i < data.length; i++) {
