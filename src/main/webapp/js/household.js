@@ -211,7 +211,6 @@ function buildMemberTable(){
             "<img class=\"img-responsive img-pic\" src='"+image+"'>" +
             "</div></td>\n" +
             "<td>" + user.name + "</td>\n" +
-            "<td>" + user.email + "</td>\n" +
             "<td>" + user.telephone + "</td>\n" +
             removeTd + "\n" +
             "</tr>"
@@ -291,25 +290,6 @@ function removeUserFromHousehold(userId) {
 }
 
 function showMiniProfile(index){
-    var members = getCurrentHousehold().residents;
-    $("#members").fadeOut(500);
-    setTimeout(function(){
-        if(members[index].userId === getCurrentUser().userId){
-            $("#toEditProfileButton").show();
-            //document.getElementById("#toEditProfileButton").innerHTML = '';
-        }else {
-            $("#toEditProfileButton").hide();
-        }
-        var image;
-        if(members[index].profileImage != "" && members[index].profileImage != null) {
-            image = members[index].profileImage;
-        } else {
-            image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
-        }
-        $("#place_for_profile_pic").html("<img src='"+image+"' id='miniProfile-profile-img'>");
-        $("#miniProfile-name").html('<p id="miniProfile-name">' + members[index].name + '</p>');
-        $("#miniProfile-email").html('<p id="miniProfile-email">' + members[index].email + '</p>');
-        $("#miniProfile-telephone").html('<p id="miniProfile-telephone">' + members[index].telephone + '</p>');
     console.log(index);
     if(index != undefined) {
         var members = getCurrentHousehold().residents;
