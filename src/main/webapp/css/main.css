@@ -195,6 +195,23 @@ div.miniprofile {
     /*border: 15px solid transparent;*/
 }
 
+.createUserInput{
+    display: inline-block;
+    margin-right: 2%;
+    /*float: right;!important;*/
+    width: 90%; !important;
+}
+
+.control-label{
+    width: 100%;!important;
+}
+
+.required_star{
+    margin-right: 1%;
+    display: inline-block;
+    float: left;
+}
+
 #miniProfile-profile-img{
     max-width: 100%;
 }

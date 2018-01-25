@@ -1,8 +1,6 @@
 /**
  * Created by Simen Moen Storvik on 19.01.2018.
  */
-
-//TODO: Replace this variable with something smoother:
 var selectedUserForNewChore = null;
 var userChoreList;
 var householdChoreList;
@@ -151,11 +149,12 @@ function getSelectedChoreFromUpdatedTotal(id){
 }
 function checkSelectedChore(chore){
     console.log("checkSelectedChore():");
-    console.log(chore.time);
-    chore.done = !chore.done;
-    //selectedChore = undefined;
-    console.log(chore.time);
-    checkChore(chore);
+    if(chore.userId===getCurrentUser().userId){
+        chore.done = !chore.done;
+        checkChore(chore);
+    }else{
+        $("#choresDetailsCheckedWarning").text("You can not check other users' chores.");
+    }
 }
 
 function deleteSelectedChore(id){
@@ -197,10 +196,11 @@ function showChoreInfo(chore){
         getHouseholdFromId((chore.houseId),function (data) {$("#choresDetailsHouseholdContent").html(data.name);});
         $("#choresDetailsUserNameContent").html(chore.user==null?"No user":chore.user.name);
         if(chore.done){
-            $("#choresDetailsCheckedContent").html("&#9745");
+            $("#choresDetailsCheckedContent").html("<p class='glyphicon glyphicon-check' onclick='checkSelectedChore(selectedChore)'></p>");
         }else{
-            $("#choresDetailsCheckedContent").html("&#9744");
+            $("#choresDetailsCheckedContent").html("<p class='glyphicon glyphicon-unchecked' onclick='checkSelectedChore(selectedChore)'></p>");
         }
+        $("#choresDetailsCheckedContainer").append("<h4 id='choresDetailsCheckedWarning' style='color: red;'></h4>");
         if(chore.user!==null&&chore.user!==undefined){
             chore.userId = chore.user.userId;
         }
@@ -356,8 +356,6 @@ function getChoresForHousehold(id, handleData){
     });
 }
 
-
-//TODO: Fiks at det kommer opp et varsel hvis man har glemt å fylle ut noen felt.
 function postNewChore(chore){
     console.log("postNewCore()");
     ajaxAuth({
