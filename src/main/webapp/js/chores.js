@@ -11,7 +11,7 @@ var totChore = 0;
 
 function readyChores(){
     console.log("readyChores()");
-    switchChoresContent(3);
+    switchChoresContent(0);
     listUserChores();
 }
 
@@ -140,7 +140,7 @@ function showChoreInfo(chore){
         switchChoresContent(0);
         $("#choresRightUpperPanelHeading").html(chore.title);
         $("#choresDetailsDescriptionContent").html(chore.description);
-        $("#choresDetailsDateTimeContent").html(chore.time.dayOfMonth + "."+chore.time.monthValue+"." + chore.time.year + " " + chore.time.hour + ":" + chore.time.minute);
+        $("#choresDetailsDateTimeContent").html(chore.time.dayOfMonth + "."+chore.time.monthValue+"." + chore.time.year + " " + pad(chore.time.hour) + ":" + pad(chore.time.minute));
         getHouseholdFromId((chore.houseId),function (data) {$("#choresDetailsHouseholdContent").html(data.name);});
         $("#choresDetailsUserNameContent").html(chore.user==null?"No user":chore.user.name);
         if(chore.done){
@@ -151,10 +151,7 @@ function showChoreInfo(chore){
         if(chore.user!==null&&chore.user!==undefined){
             chore.userId = chore.user.userId;
         }
-    }else{
-        switchChoresContent(3);
     }
-
 }
 
 function switchChoresContent(num) {

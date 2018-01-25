@@ -294,7 +294,6 @@ function loadSideMenu(){
             $.each(SHL, function(i,val){
                 if (val.archived) {
                     if (firstActive) {
-                        activeSHL = i;
                         firstActive = false;
                     }
                     inputStringArchived += '<li onclick="showListFromMenu(' + i + ')" id="shoppingList' + i + '"><a>' + val.name + '</a></li>';
@@ -313,7 +312,7 @@ function loadSideMenu(){
             $("#shopping_list_archived_tab").html(inputStringArchived);
         }
         $("#shoppingList" + activeSHL).addClass("active");
-        showListFromMenu(activeSHL);
+        showListFromMenu(activeSHL, false);
     })
 }
 
