@@ -180,3 +180,18 @@ div.miniprofile {
 #members {
     width: 100%;
 }
+
+#sumShoppingList{
+    background-color: #936d6d;
+    color: #FFFFFF;
+    height: 100%;
+    text-align: center;
+    border: 15px solid #936d6d;
+    padding-right: 40px;
+    padding-top: 10px;
+
+}
+
+#headingShoppingTrip{
+    /*border: 15px solid transparent;*/
+}
