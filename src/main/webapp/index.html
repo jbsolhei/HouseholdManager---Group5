@@ -108,14 +108,22 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a id="sideBarBrandId" class="navbar-brand">
-                        <span id="expandSidebarButtonId" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-                    </a>
+                    <div>
+                        <a id="sideBarBrandId" class="navbar-brand">
+                            <span id="expandSidebarButtonId" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+                        </a>
+
+                        <a id="homePageId" onclick="swapContent(dashboard)">
+                            Home
+                        </a>
+
+                    </div>
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mobileNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+
                 </div>
                 <div class="navbar-collapse collapse" id="mobileNavbar">
                     <ul class="nav navbar-nav navbar-right">
@@ -127,9 +135,8 @@
                         <li><a class="visible-xs" onclick="swapContent(statistics)">Statistics</a></li>
                         <li><a class="visible-xs" onclick="swapContent(news)">News</a></li>
 
-
                         <li>
-                            <a id="notifyBellId" class="dropdown-toggle"><i class="glyphicon glyphicon-bell"></i></a>
+                            <a id="notifyBellId" class="dropdown-toggle"><i class="glyphicon glyphicon-bell"></i><div class="numberCircle" id="notificationValue"></div></a>
                             <ul id="notifyDropdownListId" class="noti dropdown-menu list-group" role="menu" aria-labelledby="menu1">
 
                             </ul>
@@ -161,7 +168,7 @@
                 <li><a onclick="swapContent(chores);closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
                 <li><a onclick="swapContent(stats); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
                 <li><a onclick="swapContent(news); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
-                <li><a class="navbar-brand" onclick="swapContent(profile)" style="max-width: 50%"><img src="images/HHM_logo.png" style="height:150%; display:inline-block;"></a></li>
+                <li><a class="navbar-brand" onclick="swapContent(dashboard)"><img src="https://i.imgur.com/KHVOzlt.png" style="width: 50%; display:inline-block;"></a></li>
             </ul>
         </nav>
     </div>
@@ -248,6 +255,25 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+        }
+
+        .numberCircle {
+            position: absolute;
+            float: right;
+            right: 4px;
+            top: 4px;
+
+            width: 18px;
+            height: 18px;
+            padding: 0px;
+            border-radius: 50%;
+
+            background: #ff4d4d;
+            border: 2px solid #ff4d4d;
+            color: #ffffff;
+            text-align: center;
+
+            font: 12px Arial, sans-serif;
         }
     </style>
 

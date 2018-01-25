@@ -16,17 +16,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * <p>HouseHoldService class.</p>
+ *
  * @author team5
  */
 @Path("household")
 public class HouseHoldService {
 
+    /**
+     * <p>getTest.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getTest(){
         return "Household service is running!";
     }
 
+    /**
+     * <p>addHouseHold.</p>
+     *
+     * @param newHousehold a {@link classes.Household} object.
+     * @return a int.
+     */
     @POST
     @Auth
     @Consumes(MediaType.APPLICATION_JSON)
@@ -36,6 +49,12 @@ public class HouseHoldService {
         return HouseholdDAO.addNewHouseHold(newHousehold);
     }
 
+    /**
+     * <p>addUserToHousehold.</p>
+     *
+     * @param house a int.
+     * @param user a {@link java.lang.String} object.
+     */
     @POST
     @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("/{id}/users")
@@ -44,6 +63,13 @@ public class HouseHoldService {
         HouseholdDAO.addUserToHousehold(house,Integer.parseInt(user),0);
     }
 
+    /**
+     * <p>addUserFromInvite.</p>
+     *
+     * @param token a {@link java.lang.String} object.
+     * @param user a {@link java.lang.String} object.
+     * @return a {@link javax.ws.rs.core.Response} object.
+     */
     @POST
     @Auth(AuthType.DEFAULT)
     @Path("/invited/{token}")
@@ -61,6 +87,13 @@ public class HouseHoldService {
         return Response.ok(response).build();
     }
 
+    /**
+     * <p>inviteUsersToHousehold.</p>
+     *
+     * @param house a int.
+     * @param email an array of {@link java.lang.String} objects.
+     * @return a {@link javax.ws.rs.core.Response} object.
+     */
     @POST
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}/users/invite")
@@ -78,6 +111,13 @@ public class HouseHoldService {
         return Response.ok(response).build();
     }
 
+    /**
+     * <p>addAdmin.</p>
+     *
+     * @param id a int.
+     * @param user a {@link classes.User} object.
+     * @return a boolean.
+     */
     @POST
     @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("/{id}/admin")
@@ -86,6 +126,12 @@ public class HouseHoldService {
         return HouseholdDAO.addAdminToHousehold(id, user.getUserId());
     }
 
+    /**
+     * <p>getAdminIds.</p>
+     *
+     * @param id a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     @GET
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}/admins")
@@ -94,6 +140,13 @@ public class HouseHoldService {
         return HouseholdDAO.getAdminIds(id);
     }
 
+    /**
+     * <p>makeAdmin.</p>
+     *
+     * @param id a int.
+     * @param userId a int.
+     * @return a boolean.
+     */
     @PUT
     @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("/{id}/admin")
@@ -102,6 +155,12 @@ public class HouseHoldService {
         return HouseholdDAO.makeUserAdmin(id, userId);
     }
 
+    /**
+     * <p>getMembers.</p>
+     *
+     * @param id a int.
+     * @return an array of {@link classes.User} objects.
+     */
     @GET
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}/users")
@@ -110,6 +169,13 @@ public class HouseHoldService {
         return HouseholdDAO.getMembers(id);
     }
 
+    /**
+     * <p>getHousehold.</p>
+     *
+     * @param id a int.
+     * @param context a {@link javax.ws.rs.container.ContainerRequestContext} object.
+     * @return a {@link classes.Household} object.
+     */
     @GET
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}")
@@ -118,6 +184,13 @@ public class HouseHoldService {
         return HouseholdDAO.getHousehold(id,(int)context.getProperty("session.userId"));
     }
 
+    /**
+     * <p>updateHousehold.</p>
+     *
+     * @param id a int.
+     * @param newHouse a {@link classes.Household} object.
+     * @return a int.
+     */
     @PUT
     @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("/{id}")
@@ -128,6 +201,13 @@ public class HouseHoldService {
         return HouseholdDAO.updateHousehold(id,newHouse);
     }
 
+    /**
+     * <p>removeMyselfFromHousehold.</p>
+     *
+     * @param householdId a int.
+     * @param context a {@link javax.ws.rs.container.ContainerRequestContext} object.
+     * @return a {@link javax.ws.rs.core.Response} object.
+     */
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}/user")
@@ -141,6 +221,13 @@ public class HouseHoldService {
         return Response.ok(result).build();
     }
 
+    /**
+     * <p>removeOthersFromHousehold.</p>
+     *
+     * @param householdId a int.
+     * @param userId a int.
+     * @return a {@link javax.ws.rs.core.Response} object.
+     */
     @DELETE
     @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("{id}/users/{userId}")
@@ -153,6 +240,11 @@ public class HouseHoldService {
         return Response.ok(result).build();
     }
 
+    /**
+     * <p>deleteHousehold.</p>
+     *
+     * @param id a int.
+     */
     @DELETE
     @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("/{id}")

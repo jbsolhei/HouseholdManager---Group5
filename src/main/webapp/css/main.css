@@ -35,19 +35,22 @@
     display: none;
 }
 
-#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #notifyBellId {
+#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #homePageId {
     color: white;
     font-size: 17px;
     cursor: pointer;
 }
-
 #notifyBellId {
+    color: #436470;
+    font-size: 17px;
+    cursor: pointer;
     margin-top: 4px;
 }
 
-#currentHouseholdId:hover, #logoutId:hover, #myPageId:hover {
+#currentHouseholdId:hover, #logoutId:hover, #myPageId:hover, #homePageId:hover {
     cursor: pointer;
     background-color: #162B32;
+    border-bottom: none;
 }
 
 #expandSidebarButtonId:hover {
@@ -65,8 +68,8 @@
     min-width: 100%;
 }
 .img-circle1 {
-    height: 80px;
-    width: 80px;
+    height: 100px;
+    width: 100px;
     overflow: hidden;
     border-radius: 40px;
     text-align: center;
@@ -148,6 +151,11 @@ body {
 #verticalLine {
     border-right: 1px solid black;
     height: auto;
+}
+#homePageId{
+    border: solid 15px transparent;
+
+    position: absolute;
 }
 
 .clickableChore:hover{

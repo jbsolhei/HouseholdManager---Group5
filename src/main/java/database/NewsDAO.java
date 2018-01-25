@@ -9,6 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * <p>NewsDAO class.</p>
+ *
+ */
 public class NewsDAO {
 
     /**

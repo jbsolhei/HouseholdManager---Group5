@@ -11,10 +11,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * <p>NotificationDAO class.</p>
+ *
+ */
 public class NotificationDAO {
 
     /**
      * Used to get a users notifications based on userId.
+     *
      * @param userId The user's id.
      * @return Returns an ArrayList with Notification objects.
      */
@@ -51,6 +56,7 @@ public class NotificationDAO {
 
     /**
      * Deletes a notification.
+     *
      * @param notificationId The id of the notification that you want to update.
      * @return Returns true if successful, and false if not.
      */
@@ -76,6 +82,7 @@ public class NotificationDAO {
 
     /**
      * Adds a notification to the database.
+     *
      * @param notification A Notification Object.
      * @return Returns True if successful and False if not.
      */

@@ -8,6 +8,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+/**
+ * <p>Email class.</p>
+ *
+ */
 public class Email {
 
     /**
@@ -22,6 +26,7 @@ public class Email {
 
     /**
      * Takes an Array with recipients, a subject and a text body that will be sent through Google.
+     *
      * @param to String[] that contains the recipient(s) of the mail
      * @param subject subject of the mail (that thing that is bold when you look at your mail inbox
      * @param body body of the mail (what you want to write in the mail)

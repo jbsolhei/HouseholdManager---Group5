@@ -11,6 +11,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 public class CleanUp {
+    /**
+     * <p>closeResSet.</p>
+     *
+     * @param res a {@link java.sql.ResultSet} object.
+     */
     public static void closeResSet(ResultSet res) {
         try {
             if (res != null) {
@@ -21,6 +26,11 @@ public class CleanUp {
         }
     }
 
+    /**
+     * <p>closeStatement.</p>
+     *
+     * @param stm a {@link java.sql.Statement} object.
+     */
     public static void closeStatement(Statement stm) {
         try {
             if (stm != null) {
@@ -31,6 +41,11 @@ public class CleanUp {
         }
     }
 
+    /**
+     * <p>closeConnection.</p>
+     *
+     * @param connection a {@link java.sql.Connection} object.
+     */
     public static void closeConnection(Connection connection) {
         try {
             if (connection != null) {
@@ -41,6 +56,11 @@ public class CleanUp {
         }
     }
 
+    /**
+     * <p>rollback.</p>
+     *
+     * @param forbindelse a {@link java.sql.Connection} object.
+     */
     public static void rollback(Connection forbindelse) {
         try {
             if (forbindelse != null && !forbindelse.getAutoCommit()) {
@@ -51,6 +71,11 @@ public class CleanUp {
         }
     }
 
+    /**
+     * <p>setAutoCommit.</p>
+     *
+     * @param forbindelse a {@link java.sql.Connection} object.
+     */
     public static void setAutoCommit(Connection forbindelse) {
         try {
             if (forbindelse != null && !forbindelse.getAutoCommit()) {
@@ -61,11 +86,22 @@ public class CleanUp {
         }
     }
 
+    /**
+     * <p>writeMessage.</p>
+     *
+     * @param e a {@link java.lang.Exception} object.
+     * @param melding a {@link java.lang.String} object.
+     */
     public static void writeMessage(Exception e, String melding) {
         System.err.println("*** Error: " + melding + ". ***");
         e.printStackTrace(System.err);
     }
 
+    /**
+     * <p>closeBufferedReader.</p>
+     *
+     * @param bufferedReader a {@link java.io.BufferedReader} object.
+     */
     public static void closeBufferedReader(BufferedReader bufferedReader) {
         try {
             if (bufferedReader != null) {
@@ -76,6 +112,11 @@ public class CleanUp {
         }
     }
 
+    /**
+     * <p>closeFileReader.</p>
+     *
+     * @param fileReader a {@link java.io.FileReader} object.
+     */
     public static void closeFileReader(FileReader fileReader) {
         try {
             if (fileReader != null) {
@@ -86,6 +127,11 @@ public class CleanUp {
         }
     }
 
+    /**
+     * <p>closeFileWriter.</p>
+     *
+     * @param fileWriter a {@link java.io.FileWriter} object.
+     */
     public static void closeFileWriter(FileWriter fileWriter) {
         try {
             if (fileWriter != null) {

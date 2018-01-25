@@ -7,7 +7,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * <p>InviteHandler class.</p>
+ *
+ */
 public class InviteHandler {
+    /**
+     * <p>verifyToken.</p>
+     *
+     * @param token a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int verifyToken(String token){
         String query = "SELECT * FROM Invite_token WHERE token=?";
         int house = 0;
@@ -31,6 +41,11 @@ public class InviteHandler {
         return house;
     }
 
+    /**
+     * <p>removeToken.</p>
+     *
+     * @param token a {@link java.lang.String} object.
+     */
     public static void removeToken(String token){
         String query = "DELETE FROM Invite_token WHERE token = ?";
 

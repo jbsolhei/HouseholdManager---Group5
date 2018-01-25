@@ -25,18 +25,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * <p>UserService class.</p>
  *
  * @author team5
  */
 @Path("/user")
 public class UserService {
 
+    /**
+     * <p>getTest.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getTest(){
         return "User service says hello!";
     }
 
+    /**
+     * <p>addUser.</p>
+     *
+     * @param newUser a {@link classes.User} object.
+     * @return a boolean.
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean addUser(User newUser) {
@@ -45,6 +57,12 @@ public class UserService {
         return UserDAO.addNewUser(newUser);
     }
 
+    /**
+     * <p>getUser.</p>
+     *
+     * @param id a int.
+     * @return a {@link classes.User} object.
+     */
     @GET
     @Auth(AuthType.USER_READ)
     @Path("/{id}")
@@ -53,6 +71,13 @@ public class UserService {
         return UserDAO.getUser(id);
     }
 
+    /**
+     * <p>updateUser.</p>
+     *
+     * @param id a int.
+     * @param user a {@link classes.User} object.
+     * @return a boolean.
+     */
     @PUT
     @Auth(AuthType.USER_MODIFY)
     @Path("/{id}")
@@ -63,6 +88,13 @@ public class UserService {
         return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName(), user.getBio(), user.getRelationship(), user.getGender(), user.getProfileImage());
     }
 
+    /**
+     * <p>getPasswordMatch.</p>
+     *
+     * @param id a int.
+     * @param password a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     @POST
     @Path("/{id}/checkPassword")
     @Consumes(MediaType.TEXT_PLAIN)
@@ -70,6 +102,13 @@ public class UserService {
         return UserDAO.getPasswordMatch(id, password);
     }
 
+    /**
+     * <p>updatePassword.</p>
+     *
+     * @param id a int.
+     * @param changePasswordContainer a {@link classes.ChangePasswordContainer} object.
+     * @return a boolean.
+     */
     @PUT
     @Auth(AuthType.USER_MODIFY)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -83,6 +122,12 @@ public class UserService {
     }
 
 
+    /**
+     * <p>getHousehold.</p>
+     *
+     * @param id a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     @GET
     @Auth(AuthType.USER_MODIFY)
     @Path("/{id}/hh")
@@ -116,6 +161,12 @@ public class UserService {
     */
 
 
+    /**
+     * <p>authenticateLogin.</p>
+     *
+     * @param credentials a {@link classes.User} object.
+     * @return a {@link javax.ws.rs.core.Response} object.
+     */
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -137,6 +188,12 @@ public class UserService {
         }
     }
 
+    /**
+     * <p>logout.</p>
+     *
+     * @param context a {@link javax.ws.rs.container.ContainerRequestContext} object.
+     * @return a {@link javax.ws.rs.core.Response} object.
+     */
     @DELETE
     @Auth
     @Path("/login")
@@ -149,6 +206,11 @@ public class UserService {
         return Response.ok(response).build();
     }
 
+    /**
+     * <p>checkSession.</p>
+     *
+     * @return a {@link javax.ws.rs.core.Response} object.
+     */
     @GET
     @Auth
     @Path("/checkSession")
@@ -157,6 +219,12 @@ public class UserService {
         return Response.ok("Session is valid").build();
     }
 
+    /**
+     * <p>todos.</p>
+     *
+     * @param id a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     @GET
     @Auth(AuthType.USER_READ)
     @Path("/{id}/chores")
@@ -165,6 +233,12 @@ public class UserService {
         return ChoreDAO.getUserChores(id);
     }
 
+    /**
+     * <p>resetPassword.</p>
+     *
+     * @param email a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     @POST
     @Path("/pwReset")
     @Consumes(MediaType.TEXT_PLAIN)
@@ -172,6 +246,12 @@ public class UserService {
         return UserDAO.resetPassword(email);
     }
 
+    /**
+     * <p>getDebt.</p>
+     *
+     * @param id a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     @GET
     @Auth(AuthType.USER_MODIFY)
     @Path("/{id}/debt")
@@ -180,6 +260,12 @@ public class UserService {
         return FinanceDAO.getDebt(id);
     }
 
+    /**
+     * <p>getIncome.</p>
+     *
+     * @param id a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     @GET
     @Auth(AuthType.USER_MODIFY)
     @Path("/{id}/income")
@@ -188,6 +274,12 @@ public class UserService {
         return FinanceDAO.getIncome(id);
     }
 
+    /**
+     * <p>settlePayment.</p>
+     *
+     * @param fromUser a int.
+     * @param toUser a int.
+     */
     @DELETE
     @Path("/{id}/debt/{toUser}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -195,6 +287,12 @@ public class UserService {
        FinanceDAO.deleteDebt(fromUser, toUser);
     }
 
+    /**
+     * <p>getNotifications.</p>
+     *
+     * @param id a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     @GET
     @Path("/{id}/notifications")
     //@Auth(AuthType.USER_MODIFY)

@@ -7,6 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Base64;
 
+/**
+ * <p>HouseholdDAO class.</p>
+ *
+ */
 public class HouseholdDAO {
 
     /**
@@ -205,6 +209,7 @@ public class HouseholdDAO {
      *
      * @param id       the id of the house.
      * @param newHouse the new data to update
+     * @return a int.
      */
     public static int updateHousehold(int id, Household newHouse) {
         String query;
@@ -297,6 +302,7 @@ public class HouseholdDAO {
      *
      * @param token  the invite token
      * @param userId the id of the user
+     * @return a int.
      */
     public static int addUserFromInvite(String token, int userId) {
         int invitedHouseId = InviteHandler.verifyToken(token);
@@ -313,6 +319,7 @@ public class HouseholdDAO {
      *
      * @param houseId the id of the house
      * @param email   the email of the user.
+     * @return a int.
      */
     public static int inviteUser(int houseId, String[] email) {
         Household house = getHouseholdIdAndName(houseId);
@@ -550,6 +557,7 @@ public class HouseholdDAO {
 
     /**
      * Removes a user from a household.
+     *
      * @param householdId the household ID
      * @param userId the user ID to remove
      * @return true on success, false otherwise.

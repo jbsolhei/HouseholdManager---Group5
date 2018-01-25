@@ -12,6 +12,10 @@ import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+/**
+ * <p>AuthorizationFilter class.</p>
+ *
+ */
 @Auth
 @Provider
 @Priority(Priorities.AUTHORIZATION)
@@ -20,6 +24,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     @Context
     private ResourceInfo resourceInfo;
 
+    /** {@inheritDoc} */
     @Override
     public void filter(ContainerRequestContext context) throws IOException {
         Method matchedEndpointMethod = resourceInfo.getResourceMethod();

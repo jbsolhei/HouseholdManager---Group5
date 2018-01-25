@@ -16,6 +16,7 @@ public class UserAuth {
     /**
      * Authenticates a user login attempt. Generates and returns a Session for this user if the login
      * was successful, or null if the email/password combination was incorrect.
+     *
      * @param email the user email address
      * @param password the plain-text password
      * @return a Session object, or null.
@@ -47,6 +48,7 @@ public class UserAuth {
     /**
      * Checks if a user can read another user. This is true if both users are
      * members of the same household.
+     *
      * @param userId ID of the user to check
      * @param subjectUserId ID of the second user to check
      * @return whether the user can read the  other user
@@ -70,6 +72,7 @@ public class UserAuth {
 
     /**
      * Checks if a user can read and modify a Chore.
+     *
      * @param userId ID of the user to check
      * @param choreId the chore ID
      * @return whether the user can access the chore or not
@@ -88,6 +91,7 @@ public class UserAuth {
 
     /**
      * Checks if a user can access a Household, that is, if the user is part of that Household.
+     *
      * @param userId ID of the user to check
      * @param householdId the Household ID
      * @return whether the user can access the Household or not
@@ -106,6 +110,7 @@ public class UserAuth {
 
     /**
      * Checks if a user can read and modify a ShoppingList.
+     *
      * @param userId ID of the user to check
      * @param shoppingListId the ShoppingList ID
      * @return whether the user can access the ShoppingList or not
@@ -124,6 +129,7 @@ public class UserAuth {
 
     /**
      * Checks if a user is admin of a Household.
+     *
      * @param userId ID of the user to check
      * @param householdId the Household ID
      * @return whether the user is a admin or not
@@ -163,6 +169,11 @@ public class UserAuth {
         }
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         Session session = authenticateLogin("joaki.xamooz@gmail.com", "2");
         System.out.println("stop");
