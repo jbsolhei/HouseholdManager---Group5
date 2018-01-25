@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 public class HouseholdDAOTest {
@@ -58,6 +59,22 @@ public class HouseholdDAOTest {
         }
 
         assert isAdmin;
+    }
+
+    @Test
+    public void unmakeAdmin() throws Exception{
+        HouseholdDAO.unmakeUserAdmin(1,143);
+
+        String query = "SELECT * FROM House_user WHERE houseId=1 AND userId=143;";
+        ResultSet rs = st.executeQuery(query);
+
+        boolean isAdmin = true;
+
+        while (rs.next()){
+            isAdmin = rs.getBoolean("isAdmin");
+        }
+
+        assertFalse(isAdmin);
     }
 
     @Test
