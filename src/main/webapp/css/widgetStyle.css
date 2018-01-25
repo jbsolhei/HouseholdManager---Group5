@@ -205,7 +205,7 @@ tr:hover {
 
 /* CHORE WIDGET */
 #choresPanelId .scrollWhenFull {
-    padding: 0 !important;
+    padding: 0 0 0 0 !important;
 }
 
 /* For header colors*/
