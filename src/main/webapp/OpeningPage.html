@@ -8,7 +8,6 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <link href="css/OpeningPage.css" rel="stylesheet">
-    <link href="css/logon.css" rel="stylesheet">
     <script src="js/login.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
@@ -22,6 +21,7 @@
 </head>
 
 <body>
+
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -30,17 +30,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" style="max-width: 50%">
-                <img src="images/HHM_logo.png">
+            <a class="navbar-brand" style="display: table">
+                <span id="brandText" style="display: table-cell" ><img id="logo" src="images/HHM_logo.png">Household Manager</span>
             </a>
         </div>
         <div class="navbar-collapse collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="opNav active"><a href="#">Home</a></li>
-                <li class="opNav"><a href="#">About</a></li>
-                <li class="opNav"><a href="#">Help</a></li>
-                <li class="opNav"><a href="#">Contact</a></li>
-            </ul>
+
             <ul class="nav navbar-nav navbar-right" id="login-form">
                 <li id="wrong-credentials-message"><a>Wrong email or password</a></li>
                 <li id="emailInputId"><input placeholder="Email" class="form-control" type="email" id="email" name="email"/></li>
@@ -50,6 +45,7 @@
         </div>
     </div>
 </nav>
+
 
 <div id="mainOpeningPageDivId">
     <div id="opTextDivId">
