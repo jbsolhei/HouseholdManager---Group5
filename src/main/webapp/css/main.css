@@ -220,3 +220,6 @@ div.miniprofile {
 #miniProfile-profile-img{
     max-width: 100%;
 }
+.glyphicon-remove {
+    cursor: pointer;
+}
