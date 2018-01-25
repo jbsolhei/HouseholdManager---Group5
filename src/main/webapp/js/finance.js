@@ -21,7 +21,7 @@ function getDebt(){
                 sum += debts[i].amount;
                 debt[i] = debts[i];
             }
-            $("#debtSumOutgoing").replaceWith('<div class="col-xs-3 nopadding debt-sum" id="debtSumOutgoing">' + sum + ' kr</div>');
+            $("#debtSumOutgoing").replaceWith('<div class="col-xs-3 nopadding debt-sum" id="debtSumOutgoing">' + sum + ',-</div>');
         },
         error: function(data) {
             console.log("Error in getDebts");
@@ -43,7 +43,7 @@ function getIncome(){
                 sum += incomes[i].amount;
                 income[i] = incomes[i];
             }
-            $("#debtSumIncoming").replaceWith('<div class="col-xs-3 nopadding debt-sum" id="debtSumIncoming">' + sum + ' kr</div>');
+            $("#debtSumIncoming").replaceWith('<div class="col-xs-3 nopadding debt-sum" id="debtSumIncoming">' + sum + ',-</div>');
             console.log("getIncome():");
             console.log(income);
         },
@@ -60,6 +60,9 @@ function loadFinanceTables(){
     console.log(debt);
     console.log(income);
 
+    $("#debtTable").html("<tbody id=\"debtTable\"></tbody>");
+    $("#incomeTable").html("<tbody id=\"incomeTable\"></tbody>");
+
     var members = getCurrentHousehold().residents;
     for(var i = 0; i < debt.length; i++){
         for(var j = 0; j < members.length; j++){
@@ -68,7 +71,6 @@ function loadFinanceTables(){
                 j = members.length;
             }
         }
-        $("#debtTable").html("");
         $("#debtTable").append('<tr id="debt' + i + '" data-target="#theModal" data-toggle="modal" onclick="payMoney(' + i + ')">\n' +
             '                                <td>' + debt[i].toUser.name + '</td>\n' +
             '                                <td>' + debt[i].amount + ',-</td>\n' +
@@ -83,12 +85,12 @@ function loadFinanceTables(){
                 j = members.length;
             }
         }
-        $("#incomeTable").html("");
         $("#incomeTable").append('<tr id="income' + i + '" data-target="#theModal" data-toggle="modal" onclick="sendPaymentRequest(' + i + ')">\n' +
             '                                <td>' + income[i].toUser.name + '</td>\n' +
             '                                <td>' + income[i].amount + ',-</td>\n' +
             '                            </tr>'
         );
+
     }
 }
 
@@ -135,10 +137,10 @@ function confirmPayment(){
             $("#debt" + index).remove();
         },
     });
-    addNotification(debt[index].toUser.userId, getCurrentHousehold().houseId, getCurrentUser().name + " have payed you the " + debt[index].amount + "kr they owed you. If this is not correct, please contact " + getCurrentUser().name + ".");
+    addNotification(debt[index].toUser.userId, getCurrentHousehold().houseId, getCurrentUser().name + " have payed you the " + debt[index].amount + ",- they owed you. If this is not correct, please contact " + getCurrentUser().name + ".");
 }
 
 function confirmSendAlertPayment() {
-    addNotification(income[index].toUser.userId, getCurrentHousehold().houseId, getCurrentUser().name + " asks you to pay the " + income[index].amount + "kr that you owe.");
+    addNotification(income[index].toUser.userId, getCurrentHousehold().houseId, getCurrentUser().name + " asks you to pay the " + income[index].amount + ",- that you owe.");
     $("#closeFinanceModalButton").click();
 }

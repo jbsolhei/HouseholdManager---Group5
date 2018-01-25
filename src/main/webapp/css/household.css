@@ -1,0 +1,14 @@
+.invite-members-list-panel {
+    height: 250px;
+    overflow: auto;
+    padding: 10px !important;
+}
+
+.invite-members-email-input {
+    margin-top: 15px;
+}
+
+#invite-members-status {
+    display: none;
+    margin-right: 15px;
+}

@@ -23,7 +23,8 @@ function ajaxAuth(attr) {
     attributes.headers.Authorization = "Bearer " + window.localStorage.getItem("sessionToken");
 
     attributes.error = function (xhr, textStatus, exceptionThrown) {
-        console.log("[AjaxAuth] Error: " + xhr.status);
+        console.log("[AjaxAuth] Error: " + xhr.status + ": " + textStatus + ", " + exceptionThrown);
+        console.trace();
 
         if (typeof attr.error === "function") {
             attr.error(xhr, textStatus, exceptionThrown);
@@ -81,7 +82,9 @@ function updateCurrentUser(runThisAfter) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             window.localStorage.setItem("user",JSON.stringify(data));
-            runThisAfter();
+            if (typeof runThisAfter === "function") {
+                runThisAfter();
+            }
         },
         error: function () {
             showLoadingScreen(false);
@@ -312,3 +315,22 @@ function showLoadingScreen(show) {
         $("#coverScreen").css('display', 'none');
     }
 }
+
+// Taken from https://www.bootply.com/60873
+jQuery.fn.shake = function(intShakes, intDistance, intDuration) {
+    this.each(function() {
+        $(this).css("position", "relative");
+        for (var x = 1; x <= intShakes; x++) {
+            $(this).animate({
+                left : -intDistance
+            }, (((intDuration / intShakes) / 4)))
+            .animate({
+                left : intDistance
+            }, ((intDuration / intShakes) / 2))
+            .animate({
+                left : 0
+            }, (((intDuration / intShakes) / 4)));
+        }
+    });
+    return this;
+};

@@ -75,21 +75,21 @@ function submitNewUser() {
 
 function confirm() {
     //some of the forms is not filled in
-    if(name == "" || phone == "" ||
-        email == "" || password == "" ||
-        testPassword == ""){
-        document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-            '<strong>Failed to create user.</strong> Please fill in all the forms. </div>';
+    if(name === "" || phone === "" ||
+        email === "" || password === "" ||
+        testPassword === ""){
+        $("#alertbox").html('<div class="alert alert-danger">' +
+            '<strong>Failed to create user.</strong> Please fill in all the forms. </div>');
 
         //passwords do not match
-    } else if (password != testPassword){
-        document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-            '<strong>Your two passwords does not match.</strong> Please fill in password again. </div>';
+    } else if (password !== testPassword){
+        $("#alertbox").html('<div class="alert alert-danger">' +
+            '<strong>Your two passwords does not match.</strong> Please fill in password again. </div>');
 
         // Password too short
     } else if (password.length<8){
-        document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-            '<strong>Password is too short!</strong><br>Passwords need to be at least 8 characters. </div>';
+        $("#alertbox").html('<div class="alert alert-danger">' +
+            '<strong>Password is too short!</strong><br>Passwords need to be at least 8 characters. </div>');
 
         //success!
     } else {
@@ -98,7 +98,6 @@ function confirm() {
         /*document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
             '<strong>Success!</strong> You have now created a user.</div>';*/
         person = {"name": name, "email": email, "telephone": phone, "password": password, "profileImage" : picture};
-        console.log(person);
         addUser();
     }
 }
@@ -111,16 +110,15 @@ function addUser() {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
-            console.log(result);
             if(result === true) {
-                document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
-                    '<strong>Success!</strong> You have now created a user.</div>';
+                $("#alertbox").html('<div class="alert alert-success">' +
+                    '<strong>Success!</strong> You have now created a user.</div>');
                 $(".alert-success").fadeTo(1000, 500).slideUp(500, function(){
                     login(person.email,person.password);
                 });
             } else {
-                document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-                    '<strong>The email or phone number already exist</strong></div>';
+                $("#alertbox").html('<div class="alert alert-danger">' +
+                    '<strong>The email or phone number already exist</strong></div>');
             }
         },
         error: function (e) {
@@ -132,7 +130,7 @@ function addUser() {
 
 
 $("#pwd2").keyup(function(event){
-    if(event.keyCode == 13){
+    if(event.keyCode === 13){
         $("#confirmCreateUserButton").click();
     }
 });

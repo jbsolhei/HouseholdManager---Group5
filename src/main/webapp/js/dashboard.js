@@ -62,6 +62,18 @@ function printShoppingListsToDashboard(house) {
         }
     }
 }
+function checkIfEnter(e) {
+    var keycode = (e.keyCode ? e.keyCode : e.which);
+    if (keycode == '13') {
+        postNewsOnDashboard();
+    }
+}
+
+function postNewsOnDashboard() {
+    var post = $("#newPost").val();
+    $("#newPost").val("");
+    postNews(post, printNewsToDashboard);
+}
 
 function printNewsToDashboard(){
     getNews(function (data) {

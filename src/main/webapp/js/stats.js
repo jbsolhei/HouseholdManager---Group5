@@ -18,6 +18,8 @@ function fixData(innData) {
 }
 
 function drawExpenseGraph() {
+    $("#choreStatId").removeClass("activeStat");
+    $("#moneyStatId").addClass("activeStat");
     ajaxAuth({
         url: "res/household/" + getCurrentHousehold().houseId + "/stats/expenses",
         type: "GET",
@@ -60,7 +62,7 @@ function showExpenseStats() {
                 yAxes: [{
                     scaleLabel: {
                         display: true,
-                        labelString: 'Money Spent'
+                        labelString: 'Money Spent (NOK)'
                     }
                 }],
                 xAxes: [{
@@ -75,6 +77,8 @@ function showExpenseStats() {
 }
 
 function drawChoreStats() {
+    $("#moneyStatId").removeClass("activeStat");
+    $("#choreStatId").addClass("activeStat");
     ajaxAuth({
         url: "res/household/" + getCurrentHousehold().houseId + "/stats/tasks",
         type: "GET",
@@ -94,7 +98,6 @@ function drawChoreStats() {
 }
 
 function showChoreStats(data) {
-
     var sets = [];
 
     for (i = 0; i < data.length; i++) {

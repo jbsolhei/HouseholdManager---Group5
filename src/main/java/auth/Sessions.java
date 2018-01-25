@@ -4,6 +4,10 @@ import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.HashMap;
 
+/**
+ * <p>Sessions class.</p>
+ *
+ */
 public class Sessions {
 
     private static final int TIMEOUT_SECS = 1800; // 30 min
@@ -15,6 +19,7 @@ public class Sessions {
     /**
      * Returns a session by its ID token. Returns null if the session doesn't exist
      * or if it has timed out and has been removed.
+     *
      * @param token the ID token for the session
      * @return the Session object, or null if it doesn't exist or has timed out.
      */
@@ -42,6 +47,7 @@ public class Sessions {
     /**
      * Generates a new sesssion with a random token associated with a user ID.
      * Last activity timestamp is set to now.
+     *
      * @param userId the user ID for this session
      * @return the Session object
      */
@@ -57,6 +63,7 @@ public class Sessions {
 
     /**
      * Invalidates (deletes) a session.
+     *
      * @param token the token for the session to invalidate
      */
     public static void invalidateSession(String token) {

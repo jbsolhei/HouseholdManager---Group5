@@ -8,9 +8,19 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 
+/**
+ * <p>StatService class.</p>
+ *
+ */
 @Path("household")
 public class StatService {
 
+    /**
+     * <p>getTaskStats.</p>
+     *
+     * @param id a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Auth(AuthType.HOUSEHOLD)
@@ -20,6 +30,12 @@ public class StatService {
         return StatDAO.getTaskStats(id, numberOfMonthBackInTime);
     }
 
+    /**
+     * <p>getExpenseStats.</p>
+     *
+     * @param id a int.
+     * @return an array of double.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Auth(AuthType.HOUSEHOLD)

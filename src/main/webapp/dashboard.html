@@ -23,6 +23,15 @@
             </div>
 
             <div id="dbBottomRow" class="row">
+
+                <div id="shoppinglistPanelId" class="col-md-6 widgetCol">
+                    <div class="panel panel-default widget">
+                        <div class="slHeader panel-heading cursorPointer" onclick="navToShoppingList(activeSHL)">Shoppinglists</div>
+                        <div class="panel-body scrollWhenFull">
+                            <ul id="dashboard_shopping_list_unordered_list" class="list-group"></ul>
+                        </div>
+                    </div>
+                </div>
                 <div id="debtPanelId" class="col-md-6 widgetCol">
                     <div class="panel panel-default widget">
                         <div class="panel-heading cursorPointer" onclick="swapContent(finance)">Finance</div>
@@ -38,15 +47,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="shoppinglistPanelId" class="col-md-6 widgetCol">
-                    <div class="panel panel-default widget">
-                        <div class="slHeader panel-heading cursorPointer" onclick="navToShoppingList(activeSHL)">Shoppinglists</div>
-                        <div class="panel-body scrollWhenFull">
-                            <ul id="dashboard_shopping_list_unordered_list" class="list-group"></ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -55,6 +55,15 @@
                 <div class="panel panel-default widget">
                     <div class="nHeader panel-heading" onclick="swapContent(news)">Household news</div>
                     <div class="panel-body scrollWhenFull N">
+                        <div class="row row-eq-height">
+                            <div class="input-group">
+                                <input type="text" onkeypress="checkIfEnter(event)" id="newPost" class="form-control" placeholder="New post..">
+                                <span class="input-group-btn" onclick="postNewsOnDashboard()">
+                                    <button class="btn btn-secondary" type="button">Post</button>
+                                </span>
+                            </div>
+                            <br>
+                        </div>
                         <div class="messages-container">
                             <div class="well well-sm clickable" onclick="toggleTeaser($(this))">
                                 <div class="message-heading">

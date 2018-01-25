@@ -12,11 +12,19 @@ import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 
 /**
+ * <p>ChoreService class.</p>
+ *
  * @author team5
  */
 @Path("household/{id}/chores")
 public class ChoreService {
 
+    /**
+     * <p>getChores.</p>
+     *
+     * @param houseId a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     @GET
     @Auth(AuthType.HOUSEHOLD)
     @Produces(MediaType.APPLICATION_JSON)
@@ -32,6 +40,12 @@ public class ChoreService {
         return ChoreDAO.getCore(choreId);
     }*/
 
+    /**
+     * <p>postChore.</p>
+     *
+     * @param houseId a int.
+     * @param chore a {@link classes.Chore} object.
+     */
     @POST
     @Auth(AuthType.HOUSEHOLD)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -41,6 +55,13 @@ public class ChoreService {
         ChoreDAO.postChore(chore);
     }
 
+    /**
+     * <p>editChore.</p>
+     *
+     * @param houseId a int.
+     * @param chore a {@link classes.Chore} object.
+     * @return a int.
+     */
     @PUT
     @Auth(AuthType.HOUSEHOLD)
     @Produces(MediaType.APPLICATION_JSON)
@@ -51,6 +72,14 @@ public class ChoreService {
         return ChoreDAO.editChore(chore);
     }
 
+    /**
+     * <p>checkChore.</p>
+     *
+     * @param houseId a int.
+     * @param chore a {@link classes.Chore} object.
+     * @param context a {@link javax.ws.rs.container.ContainerRequestContext} object.
+     * @return a int.
+     */
     @PUT
     @Path("/check")
     @Auth(AuthType.HOUSEHOLD)
@@ -61,6 +90,11 @@ public class ChoreService {
         return ChoreDAO.checkChore(chore);
     }
 
+    /**
+     * <p>deleteChore.</p>
+     *
+     * @param choreId a int.
+     */
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
     @Consumes(MediaType.APPLICATION_JSON)

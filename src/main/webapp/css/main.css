@@ -6,7 +6,6 @@
 
 .navbar {
     border-radius: 0;!important;
-    height: 54px;
 }
 
 .navbar, a.navbar-brand {
@@ -35,19 +34,22 @@
     display: none;
 }
 
-#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #notifyBellId {
+#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #homePageId {
     color: white;
     font-size: 17px;
     cursor: pointer;
 }
-
 #notifyBellId {
+    color: #436470;
+    font-size: 17px;
+    cursor: pointer;
     margin-top: 4px;
 }
 
-#currentHouseholdId:hover, #logoutId:hover, #myPageId:hover {
+#currentHouseholdId:hover, #logoutId:hover, #myPageId:hover, #homePageId:hover {
     cursor: pointer;
     background-color: #162B32;
+    border-bottom: none;
 }
 
 #expandSidebarButtonId:hover {
@@ -65,8 +67,8 @@
     min-width: 100%;
 }
 .img-circle1 {
-    height: 80px;
-    width: 80px;
+    height: 100px;
+    width: 100px;
     overflow: hidden;
     border-radius: 40px;
     text-align: center;
@@ -149,7 +151,46 @@ body {
     border-right: 1px solid black;
     height: auto;
 }
+#homePageId{
+    border: solid 15px transparent;
+
+    position: absolute;
+}
+
+.clickableChore:hover{
+    padding: 2px;
+    border: 2px;
+    margin: 2px;
+    background-color: cornflowerblue;
+}
+
+.checkedChoreListElement{
+    background-color: greenyellow;
+}
+.overdueChoreListElement{
+    background-color: orangered;
+}
+
+div.miniprofile {
+    padding-right: 15px;
+    padding-left: 15px;
+}
 
 #members {
     width: 100%;
+}
+
+#sumShoppingList{
+    background-color: #936d6d;
+    color: #FFFFFF;
+    height: 100%;
+    text-align: center;
+    border: 15px solid #936d6d;
+    padding-right: 40px;
+    padding-top: 10px;
+
+}
+
+#headingShoppingTrip{
+    /*border: 15px solid transparent;*/
 }

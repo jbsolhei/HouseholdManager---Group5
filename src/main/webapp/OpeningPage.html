@@ -8,9 +8,9 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <link href="css/OpeningPage.css" rel="stylesheet">
-    <link href="css/logon.css" rel="stylesheet">
     <script src="js/login.js"></script>
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/forgotPassword.js"></script>
     <script src="js/test-hash.js"></script>
@@ -21,6 +21,7 @@
 </head>
 
 <body>
+
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -29,25 +30,23 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" style="max-width: 50%">
-                <img src="images/HHM_logo.png">
+            <a class="navbar-brand" style="display: table">
+                <span id="brandText" style="display: table-cell" ><img id="logo" src="images/HHM_logo.png">Household Manager</span>
             </a>
         </div>
         <div class="navbar-collapse collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="opNav active"><a href="#">Home</a></li>
-                <li class="opNav"><a href="#">About</a></li>
-                <li class="opNav"><a href="#">Help</a></li>
-                <li class="opNav"><a href="#">Contact</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li id="emailInputId"><input placeholder="Email" class="form-control" type="email" id="email" name="email"/></li>
-                <li id="passwordInputId"><input placeholder="Password" class="form-control" type="password" id="password" name="password"/></li>
-                <li id="loginButton"><a onclick="login($('#email').val(),$('#password').val()); showLoadingScreen(true)"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+            <ul class="nav navbar-nav navbar-right" id="login-form">
+                <li id="wrong-credentials-message"><a class="loginA">Wrong email or password</a></li>
+                <li id="forgotPassword"><a class="loginA" >Forgot password?</a></li>
+                <li id="emailInputId"><a><input placeholder="Email" class="form-control" type="email" id="email" name="email"/></a></li>
+                <li id="passwordInputId"><a><input placeholder="Password" class="form-control" type="password" id="password" name="password"/></a></li>
+                <li id="loginButton"><a class="loginA" onclick="login($('#email').val(),$('#password').val()); showLoadingScreen(true)"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div>
     </div>
 </nav>
+
 
 <div id="mainOpeningPageDivId">
     <div id="opTextDivId">
