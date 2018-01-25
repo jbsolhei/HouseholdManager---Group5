@@ -211,3 +211,7 @@ div.miniprofile {
     display: inline-block;
     float: left;
 }
+
+.panel-heading>h4 {
+    display: inline-block;
+}
