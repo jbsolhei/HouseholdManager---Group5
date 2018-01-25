@@ -8,7 +8,7 @@
         <div class="col-md-3 widgetCol">
             <div class="panel panel-default widget">
                 <div class="slHeader panel-heading styled-heading clearfix">
-                    <p id="SLHeaderID" >Shopping lists <span id="SLHIcon" data-toggle="modal" onclick="createNewList('ThisIsANewList')" data-target="#theModal" class="pull-right clickable"><i class="glyphicon glyphicon-plus"></i></span></p>
+                    <p id="SLHeaderID" >Shopping lists <span id="SLHIcon" onclick="showInputHeader()" class="pull-right clickable"><i class="glyphicon glyphicon-plus"></i></span></p>
                 </div>
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#shopping_list_active_tab">Active</a></li>
@@ -99,9 +99,6 @@
                 <div class="footerWrapper">
                     <div class="panel-footer">
                         <div id="buttonDiv">
-                            <a onclick="showInputHeader()" class="btn btn-success btn-sm">
-                                <span class="glyphicon glyphicon-plus"></span> Create new list
-                            </a>
                             <a id="archive_shopping_list_btn" onclick="archiveShoppingList()" class="btn btn-warning btn-sm">
                                 <span class="glyphicon glyphicon-trash"></span> Archive shopping list
                             </a>

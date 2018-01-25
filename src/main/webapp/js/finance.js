@@ -60,6 +60,9 @@ function loadFinanceTables(){
     console.log(debt);
     console.log(income);
 
+    $("#debtTable").html("<tbody id=\"debtTable\"></tbody>");
+    $("#incomeTable").html("<tbody id=\"incomeTable\"></tbody>");
+
     var members = getCurrentHousehold().residents;
     for(var i = 0; i < debt.length; i++){
         for(var j = 0; j < members.length; j++){
@@ -68,7 +71,6 @@ function loadFinanceTables(){
                 j = members.length;
             }
         }
-        $("#debtTable").html("");
         $("#debtTable").append('<tr id="debt' + i + '" data-target="#theModal" data-toggle="modal" onclick="payMoney(' + i + ')">\n' +
             '                                <td>' + debt[i].toUser.name + '</td>\n' +
             '                                <td>' + debt[i].amount + ',-</td>\n' +
@@ -83,12 +85,12 @@ function loadFinanceTables(){
                 j = members.length;
             }
         }
-        $("#incomeTable").html("");
         $("#incomeTable").append('<tr id="income' + i + '" data-target="#theModal" data-toggle="modal" onclick="sendPaymentRequest(' + i + ')">\n' +
             '                                <td>' + income[i].toUser.name + '</td>\n' +
             '                                <td>' + income[i].amount + ',-</td>\n' +
             '                            </tr>'
         );
+
     }
 }
 
