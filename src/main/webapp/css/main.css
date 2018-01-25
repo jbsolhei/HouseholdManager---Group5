@@ -48,6 +48,7 @@
 #currentHouseholdId:hover, #logoutId:hover, #myPageId:hover, #homePageId:hover {
     cursor: pointer;
     background-color: #162B32;
+    border-bottom: none;
 }
 
 #expandSidebarButtonId:hover {
@@ -150,8 +151,9 @@ body {
     height: auto;
 }
 #homePageId{
-    color: #ffffff;
-    padding-right: 75vh;
+    border: solid 15px transparent;
+
+    position: absolute;
 }
 
 #members {
