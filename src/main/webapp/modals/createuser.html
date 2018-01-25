@@ -6,28 +6,34 @@
     <p class="text-primary">Please fill in all the forms to successfully create a new user.</p>
     <div class="form-group divclass">
         <div class="form-group row ">
-            <label class="col-xs-2 control-label" for="name" name="namelabel">Name:</label>
-            <input type="text" required="required" class="col-xs- form-control has-feedback" id="name" placeholder="Full name" name="name">
+            <label class="control-label" for="name" name="namelabel">Name:</label>
+            <input type="text" required="required" class="createUserInput form-control has-feedback" id="name" placeholder="Full name" name="name">
+            <div class="required_star">*</div>
         </div>
         <div class="form-group row ">
-            <label class="col-xs-2 control-label"for="telephone">Telephone:</label>
-            <input type="number" class="col-xs-9 form-control" id="telephone" placeholder="Telephone number" name="telephone">
+            <label class="control-label" for="telephone">Telephone:</label>
+            <input type="number" class="form-control createUserInput" id="telephone" placeholder="Telephone number" name="telephone">
+            <div class="required_star" style="color:white;">*</div>
             <br>
         </div>
         <div class="form-group row ">
-            <label class="col-xs-2 control-label" for="email1">Email:</label>
-            <input type="email" class="col-xs-10 form-control" id="email1" placeholder="Email" name="email">
+            <label class="control-label" for="email1">Email:</label>
+            <input type="email" class="form-control createUserInput" id="email1" placeholder="Email" name="email">
+            <div class="required_star">*</div>
         </div>
         <div class="form-group row ">
-            <label class="col-xs-2 control-label" for="pwd">Password:</label>
-            <input type="password" class="col-xs-10 form-control" id="pwd" placeholder="Password" name="pwd">
+            <label class="control-label" for="pwd">Password:</label>
+            <input type="password" class="form-control createUserInput" id="pwd" placeholder="Password" name="pwd">
+            <div class="required_star">*</div>
         </div>
         <div class="form-group row ">
-            <input type="password" class="col-xs-10 form-control" id="pwd2" placeholder="Password (again)" name="pwd2">
+            <input type="password" class="form-control createUserInput" id="pwd2" placeholder="Password (again)" name="pwd2">
+            <div class="required_star">*</div>
         </div>
         <div class="form-group row ">
-            <label class="control-label"for="profile_picture">Profile picture:</label>
-            <input type="text" class="form-control" id="profile_picture" placeholder="Place a picture url.." name="telephone">
+            <label class="control-label" for="profile_picture">Profile picture:</label>
+            <input type="text" class="form-control createUserInput" id="profile_picture" placeholder="Place a picture url.." name="telephone">
+            <div class="required_star" style="color:white;">*</div>
             <br>
         </div>
 

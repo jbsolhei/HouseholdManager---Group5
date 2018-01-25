@@ -83,6 +83,12 @@
 
     $(document).ready(function () {
         window.localStorage.setItem("invite",window.location.search);
+        $("#password").keypress(function (e) {
+            if(e.which == 13) {
+                login($('#email').val(),$('#password').val());
+                showLoadingScreen(true);
+            }
+        })
     });
 </script>
 
