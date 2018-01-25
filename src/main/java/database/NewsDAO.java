@@ -35,6 +35,7 @@ public class NewsDAO {
                     user.setName(rs.getString("name"));
                     user.setEmail(rs.getString("email"));
                     user.setTelephone(rs.getString("telephone"));
+                    user.setProfileImage(rs.getString("image"));
 
                     News toAdd = new News();
                     toAdd.setHouseId(houseId);

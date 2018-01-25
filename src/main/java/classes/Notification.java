@@ -8,7 +8,6 @@ public class Notification {
     private int houseId;
     private String houseName;
     private String dateTime;
-    private boolean isRead;
 
     public String getMessage() {
         return message;
@@ -48,14 +47,6 @@ public class Notification {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
-    }
-
-    public boolean isRead() {
-        return isRead;
-    }
-
-    public void setRead(boolean read) {
-        isRead = read;
     }
 
     public String getHouseName() {

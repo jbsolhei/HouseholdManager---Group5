@@ -1,4 +1,4 @@
-<link href="css/shopping_list.css" rel="stylesheet">
+<link href="css/shoppinglist.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- <script src="js/shoppinglist.js"></script> -->
 <script src="js/shopping_list.js"></script>
@@ -10,11 +10,20 @@
                 <div class="slHeader panel-heading styled-heading clearfix">
                     <p id="SLHeaderID" >Shopping lists <span id="SLHIcon" data-toggle="modal" onclick="createNewList('ThisIsANewList')" data-target="#theModal" class="pull-right clickable"><i class="glyphicon glyphicon-plus"></i></span></p>
                 </div>
-                <div class="panel-body scrollWhenFull SL">
-                    <ul id="shoppingSideMenu" class="nav nav-pills nav-stacked">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#shopping_list_active_tab">Active</a></li>
+                    <li><a data-toggle="tab" href="#shopping_list_archived_tab">Archived</a></li>
+                </ul>
 
-                    </ul>
+                <div class="tab-content">
+                    <div id="shopping_list_active_tab" class="tab-pane fade in active panel-body scrollWhenFull SL">
+                        <!-- Active tab will load here -->
+                    </div>
+                    <div id="shopping_list_archived_tab" class="tab-pane fade panel-body scrollWhenFull SL">
+                        <!-- Archived tab will load here -->
+                    </div>
                 </div>
+
                 <div class="footerWrapper">
                     <div class="panel-footer">
                         <div id="searchField" class="input-group">
@@ -30,29 +39,45 @@
             </div>
         </div>
         <div class="col-md-9 widgetCol">
-            <div class="panel panel-default widget">
-                <div id="head" class="slHeader panel-heading">
-                    <p id="headline"></p>
-                    <div id="edit_shopping_list_btn" class="glyphicon glyphicon-eye-open col-md-1" data-toggle="modal" onclick='callModalRun("modals/editShoppingListUsers.html", [getUsers])' data-target="#theModal"></div>
-                    <div id="headerInputWrapper" >
-                        <div class="input-group">
-                            <input class="hide form-control" id="headlineInput" placeholder="Name of Shopping List" type="text" >
-                            <!--
-                            <span id="okButton" onclick="addNewShoppingList()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
-                            -->
-                            <span class="input-group-btn">
-                            <button id="okButton" onclick="addNewShoppingList()" class="btn btn-success hide">Ok</button>
+            <div id="shopping_list_panel_header" class="panel panel-default widget">
+                <div id="title_header" class="slHeader panel-heading">
+                    <div class="row">
+                        <p id="headline" class="col-md-10"></p>
+                        <span class="col-md-2">
+                            <button id="edit_shopping_list_btn" class="btn-info" onclick="toggleListOfAssociatedUsers()">Share</button>
                         </span>
-                            <span class="input-group-btn">
-                            <button id="privateButton" onclick="setPrivate()" class="btn btn-secondary hide" type="button">Private</button>
-                        </span>
-                        </div>
                     </div>
-
                 </div>
-                <div class="panel-body scrollWhenFull SL">
+                <div id="input_header" class="slHeader panel-heading">
                     <div class="input-group">
-                        <span onclick="additem()" id="additem" class="input-group-addon btn btn-info btn-lg">Add item</span>
+                        <input class="form-control" id="text_input_new_shopping_list" placeholder="Name of Shopping List" type="text" >
+                        <!--
+                        <span id="okButton" onclick="addNewShoppingList()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
+                        -->
+                        <span class="input-group-btn">
+                            <button id="ok_new_shopping_list_btn" onclick="createNewShoppingList()" class="btn btn-success">Ok</button>
+                        </span>
+                        <span class="input-group-btn">
+                                <button id="share_new_shopping_list_btn" onclick="toggleListOfAssociatedUsersToNewShoppingList()" class="btn btn-info" type="button">Share</button>
+                        </span>
+                        <span class="input-group-btn">
+                                <button id="cancel_new_shopping_list_btn" onclick="hideInputHeader()" class="btn btn-danger" type="button">Cancel</button>
+                        </span>
+                    </div>
+                </div>
+                <div id="list_of_users_associated_with_shopping_list">
+                    <table id="associated_users_table">
+                        <thead>
+                        <tr>
+                            <th><button class="btn glyphicon glyphicon-unchecked"></button> Select All</th>
+                            <th>Users who can view this list</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id="shopping_list_data_panel" class="panel-body scrollWhenFull SL">
+                    <div class="input-group">
+                        <span onclick="addItemToShoppingList()" id="additem" class="input-group-addon btn btn-info btn-lg">Add item</span>
                         <input id="shoppingListItemInput" type="text" class="form-control" name="item" placeholder="Item">
                     </div>
                     <div class="row content">
@@ -70,13 +95,17 @@
                     </div>
                     <p id="emptyListText" class="hide">Your shopping list is empty..</p>
                 </div>
+                <div id="shopping_list_white_space" class="hide"></div>
                 <div class="footerWrapper">
                     <div class="panel-footer">
                         <div id="buttonDiv">
-                            <a onclick="createNewList('ThisIsANewList')" class="btn btn-success btn-sm">
+                            <a onclick="showInputHeader()" class="btn btn-success btn-sm">
                                 <span class="glyphicon glyphicon-plus"></span> Create new list
                             </a>
-                            <a id="deleteButton" onclick="deleteList()" class="btn btn-warning btn-sm">
+                            <a id="archive_shopping_list_btn" onclick="archiveShoppingList()" class="btn btn-warning btn-sm">
+                                <span class="glyphicon glyphicon-trash"></span> Archive shopping list
+                            </a>
+                            <a id="delete_shopping_list_btn" onclick="deleteShoppingList()" class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-trash"></span> Delete this list
                             </a>
                         </div>
@@ -92,16 +121,3 @@
 </script>
 
 <!-- Denne må være her, trengs aldri å endres -->
-<div class="modal fade" id="theModal">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content" id="modal">
-        </div>
-    </div>
-</div>
-
-<script>
-    // Ikke rør
-    function callModal(modalContent) {
-        $("#modal").load(modalContent);
-    }
-</script>

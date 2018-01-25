@@ -43,12 +43,18 @@ function buildMemberTable(){
             removeTd = "<td><span class='glyphicon glyphicon-remove remove' " +
                 "data-toggle='confirm' data-remove='" + user.userId + "'></span></td>";
         }
+        var image;
+        if(user.profileImage != "" && user.profileImage != null) {
+            image = user.profileImage;
+        } else {
+            image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
+        }
 
         $("table#members tbody").append(
             "<tr data-user-index=\"" + i + "\">\n" +
             adminTd + "\n" +
             "<td><div class=\"img-circle\">" +
-            "<img class=\"img-responsive img-pic\" src=\"http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg\">" +
+            "<img class=\"img-responsive img-pic\" src='"+image+"'>" +
             "</div></td>\n" +
             "<td>" + user.name + "</td>\n" +
             "<td>" + user.email + "</td>\n" +
@@ -126,9 +132,23 @@ function showMiniProfile(index){
     var members = getCurrentHousehold().residents;
     $("#members").fadeOut(500);
     setTimeout(function(){
+        if(members[index].userId === getCurrentUser().userId){
+            $("#toEditProfileButton").show();
+            //document.getElementById("#toEditProfileButton").innerHTML = '';
+        }else {
+            $("#toEditProfileButton").hide();
+        }
+        var image;
+        if(members[index].profileImage != "" && members[index].profileImage != null) {
+            image = members[index].profileImage;
+        } else {
+            image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
+        }
+        $("#place_for_profile_pic").html("<img src='"+image+"' id='profile-img'>");
         $("#miniProfile-name").html('<p id="miniProfile-name">' + members[index].name + '</p>');
         $("#miniProfile-email").html('<p id="miniProfile-email">' + members[index].email + '</p>');
         $("#miniProfile-telephone").html('<p id="miniProfile-telephone">' + members[index].telephone + '</p>');
+
         if(members[index].gender != "" && members[index].gender != null){
             $("#miniProfile-gender").html('<p id="miniProfile-gender">' + members[index].gender + '</p>');
             $("#miniProfile-label-gender").show();
@@ -153,6 +173,7 @@ function showMiniProfile(index){
             $("#miniProfile-label-bio").hide();
         }
 
+        $("#hideMiniProfileButton").removeClass("hide");
         $("#miniProfile").removeClass("hide");
 
     }, 500);
@@ -161,6 +182,12 @@ function showMiniProfile(index){
 function hideMiniProfile(){
     $("#members").fadeIn(500);
     $("#miniProfile").addClass("hide");
+}
+
+function editProfile(){
+    swapContent(profile);
+    $("#profile-footer").click();
+    //document.getElementById("profile-footer").click();
 }
 
 /*
