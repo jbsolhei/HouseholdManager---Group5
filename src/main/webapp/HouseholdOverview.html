@@ -1,8 +1,11 @@
 <div id="householdOverviewId" class="container-fluid">
     <div id="hhoMainRow" class="row">
         <div class="col-sm-8 widgetCol">
-            <div id="accordion" class="panel panel-default">
-                <div class="hhoHeader panel-heading styled-heading clearfix">Members  <span class="glyphicon glyphicon-plus pull-right clickable" data-toggle="modal" data-target="#theModal" onclick="callModal('modals/addMemberHousehold.html')"></span></div>
+            <div class="panel panel-default">
+                <div class="hhoHeader panel-heading styled-heading clearfix">Members
+                    <span class="glyphicon glyphicon-plus pull-right clickable" data-toggle="modal" data-target="#theModal" onclick="callModal('modals/addMemberHousehold.html')"></span>
+                    <p id="editAdminsSymbol" class="pull-right" style="padding-right: 30px;"></p>
+                </div>
                 <div class="panel-body scrollWhenFull HH">
                     <div class="hide" id="miniProfile">
                         <div class="row">
@@ -62,10 +65,9 @@
                     <table class="membertable" id="members">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th id="makeAdminField"></th>
                                 <th></th>
                                 <th>Name</th>
-                                <th>Email</th>
                                 <th>Phone</th>
                                 <th></th>
                             </tr>
@@ -74,8 +76,9 @@
                     </tbody>
                 </table>
                 </div>
-                <div clasS="panel-footer">
-
+                <div class="panel-footer" style="height: auto; !important;">
+                    <p id="alertBackToUser" style="width: 100%; height: 100%; margin-bottom: 0px"></p>
+                    <div id="panelFooterHouseholdOverview" class="pull-right" style="height: 100%; !important;"></div>
                 </div>
             </div>
         </div>

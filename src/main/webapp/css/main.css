@@ -179,6 +179,11 @@ div.miniprofile {
 #members {
     width: 100%;
 }
+#buttonEditAdmins {
+    float: right;
+    background-color: rgba(150, 19, 12, 0.3);
+    height: 100%;
+}
 
 #sumShoppingList{
     background-color: #936d6d;
