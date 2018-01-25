@@ -11,6 +11,7 @@ public class User {
     private String relationship;
     private String gender;
     private String password;
+    private String profileImage;
     private ArrayList<Debt> debts;
     private ArrayList<Debt> income;
     private ArrayList<Household> associatedHouseholds;
@@ -138,5 +139,12 @@ public class User {
 
     public void setAssociatedHouseholds(ArrayList<Household> associatedHouseholds) {
         this.associatedHouseholds = associatedHouseholds;
+    }
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 }

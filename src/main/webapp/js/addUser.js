@@ -7,27 +7,36 @@ var email;
 var password;
 var testPassword;
 var person;
+var picture;
 
-function showPicture() {
+
+/*function updatePicture() {
     var filesSelected = document.getElementById("profile_picture").files;
+
+     /!*   var objurl = window.URL.createObjectURL(fileData);
+     $("#show_profile_pic").html("<img src='"+objurl+"' style='width: 100%'>");
+
+     /!*  var img = new Image();
+     img.src = objurl;
+     img.onload = function() {
+
+     // do something with your image
+     }*!/
+
     if (filesSelected.length > 0)
     {
         var fileToLoad = filesSelected[0];
-        console.log(fileToLoad);
 
         if (fileToLoad.type.match("image.*"))
         {
             var fileReader = new FileReader();
             fileReader.onload = function(fileLoadedEvent)
             {
-                $("#show_profile_pic").html("");
-                $("#show_profile_pic").html("<img src='"+fileLoadedEvent.target.result+"' style='width: 100%'>");
+                picture = fileLoadedEvent.target.result;
             };
-            fileReader.readAsDataURL(fileToLoad);
         }
     }
-}
-
+}*/
 
 function submitNewUser() {
     name = $("#name").val();
@@ -35,7 +44,31 @@ function submitNewUser() {
     email = $("#email1").val();
     password = $("#pwd").val();
     testPassword = $("#pwd2").val();
+    picture = $("#profile_picture").val();
 
+    /*   var objurl = window.URL.createObjectURL(fileData);
+     $("#show_profile_pic").html("<img src='"+objurl+"' style='width: 100%'>");
+
+     /*  var img = new Image();
+     img.src = objurl;
+     img.onload = function() {
+
+     // do something with your image
+     }*/
+
+    /*if (filesSelected.length > 0)
+    {
+        var fileToLoad = filesSelected[0];
+
+        if (fileToLoad.type.match("image.*"))
+        {
+            var fileReader = new FileReader();
+            fileReader.onload = function(fileLoadedEvent)
+            {
+                picture = fileLoadedEvent.target.result;
+            };
+        }
+    }*/
 
     confirm();
 }
@@ -59,7 +92,8 @@ function confirm() {
 
         /*document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
             '<strong>Success!</strong> You have now created a user.</div>';*/
-        person = {"name": name, "email": email, "telephone": phone, "password": password};
+        person = {"name": name, "email": email, "telephone": phone, "password": password, "profileImage" : picture};
+        console.log(person);
         addUser();
     }
 }

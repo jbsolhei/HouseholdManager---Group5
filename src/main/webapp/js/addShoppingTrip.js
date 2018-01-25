@@ -71,7 +71,7 @@ function addShoppingTrip() {
     }
 
     for (i = 0; i < contributors.length; i++) {
-        addNotification(contributors[i].userId, getCurrentHousehold().houseId, getCurrentUser().name + " have added you to a new Shopping Trip, " +name);
+        addNotification(contributors[i].userId, getCurrentHousehold().houseId, "You have been added to Shopping Trip, \""+name+"\", by " + getCurrentUser().name);
     }
 
     if(name === "" || comment === "" || sum === "" ||
