@@ -86,7 +86,8 @@ function getNotifications(userId) {
 function updateNotificationDropdown(notifications) {
     for (i = 0; i < notifications.length; i++) {
         var dateTime = notifications[i].dateTime;
-        dateTime = dateTime.slice(0, dateTime.length - 2);
+        if (dateTime !== null) dateTime = dateTime.slice(0, dateTime.length - 2);
+        else dateTime = "";
         var message = notifications[i].message;
         var id = notifications[i].notificationId;
         var houseName = notifications[i].houseName;
