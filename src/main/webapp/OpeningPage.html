@@ -37,10 +37,11 @@
         <div class="navbar-collapse collapse" id="myNavbar">
 
             <ul class="nav navbar-nav navbar-right" id="login-form">
-                <li id="wrong-credentials-message"><a>Wrong email or password</a></li>
-                <li id="emailInputId"><input placeholder="Email" class="form-control" type="email" id="email" name="email"/></li>
-                <li id="passwordInputId"><input placeholder="Password" class="form-control" type="password" id="password" name="password"/></li>
-                <li id="loginButton"><a onclick="login($('#email').val(),$('#password').val()); showLoadingScreen(true)"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li id="wrong-credentials-message"><a class="loginA">Wrong email or password</a></li>
+                <li id="forgotPassword"><a class="loginA" >Forgot password?</a></li>
+                <li id="emailInputId"><a><input placeholder="Email" class="form-control" type="email" id="email" name="email"/></a></li>
+                <li id="passwordInputId"><a><input placeholder="Password" class="form-control" type="password" id="password" name="password"/></a></li>
+                <li id="loginButton"><a class="loginA" onclick="login($('#email').val(),$('#password').val()); showLoadingScreen(true)"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
         </div>
     </div>
