@@ -5,6 +5,10 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.beans.PropertyVetoException;
 import java.sql.*;
 
+/**
+ * <p>DBConnector class.</p>
+ *
+ */
 public class DBConnector implements AutoCloseable {
     static String DB_URL = "jdbc:mysql://mysql.stud.iie.ntnu.no/g_tdat2003_t5?user=g_tdat2003_t5&password=DPiNHSqD&useSSL=true&verifyServerCertificate=false";
     static boolean USE_CONNECTION_POOLING = true;
@@ -59,10 +63,18 @@ public class DBConnector implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>conn</code>.</p>
+     *
+     * @return a {@link java.sql.Connection} object.
+     */
     public Connection getConn() {
         return conn;
     }
 
+    /**
+     * <p>disconnect.</p>
+     */
     public void disconnect () {
         try {
             conn.close();
@@ -71,6 +83,12 @@ public class DBConnector implements AutoCloseable {
         }
     }
 
+    /**
+     * <p>getResultSetFromStatement.</p>
+     *
+     * @param statement a {@link java.lang.String} object.
+     * @return a {@link java.sql.ResultSet} object.
+     */
     public ResultSet getResultSetFromStatement(String statement) {
         if (statement == null || statement.length() == 0) return null;
         try {
@@ -82,6 +100,12 @@ public class DBConnector implements AutoCloseable {
         return null;
     }
 
+    /**
+     * <p>updateDatabase.</p>
+     *
+     * @param statement a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean updateDatabase(String statement){
         if (statement == null || statement.length() == 0) return false;
         try {
@@ -93,6 +117,7 @@ public class DBConnector implements AutoCloseable {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void close() throws SQLException {
         disconnect();

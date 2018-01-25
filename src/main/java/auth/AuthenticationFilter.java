@@ -10,10 +10,15 @@ import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 
 @Auth
+/**
+ * <p>AuthenticationFilter class.</p>
+ *
+ */
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
 
+    /** {@inheritDoc} */
     @Override
     public void filter(ContainerRequestContext context) throws IOException {
         String authHeader = context.getHeaderString(HttpHeaders.AUTHORIZATION);
