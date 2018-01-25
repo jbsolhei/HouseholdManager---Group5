@@ -29,9 +29,9 @@ function printInfoToWall(){
         $("#profile_information_list_gender").html("Missing info");
     }
     if(currUs.profileImage != "" && currUs.profileImage != null) {
-        $("#profile_picture_show").html("<img src='"+currUs.profileImage+"' id='profile-img'>");
+        $("#profile_picture_show").html("<img alt='your profile picture' src='"+currUs.profileImage+"' id='profile-img'>");
     } else {
-        $("#profile_picture_show").html("<img src='http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png' id='profile-img'>");
+        $("#profile_picture_show").html("<img alt='default profile picture' src='http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png' id='profile-img'>");
     }
 
 }

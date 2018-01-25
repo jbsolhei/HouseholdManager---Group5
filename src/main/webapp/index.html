@@ -135,8 +135,11 @@
                         <li><a class="visible-xs" onclick="swapContent(statistics)">Statistics</a></li>
                         <li><a class="visible-xs" onclick="swapContent(news)">News</a></li>
 
-                        <li>
-                            <a id="notifyBellId" class="dropdown-toggle"><i class="glyphicon glyphicon-bell"></i><div class="numberCircle" id="notificationValue"></div></a>
+                        <li class="dropdown-toggle" id="dropdownBell">
+                            <a id="notifyBellId">
+                                <i class="glyphicon glyphicon-bell"></i>
+                                <div class="numberCircle" id="notificationValue"></div>
+                            </a>
 
                             <div class="panel panel-default dropdown-menu">
                                 <div class="panel-body">
@@ -175,7 +178,7 @@
                 <li><a onclick="swapContent(finance); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-credit-card"></i>  Finance</a></li>
                 <li><a onclick="swapContent(stats); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
                 <li><a onclick="swapContent(news); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
-                <li><a class="navbar-brand" onclick="swapContent(dashboard)"><img src="https://i.imgur.com/KHVOzlt.png" style="width: 50%; display:inline-block;"></a></li>
+                <li><a class="navbar-brand" onclick="swapContent(dashboard)"><img src="https://i.imgur.com/KHVOzlt.png" style="width: 50%; display:inline-block;" alt="logo"></a></li>
             </ul>
         </nav>
     </div>
