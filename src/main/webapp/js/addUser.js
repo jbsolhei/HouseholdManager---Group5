@@ -89,7 +89,7 @@ function confirm() {
         // Password too short
     } else if (password.length<8){
         document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-            '<strong>Password is too short!</strong> Passwords need to be at least 8 characters. </div>';
+            '<strong>Password is too short!</strong><br>Passwords need to be at least 8 characters. </div>';
 
         //success!
     } else {
