@@ -4,15 +4,15 @@
 var currUs;
 function loadUser(){
     currUs = getCurrentUser();
-    printInfoToWall(currUs);
+    printInfoToWall();
     //printHouseholdsToWall(currUs.userId);
     //printTasksToWall(currUs.userId);
 }
 
-function printInfoToWall(current_user){
-    $("#profile_information_list_name").html(current_user.name);
-    $("#profile_information_list_email").html(current_user.email);
-    $("#profile_information_list_phone").html(current_user.telephone);
+function printInfoToWall(){
+    $("#profile_information_list_name").html(currUs.name);
+    $("#profile_information_list_email").html(currUs.email);
+    $("#profile_information_list_phone").html(currUs.telephone);
     if(currUs.bio != "" && currUs.bio != null){
         $("#profile_information_list_bio").html(currUs.bio);
     } else {
@@ -28,11 +28,12 @@ function printInfoToWall(current_user){
     } else {
         $("#profile_information_list_gender").html("Missing info");
     }
+    if(currUs.profileImage != "" && currUs.profileImage != null) {
+        $("#profile_picture_show").html("<img src='"+currUs.profileImage+"' id='profile-img'>");
+    } else {
+        $("#profile_picture_show").html("<img src='http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png' id='profile-img'>");
+    }
 
-
-
-
-    console.log(getCurrentUser());
 }
 function printHouseholdsToWall(id) {
     ajaxAuth({
@@ -106,6 +107,11 @@ function printTasksToWall(id){
 }
 
 function editUserInfo() {
+    $("#edit_profile_picture").html("");
+    $("#edit_profile_picture").html("<br><label class='control-label profile_labels' for='profile_information_list_picture'>Profile picture:</label>" +
+    "<input class='form-control' type='text' id='edit_profile_information_picture'" +
+        "value='"+currUs.profileImage+"' placeholder='Profile picture url..'>");
+
     $("#edit_profile_name").html("");
     $("#edit_profile_name").html("<h3><input class='form-control' type='text' id='edit_profile_information_name'" +
         "value='"+currUs.name+"' placeholder='Name'></h3>");
@@ -267,6 +273,7 @@ function saveInformation() {
     var newBio = $("#edit_profile_information_bio").val();
     var newRelationship = $("#edit_profile_information_relationship").val();
     var newGender = $("#edit_profile_information_gender").val();
+    var image = $("#edit_profile_information_picture").val();
 
 
     if(newEmail == "" || newPhone == "" || newName == "") {
@@ -279,7 +286,8 @@ function saveInformation() {
             "telephone": newPhone,
             "relationship": newRelationship,
             "bio": newBio,
-            "gender": newGender
+            "gender": newGender,
+            "profileImage" : image
         };
         ajaxAuth({
             url: "res/user/" + getCurrentUser().userId,
