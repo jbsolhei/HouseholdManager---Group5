@@ -1,5 +1,6 @@
 package database;
 
+import classes.Chore;
 import classes.Household;
 import classes.User;
 import org.junit.After;
@@ -157,6 +158,13 @@ public class HouseholdDAOTest {
     }
 
     @Test
+    public void getHouseholdIdAndName() throws Exception {
+        Household temp = HouseholdDAO.getHouseholdIdAndName(1);
+        assertEquals("Testhouse",temp.getName());
+        assertEquals("Testaddress 22",temp.getAddress());
+    }
+
+    @Test
     public void updateHousehold() throws Exception {
         Household newHouse = new Household();
         newHouse.setName("Newname");
@@ -188,6 +196,13 @@ public class HouseholdDAOTest {
         while (rs.next()){
             fail();
         }
+    }
+
+    @Test
+    public void getChoresForHousehold() throws Exception{
+        Chore[] chores = HouseholdDAO.getChoresForHousehold(10);
+
+        assertEquals(3, chores.length);
     }
 
     @After

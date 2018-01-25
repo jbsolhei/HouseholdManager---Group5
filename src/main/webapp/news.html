@@ -36,32 +36,38 @@
         });
     }
 </script>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
-            <div class="panel">
-                <div id="add_news" style="padding: 15px">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="img-circle1" id="profile_pic_topnews"><img class="img-responsive img-pic1" src="http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg"></div>
+
+
+<div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-sm-10">
+        <div class="panel panel-default">
+            <div class="panel-heading nHeader">News</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div id="add_news" style="padding: 15px">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="img-circle1" id="profile_pic_topnews"><img class="img-responsive img-pic1" src="http://www.hf.uio.no/imv/personer/vit/midlertidig/mervea/akca_photo-copy.jpg"></div>
+                                    <br>
+                                </div>
+                                <div class="col-sm-10">
+                                   <textarea class="form-control" rows="5" id="comment" style="resize: none;" placeholder="Write your news here . ."></textarea>
+                                    <button class="btn btn-lg btn-default" onclick="postNews($('#comment').val(), updateNewsList)" style="float: right; width: 100%">Post</button>
+                                </div>
+                           </div>
                             <br>
                         </div>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" rows="5" id="comment" style="resize: none;"></textarea>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-8"></div>
-                        <div class="col-sm-4">
-                            <button class="btn btn-lg" onclick="postNews($('#comment').val(), updateNewsList)" style="float: right; width: 100%">Send</button>
-                        </div>
+                        <div id="list_of_news"></div>
                     </div>
                 </div>
-                <div id="list_of_news"></div>
+            </div>
             </div>
         </div>
-        <div class="col-sm-2"></div>
     </div>
+    <div class="col-xs-1"></div>
 </div>
+
+

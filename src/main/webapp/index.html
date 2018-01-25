@@ -148,7 +148,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul id="listOfHouseholds" class="dropdown-menu">
-                                <li style="border-top: 1px solid #e8e8e8;"data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#"><strong>New Household   <span class="glyphicon glyphicon-plus"></span></strong></a></li>
+                                <li style="border-top: 1px solid #e8e8e8;" data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#"><strong>New Household   <span class="glyphicon glyphicon-plus"></span></strong></a></li>
                             </ul>
                         </li>
                         <li><a id="myPageId" onclick="swapContent(profile)">My Page</a></li>
@@ -162,10 +162,12 @@
         <nav id="sideBarId" class="sidebar hidden-xs">
             <ul class="list-unstyled components">
                 <li><a onclick="swapContent(dashboard); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
+                <li><a onclick="swapContent(profile);closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-user"></i>My Page</a></li>
                 <li><a onclick="swapContent(household); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
                 <li><a onclick="swapContent(shoppinglists); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
                 <li><a onclick="swapContent(shoppingtrips); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trip</a></li>
                 <li><a onclick="swapContent(chores);closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
+                <li><a onclick="swapContent(finance); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-credit-card"></i>  Finance</a></li>
                 <li><a onclick="swapContent(stats); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
                 <li><a onclick="swapContent(news); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
                 <li><a class="navbar-brand" onclick="swapContent(dashboard)"><img src="https://i.imgur.com/KHVOzlt.png" style="width: 50%; display:inline-block;"></a></li>

@@ -90,6 +90,12 @@ public class AuthorizationFilter implements ContainerRequestFilter {
                         }
                         return;
 
+                    case NOTIFICATION_DELETE:
+                        if (!UserAuth.canUserDeleteNotification(userId, pathId)) {
+                            unauthorized(context);
+                        }
+                        return;
+
                     default:
                         return;
                 }

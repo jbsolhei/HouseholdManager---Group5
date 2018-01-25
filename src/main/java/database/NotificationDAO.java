@@ -171,7 +171,6 @@ public class NotificationDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return notifications;
     }
 }

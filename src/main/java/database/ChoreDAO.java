@@ -198,4 +198,32 @@ public class ChoreDAO {
         }
         return -1;
     }
+
+    /**
+     * "Cheks" a chore that is done.
+     * @param chore
+     * @return -1 if not ok, return st.executeUpdate if ok?
+     */
+    public static int checkChore(Chore chore){
+        String query = "UPDATE Chore SET done = ? WHERE choreId = ?;";
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)){
+
+            System.out.println(chore.getUserId());
+            System.out.println(chore.getChoreId());
+            if (chore.isDone()) {
+                st.setInt(1, 1);
+            } else {
+                st.setInt(1, 0);
+            }
+            st.setInt(2, chore.getChoreId());
+
+            return st.executeUpdate();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

@@ -1,9 +1,9 @@
-var result;
+/*var result;
 
-function createPage() {
+function createPageAddShoppingTrip() {
     if (getCurrentHousehold() !== null || getCurrentHousehold() !==  undefined) {
         ajaxAuth({
-            url: "res/household/" + getCurrentHousehold().houseId + "/users",//Må byttes ut med currentHousehold!!!!
+            url: "res/household/" + getCurrentHousehold().houseId + "/users",
             type: 'get',
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
@@ -30,16 +30,32 @@ function createPage() {
             }
         });
     }
+    $("#tripname").keyup(function(){
+        if($("#tripname").val().length>40){
+            $("#tripname").val($("#tripname").val().substring(0,40));
+        }
+    });
 }
 function addMembers(members) {
     $("#members").empty();
     for(var i=0; i<members.length; i++) {
-        $("#members").append(
-            "<div class='shopping-list-member-line'>" +
-            "<label style='margin-left: 5px'>" +
-            "<input type='checkbox' id='check-" + i + "'>" + members[i].name + "</label>" +
-            "</div>"
-        );
+        if(members[i].userId == getCurrentUser().userId){
+            $("#members").append(
+                "<div class='shopping-list-member-line'>" +
+                "<label style='margin-left: 5px'>" +
+                "<input type='checkbox' id='check-" + i + "' checked>" + members[i].name + "</label>" +
+                "</div>"
+            );
+        } else {
+            $("#members").append(
+                "<div class='shopping-list-member-line'>" +
+                "<label style='margin-left: 5px'>" +
+                "<input type='checkbox' id='check-" + i + "'>" + members[i].name + "</label>" +
+                "</div>"
+            );
+        }
+
+
     }
 }
 function addShoppinglists(data) {
@@ -74,7 +90,7 @@ function addShoppingTrip() {
         addNotification(contributors[i].userId, getCurrentHousehold().houseId, "You have been added to Shopping Trip, \""+name+"\", by " + getCurrentUser().name);
     }
 
-    if(name === "" || comment === "" || sum === "" ||
+    if(name === "" || sum === "" ||
         shoppingList === "" || id === "" ||
         contributors.length === 0) {
         document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
@@ -92,16 +108,21 @@ function addShoppingTrip() {
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             success: function (response) {
-                console.log(response);
-                getShoppingTrips();
-                document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
-                    '<strong>Success!</strong> Shoppingtrip added.</div>';
-                $(".alert-success").fadeTo(500, 500).slideUp(500, function(){
-                    $(".alert-danger").slideUp(500);
-                    $(function () {
-                        $('#theModal').modal('toggle');
+                if(response == true){
+                    getShoppingTrips();
+                    document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
+                        '<strong>Success!</strong> Shoppingtrip added.</div>';
+                    $(".alert-success").fadeTo(500, 500).slideUp(500, function(){
+                        $(".alert-danger").slideUp(500);
+                        $(function () {
+                            $('#theModal').modal('toggle');
+                        });
                     });
-                });
+                } else {
+                    document.getElementById("alertbox").innerHTML = '<div id="alertbox" class="alert alert-danger">' +
+                        '<strong>Failed!</strong>Something went wrong. Please try again.</div>';
+                }
+
             },
             error: function (response) {
                 console.log("error");
@@ -110,4 +131,4 @@ function addShoppingTrip() {
 
         });
     }
-}
+}*/

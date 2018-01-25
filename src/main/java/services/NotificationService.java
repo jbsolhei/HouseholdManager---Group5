@@ -1,5 +1,7 @@
 package services;
 
+import auth.Auth;
+import auth.AuthType;
 import classes.*;
 import database.NotificationDAO;
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -21,6 +23,7 @@ public class NotificationService {
      * @return a boolean.
      */
     @POST
+    @Auth(AuthType.DEFAULT)
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean addNotification(Notification notification) {
         notification.setMessage(StringEscapeUtils.escapeHtml4(notification.getMessage()));
@@ -34,8 +37,9 @@ public class NotificationService {
      * @return a boolean.
      */
     @DELETE
-    @Path("/{id}/deleteStatus")
-    public boolean updateNotificationStatus(@PathParam("id") int id) {
+    @Auth(AuthType.NOTIFICATION_DELETE)
+    @Path("/{id}")
+    public boolean deleteNotification(@PathParam("id") int id) {
         return NotificationDAO.deleteNotification(id);
     }
 }

@@ -74,13 +74,13 @@ public class ChoreDAOTest {
 
         ArrayList<Chore> chores = ChoreDAO.getChores(10);
 
-        assertEquals(3, chores.size());
+        assertEquals(2, chores.size());
         assertEquals("Ta ut søpla", chores.get(0).getTitle());
         assertEquals("Husk at grønn pose betyr restavfall!", chores.get(0).getDescription());
         assertEquals(51, chores.get(0).getUserId());
         assertEquals(false, chores.get(0).isDone());
 
-        LocalDateTime localDateTime = LocalDateTime.of(2018, Month.FEBRUARY, 15, 10, 30, 0);
+        LocalDateTime localDateTime = LocalDateTime.of(2017, Month.FEBRUARY, 15, 10, 30, 0);
         java.sql.Date sqlDate = java.sql.Date.valueOf(localDateTime.toLocalDate());
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
@@ -90,8 +90,22 @@ public class ChoreDAOTest {
     }
 
     @Test
-    public void deleteChore() {
+    public void deleteChore() throws Exception{
+        String query = "SELECT * FROM Chore WHERE choreId = 1;";
+        ResultSet rs = st.executeQuery(query);
+        if(rs.next()){
 
+            ChoreDAO.deleteChore(1);
+            ResultSet rs2 = st.executeQuery(query);
+
+            if(rs2.next()){
+                assert false;
+            }else{
+                assert true;
+            }
+        } else {
+            assert false;
+        }
     }
 
     @Test
@@ -122,8 +136,36 @@ public class ChoreDAOTest {
             assertEquals(1, rs2.getInt("done"));
             assertEquals("Vask badet", rs2.getString("title"));
         }
-
         rs2.close();
-
     }
+
+    @Test
+    public void checkChore() throws Exception{
+        Chore chore = new Chore();
+        chore.setUserId(1);
+        chore.setDone(true);
+        chore.setUserId(1);
+
+        String query = "SELECT done FROM Chore WHERE choreId = 1;";
+        ResultSet rs = st.executeQuery(query);
+
+        if(rs.next()){
+            if(rs.getInt("done") == 0){
+
+                ChoreDAO.checkChore(chore);
+                ResultSet rs2 = st.executeQuery(query);
+
+                if(rs2.next()){
+                    if(rs.getInt("done") == 1){
+                        assert true;
+                    }else {
+                        assert false;
+                    }
+                }
+            } else {
+                assert false;
+            }
+        }
+    }
+
 }

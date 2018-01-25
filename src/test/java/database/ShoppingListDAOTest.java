@@ -141,7 +141,7 @@ public class ShoppingListDAOTest {
     }
     @Test
     public void updateUsers() throws Exception {
-        String[] userIds = {"1", "50"};
+        int[] userIds = {1, 50};
         ShoppingListDAO.updateUsers(userIds, 1);
 
         String query = "SELECT * FROM User_Shopping_list WHERE shopping_listId = 1";
