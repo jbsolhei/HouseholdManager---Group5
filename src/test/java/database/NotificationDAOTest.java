@@ -30,7 +30,7 @@ public class NotificationDAOTest {
 
     @Test
     public void updateNotificationStatus() throws Exception {
-        NotificationDAO.updateNotificationStatus(1);
+        NotificationDAO.deleteNotificationStatus(1);
 
         String query = "SELECT * FROM Notification WHERE notificationId = 1";
 
