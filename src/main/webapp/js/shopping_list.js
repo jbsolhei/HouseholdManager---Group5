@@ -314,6 +314,12 @@ function loadSideMenu(){
         }
         $("#shoppingList" + activeSHL).addClass("active");
         showListFromMenu(activeSHL, false);
+    });
+
+    $("#text_input_new_shopping_list").keyup(function(){
+        if($("#text_input_new_shopping_list").val().length>60){
+            $("#text_input_new_shopping_list").val($("#text_input_new_shopping_list").val().substring(0,60));
+        }
     })
 }
 
@@ -506,7 +512,7 @@ function showInputHeader() {
     hidePanelBody();
     $("#title_header").css('display', 'none');
     $("#input_header").css('display', 'block');
-    $("#headlineInput").focus();
+    $("#text_input_new_shopping_list").focus();
     $.each(getCurrentHousehold().residents, function (i, val) {
         userIdsNewShoppingList.push(val.userId);
     });

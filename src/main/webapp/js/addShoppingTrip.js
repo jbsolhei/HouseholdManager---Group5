@@ -30,6 +30,11 @@ function createPage() {
             }
         });
     }
+    $("#tripname").keyup(function(){
+        if($("#tripname").val().length>40){
+            $("#tripname").val($("#tripname").val().substring(0,40));
+        }
+    });
 }
 function addMembers(members) {
     $("#members").empty();
