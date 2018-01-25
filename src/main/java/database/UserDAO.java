@@ -21,19 +21,15 @@ public class UserDAO {
      * @return Returns false if the new user's email or telephone number already exists in the database, if else true
      */
     public static boolean addNewUser(User newUser) {
-        System.out.println(newUser.getProfileImage());
         String email = newUser.getEmail();
         String name = newUser.getName();
         String password = newUser.getPassword();
         String telephone = newUser.getTelephone();
-        String profileImage = "";
-        String query;
-        if(newUser.getProfileImage() != null && newUser.getProfileImage() != "") {
-            profileImage = newUser.getProfileImage();
-            query = "INSERT INTO Person (email, name, password, telephone, image) VALUES (?,?,?,?,?)";
-        } else {
-            query = "INSERT INTO Person (email, name, password, telephone) VALUES (?,?,?,?)";
+        String profileImage = newUser.getProfileImage();
+        if ("".equals(profileImage)) {
+            profileImage = null;
         }
+        String query = "INSERT INTO Person (email, name, password, telephone, image) VALUES (?,?,?,?,?)";
 
 
 
@@ -49,13 +45,13 @@ public class UserDAO {
             st.setString(2, name);
             st.setString(3, hashedPassword);
             st.setString(4, telephone);
-            if(!profileImage.equals("")) {
-                st.setString(5, profileImage);
-            }
+            st.setString(5, profileImage);
 
             st.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
 
         return true;

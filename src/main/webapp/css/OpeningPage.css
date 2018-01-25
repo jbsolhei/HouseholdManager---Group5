@@ -196,3 +196,12 @@ html {
         overflow: hidden !important;
     }
 }
+
+#wrong-credentials-message {
+    display: none;
+}
+
+#wrong-credentials-message>a,
+#wrong-credentials-message>a:hover {
+    color: #d66;
+}
