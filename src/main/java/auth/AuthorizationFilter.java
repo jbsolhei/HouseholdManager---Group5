@@ -13,6 +13,10 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 @Auth
+/**
+ * <p>AuthorizationFilter class.</p>
+ *
+ */
 @Provider
 @Priority(Priorities.AUTHORIZATION)
 public class AuthorizationFilter implements ContainerRequestFilter {
@@ -20,6 +24,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
     @Context
     private ResourceInfo resourceInfo;
 
+    /** {@inheritDoc} */
     @Override
     public void filter(ContainerRequestContext context) throws IOException {
         Method matchedEndpointMethod = resourceInfo.getResourceMethod();

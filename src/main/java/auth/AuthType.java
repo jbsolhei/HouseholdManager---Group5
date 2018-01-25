@@ -1,5 +1,9 @@
 package auth;
 
+/**
+ * <p>AuthType class.</p>
+ *
+ */
 public enum AuthType {
     DEFAULT,
     USER_READ,

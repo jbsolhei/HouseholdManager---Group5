@@ -8,10 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * <p>StatDAO class.</p>
+ *
+ */
 public class StatDAO {
 
     /**
      * Used to get info from the database about how many trips and chores each member of the household does each month.
+     *
      * @param houseId The id of the household that you want to find info about.
      * @param numberOfMonthsAgo How far back the info goes.
      * @return An ArrayList of Stats objects.
@@ -81,6 +86,7 @@ public class StatDAO {
 
     /**
      * Used to get info about how much money is used per month in the household.
+     *
      * @param houseId The id of the household you want to find info about.
      * @param numberOfMonthsAgo How many months back to look for data.
      * @return Returns a double[] where the index decides which month + 1, and the value at each index is how much was
