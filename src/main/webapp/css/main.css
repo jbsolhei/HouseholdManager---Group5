@@ -35,15 +35,18 @@
     display: none;
 }
 
-#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #notifyBellId {
+#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId {
     color: white;
     font-size: 17px;
     cursor: pointer;
 }
-
 #notifyBellId {
+    color: #436470;
+    font-size: 17px;
+    cursor: pointer;
     margin-top: 4px;
 }
+
 
 #currentHouseholdId:hover, #logoutId:hover, #myPageId:hover {
     cursor: pointer;

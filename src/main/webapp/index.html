@@ -129,7 +129,7 @@
 
 
                         <li>
-                            <a id="notifyBellId" class="dropdown-toggle"><i class="glyphicon glyphicon-bell"></i></a>
+                            <a id="notifyBellId" class="dropdown-toggle"><i class="glyphicon glyphicon-bell"></i><div class="numberCircle" id="notificationValue"></div></a>
                             <ul id="notifyDropdownListId" class="noti dropdown-menu list-group" role="menu" aria-labelledby="menu1">
 
                             </ul>
@@ -248,6 +248,25 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+        }
+
+        .numberCircle {
+            position: absolute;
+            float: right;
+            right: 4px;
+            top: 4px;
+
+            width: 18px;
+            height: 18px;
+            padding: 0px;
+            border-radius: 50%;
+
+            background: #ff4d4d;
+            border: 2px solid #ff4d4d;
+            color: #ffffff;
+            text-align: center;
+
+            font: 12px Arial, sans-serif;
         }
     </style>
 
