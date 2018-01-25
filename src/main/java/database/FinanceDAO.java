@@ -10,8 +10,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>FinanceDAO class.</p>
+ *
+ */
 public class FinanceDAO {
 
+    /**
+     * <p>getDebt.</p>
+     *
+     * @param userId a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Debt> getDebt(int userId) {
         ArrayList<Debt> debts = new ArrayList<>();
         int toPerson = 0;
@@ -45,6 +55,12 @@ public class FinanceDAO {
         return null;
     }
 
+    /**
+     * <p>getIncome.</p>
+     *
+     * @param userId a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Debt> getIncome(int userId){
         ArrayList<Debt> income = new ArrayList<>();
         int toPerson = 0;
@@ -79,6 +95,12 @@ public class FinanceDAO {
         return null;
     }
 
+    /**
+     * <p>deleteDebt.</p>
+     *
+     * @param fromUser a int.
+     * @param toUser a int.
+     */
     public static void deleteDebt(int fromUser, int toUser) {
         String query = "DELETE FROM Finance WHERE fromPerson = ? AND toPerson = ?;";
 
@@ -98,6 +120,7 @@ public class FinanceDAO {
 
     /**
      * Updates the users debt according to what they owed each other from before.
+     *
      * @param userId id of the user who buys the items
      * @param sum the total sum
      * @param contributors users that will split the sum

@@ -10,8 +10,18 @@ import java.util.List;
 
 import static java.sql.Types.NULL;
 
+/**
+ * <p>ShoppingTripDAO class.</p>
+ *
+ */
 public class ShoppingTripDAO {
 
+    /**
+     * <p>getShoppingTrips.</p>
+     *
+     * @param houseId a int.
+     * @return a {@link java.util.List} object.
+     */
     public static List<ShoppingTrip> getShoppingTrips(int houseId) {
         String query = "SELECT * FROM Shopping_trip WHERE houseId = ? ORDER BY shopping_tripId DESC;";
 
@@ -44,6 +54,12 @@ public class ShoppingTripDAO {
         return null;
     }
 
+    /**
+     * <p>createShoppingTrip.</p>
+     *
+     * @param shoppingTrip a {@link classes.ShoppingTrip} object.
+     * @return a boolean.
+     */
     public static boolean createShoppingTrip(ShoppingTrip shoppingTrip) {
         String query = "INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, " +
                 "comment, userId, houseId, shopping_listId) VALUES (?,?,?,?,?,?,?)";
@@ -96,6 +112,12 @@ public class ShoppingTripDAO {
     }
 
 
+    /**
+     * <p>getShoppingTrip.</p>
+     *
+     * @param shopping_tripId a int.
+     * @return a {@link classes.ShoppingTrip} object.
+     */
     public static ShoppingTrip getShoppingTrip(int shopping_tripId) {
         String query = "SELECT p.* FROM Person p, User_Shopping_trip us WHERE p.userId=us.userId AND us.shopping_tripId=?";
         String query2 = "SELECT st.*, p.name FROM Shopping_trip st, Person p WHERE " +
@@ -157,6 +179,11 @@ public class ShoppingTripDAO {
         return shoppingTrip;
     }
 
+    /**
+     * <p>deleteShoppingTrip.</p>
+     *
+     * @param shoppingTripId a int.
+     */
     public static void deleteShoppingTrip(int shoppingTripId) {
         String query = "DELETE FROM Shopping_trip WHERE shopping_tripId = ?";
 

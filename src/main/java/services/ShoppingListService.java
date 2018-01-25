@@ -13,6 +13,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
+ * <p>ShoppingListService class.</p>
+ *
  * @author team5
  */
 
@@ -68,6 +70,13 @@ public class ShoppingListService {
         return ShoppingListDAO.getUsersInShoppingList(Integer.parseInt(shoppingListId));
     }
 
+    /**
+     * <p>getItems.</p>
+     *
+     * @param id a {@link java.lang.String} object.
+     * @param shopping_list_id a {@link java.lang.String} object.
+     * @return an array of {@link classes.Item} objects.
+     */
     @GET
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}/items")
@@ -76,6 +85,13 @@ public class ShoppingListService {
         return ShoppingListDAO.getItems(Integer.parseInt(shopping_list_id));
     }
 
+    /**
+     * <p>createShoppingList.</p>
+     *
+     * @param houseId a int.
+     * @param shoppingListName a {@link java.lang.String} object.
+     * @return a int.
+     */
     @POST
     @Auth(AuthType.HOUSEHOLD)
     @Consumes(MediaType.TEXT_PLAIN)
@@ -88,6 +104,7 @@ public class ShoppingListService {
      *
      * @param houseId the hose ID
      * @param shopping_list_id the shopping list ID
+     * @return a boolean.
      */
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
@@ -97,6 +114,13 @@ public class ShoppingListService {
         return (ShoppingListDAO.deleteShoppingList(houseId, shopping_list_id) != -1);
     }
 
+    /**
+     * <p>addItems.</p>
+     *
+     * @param shopping_list_id a int.
+     * @param itemName a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     @POST
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}/items")
@@ -105,6 +129,13 @@ public class ShoppingListService {
         return (ShoppingListDAO.addItem(StringEscapeUtils.escapeHtml4(itemName), shopping_list_id) != -1);
     }
 
+    /**
+     * <p>deleteItem.</p>
+     *
+     * @param shopping_list_id a int.
+     * @param itemId a int.
+     * @return a boolean.
+     */
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{shopping_list_id}/items/{itemId}")
@@ -153,6 +184,7 @@ public class ShoppingListService {
      *
      * @param shoppingListId the shopping list ID
      * @param archived the wanted value of the column
+     * @return a boolean.
      */
     @PUT
     @Auth(AuthType.HOUSEHOLD)

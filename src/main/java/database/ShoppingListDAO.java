@@ -7,6 +7,10 @@ import classes.User;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * <p>ShoppingListDAO class.</p>
+ *
+ */
 public class ShoppingListDAO {
 
     /**
@@ -95,6 +99,7 @@ public class ShoppingListDAO {
 
     /**
      * Gives you a shopping list given the shopping list ID
+     *
      * @param shoppingListId the shopping list ID
      * @return a ShoppingList object
      */
@@ -270,8 +275,9 @@ public class ShoppingListDAO {
     /**
      * Delete
      *
-     * @param houseId
-     * @param shopping_list_id
+     * @param houseId a int.
+     * @param shopping_list_id a int.
+     * @return a int.
      */
     public static int deleteShoppingList(int houseId, int shopping_list_id) {
         String query = "DELETE FROM Shopping_list WHERE houseId = ? AND shopping_listId = ?";
@@ -320,6 +326,7 @@ public class ShoppingListDAO {
      *
      * @param shopping_list_id the shopping list ID of the associated shopping list
      * @param itemId the item ID of the item to be deleted
+     * @return a int.
      */
     public static int deleteItem(int shopping_list_id, int itemId) {
         String query = "DELETE FROM Item WHERE shopping_listId = ? AND itemId = ?;";
@@ -340,8 +347,9 @@ public class ShoppingListDAO {
 
     /**
      * Deletes and inserts rows into the User_Shopping_list
-     * @param userIds
-     * @param shoppingListId
+     *
+     * @param userIds an array of {@link java.lang.String} objects.
+     * @param shoppingListId a int.
      */
     public static void updateUsers(String[] userIds, int shoppingListId) {
         String delete = "DELETE FROM User_Shopping_list WHERE shopping_listId = ?";
@@ -405,6 +413,7 @@ public class ShoppingListDAO {
      *
      * @param shoppingListId the shopping list ID
      * @param archived the wanted column value
+     * @return a int.
      */
     public static int updateArchived(int shoppingListId, boolean archived) {
         String query = "UPDATE Shopping_list SET archived = ? WHERE shopping_listId = ?;";
@@ -476,6 +485,11 @@ public class ShoppingListDAO {
         return itemsArray;
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main (String[] args) {
         int rtn = ShoppingListDAO.updateArchived(69, false);
         System.out.println("stop");
