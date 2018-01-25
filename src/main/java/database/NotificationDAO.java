@@ -52,8 +52,8 @@ public class NotificationDAO {
      * @param notificationId The id of the notification that you want to update.
      * @return Returns true if successful, and false if not.
      */
-    public static boolean deleteNotificationStatus(int notificationId) {
-        String query = "DELETE Notification FROM Notification WHERE notificationId = ?";
+    public static boolean deleteNotification(int notificationId) {
+        String query = "DELETE FROM Notification WHERE notificationId = ?";
         int updated = -1;
 
         try(DBConnector dbc = new DBConnector();

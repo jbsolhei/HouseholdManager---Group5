@@ -60,7 +60,7 @@ public class UserService {
     public boolean updateUser(@PathParam("id") int id, User user) {
         user.setName(StringEscapeUtils.escapeHtml4(user.getName()));
         user.setTelephone(StringEscapeUtils.escapeHtml4(user.getTelephone()));
-        return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName(), user.getBio(), user.getRelationship(), user.getGender());
+        return UserDAO.updateUser(id, user.getEmail(), user.getTelephone(), user.getName(), user.getBio(), user.getRelationship(), user.getGender(), user.getProfileImage());
     }
 
     @POST
