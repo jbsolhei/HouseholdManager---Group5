@@ -56,11 +56,13 @@ a {
     text-decoration: line-through;
 }
 
-#panel_header {
+#title_header {
+    height: 50px;
     display: block;
-}
+ }
 
 #input_header {
+    height: 50px;
     display: none;
 }
 
@@ -77,7 +79,7 @@ a {
     border-radius: 4px;
 }
 
-.footerWrapper, #headerInputWrapper {
+.footerWrapper, #input_header {
     height: 45px;
 }
 
@@ -99,4 +101,8 @@ a {
 
 #emptyListText {
     text-align: center;
+}
+
+#shopping_list_white_space {
+    padding: 25px 0 25px 0;
 }

@@ -39,7 +39,7 @@ function printHouseholdChoresToDashboard(id){
                         }
                         var inputString = "<tr>" +
                             "<td>" + current.title + "</td>" +
-                            "<td>" + current.time.dayOfMonth + "."+current.time.monthValue+"." + current.time.year  + " " + current.time.hour+":"+current.time.minute+ "</td>" +
+                            "<td>" + pad(current.time.dayOfMonth) + "."+pad(current.time.monthValue)+"." + current.time.year  + " " + pad(current.time.hour)+":"+pad(current.time.minute)+ "</td>" +
                             "<td>" + name + "</td>" +
                             "</tr>";
                         $("#dashboard_chores_table_body").append(inputString);

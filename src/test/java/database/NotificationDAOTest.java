@@ -30,7 +30,6 @@ public class NotificationDAOTest {
 
     @Test
     public void deleteNotification() throws Exception {
-        /*
         NotificationDAO.deleteNotification(1);
 
         String query = "SELECT * FROM Notification WHERE notificationId = 1";
@@ -49,7 +48,6 @@ public class NotificationDAOTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        */
     }
 
     @Test

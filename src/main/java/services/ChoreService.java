@@ -6,6 +6,8 @@ import database.ChoreDAO;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 
@@ -54,7 +56,8 @@ public class ChoreService {
     @Auth(AuthType.HOUSEHOLD)
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public int checkChore(@PathParam("id") int houseId, Chore chore){
+    public int checkChore(@PathParam("id") int houseId, Chore chore,@Context ContainerRequestContext context){
+        if (chore.getUserId()!=(int)context.getProperty("session.userId"))return 0;
         return ChoreDAO.editChore(chore);
     }
 
