@@ -61,7 +61,7 @@ function editAdmins() {
             "<tr data-user-index=\"" + i + "\">\n" +
             adminTd + "\n" +
             "<td><div class=\"img-circle\">" +
-            "<img class=\"img-responsive img-pic\" src='"+image+"'>" +
+            "<img alt='profile picture' class=\"img-responsive img-pic\" src='"+image+"'>" +
             "</div></td>\n" +
             "<td>" + user.name + "</td>\n" +
             "<td>" + user.telephone + "</td>\n" +
@@ -208,7 +208,7 @@ function buildMemberTable(){
             "<tr data-user-index=\"" + i + "\">\n" +
             adminTd + "\n" +
             "<td><div class=\"img-circle\">" +
-            "<img class=\"img-responsive img-pic\" src='"+image+"'>" +
+            "<img alt='profile picture' class=\"img-responsive img-pic\" src='"+image+"'>" +
             "</div></td>\n" +
             "<td>" + user.name + "</td>\n" +
             "<td>" + user.telephone + "</td>\n" +
@@ -307,7 +307,7 @@ function showMiniProfile(index){
             } else {
                 image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
             }
-            $("#place_for_profile_pic").html("<img src='" + image + "' id='profile-img'>");
+            $("#place_for_profile_pic").html("<img alt='profile picture' src='" + image + "' id='profile-img'>");
             $("#miniProfile-name").html('<p id="miniProfile-name">' + members[index].name + '</p>');
             $("#miniProfile-email").html('<p id="miniProfile-email">' + members[index].email + '</p>');
             $("#miniProfile-telephone").html('<p id="miniProfile-telephone">' + members[index].telephone + '</p>');
