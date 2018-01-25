@@ -502,6 +502,34 @@ public class HouseholdDAO {
     }
 
     /**
+     * Make existing admin in household not admin.
+     *
+     * @param houseId the id of the house
+     * @param userId the users id.
+     * @return boolean of success
+     */
+    public static boolean unmakeUserAdmin(int houseId,int userId){
+        String query = "UPDATE House_user SET isAdmin = 0 WHERE userId = ? AND houseId = ?;";
+        int updateResult = 0;
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, userId);
+            st.setInt(2, houseId);
+
+            updateResult = st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (updateResult == 0) return false;
+        return true;
+    }
+
+    /**
      * Add user to household and make admin.
      *
      * @param houseId the id of the house
