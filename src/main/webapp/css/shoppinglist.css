@@ -56,11 +56,13 @@ a {
     text-decoration: line-through;
 }
 
-#shopping_list_panel_header {
+#title_header {
+    height: 50px;
     display: block;
-}
+ }
 
 #input_header {
+    height: 50px;
     display: none;
 }
 
