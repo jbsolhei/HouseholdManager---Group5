@@ -131,7 +131,7 @@ public class NotificationDAO {
         ArrayList<Notification> notifications = new ArrayList<>();
         String query =  "SELECT choreId, title, Household.houseId, Household.house_name, chore_datetime FROM Chore\n" +
                         "LEFT JOIN Household ON Chore.houseId = Household.houseId\n" +
-                        "WHERE chore_datetime BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 1 DAY) AND userId = ? AND notificationSent = FALSE;";
+                        "WHERE chore_datetime BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 1 DAY) AND userId = ? AND notificationSent = FALSE AND Chore.done = FALSE";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
