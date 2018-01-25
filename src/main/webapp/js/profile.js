@@ -280,13 +280,13 @@ function updatePassword(password) {
 }
 
 function saveInformation() {
-    var newName = $("#edit_profile_information_name").val();
-    var newEmail = $("#edit_profile_information_email").val();
+    var newName = he.encode($("#edit_profile_information_name").val());
+    var newEmail = he.encode($("#edit_profile_information_email").val());
     var newPhone = $("#edit_profile_information_phone").val();
-    var newBio = $("#edit_profile_information_bio").val();
+    var newBio = he.encode($("#edit_profile_information_bio").val());
     var newRelationship = $("#edit_profile_information_relationship").val();
     var newGender = $("#edit_profile_information_gender").val();
-    var image = $("#edit_profile_information_picture").val();
+    var image = encodeURI($("#edit_profile_information_picture").val());
 
 
     if(newEmail == "" || newPhone == "" || newName == "") {
