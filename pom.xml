@@ -224,6 +224,8 @@
               <exclude>**/database/FinanceDAOTest.java</exclude>
               <exclude>**/database/ChoreDAOTest.java</exclude>
               <exclude>**/database/NotificationDAOTest.java></exclude>
+              <exclude>**/database/StatDAOTest.java></exclude>
+
             </excludes>
         </configuration>
     </plugin>

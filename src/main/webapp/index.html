@@ -107,11 +107,13 @@
                     <a id="sideBarBrandId" class="navbar-brand">
                         <span id="expandSidebarButtonId" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
                     </a>
+
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mobileNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                    <a class="navbar-brand" onclick="swapContent(dashboard)"><img src="https://i.imgur.com/KHVOzlt.png" style="height:200%; display:inline-block; margin-top: -9px;">
                 </div>
                 <div class="navbar-collapse collapse" id="mobileNavbar">
                     <ul class="nav navbar-nav navbar-right">
@@ -157,7 +159,7 @@
                 <li><a onclick="swapContent(chores);closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
                 <li><a onclick="swapContent(stats); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
                 <li><a onclick="swapContent(news); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
-                <li><a class="navbar-brand" onclick="swapContent(profile)" style="max-width: 50%"><img src="images/HHM_logo.png" style="height:150%; display:inline-block;"></a></li>
+                <li><a class="navbar-brand" onclick="swapContent(dashboard)"><img src="https://i.imgur.com/KHVOzlt.png" style="width: 50%; display:inline-block;"></a></li>
             </ul>
         </nav>
     </div>
