@@ -87,7 +87,7 @@ public class ChoreService {
     @Consumes(MediaType.APPLICATION_JSON)
     public int checkChore(@PathParam("id") int houseId, Chore chore,@Context ContainerRequestContext context){
         if (chore.getUserId()!=(int)context.getProperty("session.userId"))return 0;
-        return ChoreDAO.editChore(chore);
+        return ChoreDAO.checkChore(chore);
     }
 
     /**
