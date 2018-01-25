@@ -1,38 +1,17 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-10">
-            <div class="panel row" id="profile-panel-info">
-                <div class="panel-heading">
-                    <label style="float: left"><h4>Finance</h4></label>
+        <div class="col-sm-6">
+            <div class="panel row">
+                <div class="panel-heading bg-success">
+                    <label style="float: left"><h4>People who owe you money</h4></label>
                     <label style="float: right">
                         <i data-toggle="tooltip" data-placement="bottom" title="Click on rows to either:
                         1. Settle payment or
                         2. Send an alert to the user to
-                        request your money." id="financeInfoButton" class="glyphicon glyphicon-question-sign"></i>
+                        request your money." id="financeInfoButton1" class="glyphicon glyphicon-question-sign"></i>
                     </label>
                 </div>
-                <div class="panel-body">
-                    <br>
-                    <div class="row">
-                        <div class="bg-danger col-sm-12">
-                            <h4>People you owe money</h4>
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Sum</th>
-                                </tr>
-                                </thead>
-                                <tbody id="debtTable">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="bg-success col-sm-12">
-                            <h4>People who owe you money</h4>
+                <div class="panel-body scrollWhenFull N">
                         <table class="table">
                             <thead>
                             <tr>
@@ -43,10 +22,34 @@
                             <tbody id="incomeTable">
                             </tbody>
                         </table>
-                        </div>
                     </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel row">
+                <div class="panel-heading bg-danger">
+                    <label style="float: left"><h4>People you owe money</h4></label>
+                    <label style="float: right">
+                        <i data-toggle="tooltip" data-placement="bottom" title="Click on rows to either:
+                        1. Settle payment or
+                        2. Send an alert to the user to
+                        request your money." id="financeInfoButton2" class="glyphicon glyphicon-question-sign"></i>
+                    </label>
                 </div>
-                <div class="panel-footer"></div>
+                <div class="panel-body scrollWhenFull N">
+                    <br>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Sum</th>
+                            </tr>
+                            </thead>
+                            <tbody id="debtTable">
+                            </tbody>
+                        </table>
+                    <br>
+                </div>
             </div>
         </div>
         <div class="col-sm-1"></div>

@@ -6,7 +6,6 @@
 
 .navbar {
     border-radius: 0;!important;
-    height: 54px;
 }
 
 .navbar, a.navbar-brand {
@@ -179,4 +178,36 @@ div.miniprofile {
 
 #members {
     width: 100%;
+}
+
+#sumShoppingList{
+    background-color: #936d6d;
+    color: #FFFFFF;
+    height: 100%;
+    text-align: center;
+    border: 15px solid #936d6d;
+    padding-right: 40px;
+    padding-top: 10px;
+
+}
+
+#headingShoppingTrip{
+    /*border: 15px solid transparent;*/
+}
+
+.createUserInput{
+    display: inline-block;
+    margin-right: 2%;
+    /*float: right;!important;*/
+    width: 90%; !important;
+}
+
+.control-label{
+    width: 100%;!important;
+}
+
+.required_star{
+    margin-right: 1%;
+    display: inline-block;
+    float: left;
 }

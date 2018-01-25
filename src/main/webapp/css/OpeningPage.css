@@ -1,3 +1,4 @@
+
 body {
     background-color: white;
 }
@@ -15,44 +16,33 @@ html {
 
 .navbar {
     margin-bottom: 0;
-    height: 6vh;
-    z-index: 1000;
+    z-index: 999;
+    display: table;
+    width: 100%;
 }
 
-#myNavbar a {
-    font-size: 2.5vh;
-    max-height: 6vh;
-}
 
 .navbar-brand {
-    width: auto;
-    height: 100%;
-    padding: 0.5vh;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+    height: 60px;
 }
 
-.navbar-brand>img {
+#logo {
+    height: 30px;
     width: auto;
-    height: 4.5vh;
-    padding: 0px;
-    margin-left: 1.2vh;
+    margin-right: 10px;
 }
 
-#myNavbar>ul{
-    padding-top: 0px;
-    padding-bottom: 0px;
+.loginA {
+    padding-top: 20px !important;
+    height: 60px;
 }
 
 #email, #password {
-    border-radius: 17vh;
-    height: 4vh;
-}
-
-#passwordInputId, #emailInputId {
-    margin-top: 1.2vh;
-    margin-right: 1.2vh;
-    margin-bottom: 1.2vh;
-    height: 1vh;
-    color: black;
+    border-radius: 15px;
+    height: 30px;
 }
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
@@ -62,9 +52,10 @@ html {
 
 #mainOpeningPageDivId {
     height: 100vh;
-    background: url("../images/longAssPhoto.png") no-repeat;
     background-size: 100%, 100%;
-    background-color: #f6f9f9;
+    background: #f6f9f9 url("../images/longAssPhoto.png");
+    background-repeat:no-repeat;
+    background-size:cover;
 }
 
 #loginButton:hover {
@@ -119,6 +110,7 @@ html {
     height: 50%;
 }
 
+
 /* FOR THE LOADING SCREEN */
 .loader {
     border: 1.6vh solid #f3f3f3;
@@ -153,6 +145,7 @@ html {
     background-color: rgba(0,0,0,0.2);
 }
 
+
 #centerDiv {
     position: absolute;
     left: 50%;
@@ -163,6 +156,7 @@ html {
 
 /* FOR MOBILE */
 @media (max-width: 767px) {
+
     #opTextDivId {
         background-color: rgba(255, 165, 0, 0.0);
         width: 100%;
@@ -178,6 +172,18 @@ html {
         align-items: center;
         justify-content: center;
 
+    }
+
+    #logo {
+        display: none;
+    }
+
+    #brandText {
+        font-size: 20px;
+    }
+
+    #emailInputId, #passwordInputId {
+        margin-bottom: 10px;
     }
 
     #opTextId {

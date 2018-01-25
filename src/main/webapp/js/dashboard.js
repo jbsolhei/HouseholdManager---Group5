@@ -28,7 +28,9 @@ function printHouseholdChoresToDashboard(id){
             if (data !== null && data !==undefined) {
                 for (var i = 0; i < data.length; i++) {
                     var current = data[i];
-                    if(!(today>toJSDate(current.time)&&current.done)){
+                    if((today.getFullYear()===toJSDate(current.time).getFullYear()&&
+                            today.getMonth()===toJSDate(current.time).getMonth()&&
+                            today.getDate()===toJSDate(current.time).getDate()&&!current.done)){
                         if (current.user === undefined || current.user === null) {
                             var name = "None";
                         } else {

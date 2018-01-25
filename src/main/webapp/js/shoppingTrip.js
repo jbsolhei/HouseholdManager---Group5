@@ -67,11 +67,11 @@ function viewInformation(shoppingTripId, i) {
 }
 
 function updateInformation(result) {
-    $("#heading").html("<h4>" + result.name + "</h4>")
+    $("#headingShoppingTrip").html("<h4>" + result.name + "</h4>")
     $("#userAndDateShoppingtrip").html("<p><small>Registered by " +result.userName+"   on   "+result.shoppingDate.dayOfMonth+"-" +result.shoppingDate.month+"-"+result.shoppingDate.year+"</small></p>");
     if (result.comment == "") $("#comments").html("<p class='STHeaderText'><b>Comment:</b></p><p id='noCommentID'>No Comments</p><br>");
     else $("#comments").html("<p class='STHeaderText'><b>Comment:</b></p><p>"+result.comment+"</p><br>");
-    $("#sum").html("<p class='pull-right'>Sum: "+result.expence+",-</p>")
+    $("#sumShoppingList").html("<p class='pull-right'>"+result.expence+",-</p>")
     if(result.shopping_listName === null) {
         $("#shoppinglist").html("<p class='STHeaderText'><b>No attached shopping list</b></p>");
     } else {

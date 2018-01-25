@@ -25,7 +25,8 @@ public class Debt {
      * @return a double.
      */
     public double getAmount() {
-        return amount;
+
+        return Math.round(amount * 100)/100;
     }
 
     /**
@@ -43,7 +44,6 @@ public class Debt {
      * @param amount a double.
      */
     public void setAmount(double amount) {
-        this.amount = amount;
     }
 
     /**

@@ -38,8 +38,8 @@ public class NotificationService {
      */
     @DELETE
     @Auth(AuthType.NOTIFICATION_DELETE)
-    @Path("/{id}/deleteStatus")
-    public boolean updateNotificationStatus(@PathParam("id") int id) {
+    @Path("/{id}")
+    public boolean deleteNotification(@PathParam("id") int id) {
         return NotificationDAO.deleteNotification(id);
     }
 }
