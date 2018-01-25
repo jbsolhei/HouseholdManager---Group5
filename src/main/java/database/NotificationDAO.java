@@ -53,7 +53,7 @@ public class NotificationDAO {
      * @return Returns true if successful, and false if not.
      */
     public static boolean deleteNotification(int notificationId) {
-        String query = "DELETE Notification FROM Notification WHERE notificationId = ?";
+        String query = "DELETE FROM Notification WHERE notificationId = ?";
         int updated = -1;
 
         try(DBConnector dbc = new DBConnector();
