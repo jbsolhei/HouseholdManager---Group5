@@ -348,10 +348,10 @@ public class ShoppingListDAO {
     /**
      * Deletes and inserts rows into the User_Shopping_list
      *
-     * @param userIds an array of {@link java.lang.String} objects.
+     * @param userIds an array of user IDs.
      * @param shoppingListId a int.
      */
-    public static void updateUsers(String[] userIds, int shoppingListId) {
+    public static void updateUsers(int[] userIds, int shoppingListId) {
         String delete = "DELETE FROM User_Shopping_list WHERE shopping_listId = ?";
         String query = "INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES (?, ?);";
 
@@ -363,11 +363,11 @@ public class ShoppingListDAO {
             del_st.setInt(1, shoppingListId);
             del_st.executeUpdate();
 
-            for (String userId : userIds) {
-                st.setInt(1, Integer.parseInt(userId));
+            for (int userId : userIds) {
+                st.setInt(1, userId);
                 st.setInt(2, shoppingListId);
                 int rtn = st.executeUpdate();
-                if (rtn < 0) System.err.println("Could not update: " + userIds + " into shoppinglist where shoppinglistid = " + shoppingListId);
+                if (rtn < 0) System.err.println("Could not update: " + userId + " into shoppinglist where shoppinglistid = " + shoppingListId);
             }
             
         } catch (SQLException e) {
