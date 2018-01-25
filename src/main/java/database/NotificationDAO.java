@@ -17,7 +17,7 @@ public class NotificationDAO {
      */
     public static ArrayList<Notification> getNotifications(int userId) {
 
-        String query = "SELECT userId, Notification.houseId, notificationId, message, notificationDateTime, isRead, house_name FROM Notification LEFT JOIN Household ON Notification.houseId = Household.houseId WHERE userId = ? AND isRead = FALSE";
+        String query = "SELECT userId, Notification.houseId, notificationId, message, notificationDateTime, house_name FROM Notification LEFT JOIN Household ON Notification.houseId = Household.houseId WHERE userId = ?";
         ArrayList<Notification> notifications = new ArrayList<>();
 
         try (DBConnector dbc = new DBConnector();
@@ -34,7 +34,6 @@ public class NotificationDAO {
                     notification.setNotificationId(rs.getInt("notificationId"));
                     notification.setMessage(rs.getString("message"));
                     notification.setDateTime(rs.getString("notificationDateTime"));
-                    notification.setRead(rs.getBoolean("isRead"));
                     notification.setHouseName(rs.getString("house_name"));
 
                     notifications.add(notification);
@@ -49,12 +48,12 @@ public class NotificationDAO {
     }
 
     /**
-     * Updates the isRead column of a notification to true.
+     * Deletes a notification.
      * @param notificationId The id of the notification that you want to update.
      * @return Returns true if successful, and false if not.
      */
-    public static boolean updateNotificationStatus(int notificationId) {
-        String query = "UPDATE Notification SET isRead = TRUE WHERE notificationId = ?";
+    public static boolean deleteNotification(int notificationId) {
+        String query = "DELETE Notification FROM Notification WHERE notificationId = ?";
         int updated = -1;
 
         try(DBConnector dbc = new DBConnector();

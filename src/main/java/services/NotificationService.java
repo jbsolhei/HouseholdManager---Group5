@@ -17,9 +17,9 @@ public class NotificationService {
        return NotificationDAO.addNotificationToDB(notification);
     }
 
-    @PUT
-    @Path("/{id}/updateStatus")
-    public boolean updateNotificationStatus(@PathParam("id") int id) {
-        return NotificationDAO.updateNotificationStatus(id);
+    @DELETE
+    @Path("/{id}/deleteNotification")
+    public boolean updateNotification(@PathParam("id") int id) {
+        return NotificationDAO.deleteNotification(id);
     }
 }
