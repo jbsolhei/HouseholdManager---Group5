@@ -130,9 +130,9 @@ public class UserDAO {
      * @param newName new Name
      * @return True or false depending on success.
      */
-    public static boolean updateUser(int id, String newEmail, String newTelephone, String newName, String bio, String relationship, String gender) {
+    public static boolean updateUser(int id, String newEmail, String newTelephone, String newName, String bio, String relationship, String gender, String image) {
         String getQuery = "SELECT * FROM Person WHERE email=? AND userId NOT LIKE ?";
-        String query = "UPDATE Person SET email = ?, telephone = ?, name = ?, bio = ?, relationship = ?, gender = ? WHERE userId = ?";
+        String query = "UPDATE Person SET email = ?, telephone = ?, name = ?, bio = ?, relationship = ?, gender = ?, image = ? WHERE userId = ?";
         boolean userInfoUpdated = false;
 
         try (DBConnector dbc = new DBConnector();
@@ -155,7 +155,9 @@ public class UserDAO {
                 st.setString(4, bio);
                 st.setString(5, relationship);
                 st.setString(6, gender);
-                st.setInt(7, id);
+                st.setString(7, image);
+                st.setInt(8, id);
+
 
                 int update = st.executeUpdate();
 

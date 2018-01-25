@@ -273,6 +273,7 @@ function saveInformation() {
     var newBio = $("#edit_profile_information_bio").val();
     var newRelationship = $("#edit_profile_information_relationship").val();
     var newGender = $("#edit_profile_information_gender").val();
+    var image = $("#edit_profile_information_picture").val();
 
 
     if(newEmail == "" || newPhone == "" || newName == "") {
@@ -285,7 +286,8 @@ function saveInformation() {
             "telephone": newPhone,
             "relationship": newRelationship,
             "bio": newBio,
-            "gender": newGender
+            "gender": newGender,
+            "profileImage" : image
         };
         ajaxAuth({
             url: "res/user/" + getCurrentUser().userId,
