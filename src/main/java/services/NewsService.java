@@ -14,10 +14,18 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
 /**
+ * <p>NewsService class.</p>
+ *
  * @author team5
  */
 @Path("household/{id}/news")
 public class NewsService {
+    /**
+     * <p>getNews.</p>
+     *
+     * @param houseId a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     @GET
     @Auth(AuthType.HOUSEHOLD)
     @Produces(MediaType.APPLICATION_JSON)
@@ -25,6 +33,14 @@ public class NewsService {
         return NewsDAO.getNews(houseId);
     }
 
+    /**
+     * <p>postNews.</p>
+     *
+     * @param houseId a int.
+     * @param news a {@link classes.News} object.
+     * @param context a {@link javax.ws.rs.container.ContainerRequestContext} object.
+     * @return a {@link javax.ws.rs.core.Response} object.
+     */
     @POST
     @Auth(AuthType.HOUSEHOLD)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -40,6 +56,12 @@ public class NewsService {
         return Response.notModified().build();
     }
 
+    /**
+     * <p>deleteNews.</p>
+     *
+     * @param msgId a int.
+     * @return a {@link javax.ws.rs.core.Response} object.
+     */
     @DELETE
     @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("/{msgId}")

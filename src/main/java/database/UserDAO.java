@@ -8,10 +8,15 @@ import java.util.ArrayList;
 import java.util.Base64;
 
 
+/**
+ * <p>UserDAO class.</p>
+ *
+ */
 public class UserDAO {
 
     /**
      * Used to create a new user in the database from a User object.
+     *
      * @param newUser a User object
      * @return Returns false if the new user's email or telephone number already exists in the database, if else true
      */
@@ -58,6 +63,7 @@ public class UserDAO {
 
     /**
      * Checks if a an email or a telephone number already exists in the database.
+     *
      * @param email The email that you want to check if exists
      * @param telephone The telephone number that you want to check if exists
      * @return Returns true if the telephone number or the email already exists and false if not
@@ -88,6 +94,7 @@ public class UserDAO {
 
     /**
      * Get a user from a user ID.
+     *
      * @param userId the user ID
      * @return a User object, or null if a user with the given ID doesn't exist.
      */
@@ -124,11 +131,16 @@ public class UserDAO {
     /**
      * Used to update email, name and the telephone of a user based on email.
      * Returns false if the user does not exist and true if the update was successful.
+     *
      * @param id The user's id in the database
      * @param newEmail New email
      * @param newTelephone new Telephone number
      * @param newName new Name
      * @return True or false depending on success.
+     * @param bio a {@link java.lang.String} object.
+     * @param relationship a {@link java.lang.String} object.
+     * @param gender a {@link java.lang.String} object.
+     * @param image a {@link java.lang.String} object.
      */
     public static boolean updateUser(int id, String newEmail, String newTelephone, String newName, String bio, String relationship, String gender, String image) {
         String getQuery = "SELECT * FROM Person WHERE email=? AND userId NOT LIKE ?";
@@ -175,6 +187,7 @@ public class UserDAO {
 
     /**
      * Used to delete users from the database based on the users email.
+     *
      * @param id The user's id
      */
     public static void deleteUser(int id) {
@@ -196,6 +209,7 @@ public class UserDAO {
      * Used to reset a user's password when forgot. Takes the user's email, and generates a
      * random password that gets sent to the user's email. A hashed version of the new
      * password is inserted to the database.
+     *
      * @param email The email of the user who's password is going to be reset.
      * @return Returns true if the password was successfully reset. Returns false if the email is non existent. in
      * the database.
@@ -235,6 +249,7 @@ public class UserDAO {
 
     /**
      * Used to update a user's password based on the his/hers email.
+     *
      * @param id The user's id
      * @param newPassword The new password that the user wants
      * @return False if the user does not exist and true if successful.
@@ -267,6 +282,7 @@ public class UserDAO {
 
     /**
      * Used to get all the Households that a user is connected to
+     *
      * @param userId The id of the user
      * @return An ArrayList of Household objects
      */
@@ -299,6 +315,7 @@ public class UserDAO {
 
     /**
      * Used to get a user's tasks based on the user's id
+     *
      * @param userId The id of the user
      * @return Returns an ArrayList of todo objects
      */
@@ -335,8 +352,10 @@ public class UserDAO {
 
     /**
      * Method for checking if current password is correct, when changing password
+     *
      * @param id the user id
      * @return a boolean, true if the password is correct, else false.
+     * @param password a {@link java.lang.String} object.
      */
     public static boolean getPasswordMatch(int id, String password) {
         String query = "SELECT password FROM Person WHERE userId = ?";

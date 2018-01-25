@@ -17,6 +17,7 @@ import java.io.IOException;
 @Priority(Priorities.HEADER_DECORATOR)
 public class CORSFilter implements ContainerResponseFilter {
 
+    /** {@inheritDoc} */
     @Override
     public void filter(ContainerRequestContext containerRequestContext,
                        ContainerResponseContext containerResponseContext) throws IOException {

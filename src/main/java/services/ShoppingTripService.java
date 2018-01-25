@@ -12,9 +12,19 @@ import javax.ws.rs.core.MediaType;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * <p>ShoppingTripService class.</p>
+ *
+ */
 @Path("shoppingtrip")
 public class ShoppingTripService {
 
+    /**
+     * <p>getShoppingTrips.</p>
+     *
+     * @param houseId a int.
+     * @return a {@link java.util.List} object.
+     */
     @GET
     @Auth(AuthType.HOUSEHOLD)
     @Path("/{id}")
@@ -23,6 +33,12 @@ public class ShoppingTripService {
         return ShoppingTripDAO.getShoppingTrips(houseId);
     }
 
+    /**
+     * <p>createShoppingTrip.</p>
+     *
+     * @param shoppingTrip a {@link classes.ShoppingTrip} object.
+     * @return a boolean.
+     */
     @POST
     @Auth
     @Consumes (MediaType.APPLICATION_JSON)
@@ -35,6 +51,12 @@ public class ShoppingTripService {
         return ShoppingTripDAO.createShoppingTrip(shoppingTrip);
     }
 
+    /**
+     * <p>getShoppingTrip.</p>
+     *
+     * @param shoppingTripid a int.
+     * @return a {@link classes.ShoppingTrip} object.
+     */
     @GET
     @Auth
     @Path("/{id}/trip")
@@ -43,6 +65,11 @@ public class ShoppingTripService {
         return ShoppingTripDAO.getShoppingTrip(shoppingTripid);
     }
 
+    /**
+     * <p>deleteShoppingTrip.</p>
+     *
+     * @param shoppingTripId a int.
+     */
     @DELETE
     @Auth
     @Path("/{id}")
