@@ -144,15 +144,30 @@ public class HouseHoldService {
      * <p>makeAdmin.</p>
      *
      * @param id a int.
-     * @param userId a int.
+     * @param user an user object.
      * @return a boolean.
      */
     @PUT
     @Auth(AuthType.HOUSEHOLD_ADMIN)
     @Path("/{id}/admin")
-    @Consumes(MediaType.TEXT_PLAIN)
-    public boolean makeAdmin(@PathParam("id") int id, int userId) {
-        return HouseholdDAO.makeUserAdmin(id, userId);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean makeAdmin(@PathParam("id") int id, User user) {
+        return HouseholdDAO.makeUserAdmin(id, user.getUserId());
+    }
+
+    /**
+     * <p>unmakeAdmin. Make an admin not admin</p>
+     *
+     * @param id a int.
+     * @param user an user object.
+     * @return a boolean.
+     */
+    @PUT
+    @Auth(AuthType.HOUSEHOLD_ADMIN)
+    @Path("/{id}/unmakeAdmin")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public boolean unmakeAdmin(@PathParam("id") int id, User user) {
+        return HouseholdDAO.unmakeUserAdmin(id, user.getUserId());
     }
 
     /**

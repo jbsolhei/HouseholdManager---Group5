@@ -15,6 +15,8 @@ INSERT INTO Household (houseId,house_name,house_address) VALUES (3,'Deletehouse'
 
 INSERT INTO House_user (houseId,userId,isAdmin) VALUES (1,33,0);
 INSERT INTO House_user (houseId,userId,isAdmin) VALUES (1,34,0);
+INSERT INTO House_user (houseId,userId,isAdmin) VALUES (1,143,1);
+
 
 INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (1, 'Shopping list 1', 1);
 INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (2, 'Shopping list 2', 1);
