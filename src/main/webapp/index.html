@@ -110,13 +110,12 @@
                     <a id="sideBarBrandId" class="navbar-brand">
                         <span id="expandSidebarButtonId" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
                     </a>
-
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mobileNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" onclick="swapContent(dashboard)"><img src="https://i.imgur.com/KHVOzlt.png" style="height:200%; display:inline-block; margin-top: -9px;">
+
                 </div>
                 <div class="navbar-collapse collapse" id="mobileNavbar">
                     <ul class="nav navbar-nav navbar-right">
@@ -128,6 +127,7 @@
                         <li><a class="visible-xs" onclick="swapContent(statistics)">Statistics</a></li>
                         <li><a class="visible-xs" onclick="swapContent(news)">News</a></li>
 
+                        <li><a id="homePageId" onclick="swapContent(dashboard)">Home</a></li>
 
                         <li>
                             <a id="notifyBellId" class="dropdown-toggle"><i class="glyphicon glyphicon-bell"></i></a>

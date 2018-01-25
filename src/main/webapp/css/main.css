@@ -35,7 +35,7 @@
     display: none;
 }
 
-#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #notifyBellId {
+#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #notifyBellId, #homePageId {
     color: white;
     font-size: 17px;
     cursor: pointer;
@@ -45,7 +45,7 @@
     margin-top: 4px;
 }
 
-#currentHouseholdId:hover, #logoutId:hover, #myPageId:hover {
+#currentHouseholdId:hover, #logoutId:hover, #myPageId:hover, #homePageId:hover {
     cursor: pointer;
     background-color: #162B32;
 }
@@ -148,6 +148,10 @@ body {
 #verticalLine {
     border-right: 1px solid black;
     height: auto;
+}
+#homePageId{
+    color: #ffffff;
+    padding-right: 75vh;
 }
 
 #members {
