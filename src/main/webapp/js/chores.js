@@ -13,6 +13,30 @@ function readyChores(){
     console.log("readyChores()");
     switchChoresContent(0);
     listUserChores();
+
+
+    $("#newChoreTitleInput").keyup(function(){
+        if($("#newChoreTitleInput").val().length>60){
+            $("#newChoreTitleInput").val($("#newChoreTitleInput").val().substring(0,60));
+        }
+    });
+    $("#editChoreTitleInput").keyup(function(){
+        if($("#editChoreTitleInput").val().length>60){
+            $("#editChoreTitleInput").val($("#editChoreTitleInput").val().substring(0,60));
+        }
+    });
+    $("#newChoreDescriptionInput").keyup(function(){
+        if($("#newChoreDescriptionInput").val().length>240){
+            $("#newChoreDescriptionInput").val($("#newChoreDescriptionInput").val().substring(0,240));
+        }
+        $("#newChoreDescriptionControl").text("(" + $("#newChoreDescriptionInput").val().length + "/240)");
+    });
+    $("#editChoreDescriptionInput").keyup(function(){
+        if($("#editChoreDescriptionInput").val().length>240){
+            $("#editChoreDescriptionInput").val($("#editChoreDescriptionInput").val().substring(0,240));
+        }
+        $("#editChoreDescriptionControl").text("(" + $("#editChoreDescriptionInput").val().length + "/240)");
+    });
 }
 
 function listUserChores(){
@@ -37,7 +61,7 @@ function listUserChores(){
                 "<td id='userChoreListElhh"+i+"'></td>" +
                 "<td>"+val.time.dayOfMonth + "."+val.time.monthValue+"." + val.time.year+"</td></tr>";
             getHouseholdFromId(val.houseId, function (data) {
-               $("#userChoreListElhh"+i).text(data.name);
+               $("#userChoreListElhh" + i).text(data.name);
             });
             totChore++;
         });
@@ -57,9 +81,17 @@ function toJSDate(ltd) {
     return new Date(y,mon,d,h,min);
 }
 
+function sortByDate(array){
+    array.sort(function (a,b) {
+        return toJSDate(a.time) - toJSDate(b.time);
+    });
+    return array;
+}
+
 function listHouseholdChores() {
     console.log("listHouseholdChores()");
     getChoresForHousehold(getCurrentHousehold().houseId, function(data){
+        data = sortByDate(data);
         householdChoreList = [];
         var hhChoreCounter = 0;
         var leftLowerTableBodyHTML = "";
@@ -101,6 +133,8 @@ function getSelectedChoreFromUpdatedTotal(id){
         if(val.choreId===id){
             selectedChore = val;
             showChoreInfo(val);
+            $(".text-muted").removeClass("text-muted");
+            $("#choreTab"+id).addClass("text-muted");
             choreSent = true;
         }
     });
@@ -109,6 +143,8 @@ function getSelectedChoreFromUpdatedTotal(id){
             if(val.choreId===id){
                 selectedChore = val;
                 showChoreInfo(val);
+                $(".text-muted").removeClass("text-muted");
+                $("#choreTab"+id).addClass("text-muted");
             }
         });
     }
@@ -130,6 +166,7 @@ function deleteSelectedChore(id){
         success: function(){
             console.log("Chore deleted.");
             selectedChore = undefined;
+            readyChores();
             switchChoresContent(3);
         },
         error: function(data){
@@ -261,7 +298,7 @@ function editChore(chore){
     switchChoresContent(2);
     $("#editChoreTitleInput").val(he.unescape(chore.title));
     $("#editChoreDescriptionInput").val(he.unescape(chore.description));
-    $("#editChoreDropdownButton").html(chore.user==null?"No user <span class=\"caret\"></span>":chore.user.name + ' <span class="caret"></span>');
+    $("#editChoreDescriptionControl").text("(" + $("#editChoreDescriptionInput").val().length + "/240)");    $("#editChoreDropdownButton").html(chore.user==null?"No user <span class=\"caret\"></span>":chore.user.name + ' <span class="caret"></span>');
     document.getElementById("editChoreLocalTimeInput").value = (chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
     console.log(chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
 }

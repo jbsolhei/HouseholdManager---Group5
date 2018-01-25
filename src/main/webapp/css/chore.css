@@ -62,7 +62,6 @@
 }
 
 .clickableChore:hover{
-    background-color: rgba(19, 66, 2, 0.1) !important;
     cursor: pointer;
 }
 
@@ -78,4 +77,8 @@
 
 .missingChoreInput{
     background-color: tomato;
+}
+
+.selectedChoreListElement{
+
 }
