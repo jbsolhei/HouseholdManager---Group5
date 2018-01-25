@@ -108,4 +108,22 @@ public class FinanceDAOTest {
 
 
     }
+
+    @Test
+    public void deleteDebt() throws Exception{
+        String query = "SELECT * FROM Finance WHERE fromperson = 101 AND toperson = 103;";
+
+        ResultSet rs = st.executeQuery(query);
+
+        if(rs.next()){
+            FinanceDAO.deleteDebt(101, 103);
+
+            ResultSet rs2 = st.executeQuery(query);
+            if(rs2.next()){
+                assert false;
+            } else {
+                assert true;
+            }
+        }
+    }
 }

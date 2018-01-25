@@ -199,6 +199,11 @@ public class ChoreDAO {
         return -1;
     }
 
+    /**
+     * "Cheks" a chore that is done.
+     * @param chore
+     * @return -1 if not ok, return st.executeUpdate if ok?
+     */
     public static int checkChore(Chore chore){
         String query = "UPDATE Chore SET done = ? WHERE choreId = ?;";
         try (DBConnector dbc = new DBConnector();
