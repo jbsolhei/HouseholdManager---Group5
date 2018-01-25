@@ -44,7 +44,7 @@ var dateTime =    currentdate.getFullYear() + "-"
  */
 function deleteNotification(notificationId) {
     ajaxAuth({
-        url: "res/notification/" + notificationId + "/deleteNotification",
+        url: "res/notification/" + notificationId,
         type: "DELETE",
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
