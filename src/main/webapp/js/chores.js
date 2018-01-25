@@ -7,6 +7,7 @@ var selectedUserForNewChore = null;
 var userChoreList;
 var householdChoreList;
 var selectedChore;
+var totChore = 0;
 
 function readyChores(){
     console.log("readyChores()");
@@ -19,20 +20,26 @@ function listUserChores(){
     getChoresForUser(getCurrentUser().userId,function(data){
         userChoreList = data;
         var leftUpperTableBodyHTML = "";
+        var today = new Date();
+
         $.each(data,function(i,val){
-            if(Date.now()>toJSDate(val.time)&&!val.done){
+            if(today>toJSDate(val.time)&&!val.done){
                 leftUpperTableBodyHTML+="<tr class='clickableChore overdueChoreListElement'";
-            }else if(Date.now()>toJSDate(val.time)&&val.done){
+            }else if(today>toJSDate(val.time)&&val.done){
                 leftUpperTableBodyHTML += "<tr class='hide'";
-            }else if(Date.now()<toJSDate(val.time)&&val.done){
+            }else if(today<toJSDate(val.time)&&val.done){
                 leftUpperTableBodyHTML+="<tr class='clickableChore checkedChoreListElement'";
             }else{
                 leftUpperTableBodyHTML += "<tr class='clickableChore'";
             }
-            leftUpperTableBodyHTML += " onclick='selectChoreInfo(0,"+i+")'>" +
+            leftUpperTableBodyHTML += " id='choreTab"+totChore+"' onclick='selectChoreInfo(0,"+i+")'>" +
                 "<td>"+val.title+"</td>" +
-                "<td>"+val.user.name+"</td>" +
+                "<td id='userChoreListElhh"+i+"'></td>" +
                 "<td>"+val.time.dayOfMonth + "."+val.time.monthValue+"." + val.time.year+"</td></tr>";
+            getHouseholdFromId(val.houseId, function (data) {
+               $("#userChoreListElhh"+i).text(data.name);
+            });
+            totChore++;
         });
         $("#choresLeftUpperTableBody").html(leftUpperTableBodyHTML);
         listHouseholdChores();
@@ -53,26 +60,28 @@ function listHouseholdChores() {
     getChoresForHousehold(getCurrentHousehold().houseId, function(data){
         householdChoreList = data;
         var leftLowerTableBodyHTML = "";
+        var today = new Date;
         $.each(data,function(i,val){
-            var today = new Date;
-            if(today>toJSDate(val.time)&&!val.done){
-                leftLowerTableBodyHTML+="<tr class='clickableChore overdueChoreListElement'";
-            }else if(today>toJSDate(val.time)&&val.done){
-                leftLowerTableBodyHTML += "<tr class='hide'";
-            }else if(today<toJSDate(val.time)&&val.done){
-                leftLowerTableBodyHTML+="<tr class='clickableChore checkedChoreListElement'";
-            }else{
-                leftLowerTableBodyHTML += "<tr class='clickableChore'";
+            if(val.userId!==getCurrentUser().userId){
+                if(today>toJSDate(val.time)&&!val.done){
+                    leftLowerTableBodyHTML+="<tr class='clickableChore overdueChoreListElement'";
+                }else if(today>toJSDate(val.time)&&val.done){
+                    leftLowerTableBodyHTML += "<tr class='hide'";
+                }else if(today<toJSDate(val.time)&&val.done){
+                    leftLowerTableBodyHTML+="<tr class='clickableChore checkedChoreListElement'";
+                }else{
+                    leftLowerTableBodyHTML += "<tr class='clickableChore'";
+                }
+                leftLowerTableBodyHTML += " onclick='selectChoreInfo(1,"+i+")'>" +
+                    "<td>"+val.title+"</td>";
+                if(val.user==null){
+                    leftLowerTableBodyHTML += "<td>No User</td>"
+                } else {
+                    leftLowerTableBodyHTML += "<td>"+val.user.name+"</td>"
+                }
+                leftLowerTableBodyHTML +=
+                    "<td>"+val.time.dayOfMonth + "."+val.time.monthValue+"." + val.time.year+"</td></tr>";
             }
-            leftLowerTableBodyHTML += " onclick='selectChoreInfo(1,"+i+")'>" +
-                "<td>"+val.title+"</td>";
-            if(val.user==null){
-                leftLowerTableBodyHTML += "<td>No User</td>"
-            } else {
-                leftLowerTableBodyHTML += "<td>"+val.user.name+"</td>"
-            }
-            leftLowerTableBodyHTML +=
-                "<td>"+val.time.dayOfMonth + "."+val.time.monthValue+"." + val.time.year+"</td></tr>";
         });
         $("#choresLeftLowerTableBody").html(leftLowerTableBodyHTML);
         if(selectedChore!==undefined) {
@@ -127,6 +136,7 @@ function selectChoreInfo(from, choreId){
 }
 function showChoreInfo(chore){
     console.log("showChoreInfo");
+    $(".activeChoreTab").removeClass("activeChoreTab");
     if(chore!==undefined){
         switchChoresContent(0);
         $("#choresRightUpperPanelHeading").html(chore.title);
