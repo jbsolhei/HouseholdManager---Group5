@@ -23,7 +23,8 @@ function ajaxAuth(attr) {
     attributes.headers.Authorization = "Bearer " + window.localStorage.getItem("sessionToken");
 
     attributes.error = function (xhr, textStatus, exceptionThrown) {
-        console.log("[AjaxAuth] Error: " + xhr.status);
+        console.log("[AjaxAuth] Error: " + xhr.status + ": " + textStatus + ", " + exceptionThrown);
+        console.trace();
 
         if (typeof attr.error === "function") {
             attr.error(xhr, textStatus, exceptionThrown);
