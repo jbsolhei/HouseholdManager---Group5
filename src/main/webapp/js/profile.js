@@ -107,6 +107,11 @@ function printTasksToWall(id){
 }
 
 function editUserInfo() {
+    $("#edit_profile_picture").html("");
+    $("#edit_profile_picture").html("<br><label class='control-label profile_labels' for='profile_information_list_picture'>Profile picture:</label>" +
+    "<input class='form-control' type='text' id='edit_profile_information_picture'" +
+        "value='"+currUs.profileImage+"' placeholder='Profile picture url..'>");
+
     $("#edit_profile_name").html("");
     $("#edit_profile_name").html("<h3><input class='form-control' type='text' id='edit_profile_information_name'" +
         "value='"+currUs.name+"' placeholder='Name'></h3>");
