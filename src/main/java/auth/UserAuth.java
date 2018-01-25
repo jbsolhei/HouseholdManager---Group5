@@ -148,6 +148,26 @@ public class UserAuth {
     }
 
     /**
+     * Checks if a user can delete a notification, that is, only if the user is the associated
+     * user of the notification.
+     *
+     * @param userId the user ID
+     * @param notificationId the notification ID
+     * @return whether the user can delete the notification or not
+     */
+    public static boolean canUserDeleteNotification(int userId, int notificationId) {
+        String query = "SELECT Notification.notificationId FROM Notification " +
+                "WHERE Notification.userId = ? AND Notification.notificationId = ?";
+
+        try {
+            return isInRelation(query, userId, notificationId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * Checks whether the result of the given query has at least one row or not.
      * @param query a prepared statement query
      * @param id1 the first ID in the prepared statement
