@@ -529,14 +529,14 @@ function hideInputHeader() {
  * Function to create a new shoppingList
  * Automatically adds all users in the household to the list automatically
  */
-function createNewShoppingList(userIds) {
+function createNewShoppingList() {
     hideInputHeader();
     console.log($("#text_input_new_shopping_list").val());
     var shoppingListName = $("#text_input_new_shopping_list").val();
     if (shoppingListName !== null || shoppingListName !== '') {
         ajax_createNewList(shoppingListName, function (shoppingListId) {
             if (shoppingListId) {
-                ajax_updateUsers(userIds, shoppingListId, function () {
+                ajax_updateUsers(userIdsNewShoppingList, shoppingListId, function () {
                     $("#headline").replaceWith('<p id="headline" class="col-md-10">' + shoppingListName + '</p>');
                     loadSideMenu();
                 })
