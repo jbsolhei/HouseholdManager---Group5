@@ -6,7 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class NotificationDAO {
 
@@ -18,14 +21,13 @@ public class NotificationDAO {
     public static ArrayList<Notification> getNotifications(int userId) {
 
         String query = "SELECT userId, Notification.houseId, notificationId, message, notificationDateTime, house_name FROM Notification LEFT JOIN Household ON Notification.houseId = Household.houseId WHERE userId = ?";
-        ArrayList<Notification> notifications = new ArrayList<>();
+        ArrayList<Notification> notifications = getChoreNotification(userId);
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
 
             st.setInt(1, userId);
-
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     Notification notification = new Notification();
@@ -98,5 +100,71 @@ public class NotificationDAO {
 
         if (added <= 0) return false;
         return true;
+    }
+
+    /**
+     * Updates the "notificationSent" column in the chore Table to True.
+     * @param choreId The id of the chore you want to update.
+     */
+    private static void updateChoreNotificationSatus(int choreId) {
+
+        String query = "UPDATE Chore SET notificationSent = TRUE WHERE choreId = ?";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, choreId);
+            st.executeUpdate();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Used to make notifications for chores that must be done within a day.
+     * @param userId The id of the user you want to get chore notifications.
+     * @return An ArrayList with notification objects.
+     */
+    private static ArrayList<Notification> getChoreNotification(int userId) {
+        ArrayList<Notification> notifications = new ArrayList<>();
+        String query =  "SELECT choreId, title, Household.houseId, Household.house_name, chore_datetime FROM Chore\n" +
+                        "LEFT JOIN Household ON Chore.houseId = Household.houseId\n" +
+                        "WHERE chore_datetime BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 1 DAY) AND userId = ? AND notificationSent = FALSE;";
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setInt(1, userId);
+
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    Notification notification = new Notification();
+                    notification.setHouseName(rs.getString("house_name"));
+
+
+                    String dateTime = rs.getString("chore_dateTime");
+                    dateTime = dateTime.substring(0, dateTime.length() - 5);
+
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss++");
+                    Date date = new Date();
+
+                    notification.setMessage("Your chore \"" + rs.getString("title") + "\", must be done by " + dateTime + ".");
+                    notification.setUserId(userId);
+                    notification.setHouseId(rs.getInt("houseId"));
+                    notification.setDateTime(dateFormat.format(date));
+                    notifications.add(notification);
+
+                    updateChoreNotificationSatus(rs.getInt("choreId"));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return notifications;
     }
 }
