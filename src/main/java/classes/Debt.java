@@ -10,7 +10,8 @@ public class Debt {
     }
 
     public double getAmount() {
-        return amount;
+
+        return Math.round(amount * 100)/100;
     }
 
     public User getToUser() {
@@ -18,7 +19,6 @@ public class Debt {
     }
 
     public void setAmount(double amount) {
-        this.amount = amount;
     }
 
     public void setToUser(User toUser) {
