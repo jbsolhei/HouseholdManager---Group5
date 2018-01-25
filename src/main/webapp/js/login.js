@@ -2,10 +2,7 @@
  * Created by Camilla Velvin on 11.01.2018.
  */
 function login(email,password){
-    console.log(email + " pass " + password);
-
     var loginPerson = {"name": "", "email": email, "telephone": "", "password": password};
-    console.log(JSON.stringify(loginPerson));
     $.ajax({
         url: "res/user/login",
         type: 'post',
@@ -19,10 +16,13 @@ function login(email,password){
                 inviteCheck();
             }
         },
-        error: function(result) {
+        error: function(xhr) {
             showLoadingScreen(false);
-            console.log(result);
-            alert("Wrong email or password");
+            if (xhr.status === 401) {
+                $("#wrong-credentials-message").clearQueue().fadeIn().delay(2000).fadeOut();
+                $("#emailInputId").shake(2, 7, 300);
+                $("#passwordInputId").shake(2, 7, 300);
+            }
         }
     });
 }

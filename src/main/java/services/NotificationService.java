@@ -34,8 +34,8 @@ public class NotificationService {
      * @return a boolean.
      */
     @DELETE
-    @Path("/{id}/deleteStatus")
-    public boolean updateNotificationStatus(@PathParam("id") int id) {
+    @Path("/{id}")
+    public boolean deleteNotification(@PathParam("id") int id) {
         return NotificationDAO.deleteNotification(id);
     }
 }

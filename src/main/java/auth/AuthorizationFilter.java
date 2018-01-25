@@ -12,11 +12,11 @@ import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-@Auth
 /**
  * <p>AuthorizationFilter class.</p>
  *
  */
+@Auth
 @Provider
 @Priority(Priorities.AUTHORIZATION)
 public class AuthorizationFilter implements ContainerRequestFilter {

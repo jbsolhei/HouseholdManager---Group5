@@ -62,7 +62,6 @@
 }
 
 .clickableChore:hover{
-    background-color: rgba(19, 66, 2, 0.1) !important;
     cursor: pointer;
 }
 
@@ -74,4 +73,12 @@
 .overdueChoreListElement, .overdueChoreListElement:hover{
     background-color: rgba(145, 0, 0, 0.2) !important;
     cursor: pointer;
+}
+
+.missingChoreInput{
+    background-color: tomato;
+}
+
+.selectedChoreListElement{
+
 }
