@@ -313,6 +313,7 @@ function loadSideMenu(){
             $("#shopping_list_archived_tab").html(inputStringArchived);
         }
         $("#shoppingList" + activeSHL).addClass("active");
+        showListFromMenu(activeSHL);
     })
 }
 
