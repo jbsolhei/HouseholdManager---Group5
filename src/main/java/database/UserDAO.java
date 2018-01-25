@@ -28,7 +28,7 @@ public class UserDAO {
         String telephone = newUser.getTelephone();
         String profileImage = "";
         String query;
-        if(newUser.getProfileImage() != null) {
+        if(newUser.getProfileImage() != null && newUser.getProfileImage() != "") {
             profileImage = newUser.getProfileImage();
             query = "INSERT INTO Person (email, name, password, telephone, image) VALUES (?,?,?,?,?)";
         } else {

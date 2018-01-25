@@ -23,7 +23,7 @@ public class ShoppingTripDAO {
      * @return a {@link java.util.List} object.
      */
     public static List<ShoppingTrip> getShoppingTrips(int houseId) {
-        String query = "SELECT * FROM Shopping_trip WHERE houseId = ?;";
+        String query = "SELECT * FROM Shopping_trip WHERE houseId = ? ORDER BY shopping_tripId DESC;";
 
         List<ShoppingTrip> shoppingTripList = new ArrayList<>();
 
