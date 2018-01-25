@@ -13,7 +13,7 @@ import static java.sql.Types.NULL;
 public class ShoppingTripDAO {
 
     public static List<ShoppingTrip> getShoppingTrips(int houseId) {
-        String query = "SELECT * FROM Shopping_trip WHERE houseId = ?;";
+        String query = "SELECT * FROM Shopping_trip WHERE houseId = ? ORDER BY shopping_tripId DESC;";
 
         List<ShoppingTrip> shoppingTripList = new ArrayList<>();
 

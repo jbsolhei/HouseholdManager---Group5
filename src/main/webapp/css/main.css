@@ -35,13 +35,15 @@
     display: none;
 }
 
-#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #notifyBellId, #homePageId {
+#currentHouseholdId, #logoutId, #myPageId, #expandSidebarButtonId, #homePageId {
     color: white;
     font-size: 17px;
     cursor: pointer;
 }
-
 #notifyBellId {
+    color: #436470;
+    font-size: 17px;
+    cursor: pointer;
     margin-top: 4px;
 }
 
@@ -154,6 +156,25 @@ body {
     border: solid 15px transparent;
 
     position: absolute;
+}
+
+.clickableChore:hover{
+    padding: 2px;
+    border: 2px;
+    margin: 2px;
+    background-color: cornflowerblue;
+}
+
+.checkedChoreListElement{
+    background-color: greenyellow;
+}
+.overdueChoreListElement{
+    background-color: orangered;
+}
+
+div.miniprofile {
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 #members {

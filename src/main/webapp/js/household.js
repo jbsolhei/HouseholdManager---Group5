@@ -51,7 +51,7 @@ function buildMemberTable(){
         }
 
         $("table#members tbody").append(
-            "<tr onclick=\"showMiniProfile(" + i + ")\">\n" +
+            "<tr data-user-index=\"" + i + "\">\n" +
             adminTd + "\n" +
             "<td><div class=\"img-circle\">" +
             "<img class=\"img-responsive img-pic\" src='"+image+"'>" +
@@ -63,6 +63,12 @@ function buildMemberTable(){
             "</tr>"
         );
     }
+
+    $("table#members tr").on("click", function (event) {
+        if (!$(event.target).is("span[data-toggle='confirm']")) {
+            showMiniProfile($(event.delegateTarget).data("user-index"));
+        }
+    });
 
     $("span.remove[data-toggle='confirm']").confirmation({
         rootSelector: "span.remove[data-toggle='confirm']",
@@ -139,30 +145,31 @@ function showMiniProfile(index){
             image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
         }
         $("#place_for_profile_pic").html("<img src='"+image+"' id='profile-img'>");
-        document.getElementById("miniProfile-name").innerHTML = '<p id="miniProfile-name">' + members[index].name + '</p>';
-        document.getElementById("miniProfile-email").innerHTML = '<p id="miniProfile-email">' + members[index].email + '</p>';
-        document.getElementById("miniProfile-telephone").innerHTML = '<p id="miniProfile-telephone">' + members[index].telephone + '</p>';
+        $("#miniProfile-name").html('<p id="miniProfile-name">' + members[index].name + '</p>');
+        $("#miniProfile-email").html('<p id="miniProfile-email">' + members[index].email + '</p>');
+        $("#miniProfile-telephone").html('<p id="miniProfile-telephone">' + members[index].telephone + '</p>');
+
         if(members[index].gender != "" && members[index].gender != null){
-            document.getElementById("miniProfile-gender").innerHTML = '<p id="miniProfile-gender">' + members[index].gender + '</p>';
+            $("#miniProfile-gender").html('<p id="miniProfile-gender">' + members[index].gender + '</p>');
             $("#miniProfile-label-gender").show();
         } else {
-            document.getElementById("miniProfile-gender").innerHTML = '<p id="miniProfile-gender"></p>';
+            $("#miniProfile-gender").html('<p id="miniProfile-gender"></p>');
             $("#miniProfile-label-gender").hide();
         }
 
         if(members[index].relationship != "" && members[index].relationship != null) {
-            document.getElementById("miniProfile-relationship").innerHTML = '<p id="miniProfile-relationship">' + members[index].relationship + '</p>';
+            $("#miniProfile-relationship").html('<p id="miniProfile-relationship">' + members[index].relationship + '</p>');
             $("#miniProfile-label-relationship").show();
         } else {
-            document.getElementById("miniProfile-relationship").innerHTML = '<p id="miniProfile-relationship"></p>';
+            $("#miniProfile-relationship").html('<p id="miniProfile-relationship"></p>');
             $("#miniProfile-label-relationship").hide();
         }
 
         if(members[index].bio != "" && members[index].bio != null) {
-            document.getElementById("miniProfile-bio").innerHTML = '<p id="miniProfile-bio">' + members[index].bio + '</p>';
+            $("#miniProfile-bio").html('<p id="miniProfile-bio">' + members[index].bio + '</p>');
             $("#miniProfile-label-bio").show();
         }else {
-            document.getElementById("miniProfile-bio").innerHTML = '<p id="miniProfile-bio"></p>';
+            $("#miniProfile-bio").html('<p id="miniProfile-bio"></p>');
             $("#miniProfile-label-bio").hide();
         }
 

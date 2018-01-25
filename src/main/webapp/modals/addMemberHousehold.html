@@ -4,10 +4,11 @@
     <i data-toggle="tooltip" data-placement="bottom" title="Enter email to invite new users to this household. Click users to remove." id="newUserInfoIcon" class="glyphicon glyphicon-question-sign pull-right"></i>&nbsp;
 </div>
 <div class="modal-body">
-    <div class="panel-body">
+    <p>Enter the email addresses of the people you wish to invite</p>
+    <div class="panel panel-default invite-members-list-panel">
         <ul id="inviteMembersToHouseholdList" class="nav nav-pills nav-stacked addHouseInput"></ul>
     </div>
-    <div class="input-group">
+    <div class="input-group invite-members-email-input">
         <input id="inviteEmail" type="text" class="form-control" placeholder="John.Doe@example.com">
         <div class="input-group-btn">
             <button onclick="addEmailToInviteList()" class="btn btn-default" type="submit">
@@ -17,5 +18,6 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="inviteMembersToHousehold()">Send invite</button>
+    <span id="invite-members-status">Sending invitations...</span>
+    <button type="button" class="btn btn-default" onclick="inviteMembersToHousehold()">Send invite</button>
 </div>

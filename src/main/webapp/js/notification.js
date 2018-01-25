@@ -86,7 +86,8 @@ function getNotifications(userId) {
 function updateNotificationDropdown(notifications) {
     for (i = 0; i < notifications.length; i++) {
         var dateTime = notifications[i].dateTime;
-        dateTime = dateTime.slice(0, dateTime.length - 2);
+        if (dateTime !== null) dateTime = dateTime.slice(0, dateTime.length - 2);
+        else dateTime = "";
         var message = notifications[i].message;
         var id = notifications[i].notificationId;
         var houseName = notifications[i].houseName;
@@ -102,6 +103,7 @@ function updateNotificationDropdown(notifications) {
  */
 function countNotifications() {
     var notifications = $('#notifyDropdownListId').children('li').length;
+    console.log(notifications);
     return notifications;
 }
 
@@ -109,9 +111,17 @@ function countNotifications() {
  * Updates the notifications bell to the color orange if there are some notifications left in the dropdown.
  */
 function updateNotificationBell() {
+    var number = countNotifications();
     if (countNotifications() > 0) {
-        $("#notifyBellId").css('color', 'orange');
+        $("#notifyBellId").css('color', 'white');
+        $("#notificationValue").html("");
+        $("#notificationValue").addClass("numberCircle");
+        $("#notificationValue").append(""+number+"");
+    } else {
+        $("#notificationValue").html("");
+        $("#notificationValue").removeClass("numberCircle")
     }
+
 }
 
 //Set to true when the dropdown is opened, and false if closed.
@@ -128,9 +138,14 @@ $(document).on('click', '.notificationElement', function () {
     deleteNotification(id);
     $(this).remove();
 
+    $("#notificationValue").html("");
+    $("#notificationValue").append(""+countNotifications()+"");
+
     if (countNotifications() <= 0) {
-        $("#notifyBellId").css('color', 'white');
+        $("#notifyBellId").css('color', '#436470');
         $('#notifyBellId').parent().removeClass('open');
+        $("#notificationValue").html("");
+        $("#notificationValue").removeClass("numberCircle")
     }
 });
 
