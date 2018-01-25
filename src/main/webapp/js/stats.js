@@ -18,6 +18,8 @@ function fixData(innData) {
 }
 
 function drawExpenseGraph() {
+    $("#choreStatId").removeClass("activeStat");
+    $("#moneyStatId").addClass("activeStat");
     ajaxAuth({
         url: "res/household/" + getCurrentHousehold().houseId + "/stats/expenses",
         type: "GET",
@@ -75,6 +77,8 @@ function showExpenseStats() {
 }
 
 function drawChoreStats() {
+    $("#moneyStatId").removeClass("activeStat");
+    $("#choreStatId").addClass("activeStat");
     ajaxAuth({
         url: "res/household/" + getCurrentHousehold().houseId + "/stats/tasks",
         type: "GET",
