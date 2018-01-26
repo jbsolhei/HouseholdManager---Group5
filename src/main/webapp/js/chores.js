@@ -8,7 +8,6 @@ var selectedChore;
 var totChore = 0;
 
 function readyChores(){
-    console.log("readyChores()");
     switchChoresContent(0);
     listUserChores();
 
@@ -38,7 +37,6 @@ function readyChores(){
 }
 
 function listUserChores(){
-    console.log("listUserChores()");
     getChoresForUser(getCurrentUser().userId,function(data){
         userChoreList = data;
         var leftUpperTableBodyHTML = "";
@@ -64,8 +62,6 @@ function listUserChores(){
             totChore++;
         });
         $("#choresLeftUpperTableBody").html(leftUpperTableBodyHTML);
-        console.log("userChoreList:");
-        console.log(userChoreList);
         listHouseholdChores();
     });
 }
@@ -87,7 +83,6 @@ function sortByDate(array){
 }
 
 function listHouseholdChores() {
-    console.log("listHouseholdChores()");
     getChoresForHousehold(getCurrentHousehold().houseId, function(data){
         data = sortByDate(data);
         householdChoreList = [];
