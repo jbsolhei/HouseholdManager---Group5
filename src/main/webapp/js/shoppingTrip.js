@@ -17,6 +17,10 @@ function getShoppingTrips() {
                 numberOfItems = data.length;
                 if (numberOfItems!==0) {
                     viewShoppingTrips(data);
+                } else if(numberOfItems == 0) {
+                    $("#shoppingtripRightFirstPanel").addClass("hide");
+                    $("#shoppingtripRightPanelSecondPanel").removeClass("hide");
+                    createPageAddShoppingTrip();
                 }
             }
         },
@@ -116,7 +120,7 @@ function createPageAddShoppingTrip() {
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                console.log("users: " + data);
+                console.log("ant user " + data.length);
                 result = data;
                 addMembers(data);
             },

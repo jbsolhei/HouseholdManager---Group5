@@ -9,6 +9,7 @@ function loadHousehold(){
 
 function editAdmins() {
     $("table#members tbody").empty();
+    $("#panelFooterHouseholdOverview1").html("");
 
     $("#makeAdminField").html("<p style='font-size: 12px'>Choose<br>admins</p>");
     if (getCurrentHousehold() === null || getCurrentUser() === null) {
@@ -74,6 +75,7 @@ function editAdmins() {
 }
 
 function updateAdminsInHousehold() {
+    $("#panelFooterHouseholdOverview1").html('');
     var member = getCurrentHousehold().residents;
     var admins = getCurrentHousehold().admins;
 
@@ -152,8 +154,8 @@ function updateAdminsInHousehold() {
         }
         updateCurrentHousehold(household, loadHousehold());
     } else {
-        document.getElementById("alertBackToUser").innerHTML = '<div style="text-align: left" class="alert alert-danger">' +
-            '<strong>You must choose one administrator</strong></div>';
+        $("#panelFooterHouseholdOverview1").html('<div style="text-align: left" class="alert alert-danger">' +
+            '<strong>You must choose one administrator</strong></div>');
     }
 }
 
@@ -253,12 +255,26 @@ function buildOtherInfoHousehold() {
 
 function removeMyselfFromHousehold() {
     var admins = getCurrentHousehold().admins;
+    var members = getCurrentHousehold().residents;
     if (getCurrentHousehold() !== null) {
-        console.log(admins.length);
         if(admins.length == 1 && admins[0].userId == getCurrentUser().userId) {
-            document.getElementById("alertBackToUser").innerHTML = '<div style="text-align: left" class="alert alert-danger">' +
-                '<strong>You must choose another administrator! </strong> An household must have an administrator</div>';
-            showLoadingScreen(false);
+            if(members.length == 1) {
+                ajaxAuth({
+                    url: "res/household/" + getCurrentHousehold().houseId + "/user",
+                    method: "DELETE",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.success === true) {
+                            window.localStorage.removeItem("house");
+                            window.location.reload();
+                        }
+                    }
+                });
+            } else {
+                $("#panelFooterHouseholdOverview1").html('<div style="text-align: left" class="alert alert-danger">' +
+                    '<strong>You must choose another administrator! </strong> An household must have an administrator</div>');
+                showLoadingScreen(false);
+            }
         } else {
             ajaxAuth({
                 url: "res/household/" + getCurrentHousehold().houseId + "/user",
