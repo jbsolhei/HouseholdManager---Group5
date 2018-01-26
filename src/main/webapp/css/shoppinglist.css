@@ -90,6 +90,7 @@ a {
     min-height: 78vh !important;
     max-height: 78vh !important;
     overflow: auto !important;
+    border-bottom: none;
 }
 
 #associated_users_table {
@@ -130,4 +131,15 @@ a {
 
 .inputHolder {
     padding: 0;
+}
+
+.liTab {
+    width: 50%;
+    margin: 0;
+    text-align: center;
+}
+
+#slFooter {
+    border-top: none;
+    background-color: white;
 }
