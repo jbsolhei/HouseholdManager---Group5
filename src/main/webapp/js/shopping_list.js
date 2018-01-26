@@ -231,8 +231,21 @@ function ajax_addItem(shoppingListId, itemName, handleData) {
     })
 }
 
-/* --- visual updates methods --- */
+function ajax_updateShoppingListName(shoppingListId, name) {
+    ajaxAuth({
+        type: 'PUT',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/name',
+        data: name,
+        contentType: 'text/plain',
+        success: function (data) {
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    })
+}
 
+/* --- visual updates methods --- */
 
 function readyShoppingList(){
     SHL = getCurrentHousehold().shoppingLists;
@@ -292,33 +305,48 @@ function loadSideMenu(){
  * @param SLIndex
  */
 function showListFromMenu(SLIndex, isArchived){
+    if (SHL[activeSHL] === undefined) {
+        $("#addItemInputGroup").addClass("hide");
+    } else {
+        $("#addItemInputGroup").removeClass("hide");
+    }
+
     removeEditElemets();
     closeListOfAssociatedUsers();
     hideInputHeader();
-    $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-    ajax_getShoppingList(SHL[SLIndex].shoppingListId, function (shoppingList) {
-        if(shoppingList.items.length===0){
-            $("#emptyListText").removeClass("hide");
-        }else{
-            $("#emptyListText").addClass("hide");
-            var items = shoppingList.items;
-            $.each(items,function(i,val){
-                var checkedBy;
-                if(val.checkedBy === null) {
-                    checkedBy="";
-                    $("#newItem").prepend('<tr id="item' + val.itemId + '"><td><span onclick="checkItem(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td id="name_item_id_' + val.itemId + '">' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
-                } else {
-                    checkedBy = val.checkedBy.name;
-                    $("#newItem").prepend('<tr id="item' + val.itemId + '"><td><span onclick="uncheckItem(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td id="name_item_id_' + val.itemId + '" class="item-is-checked">' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
-                }
-            });
-        }
-        $("#headline").replaceWith('<a id="headline">' + shoppingList.name + '</a>');
-        $("#shoppingList" + activeSHL).removeClass("active");
-        $("#shoppingList" + SLIndex).addClass("active");
-        if (isArchived) archivedSHL = SLIndex;
-        else activeSHL = SLIndex;
-    });
+    console.log("showListFromMenu");
+    if (SHL[SLIndex] !== undefined) {
+        $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
+        ajax_getShoppingList(SHL[SLIndex].shoppingListId, function (shoppingList) {
+            if(shoppingList.items.length===0){
+                $("#emptyListText").removeClass("hide");
+            }else{
+                $("#emptyListText").addClass("hide");
+                var items = shoppingList.items;
+                $.each(items,function(i,val){
+                    var checkedBy;
+                    if(val.checkedBy === null) {
+                        checkedBy="";
+                        $("#newItem").prepend('<tr id="item' + val.itemId + '"><td><span onclick="checkItem(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td id="name_item_id_' + val.itemId + '">' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                    } else {
+                        checkedBy = val.checkedBy.name;
+                        $("#newItem").prepend('<tr id="item' + val.itemId + '"><td><span onclick="uncheckItem(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td id="name_item_id_' + val.itemId + '" class="item-is-checked">' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                    }
+                });
+            }
+            $("#headline").replaceWith('<a id="headline">' + shoppingList.name + '</a>');
+            $("#shoppingList" + activeSHL).removeClass("active");
+            $("#shoppingList" + SLIndex).addClass("active");
+            if (isArchived) archivedSHL = SLIndex;
+            else activeSHL = SLIndex;
+        });
+    } else if ($("#activeTab").parent().hasClass("active")) {
+        console.log("Removes everything from active tab");
+        $("#shopping_list_active_tab").html("");
+    } else if ($("#archiveTab").parent().hasClass("active")) {
+        console.log("Removes everything from archive tab");
+        $("#shopping_list_archived_tab").html("");
+    }
 }
 
 /**
@@ -413,6 +441,7 @@ function checkAssociatedUser(userId) {
     ajax_insertUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
         if (data) {
             $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="uncheckAssociatedUser('+ userId +')"><i class="glyphicon glyphicon-check"></i></td>')
+            console.log('checked! ' + data);
         }
     })
 }
@@ -425,6 +454,7 @@ function uncheckAssociatedUser(userId) {
     ajax_deleteUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
         if (data) {
             $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="checkAssociatedUser('+ userId +')"><i class="glyphicon glyphicon-unchecked"></i></td>')
+            console.log('unchecked! ' + data);
         }
     })
 }
@@ -613,15 +643,13 @@ function removeObjectArray(array, element) {
     array.splice(index, 1);
 }
 
-
-
 /**
  * Used to edit name and who can see a shopping list.
  * @param edit True if edit, false if edit is done.
  */
 function editShoppingList(edit) {
     if (edit) {
-        var slName = SHL[activeSHL].name;
+        var slName = he.decode(SHL[activeSHL].name);
         $("#edit_shopping_list_btn").addClass("hide");
         $("#edit_header").removeClass("hide");
         $("#archive_shopping_list_btn").addClass("hide");
@@ -632,11 +660,10 @@ function editShoppingList(edit) {
         $("#list_of_users_associated_with_shopping_list").removeClass("hide");
         toggleListOfAssociatedUsers();
     } else {
-
+        ajax_updateShoppingListName(SHL[activeSHL].shoppingListId, $("#editTitleInput").val());
         loadSideMenu();
         removeEditElemets();
         $("#archive_shopping_list_btn").removeClass("hide");
-
     }
 }
 
@@ -651,6 +678,7 @@ function removeEditElemets() {
 $(document).keypress(function(e) {
     if (e.keyCode == 13 && $("#shoppingListItemInput").is(":focus")) {
         addItemToShoppingList();
+        $("#shoppingListItemInput").focus();
     }
 });
 
@@ -665,33 +693,29 @@ $(document).on('click', '#archiveTab', function () {
 });
 
 function checkAll() {
-        ajax_getShoppingListUsers(SHL[activeSHL].shoppingListId, function (users) {
-            $.each(users, function (i, val) {
-                console.log("checked: " + val.userId);
-                checkAssociatedUser(val.userId);
-            });
-        })
+    var users = getCurrentHousehold().residents;
+    $.each(users, function (i, val) {
+        checkAssociatedUser(val.userId);
+    });
 }
 
 function uncheckAll() {
-    ajax_getShoppingListUsers(SHL[activeSHL].shoppingListId, function (users) {
-        $.each(users, function (i, val) {
-            console.log("unchecked: "+val.userId);
-            uncheckAssociatedUser(val.userId);
-        });
-    })
+    var users = getCurrentHousehold().residents;
+    $.each(users, function (i, val) {
+        uncheckAssociatedUser(val.userId);
+    });
 }
 
 $(document).on('click', '#checkAllth', function () {
     checkAll();
     $("#checkAllth").addClass('hide');
     $("#uncheckAllth").removeClass('hide');
-   console.log('click check all');
+    console.log('click check all');
 });
 
 $(document).on('click', '#uncheckAllth', function () {
     uncheckAll();
     $("#uncheckAllth").addClass('hide');
     $("#checkAllth").removeClass('hide');
-   console.log('click uncheck all');
+    console.log('click uncheck all');
 });
