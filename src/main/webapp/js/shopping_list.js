@@ -314,7 +314,6 @@ function showListFromMenu(SLIndex, isArchived){
             });
         }
         $("#headline").replaceWith('<a id="headline">' + shoppingList.name + '</a>');
-        $("#shoppingListItemInput").focus();
         $("#shoppingList" + activeSHL).removeClass("active");
         $("#shoppingList" + SLIndex).addClass("active");
         if (isArchived) archivedSHL = SLIndex;
