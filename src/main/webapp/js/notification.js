@@ -63,6 +63,7 @@ function deleteNotification(notificationId) {
  * @param userId The id of the user.
  */
 function getNotifications(userId) {
+
     ajaxAuth({
         url: "res/user/"+ userId +"/notifications",
         type: "GET",
@@ -86,6 +87,7 @@ function getNotifications(userId) {
  * @param notifications A Notification object.
  */
 function updateNotificationDropdown() {
+    $("#notifyDropdownListId").html("");
     for (i = 0; i < notifications.length; i++) {
         var dateTime = notifications[i].dateTime;
         if (dateTime !== null) dateTime = dateTime.slice(0, dateTime.length - 2);

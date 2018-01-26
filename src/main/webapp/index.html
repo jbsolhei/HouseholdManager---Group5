@@ -198,11 +198,6 @@
     <script>
         var sideBarOpen = false;
 
-        $(function() {
-            setInterval(checkSession, 20000);
-            swapContent(dashboard);
-        });
-
         function openNav() {
             sideBarOpen = true;
             $("#sideBarId").css('width', '250px');
@@ -222,11 +217,11 @@
         });
 
         $(document).ready(function(){
+            setInterval(checkSession, 20000);
+            setInterval(function(){getNotifications(getCurrentUser().userId)},1000);
+            swapContent(dashboard);
             $('[data-toggle="popover"]').popover();
         });
-
-        getNotifications(getCurrentUser().userId);
-        updateNotificationBell();
     </script>
 
     <style>
