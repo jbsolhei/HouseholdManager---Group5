@@ -70,7 +70,6 @@ function getNotifications(userId) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
-            console.log("notifications updated!");
             notifications = result;
             updateNotificationDropdown();
             updateNotificationBell();
@@ -87,7 +86,8 @@ function getNotifications(userId) {
  * @param notifications A Notification object.
  */
 function updateNotificationDropdown() {
-    $("#notifyDropdownListId").html("");
+    var noteboi = $("#notifyDropdownListId");
+    noteboi.html("");
     for (i = 0; i < notifications.length; i++) {
         var dateTime = notifications[i].dateTime;
         if (dateTime !== null) dateTime = dateTime.slice(0, dateTime.length - 2);
@@ -97,7 +97,7 @@ function updateNotificationDropdown() {
         var houseName = notifications[i].houseName;
         if (houseName == null) houseName = "";
 
-        $("#notifyDropdownListId").prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
+        noteboi.prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
     }
 }
 
@@ -115,14 +115,16 @@ function countNotifications() {
  */
 function updateNotificationBell() {
     var number = countNotifications();
+    var numbers = $("#notificationValue");
     if (countNotifications() > 0) {
         $("#notifyBellId").css('color', 'white');
-        $("#notificationValue").html("");
-        $("#notificationValue").addClass("numberCircle");
-        $("#notificationValue").append(""+number+"");
+        numbers.html("");
+        numbers.addClass("numberCircle");
+        numbers.append(""+number+"");
     } else {
-        $("#notificationValue").html("");
-        $("#notificationValue").removeClass("numberCircle")
+        $("#notifyBellId").css('color', 'gray');
+        numbers.html("");
+        numbers.removeClass("numberCircle")
     }
 
 }
