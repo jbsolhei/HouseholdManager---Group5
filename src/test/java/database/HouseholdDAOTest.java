@@ -39,7 +39,7 @@ public class HouseholdDAOTest {
             count++;
         }
 
-        assert count==2;
+        assertEquals(1,count);
     }
 
     @Test
