@@ -109,9 +109,11 @@ a {
 }
 
 #list_of_users_wrapper {
-    height: 50vh;
-    margin-left: 20vh;
-    margin-right: 20vh;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    border-left: solid 2px lightgrey;
+    border-left: solid 2px lightgrey;
 }
 
 #edit_header, #input_header {

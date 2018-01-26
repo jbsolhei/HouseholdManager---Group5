@@ -139,7 +139,7 @@ function ajax_updateArchived(shoppingListId, archived, handleData){
             handleData(data);
         },
         error: function (result) {
-            console.log(result);
+            console.log("error in ajax_updateArchived");
         }
     })
 }
@@ -344,10 +344,10 @@ function toggleListOfAssociatedUsers() {
         $("#associated_users_table").empty();
         ajax_getShoppingListUsers(shoppingListId, function (users) {
             $.each(householdUsers, function (i, val) {
-                $("#associated_users_table").append('<tr><td id="associated_user_id_' + val.userId + '" onclick="checkAssociatedUser(' + val.userId + ')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr>');
+                $("#associated_users_table").append('<tr><td id="associated_user_id_' + val.userId + '" onclick="checkAssociatedUser(' + val.userId + ')"><i class="glyphicon glyphicon-unchecked"></i></td><td>' + val.name + '</td></tr>');
             });
             $.each(users, function (i, val) {
-                $("#associated_user_id_" + val.userId).replaceWith('<td id="associated_user_id_' + val.userId + '" onclick="uncheckAssociatedUser(' + val.userId + ')" class="glyphicon glyphicon-check"></td>')
+                $("#associated_user_id_" + val.userId).replaceWith('<td id="associated_user_id_' + val.userId + '" onclick="uncheckAssociatedUser(' + val.userId + ')"><i class="glyphicon glyphicon-check"></i></td>')
             });
             $("#list_of_users_associated_with_shopping_list").css('display', 'block');
         })
@@ -536,7 +536,7 @@ function deleteShoppingList() {
  */
 function archiveShoppingList() {
     var shoppingListId = SHL[activeSHL].shoppingListId;
-    ajax_updateArchived(shoppingListId, true, function (data) {
+    ajax_updateArchived(shoppingListId, "true", function (data) {
         if (data) {
             loadSideMenu();
         }
@@ -571,10 +571,10 @@ function toggleListOfAssociatedUsersToNewShoppingList() {
         var householdUsers = getCurrentHousehold().residents;
         $("#associated_users_table").html("");
         $.each(householdUsers, function (i, val) {
-            $("#associated_users_table").append('<tr><td id="associated_user_id_' + val.userId + '" onclick="checkUserInNewShoppingList(' + val.userId + ')" class="glyphicon glyphicon-unchecked"></td><td><span>' + val.name + '</span></td></tr>');
+            $("#associated_users_table").append('<tr><td id="associated_user_id_' + val.userId + '" onclick="checkUserInNewShoppingList(' + val.userId + ')"><i class="glyphicon glyphicon-unchecked"></i></td><td><span>' + val.name + '</span></td></tr>');
         });
         $.each(userIdsNewShoppingList, function (i, val) {
-            $("#associated_user_id_" + val).replaceWith('<td id="associated_user_id_' + val + '" onclick="uncheckUserInNewShoppingList(' + val + ')" class="glyphicon glyphicon-check"></td>')
+            $("#associated_user_id_" + val).replaceWith('<td id="associated_user_id_' + val + '" onclick="uncheckUserInNewShoppingList(' + val + ')"><i class="glyphicon glyphicon-check"></i></td>')
         });
 
         //$("#list_of_users_associated_with_shopping_list").css('display', 'block');
