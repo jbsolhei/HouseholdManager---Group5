@@ -6,7 +6,7 @@
                 <div id="choresPanelId" class="col-md-12 widgetCol">
                     <div class="panel panel-default widget">
                         <div class="cHeader panel-heading cursorPointer" onclick="swapContent(chores)"><i class="glyphicon glyphicon glyphicon-check"></i> Today's household chores</div>
-                        <div class="panel-body scrollWhenFull" onclick="swapContent(chores)">
+                        <div class="panel-body scrollWhenFull">
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -63,7 +63,7 @@
                             <div class="input-group">
                                 <input type="text" onkeypress="checkIfEnter(event)" id="newPost" class="form-control" placeholder="New post..">
                                 <span class="input-group-btn" onclick="postNewsOnDashboard()">
-                                    <button class="btn btn-secondary btn-default" type="button">Post</button>
+                                    <button id="postNewsButtonDashboard" class="btn btn-secondary btn-default" type="button">Post</button>
                                 </span>
                             </div>
                             <br>

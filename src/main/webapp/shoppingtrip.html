@@ -57,13 +57,10 @@
                                 <div id="comments"></div>
                             </div>
                         </div>
-                        <div class="panel-footer">
+                        <div class="panel-footer" style="background-color: #fff; border-top: none; margin-bottom: 10px;">
                             <div id="buttonDiv">
-                                <a onclick='callModal("modals/regshoppingtrip.html")' class="btn btn-success btn-sm">
-                                    <span class="glyphicon glyphicon-plus"></span> Create new list
-                                </a>
-                                <a id="deleteButton" class="btn btn-warning btn-sm"onclick="deleteShoppingTrip()">
-                                    <span class="glyphicon glyphicon-trash"></span> Delete this list
+                                <a style="float:right;"id="deleteButton" class="btn btn-default btn-lg">
+                                    <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </div>
                         </div>
@@ -92,7 +89,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <h4>Who's paying?</h4>
+                                    <label>Who's paying?</label>
+                                    <label style="float: right">
+                                        <i data-toggle="tooltip" data-placement="bottom" title="The SUM of your shopping trip will be registered as a shared debt between the people you select" id="financeInfoButton1" class="glyphicon glyphicon-question-sign"></i>
+                                    </label>
                                 </div>
                                 <div class="col-md-9">
                                     <div class="panel panel-default">
@@ -105,7 +105,10 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="container-fluid">
-                                        <h4 style="float: left; text-align: left;">Attach shopping list?</h4>
+                                        <label style="float: left">Attach shopping list? </label>
+                                        <label style="float: right">
+                                            <i data-toggle="tooltip" data-placement="bottom" title="If your shopping trip was in cooperation with a shopping list you can attach it" id="financeInfoButton1" class="glyphicon glyphicon-question-sign"></i>
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
@@ -136,4 +139,17 @@
 
 <script>
     getShoppingTrips();
+
+    $("#deleteButton").confirmation({
+        rootSelector: "span.remove[data-toggle='confirm']",
+        popout: true,
+        singleton: true,
+        title: "Delete this shopping trip? Confirm",
+        btnOkClass: "btn-sm btn-danger",
+        btnOkIcon: "glyphicon glyphicon-trash",
+        btnCancelClass: "btn-sm btn-default",
+        onConfirm: function () {
+            deleteShoppingTrip();
+        }
+    });
 </script>

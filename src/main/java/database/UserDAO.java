@@ -418,7 +418,6 @@ public class UserDAO {
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
                     if (rs.getInt("isAdmin") == 1) {
-                        System.out.println("userId: " + userId + " is Admin at house: " + houseId);
                         return true;
                     }
                     return false;

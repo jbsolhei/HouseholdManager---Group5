@@ -484,14 +484,4 @@ public class ShoppingListDAO {
         }
         return itemsArray;
     }
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main (String[] args) {
-        int rtn = ShoppingListDAO.updateArchived(69, false);
-        System.out.println("stop");
-    }
 }
