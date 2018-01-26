@@ -57,13 +57,10 @@
                                 <div id="comments"></div>
                             </div>
                         </div>
-                        <div class="panel-footer">
+                        <div class="panel-footer" style="background-color: #fff; border-top: none; margin-bottom: 10px;">
                             <div id="buttonDiv">
-                                <a onclick='callModal("modals/regshoppingtrip.html")' class="btn btn-success btn-sm">
-                                    <span class="glyphicon glyphicon-plus"></span> Create new list
-                                </a>
-                                <a id="deleteButton" class="btn btn-warning btn-sm"onclick="deleteShoppingTrip()">
-                                    <span class="glyphicon glyphicon-trash"></span> Delete this list
+                                <a style="float:right;"id="deleteButton" class="btn btn-default btn-lg">
+                                    <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </div>
                         </div>
@@ -136,4 +133,17 @@
 
 <script>
     getShoppingTrips();
+
+    $("#deleteButton").confirmation({
+        rootSelector: "span.remove[data-toggle='confirm']",
+        popout: true,
+        singleton: true,
+        title: "Delete this shopping trip? Confirm",
+        btnOkClass: "btn-sm btn-danger",
+        btnOkIcon: "glyphicon glyphicon-trash",
+        btnCancelClass: "btn-sm btn-default",
+        onConfirm: function () {
+            deleteShoppingTrip();
+        }
+    });
 </script>

@@ -231,17 +231,24 @@ function changePassword() {
                         if(res == "true") {
                             saveInformation();
                         } else {
-                            document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-                                '<strong>Current password does not match</strong></div>';
+                            if(newPassword == repeatPassword){
+                                document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                                    '<strong>Failed to update password.</strong> Your old password is incorrect. </div>';
+                            } else {
+                                document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                                    '<strong>New password does not match</strong></div>';
+                            }
                         }
                     },
                     error: function (res) {
                         console.log(res);
                     }
                 });
-            } else {
+            }
+
+            else{
                 document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-                    '<strong>New password does not match</strong></div>';
+                    '<strong>Failed to update password.</strong> Make sure your new passwords match & that your old password is correct. </div>';
             }
         }
     }
