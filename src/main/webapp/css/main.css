@@ -152,9 +152,14 @@ body {
     height: auto;
 }
 #homePageId{
+    margin-top: -2px;
+    padding-bottom: 17px;
     border: solid 15px transparent;
-
     position: absolute;
+}
+
+#homePageId:hover{
+    text-decoration: none !important;
 }
 
 .clickableChore:hover{
@@ -180,8 +185,8 @@ div.miniprofile {
     width: 100%;
 }
 #buttonEditAdmins {
-    float: right;
-    background-color: rgba(150, 19, 12, 0.3);
+    /*float: right;*/
+    background-color: #e8ca7d;
     height: 100%;
 }
 

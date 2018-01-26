@@ -55,7 +55,7 @@ function editAdmins() {
         } else {
             image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
         }
-        $("#panelFooterHouseholdOverview").html("<button class='btn' id='buttonEditAdmins' onclick='updateAdminsInHousehold()'>Update admministrators</button>")
+        $("#panelFooterHouseholdOverview").html("<button class='btn' id='buttonEditAdmins' onclick='updateAdminsInHousehold()'><span class=\"glyphicon glyphicon-refresh\"></span> Update admministrators</button>")
 
         $("table#members tbody").append(
             "<tr data-user-index=\"" + i + "\">\n" +

@@ -231,33 +231,24 @@ function changePassword() {
                         if(res == "true") {
                             saveInformation();
                         } else {
-                            document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-                                '<strong>Current password does not match</strong></div>';
+                            if(newPassword == repeatPassword){
+                                document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                                    '<strong>Failed to update password.</strong> Your old password is incorrect. </div>';
+                            } else {
+                                document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                                    '<strong>New password does not match</strong></div>';
+                            }
                         }
                     },
                     error: function (res) {
                         console.log(res);
                     }
                 });
-                /*ajaxAuth({
-                    url: "res/user/"+getCurrentUser().userId+"/checkPassword",
-                    type: 'POST',
-                    contentType: 'text/plain; charset=utf-8',
-                    data: oldPassword,
-                    success: function (res) {
-                        console.log(res);
-                        if (res == "true") {
-                            updatePassword(newPassword);
-                           // saveInformation();
-                        } else {
-                            document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-                                '<strong>Current password does not match</strong></div>';
-                        }
-                    }
-                });*/
-            } else {
+            }
+
+            else{
                 document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-                    '<strong>New password does not match</strong></div>';
+                    '<strong>Failed to update password.</strong> Make sure your new passwords match & that your old password is correct. </div>';
             }
         }
     }
