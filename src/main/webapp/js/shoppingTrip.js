@@ -185,12 +185,14 @@ function addShoppingTrip() {
     var shoppingList = $("#sel1").val()-1;
     var id = $("#sel1 option:selected").data("trip-id");
 
-    for(var i=0; i<result.length; i++) {
-        if($("#check-" + i).is(":checked")) {
-            contributors.push({
-                "userId" : result[i].userId,
-                "name" : result[i].name
-            })
+    if (result !== undefined) {
+        for(var i=0; i<result.length; i++) {
+            if($("#check-" + i).is(":checked")) {
+                contributors.push({
+                    "userId" : result[i].userId,
+                    "name" : result[i].name
+                })
+            }
         }
     }
 

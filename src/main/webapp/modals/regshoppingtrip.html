@@ -1,4 +1,3 @@
-
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     <h4 class="modal-title">New shopping trip</h4>
@@ -22,17 +21,18 @@
             <div class="col-md-6">
                 <h4>Who's paying?</h4>
                 <div class="panel panel-default">
-                    <div class="checkbox" id="members">
+                    <div class="memberList checkbox" id="members">
 
                     </div>
+                    <span class="pull-left" style="text-align: left; width: 100%; margin-top: 5px"><input id="check" type="checkbox" value="" checked> uncheck all</span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="row">
                     <div class="container-fluid">
-                        <h4>Attach shopping list?</h4>
+                        <h4>Attached Shopping list</h4>
                         <div class="form-group">
-                            <select class="form-control" id="sel1"></select>
+                            <select id="connectedSLList" class="form-control" id="sel1"></select>
                         </div>
                     </div>
                 </div>
@@ -47,9 +47,116 @@
 
 <div class="modal-footer">
     <p id="alertbox"></p>
-    <button type="button" onclick="addShoppingTrip()" class="btn btn-primary">Register shopping trip</button>
+    <button type="button" onclick="addShoppingTripModal()" class="btn btn-primary">Register shopping trip</button>
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 </div>
+
+
 <script>
-    createPage();
+    var slId = SHL[activeSHL].shoppingListId;
+    var slName = he.decode(SHL[activeSHL].name);
+    ajax_getShoppingListUsers(slId, function (members) {
+        console.log(members.length);
+       for (i = 0; i < members.length; i++) {
+            $("#members").append('<label style="text-align: left; width: 100%"><input id="memberId'+members[i].userId+'" type="checkbox" class="theClass" value="" checked>'+members[i].name+'</label>');
+       }
+    });
+
+    var itmesCheckedByCurrentUser = [];
+    var itemText = "For items: ";
+    ajax_getShoppingList(slId, function (list) {
+       for(i = 0; i < list.items.length; i++) {
+           if (list.items[i].checkedBy !== null && list.items[i].checkedBy.userId === getCurrentUser().userId) {
+               console.log(list.items[i]);
+               itmesCheckedByCurrentUser.push(list.items[i]);
+               itemText += list.items[i].name +", ";
+           }
+       }
+
+       itemText += ("in Shopping list: " + slName +".");
+       $("#trip-comments").html(itemText);
+    });
+
+    $("#connectedSLList").append('<option selected="selected">'+slName+'</option>');
+
+
+    $('#check').click(function(){
+        if ($(this).is(':checked')) {
+            $('input:checkbox').attr('checked','checked');
+            $(this).val('uncheck all')
+        } else {
+            $('input:checkbox').removeAttr('checked');
+            $(this).val('check all');
+        }
+    });
+
+    function addShoppingTripModal() {
+
+        var contributors = [];
+
+        $('.theClass:checkbox:checked').each(function () {
+           var id = $(this).attr("id").slice(8);
+            contributors.push({
+                "userId" : id
+            })
+        });
+
+
+        var name = $("#tripname").val();
+        var comment = $("#trip-comments").val();
+        var sum = $("#trip-sum").val();
+
+
+        if(name === "" || sum === "" ||
+            slName === "" || slId === "" ||
+            contributors.length === 0) {
+            document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
+                '<strong>Please fill in all the forms. </div>';
+
+        } else {
+            var data = {"name" : name, "expence" : sum, "comment" : comment, "userId" : getCurrentUser().userId,
+                "userName" : getCurrentUser().name, "contributors" : contributors,
+                "houseId" : getCurrentHousehold().houseId, "shopping_listId" : slId, "shopping_listName" : slName};
+
+            ajaxAuth({
+                url: "res/shoppingtrip",
+                type: 'post',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    if(response == true){
+                        for (i = 0; i < contributors.length; i++) {
+                            addNotification(contributors[i].userId, getCurrentHousehold().houseId, "You have been added to Shopping Trip, \""+name+"\", by " + getCurrentUser().name);
+                        }
+                        getShoppingTrips();
+
+                        document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
+                            '<strong>Success!</strong> Shoppingtrip added.</div>';
+
+                        $(".alert-success").fadeTo(500, 500).slideUp(500, function(){
+                            switchShoppingtripContent(0);
+                        });
+
+
+
+                    } else {
+                        document.getElementById("alertbox").innerHTML = '<div id="alertbox" class="alert alert-danger">' +
+                            '<strong>Failed!</strong>Something went wrong. Please try again.</div>';
+                    }
+
+                },
+                error: function (response) {
+                    console.log("error");
+                    console.log(response);
+                }
+
+            });
+        }
+    }
+
+
+
+
+    //createPage();
 </script>
