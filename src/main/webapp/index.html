@@ -138,13 +138,13 @@
                         <li><a onclick="swapContent(news); closeNav()" class="visible-xs"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
 
                         <li class="dropdown-toggle" id="dropdownBell">
-                            <a id="notifyBellId">
+                            <a id="notifyBellId" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-bell"></i>
                                 <div class="numberCircle" id="notificationValue"></div>
                             </a>
 
                             <div class="panel panel-default dropdown-menu">
-                                <div class="panel-body">
+                                <div class="panel-body" style="padding-left: 0px; padding-right: 0px;">
                                     <ul id="notifyDropdownListId" class="noti list-group" role="menu" aria-labelledby="menu1">
                                     </ul>
                                 </div>
@@ -158,6 +158,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul id="listOfHouseholds" class="dropdown-menu">
+                                <li style="border-top: 1px solid #e8e8e8; padding-top: 4px; padding-bottom:4px;" data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#"><strong>Invite user   <span style="float:right;" class="glyphicon glyphicon-plus"></span></strong></a></li>
                                 <li style="border-top: 1px solid #e8e8e8;" data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#"><strong>New Household   <span class="glyphicon glyphicon-plus"></span></strong></a></li>
                             </ul>
                         </li>
@@ -199,11 +200,6 @@
     <script>
         var sideBarOpen = false;
 
-        $(function() {
-            setInterval(checkSession, 20000);
-            swapContent(dashboard);
-        });
-
         function openNav() {
             sideBarOpen = true;
             $("#sideBarId").css('width', '250px');
@@ -223,11 +219,11 @@
         });
 
         $(document).ready(function(){
+            setInterval(checkSession, 20000);
+            setInterval(function(){getNotifications(getCurrentUser().userId)},1000);
+            swapContent(dashboard);
             $('[data-toggle="popover"]').popover();
         });
-
-        getNotifications(getCurrentUser().userId);
-        updateNotificationBell();
     </script>
 
     <style>
