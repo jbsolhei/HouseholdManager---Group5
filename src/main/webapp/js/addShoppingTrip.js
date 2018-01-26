@@ -1,4 +1,5 @@
-/*var result;
+/*
+var result;
 
 function createPageAddShoppingTrip() {
     if (getCurrentHousehold() !== null || getCurrentHousehold() !==  undefined) {

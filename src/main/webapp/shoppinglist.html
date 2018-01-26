@@ -96,6 +96,7 @@
                     <a id="delete_shopping_list_btn" class="headerBtn btn btn-danger pull-right glyphicon glyphicon-trash" onclick="deleteShoppingList()" ></a>
                     <a id="unarchive_shopping_list_btn" class="hide headerBtn btn btn-warning pull-right" onclick="unArchiveShoppingList()">Unarchive</a>
                     <a id="archive_shopping_list_btn" class="headerBtn btn btn-warning pull-right" onclick="archiveShoppingList()">Archive</a>
+                    <a id="make_shopping_trip_from_list" class="headerBtn btn btn-default pull-right glyphicon glyphicon-credit-card" data-toggle="modal" onclick='callModal("modals/regshoppingtrip.html")' data-target="#theModal"></a>
                 </div>
             </div>
         </div>
@@ -103,6 +104,12 @@
 </div>
 
 <script>
+    // Ikke rør
+    function callModal(modalContent) {
+        console.log("CALLING MODAL");
+        $("#modal").load(modalContent);
+    }
+
     loadSideMenu();
 </script>
 
