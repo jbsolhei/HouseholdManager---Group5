@@ -152,9 +152,14 @@ body {
     height: auto;
 }
 #homePageId{
+    margin-top: -2px;
+    padding-bottom: 17px;
     border: solid 15px transparent;
-
     position: absolute;
+}
+
+#homePageId:hover{
+    text-decoration: none !important;
 }
 
 .clickableChore:hover{
