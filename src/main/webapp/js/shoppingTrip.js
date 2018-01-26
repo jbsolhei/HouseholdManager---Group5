@@ -16,6 +16,10 @@ function getShoppingTrips() {
                 numberOfItems = data.length;
                 if (numberOfItems!==0) {
                     viewShoppingTrips(data);
+                } else if(numberOfItems == 0) {
+                    $("#shoppingtripRightFirstPanel").addClass("hide");
+                    $("#shoppingtripRightPanelSecondPanel").removeClass("hide");
+                    createPageAddShoppingTrip();
                 }
             }
         },
@@ -168,7 +172,7 @@ function addShoppinglists(data) {
             $("<option>")
                 .attr("id", "trip-" + data[i].shoppingListId)
                 .data("trip-id", data[i].shoppingListId)
-                .text(data[i].name)
+                .text(he.decode(data[i].name))
         );
     }
 }
