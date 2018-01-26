@@ -1,6 +1,6 @@
 <div class="modal-header clearfix">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <h4 class="modal-title pull-left">Invite members</h4>
+    <h4 id="inviteMembersTitle" class="modal-title pull-left">Invite members to</h4>
     <i data-toggle="tooltip" data-placement="bottom" title="Enter email to invite new users to this household. Click users to remove." id="newUserInfoIcon" class="glyphicon glyphicon-question-sign pull-right"></i>&nbsp;
 </div>
 <div class="modal-body">
@@ -21,3 +21,7 @@
     <span id="invite-members-status">Sending invitations...</span>
     <button type="button" class="btn btn-default" onclick="inviteMembersToHousehold()">Send invite</button>
 </div>
+
+<script>
+    $("#inviteMembersTitle").append(" " + getCurrentHousehold().name + "!");
+</script>

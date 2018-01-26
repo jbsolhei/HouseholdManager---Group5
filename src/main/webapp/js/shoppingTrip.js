@@ -32,7 +32,7 @@ function deleteShoppingTrip(){
             console.log("List #" + activeSHT.shoppingTripId + " deleted.");
             getShoppingTrips();
         }
-    })
+    });
 }
 
 function viewShoppingTrips(data) {

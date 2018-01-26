@@ -65,7 +65,7 @@ public class ShoppingTripDAO {
                 "comment, userId, houseId, shopping_listId) VALUES (?,?,?,?,?,?,?)";
 
 
-        if(shoppingTrip.getContributors() == null) {
+        if (shoppingTrip.getContributors() == null) {
             return false;
         }
 
@@ -81,10 +81,10 @@ public class ShoppingTripDAO {
             st.setString(4, shoppingTrip.getComment());
             st.setInt(5, shoppingTrip.getUserId());
             st.setInt(6, shoppingTrip.getHouseId());
-            if (shoppingTrip.getShopping_listId()>0) {
+            if (shoppingTrip.getShopping_listId() > 0) {
                 st.setInt(7, shoppingTrip.getShopping_listId());
             } else {
-                st.setNull(7,NULL);
+                st.setNull(7, NULL);
             }
             st.executeUpdate();
 
@@ -185,7 +185,37 @@ public class ShoppingTripDAO {
      * @param shoppingTripId a int.
      */
     public static void deleteShoppingTrip(int shoppingTripId) {
-        String query = "DELETE FROM Shopping_trip WHERE shopping_tripId = ?";
+        if (updateDebtValue(shoppingTripId)) {
+            String query = "DELETE FROM Shopping_trip WHERE shopping_tripId = ?";
+
+            try (DBConnector dbc = new DBConnector();
+                 Connection conn = dbc.getConn();
+                 PreparedStatement st = conn.prepareStatement(query)) {
+
+                st.setInt(1, shoppingTripId);
+
+                st.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+
+    /**
+     * This function updates the debt between people if someone deletes a shopping trip.
+     * @param shoppingTripId
+     * @return true if ok, false if failed
+     */
+    public static boolean updateDebtValue(int shoppingTripId) {
+        String query = "SELECT Shopping_trip.expence, User_Shopping_trip.userId as 'user1', User_Shopping_trip.shopping_tripId, Shopping_trip.userId as 'user2'\n" +
+                "FROM Shopping_trip\n" +
+                "  INNER JOIN User_Shopping_trip ON Shopping_trip.shopping_tripId=User_Shopping_trip.shopping_tripId\n" +
+                "WHERE Shopping_trip.shopping_tripId = ? \n" +
+                "AND User_Shopping_trip.userId NOT LIKE Shopping_trip.userId;";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -193,12 +223,41 @@ public class ShoppingTripDAO {
 
             st.setInt(1, shoppingTripId);
 
-            st.executeUpdate();
+            ResultSet rs = st.executeQuery();
 
+            if (rs.next()) {
+                double value = rs.getDouble("expence");
+                User mainUser = new User();
+                System.out.println("expende: " + value);
+                mainUser.setUserId(rs.getInt("user2"));
+                ArrayList<User> users = new ArrayList<User>();
+                User user1 = new User();
+                user1.setUserId(rs.getInt("user1"));
+                users.add(user1);
+                while (rs.next()) {
+                    User user = new User();
+                    user.setUserId(rs.getInt("user1"));
+                    users.add(user);
+                }
+
+                for (int i = 0; i < users.size(); i++) {
+                    ArrayList<User> users2 = new ArrayList<>();
+
+                    for(int j = 0; j < users.size(); j++){
+                        users2.add(users.get(j));
+                    }
+                    users2.add(mainUser);
+                    System.out.println("bruker nr: " + i);
+                    System.out.println("users1 size: " + users.size());
+                    System.out.println("users2 size: " + users2.size());
+
+                    FinanceDAO.updateFinance(users.get(i).getUserId(), value, users2);
+                }
+            }
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-
     }
-
 }
