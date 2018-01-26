@@ -70,6 +70,15 @@ a {
     height: 45px;
 }
 
+#additem {
+    background: #5cb85c;
+    color: #f9f9f9;
+}
+
+#additem:hover {
+    background: #47a447;
+}
+
 .input-group {
     margin-bottom: 10px;
 }
@@ -113,11 +122,7 @@ a {
     height: 100%;
     width: 100%;
     overflow-y: auto;
-<<<<<<< HEAD
     border-left: solid 2px lightgrey;
-    border-left: solid 2px lightgrey;
-=======
->>>>>>> 6d722ba04dc6ba0915a5e7f8fdc6601e56afb1b6
 }
 
 #edit_header, #input_header {
@@ -147,4 +152,25 @@ a {
 #slFooter {
     border-top: none;
     background-color: white;
+}
+
+#cancel_new_shopping_list_btn {
+    background-color: #d9534f;
+    color: #f7f7f7;
+    text-align: center;
+}
+
+#cancel_new_shopping_list_btn:hover {
+    background-color: #d43f3a;
+}
+
+#ok_new_shopping_list_btn {
+    background-color: #5cb85c;
+    color: #f7f7f7;
+    text-align: center;
+    border-radius: 4px;
+}
+
+#ok_new_shopping_list_btn:hover {
+    background-color: #47a447;
 }
