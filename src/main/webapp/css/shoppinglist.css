@@ -71,12 +71,12 @@ a {
 }
 
 #additem {
-    background: #5cb85c;
-    color: #f9f9f9;
+    background: lightgrey;
+    color: black;
 }
 
 #additem:hover {
-    background: #47a447;
+    background: grey;
 }
 
 .input-group {
