@@ -4,8 +4,10 @@ import classes.*;
 
 import java.security.SecureRandom;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Base64;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 
 
 /**
@@ -37,9 +39,10 @@ public class UserDAO {
 
         String hashedPassword = HashHandler.makeHashFromPassword(password);
 
+        int id=0;
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
-             PreparedStatement st = conn.prepareStatement(query)) {
+             PreparedStatement st = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             st.setString(1, email);
             st.setString(2, name);
@@ -48,7 +51,28 @@ public class UserDAO {
             st.setString(5, profileImage);
 
             st.executeUpdate();
+            try (ResultSet resultSet = st.getGeneratedKeys()) {
+                while (resultSet.next()) {
+                    id = resultSet.getInt(1);
+                }
+            }
+            if(id>0) {
+                String queryNotification = "INSERT INTO Notification (userId, message, notificationDateTime) VALUES (?, ?, ?);";
 
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date dateobj = new Date();
+                String date = df.format(dateobj);
+                try (PreparedStatement ps = conn.prepareStatement(queryNotification)){
+                    ps.setInt(1, id);
+                    ps.setString(2, "Welcome! Go to 'My Page' to add more information about yourself..");
+                    ps.setString(3, date);
+
+                    ps.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
