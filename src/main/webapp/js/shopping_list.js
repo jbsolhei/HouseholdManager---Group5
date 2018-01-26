@@ -3,6 +3,7 @@ var SHL_active;
 var SHL_archived;
 var current_SHL_index;
 var userIdsNewShoppingList = [];
+var makeNewList = false;
 
 /* --- Ajax- methods --- */
 
@@ -496,7 +497,7 @@ function addItemToShoppingList() {
  * Method to reveal the input field in the header, and set the headline as active
  */
 function showInputHeader() {
-
+    makeNewList = true;
     removeEditElemets();
     hidePanelBody();
     $("#title_header").addClass('hide');
@@ -513,7 +514,7 @@ function showInputHeader() {
  * Method to hide the input field in the header
  */
 function hideInputHeader() {
-
+    makeNewList = false;
     $("#input_header").addClass('hide');
     $("#title_header").removeClass('hide');
     $("#list_of_users_associated_with_shopping_list").addClass("hide");
@@ -532,9 +533,12 @@ function createNewShoppingList() {
     if (shoppingListName !== null || shoppingListName !== '') {
         ajax_createNewList(shoppingListName, function (shoppingListId) {
             if (shoppingListId) {
+                console.log("userIds " );
+                console.log(userIdsNewShoppingList);
                 ajax_updateUsers(userIdsNewShoppingList, shoppingListId, function () {
                     $("#headline").replaceWith('<p id="headline" class="col-md-10">' + shoppingListName + '</p>');
                     loadSideMenu();
+                    makeNewList = false;
                 })
             }
         })
@@ -648,6 +652,7 @@ function removeObjectArray(array, element) {
  * @param edit True if edit, false if edit is done.
  */
 function editShoppingList(edit) {
+    makeNewList = false;
     if (edit) {
         var slName = he.decode(SHL[activeSHL].name);
         $("#edit_shopping_list_btn").addClass("hide");
@@ -693,16 +698,20 @@ $(document).on('click', '#archiveTab', function () {
 });
 
 function checkAll() {
+    userIdsNewShoppingList = [];
     var users = getCurrentHousehold().residents;
     $.each(users, function (i, val) {
-        checkAssociatedUser(val.userId);
+        if (!makeNewList) checkAssociatedUser(val.userId);
+        else checkUserInNewShoppingList(val.userId);
     });
 }
 
 function uncheckAll() {
+    userIdsNewShoppingList = [];
     var users = getCurrentHousehold().residents;
     $.each(users, function (i, val) {
-        uncheckAssociatedUser(val.userId);
+        if (!makeNewList) uncheckAssociatedUser(val.userId);
+        else uncheckUserInNewShoppingList(val.userId);
     });
 }
 
