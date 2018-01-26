@@ -52,16 +52,18 @@ function printHouseholdChoresToDashboard(id){
 }
 
 function printShoppingListsToDashboard(house) {
-    if (house.shoppingLists!==null&&house.shoppingLists!==undefined) {
-        for (var i = 0; i < house.shoppingLists.length; i++) {
-            if(!(house.shoppingLists[i].isArchived)){
+    ajax_getShoppingLists(function (shoppingLists) {
+        $("#dashboard_shopping_list_wait_message").addClass("hide");
+        $.each(shoppingLists, function (i, val) {
+            if (!(val.archived)) {
                 var current = house.shoppingLists[i];
                 var inputSting = "<li class='list-group-item'>" + current.name + "</li>";
                 $("#dashboard_shopping_list_unordered_list").append(inputSting);
             }
-        }
-    }
+        })
+    });
 }
+
 function checkIfEnter(e) {
     var keycode = (e.keyCode ? e.keyCode : e.which);
     if (keycode == '13') {
