@@ -25,9 +25,10 @@ public class FinanceDAO {
     public static ArrayList<Debt> getDebt(int userId) {
         ArrayList<Debt> debts = new ArrayList<>();
         int toPerson = 0;
+        String name = "";
         double value = 0;
         User theOtherUser;
-        String query = "SELECT * FROM Finance WHERE fromPerson = ?";
+        String query = "SELECT p.userId, p.name, f.value FROM Person p, Finance f WHERE p.userId=f.toPerson AND f.fromPerson = ?";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
@@ -37,11 +38,13 @@ public class FinanceDAO {
             try (ResultSet rs = st.executeQuery()) {
 
                 while (rs.next()) {
-                    toPerson = rs.getInt("toPerson");
+                    toPerson = rs.getInt("userId");
+                    name = rs.getString("name");
                     value = rs.getDouble("value");
 
                     theOtherUser = new User();
                     theOtherUser.setUserId(toPerson);
+                    theOtherUser.setName(name);
                     debts.add(new Debt(value, theOtherUser));
 
                 }
@@ -64,10 +67,11 @@ public class FinanceDAO {
     public static ArrayList<Debt> getIncome(int userId){
         ArrayList<Debt> income = new ArrayList<>();
         int toPerson = 0;
+        String name = "";
         double value = 0;
         User theOtherUser;
 
-        String query = "SELECT * FROM Finance WHERE toPerson = ?";
+        String query = "SELECT p.userId, p.name, f.value FROM Person p, Finance f WHERE p.userId=f.fromPerson AND toPerson = ?";
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)) {
@@ -76,11 +80,13 @@ public class FinanceDAO {
             try (ResultSet rs = st.executeQuery()) {
 
                 while (rs.next()) {
-                    userId = rs.getInt("fromPerson");
+                    userId = rs.getInt("userId");
+                    name = rs.getString("name");
                     value = rs.getDouble("value");
 
                     theOtherUser = new User();
                     theOtherUser.setUserId(userId);
+                    theOtherUser.setName(name);
                     income.add(new Debt(value, theOtherUser));
 
                 }
