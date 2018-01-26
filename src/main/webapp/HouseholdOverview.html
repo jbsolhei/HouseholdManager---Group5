@@ -1,16 +1,14 @@
 <div id="householdOverviewId" class="container-fluid">
     <div id="hhoMainRow" class="row">
         <div class="col-sm-8 widgetCol">
-            <div id="accordion" class="panel panel-default">
-                <div class="hhoHeader panel-heading styled-heading clearfix">Members  <span class="glyphicon glyphicon-plus pull-right clickable" data-toggle="modal" data-target="#theModal" onclick="callModal('modals/addMemberHousehold.html')"></span></div>
+            <div class="panel panel-default">
+                <div class="hhoHeader panel-heading styled-heading clearfix" style="background-color: #efdaa5;">
+                    <span id="panel-heading-text">Members</span>
+                    <span class="glyphicon glyphicon-plus pull-right clickable" data-toggle="modal" data-target="#theModal" onclick="callModal('modals/addMemberHousehold.html')"></span>
+                    <p id="editAdminsSymbol" class="pull-right" style="padding-right: 30px;"></p>
+                </div>
                 <div class="panel-body scrollWhenFull HH">
                     <div class="hide" id="miniProfile">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <div type="button" class="btn btn-default" onclick="hideMiniProfile()" style="width: 100%; text-align: center;">Go back</div>
-                            </div>
-                            <div class="col-sm-10"></div>
-                        </div>
                         <div class="row">
                             <div class="col-sm-5" id="place_for_profile_pic">
 
@@ -22,26 +20,26 @@
                                 <div class="miniprofile">
                                     <form class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2 profile_labels" for="miniProfile-email">Email:</label>
-                                            <div class="col-sm-10">
+                                            <label class="control-label col-md-4 profile_labels" for="miniProfile-email">Email:</label>
+                                            <div class="col-md-8">
                                                 <p class="form-control-static" id="miniProfile-email"></p>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2 profile_labels" for="miniProfile-telephone">Phone:</label>
-                                            <div class="col-sm-10">
+                                            <label class="control-label col-md-4 profile_labels" for="miniProfile-telephone">Phone:</label>
+                                            <div class="col-md-8">
                                                 <p class="form-control-static" id="miniProfile-telephone">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2 profile_labels" for="miniProfile-gender" id="miniProfile-label-gender">Gender:</label>
-                                            <div class="col-sm-10">
+                                            <label class="control-label col-md-4 profile_labels" for="miniProfile-gender" id="miniProfile-label-gender">Gender:</label>
+                                            <div class="col-md-8">
                                                 <p class="form-control-static" id="miniProfile-gender">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-sm-2 profile_labels" for="miniProfile-relationship" id="miniProfile-label-relationship">Relationship:</label>
-                                            <div class="col-sm-10">
+                                            <label class="control-label col-md-4 profile_labels" for="miniProfile-relationship" id="miniProfile-label-relationship">Relationship:</label>
+                                            <div class="col-md-8">
                                                 <p class="form-control-static" id="miniProfile-relationship">
                                             </div>
                                         </div>
@@ -62,10 +60,9 @@
                     <table class="membertable" id="members">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th id="makeAdminField"></th>
                                 <th></th>
                                 <th>Name</th>
-                                <th>Email</th>
                                 <th>Phone</th>
                                 <th></th>
                             </tr>
@@ -74,14 +71,15 @@
                     </tbody>
                 </table>
                 </div>
-                <div clasS="panel-footer">
-
+                <div class="panel-footer" style="height: auto; !important;">
+                    <p id="alertBackToUser" style="width: 100%; height: 100%; margin-bottom: 0px"></p>
+                    <div id="panelFooterHouseholdOverview" class="pull-right" style="height: 100%; !important; "></div>
                 </div>
             </div>
         </div>
         <div class="col-sm-4 widgetCol">
             <div class="panel panel-default widget">
-                <div class="hhoHeader panel-heading">Other Information</div>
+                <div class="hhoHeader panel-heading" style="background-color: #efdaa5;">Other Information</div>
                 <div class="panel-body">
                     <br>
                     <div class="row">

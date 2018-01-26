@@ -1,5 +1,6 @@
 package database;
 
+import classes.Chore;
 import classes.Household;
 import classes.User;
 import org.junit.After;
@@ -11,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 public class HouseholdDAOTest {
@@ -58,6 +60,22 @@ public class HouseholdDAOTest {
         }
 
         assert isAdmin;
+    }
+
+    @Test
+    public void unmakeAdmin() throws Exception{
+        HouseholdDAO.unmakeUserAdmin(1,143);
+
+        String query = "SELECT * FROM House_user WHERE houseId=1 AND userId=143;";
+        ResultSet rs = st.executeQuery(query);
+
+        boolean isAdmin = true;
+
+        while (rs.next()){
+            isAdmin = rs.getBoolean("isAdmin");
+        }
+
+        assertFalse(isAdmin);
     }
 
     @Test
@@ -140,6 +158,13 @@ public class HouseholdDAOTest {
     }
 
     @Test
+    public void getHouseholdIdAndName() throws Exception {
+        Household temp = HouseholdDAO.getHouseholdIdAndName(1);
+        assertEquals("Testhouse",temp.getName());
+        assertEquals("Testaddress 22",temp.getAddress());
+    }
+
+    @Test
     public void updateHousehold() throws Exception {
         Household newHouse = new Household();
         newHouse.setName("Newname");
@@ -171,6 +196,13 @@ public class HouseholdDAOTest {
         while (rs.next()){
             fail();
         }
+    }
+
+    @Test
+    public void getChoresForHousehold() throws Exception{
+        Chore[] chores = HouseholdDAO.getChoresForHousehold(10);
+
+        assertEquals(3, chores.length);
     }
 
     @After

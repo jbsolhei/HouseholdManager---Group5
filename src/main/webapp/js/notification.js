@@ -1,3 +1,4 @@
+var notifications = [];
 /**
  * Used to add a notification to the database. DateTime automatically added.
  * @param userId The id of the user that the notification is going to.
@@ -69,7 +70,8 @@ function getNotifications(userId) {
         dataType: 'json',
         success: function (result) {
             console.log("notifications updated!");
-            updateNotificationDropdown(result);
+            notifications = result;
+            updateNotificationDropdown();
             updateNotificationBell();
             return result;
         },
@@ -83,7 +85,7 @@ function getNotifications(userId) {
  * Inserts the user's notifications in to the dropdown.
  * @param notifications A Notification object.
  */
-function updateNotificationDropdown(notifications) {
+function updateNotificationDropdown() {
     for (i = 0; i < notifications.length; i++) {
         var dateTime = notifications[i].dateTime;
         if (dateTime !== null) dateTime = dateTime.slice(0, dateTime.length - 2);
@@ -103,7 +105,6 @@ function updateNotificationDropdown(notifications) {
  */
 function countNotifications() {
     var notifications = $('#notifyDropdownListId').children('li').length;
-    console.log(notifications);
     return notifications;
 }
 
@@ -147,6 +148,21 @@ $(document).on('click', '.notificationElement', function () {
         $("#notificationValue").html("");
         $("#notificationValue").removeClass("numberCircle")
     }
+});
+
+/**
+ * Removes all notifications to a user.
+ */
+$(document).on('click', '#removeAllNotificationsButton', function () {
+    var num = countNotifications();
+    console.log("ant not: " +  num);
+    for(var i = 0; i < num; i++){
+        console.log("nr deleted: " + notifications[i].notificationId);
+        deleteNotification(notifications[i].notificationId);
+        $('#notifyDropdownListId').children('li').remove();
+    }
+    console.log("ant not after del: " + countNotifications());
+    updateNotificationBell();
 });
 
 

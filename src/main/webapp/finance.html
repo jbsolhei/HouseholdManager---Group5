@@ -1,61 +1,61 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="panel row">
-                <div class="panel-heading bg-success">
-                    <h4>People who owe you money</h4>
-                    <label style="float: right">
-                        <i data-toggle="tooltip" data-placement="bottom" title="Click on rows to either:
-                        1. Settle payment or
-                        2. Send an alert to the user to
-                        request your money." id="financeInfoButton1" class="glyphicon glyphicon-question-sign"></i>
-                    </label>
-                </div>
-                <div class="panel-body scrollWhenFull N">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Sum</th>
-                        </tr>
-                        </thead>
-                        <tbody id="incomeTable">
-                        </tbody>
-                    </table>
-                </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div id="incomeHeading" class="panel-heading">
+                <h4>People who owe you money</h4>
+                <label style="float: right">
+                    <i data-toggle="tooltip" data-placement="bottom" title="Click on rows to either:
+                    1. Settle payment or
+                    2. Send an alert to the user to
+                    request your money." id="financeInfoButton1" class="glyphicon glyphicon-question-sign"></i>
+                </label>
+            </div>
+            <div class="panel-body scrollWhenFull N">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Sum</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="incomeTable">
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="panel row">
-                <div class="panel-heading bg-danger">
-                    <h4>People you owe money</h4>
-                    <label style="float: right">
-                        <i data-toggle="tooltip" data-placement="bottom" title="Click on rows to either:
-                        1. Settle payment or
-                        2. Send an alert to the user to
-                        request your money." id="financeInfoButton2" class="glyphicon glyphicon-question-sign"></i>
-                    </label>
-                </div>
-                <div class="panel-body scrollWhenFull N">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Sum</th>
-                        </tr>
-                        </thead>
-                        <tbody id="debtTable">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-1"></div>
     </div>
-    <div class="modal fade text-center" id="theModal">
-        <div class="modal-dialog">
-            <div class="modal-content" id="modal">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div id="debtHeading" class="panel-heading">
+                <h4>People you owe money</h4>
+                <label style="float: right">
+                    <i data-toggle="tooltip" data-placement="bottom" title="Click on rows to either:
+                    1. Settle payment or
+                    2. Send an alert to the user to
+                    request your money." id="financeInfoButton2" class="glyphicon glyphicon-question-sign"></i>
+                </label>
             </div>
+            <div class="panel-body scrollWhenFull N">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Sum</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody id="debtTable">
+                    </tbody>
+                </table>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade text-center" id="theModal">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modal">
         </div>
     </div>
 </div>

@@ -15,6 +15,8 @@ INSERT INTO Household (houseId,house_name,house_address) VALUES (3,'Deletehouse'
 
 INSERT INTO House_user (houseId,userId,isAdmin) VALUES (1,33,0);
 INSERT INTO House_user (houseId,userId,isAdmin) VALUES (1,34,0);
+INSERT INTO House_user (houseId,userId,isAdmin) VALUES (1,143,1);
+
 
 INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (1, 'Shopping list 1', 1);
 INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (2, 'Shopping list 2', 1);
@@ -56,6 +58,7 @@ INSERT INTO Person (userId, email, name, password, telephone) VALUES (103,'notad
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (101, 100, 100);
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (102, 100, 150);
 INSERT INTO Finance (fromPerson, toPerson, value) VALUES (100, 103, 50);
+INSERT INTO Finance (fromPerson, toPerson, value) VALUES (101, 103, 50);
 
 INSERT INTO Person (userId, email, name, password, telephone) VALUES (12, 'test1@ert.no', 'ert', '123456', '4383');
 INSERT INTO Person (userId, email, name, password, telephone) VALUES (13, 'Frank1@gmail1.com', 'Frank', '123456', '233');

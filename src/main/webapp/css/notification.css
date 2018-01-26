@@ -4,6 +4,12 @@
     padding-bottom: 13px;
     margin: 0;
 }
+#dropdownBell.dropdown-toggle.open {
+    background-color: #233237; !important;
+}
+#notifyBellId {
+    background-color: #233237; !important;
+}
 
 .notificationElement {
     color: #233237;

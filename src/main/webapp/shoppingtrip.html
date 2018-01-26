@@ -4,7 +4,7 @@
             <div class="panel panel-default widget">
                 <div class="panel-heading">
                             Shopping trips
-                            <a data-toggle="modal" onclick='callModal("modals/regshoppingtrip.html")' data-target="#theModal" class="btn btn-md pull-right">
+                            <a onclick="switchShoppingtripContent(1)" class="btn btn-md pull-right">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
                 </div>
@@ -24,55 +24,113 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-9 widgetCol">
-            <div class="panel panel-default widget">
-                <div class="panel-heading" id="panelStats">
-                    <div class="col-sm-9">
-                        <div class="row">
-                            <div class="col-sm-12" id="headingShoppingTrip">
-                                <h4>Registered by: Name/info</h4><br><small>-date-</small>
+            <div class="col-md-9 widgetCol">
+                <div class="row" id="shoppingtripRightFirstPanel">
+                    <div class="panel panel-default widget">
+                        <div class="panel-heading" id="panelStats">
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-12" id="headingShoppingTrip">
+                                        <h4>Registered by: Name/info</h4><br><small>-date-</small>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12" id="userAndDateShoppingtrip"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3" id="sumShoppingList">
+                                <h4>Sum</h4>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12" id="userAndDateShoppingtrip"></div>
+                        <div class="panel-body scrollWhenFull ST2">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div id="shoppinglist" ></div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <p class='STHeaderText'>People paying:</p>
+                                    <ul id="list">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div id="comments"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-3" id="sumShoppingList">
-                        <h4>Sum</h4>
+                        <div class="panel-footer">
+                            <div id="buttonDiv">
+                                <a onclick='callModal("modals/regshoppingtrip.html")' class="btn btn-success btn-sm">
+                                    <span class="glyphicon glyphicon-plus"></span> Create new list
+                                </a>
+                                <a id="deleteButton" class="btn btn-warning btn-sm"onclick="deleteShoppingTrip()">
+                                    <span class="glyphicon glyphicon-trash"></span> Delete this list
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="panel-body scrollWhenFull ST2">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <div id="shoppinglist" ></div>
+
+
+                <div class="row hide" id="shoppingtripRightPanelSecondPanel">
+                    <div class="panel panel-default widget">
+                        <div class="stHeader panel-heading styled-heading" id ="shoppingtripRightSecondPanelHeading">
+                            <input class="form-control newShoppingtripInput" id="tripname" type="text" placeholder="Shopping trip title" style="font-size:18px">
                         </div>
-                        <div class="col-xs-6">
-                            <p class='STHeaderText'>People paying:</p>
-                            <ul id="list">
-                            </ul>
+                        <div class="panel-body scrollWhenFull C" id="shoppingtripRightSecondPanelBody">
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h4>SUM</h4>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        <input id="trip-sum" type="number" class="form-control input" placeholder="Total cost . .">
+                                        <span class="input-group-addon"> NOK </span>
+                                    </div>
+                                    <!--<input id="trip-sum" placeholder="$$$" type="number" class="input form-control">-->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h4>Who's paying?</h4>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="panel panel-default">
+                                        <div class="checkbox" id="members">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="container-fluid">
+                                        <h4 style="float: left; text-align: left;">Attach shopping list?</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <select class="form-control" id="sel1"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Comments:</h4>
+                                    <textarea id="trip-comments" class="form-control container-fluid" rows="2" maxlength="300"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p id="alertbox"></p>
+                                    <button type="button" onclick="addShoppingTrip()" class="btn btn-primary">Register shopping trip</button>
+                                    <button type="button" class="btn btn-default" onclick="switchShoppingtripContent(0)">Cancel</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div id="comments"></div>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <div id="buttonDiv">
-                        <a onclick='callModal("modals/regshoppingtrip.html")' class="btn btn-success btn-sm">
-                            <span class="glyphicon glyphicon-plus"></span> Create new list
-                        </a>
-                        <a id="deleteButton" class="btn btn-warning btn-sm"onclick="deleteShoppingTrip()">
-                            <span class="glyphicon glyphicon-trash"></span> Delete this list
-                        </a>
                     </div>
                 </div>
             </div>
-           <!-- <div class="panel panel-info" style="height: 40vh;">
-                <div class="panel-heading"><h4>Name/info</h4><small>-date-</small></div>
-                <div class="panel-body">Stuff</div>
-            </div>-->
-        </div>
     </div>
 </div>
 
