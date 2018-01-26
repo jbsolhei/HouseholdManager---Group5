@@ -85,7 +85,9 @@ function getNotifications(userId) {
  */
 function updateNotificationDropdown() {
     var noteboi = $("#notifyDropdownListId");
+    var noteboi2 = $("#notifyDropdownListId1");
     noteboi.html("");
+    noteboi2.html("");
     for (i = 0; i < notifications.length; i++) {
         var dateTime = notifications[i].dateTime;
         if (dateTime !== null) dateTime = dateTime.slice(0, dateTime.length - 2);
@@ -95,8 +97,8 @@ function updateNotificationDropdown() {
         var houseName = notifications[i].houseName;
         if (houseName == null) houseName = "";
 
-        $("#notifyDropdownListId").prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
-        $("#notifyDropdownListId1").prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
+        noteboi.prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
+        noteboi2.prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
     }
 }
 
@@ -106,7 +108,7 @@ function updateNotificationDropdown() {
  */
 function countNotifications() {
     var notifications = $('#notifyDropdownListId').children('li').length;
-    var notifications = $('#notifyDropdownListId1').children('li').length;
+    notifications = $('#notifyDropdownListId1').children('li').length;
     return notifications;
 }
 
@@ -116,21 +118,22 @@ function countNotifications() {
 function updateNotificationBell() {
     var number = countNotifications();
     var numbers = $("#notificationValue");
+    var numbers1 = $("#notificationValue1");
     if (countNotifications() > 0) {
         $("#notifyBellId").css('color', 'white');
         numbers.html("");
         numbers.addClass("numberCircle");
         numbers.append(""+number+"");
         $("#notifyBellId1").css('color', 'white');
-        $("#notificationValue1").html("");
-        $("#notificationValue1").addClass("numberCircle");
-        $("#notificationValue1").append(""+number+"");
+        numbers1.html("");
+        numbers1.addClass("numberCircle");
+        numbers1.append(""+number+"");
     } else {
-        $("#notifyBellId").css('color', 'gray');
-        numbers.html("");
+        $("#notifyBellId").css('color', '#436470');
         numbers.removeClass("numberCircle")
-        $("#notificationValue1").html("");
-        $("#notificationValue1").removeClass("numberCircle");
+        numbers.html("");
+        numbers1.html("");
+        numbers1.removeClass("numberCircle");
     }
 
 }
