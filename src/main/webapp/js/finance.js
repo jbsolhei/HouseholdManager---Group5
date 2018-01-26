@@ -116,9 +116,11 @@ function sendPaymentRequest(i) {
 function loadFinanceModal() {
     if(payOrAlert == 0){
         document.getElementById("payMoneyText").innerHTML = '<p id="payMoneyText">Do you confirm that you have payed ' + name + ' ' + amount + ',- ?</p>';
+
     } else {
         $("#financeModalTitle").replaceWith('<h4 id="financeModalTitle" class="modal-title">Send payment alert</h4>');
-        document.getElementById("payMoneyText").innerHTML = '<p id="payMoneyText">Do you want to send ' + name + ' an alert to pay the ' + amount + ',- that they owe you?</p>';
+        document.getElementById("payMoneyText").innerHTML = '<p id="payMoneyText">Confirm to send this alert:</p>';
+        $("#payMoneyInput").append('<textarea class="form-control" rows="2" id="payMoneyInput">Please pay the ' + income[index].amount + ',- that you owe me.</textarea>');
         $("#confirmPaymentButton").replaceWith('<button id="confirmSendAlertPaymentButton" type="button" class="btn btn-primary" onclick="confirmSendAlertPayment()">Send alert</button>');
     }
 
@@ -143,6 +145,7 @@ function confirmPayment(){
 }
 
 function confirmSendAlertPayment() {
-    addNotification(income[index].toUser.userId, getCurrentHousehold().houseId, getCurrentUser().name + " asks you to pay the " + income[index].amount + ",- that you owe.");
+    console.log($("textarea#payMoneyInput").val());
+    addNotification(income[index].toUser.userId, getCurrentHousehold().houseId, "ALERT FROM " + getCurrentUser().name.toUpperCase() + ": " + $("textarea#payMoneyInput").val());
     $("#closeFinanceModalButton").click();
 }

@@ -4,6 +4,12 @@
     padding-bottom: 13px;
     margin: 0;
 }
+#notifyBellId1.dropdown-toggle {
+    background-color: #233237;
+    padding-top: 3px;
+    margin: 0;
+}
+
 #dropdownBell.dropdown-toggle.open {
     background-color: #233237; !important;
 }
@@ -30,7 +36,7 @@
     border-radius: 0;
 }
 
-#notifyDropdownListId {
+#notifyDropdownListId, #notifyDropdownListId1 {
     width: 40vh;
     border: none;
     max-height: 50vh;
@@ -40,6 +46,7 @@
     padding-bottom: 0px;
     margin: 0px;
 }
+
 
 .notifyMessageId {
     font-size: 1.0em;

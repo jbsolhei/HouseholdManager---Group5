@@ -33,31 +33,29 @@ function inviteMembersToHousehold() {
 }
 
 function addEmailToInviteList() {
-    var email = $("#inviteEmail").val();
+    var email = $("#inviteEmail").val().trim();
     var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (emailRegex.test(email)) {
         $("#inviteMembersToHouseholdList").append(
-            $("<li>").attr("class", "newUserListElement").data("invite-email", email).text(email)
+            $("<li>")
+                .attr("class", "newUserListElement")
+                .data("invite-email", email)
+                .text(email)
         );
         $("#inviteEmail").val("").focus();
     }
-    else {
-        animateEmailError();
+    else if (email !== "") {
+        $("#inviteEmail").clearQueue()
+            .animate({
+                backgroundColor: "#fbb"
+            }, 500)
+            .delay(2000)
+            .animate({
+                backgroundColor: "#fff"
+            }, 500);
     }
 }
-
-function animateEmailError() {
-    $("#inviteEmail").clearQueue()
-        .animate({
-            backgroundColor: "#fbb"
-        }, 500)
-        .delay(2000)
-        .animate({
-            backgroundColor: "#fff"
-        }, 500);
-}
-
 
 $(document).keypress(function(e) {
     if (e.keyCode === 13 && $("#inviteEmail").is(":focus")) {
