@@ -48,8 +48,8 @@ function listUserChores(){
                 "<td id='userChoreListElhh"+i+"'></td>" +
                 "<td>"+val.time.dayOfMonth + "."+val.time.monthValue+"." + val.time.year+"</td></tr>";
 
-
-            $("#choresLeftUpperTableBody").append(leftUpperTableBodyHTML);
+            if (val.done) $("#choresLeftUpperTableBody_completed").append(leftUpperTableBodyHTML);
+            else $("#choresLeftUpperTableBody").append(leftUpperTableBodyHTML);
             $.each(userHHsForChores, function(j,HHval){
                 if(val.houseId===HHval.houseId){
                     $("#userChoreListElhh"+i).text(HHval.name);
@@ -82,9 +82,9 @@ function listHouseholdChores() {
         data = sortByDate(data);
         householdChoreList = [];
         var hhChoreCounter = 0;
-        var leftLowerTableBodyHTML = "";
         var today = new Date;
         $.each(data,function(i,val){
+            var leftLowerTableBodyHTML = "";
             if(val.userId!==getCurrentUser().userId){
                 householdChoreList[hhChoreCounter] = val;
                 hhChoreCounter++;
@@ -107,8 +107,9 @@ function listHouseholdChores() {
                 leftLowerTableBodyHTML +=
                     "<td>"+val.time.dayOfMonth + "."+val.time.monthValue+"." + val.time.year+"</td></tr>";
             }
+            if (val.done) $("#choresLeftLowerTableBody_completed").append(leftLowerTableBodyHTML);
+            else $("#choresLeftLowerTableBody").append(leftLowerTableBodyHTML);
         });
-        $("#choresLeftLowerTableBody").html(leftLowerTableBodyHTML);
         if(selectedChore!==undefined){
             getSelectedChoreFromUpdatedTotal(selectedChore.choreId);
         }else if(newlyPostedChoreId!==undefined){
@@ -346,7 +347,7 @@ function editChore(chore){
     $("#editChoreTitleInput").val(he.unescape(chore.title));
     $("#editChoreDescriptionInput").val(he.unescape(chore.description));
     $("#editChoreDescriptionControl").text("(" + $("#editChoreDescriptionInput").val().length + "/240)");    $("#editChoreDropdownButton").html(chore.user==null?"No user <span class=\"caret\"></span>":chore.user.name + ' <span class="caret"></span>');
-    document.getElementById("editChoreLocalTimeInput").value = (chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
+    $("#editChoreLocalTimeInput").value = (chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
 }
 function editChoreButtonPressed(){
     var editedChoreTitle = $("#editChoreTitleInput").val();
@@ -478,4 +479,24 @@ function setUpChoreListeners(){
         }
         $("#editChoreDescriptionControl").text("(" + $("#editChoreDescriptionInput").val().length + "/240)");
     });
+}
+
+function toggleYourCompletedList() {
+    if ($("#yourChoresTab_completed").hasClass("hide")) {
+        $("#yourChoresTab_completed").removeClass("hide");
+        $("#completed_personal_chores_box").html("Press to hide completed list");
+    } else {
+        $("#yourChoresTab_completed").addClass("hide");
+        $("#completed_personal_chores_box").html("Press to show completed list");
+    }
+}
+
+function toggleHouseholdCompletedList() {
+    if ($("#householdChoresTab_completed").hasClass("hide")) {
+        $("#householdChoresTab_completed").removeClass("hide");
+        $("#completed_household_chores_box").html("Press to hide completed list");
+    } else {
+        $("#householdChoresTab_completed").addClass("hide");
+        $("#completed_household_chores_box").html("Press to show completed list");
+    }
 }

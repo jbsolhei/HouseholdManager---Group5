@@ -3,8 +3,10 @@ function loadHousehold(){
     $("#householdAddress").html(getCurrentHousehold().address);
     $("#numOfMembers").html(getCurrentHousehold().residents.length);
     $("#numOfAdmins").html(getCurrentHousehold().admins.length);
+    $("#household_overview_list_of_households_btn").html(getCurrentHousehold().name + "<span id=\"household_caret\" class=\"caret\"></span>");
     buildMemberTable();
     buildOtherInfoHousehold();
+    buildListOfHouseHolds();
 }
 
 function editAdmins() {
@@ -377,6 +379,16 @@ function editProfile(){
     $("#profile-footer").click();
     //document.getElementById("profile-footer").click();
 }
+
+function buildListOfHouseHolds() {
+    getAllHouseholdsForUser(getCurrentUser().userId, function (households) {
+        $.each(households, function (i, val) {
+            console.log(val);
+            $("#household_overview_list_of_households").append('<li><a onclick="setCurrentHousehold('+ val.houseId +', true)">'+ val.name +'</a></li>');
+        });
+    });
+}
+
 
 /*
  function buildAdminTable() {
