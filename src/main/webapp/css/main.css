@@ -212,6 +212,10 @@ div.miniprofile {
     width: 90%; !important;
 }
 
+.modal-success.modal-header {
+    background-color: #47c9a2;
+}
+
 .control-label{
     width: 100%;!important;
 }
