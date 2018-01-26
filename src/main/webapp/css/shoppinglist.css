@@ -142,10 +142,15 @@ a {
     padding: 0;
 }
 
+
 .liTab {
     width: 50%;
     margin: 0;
     text-align: center;
+}
+
+#headline {
+    margin-top: 10px;
 }
 
 #slFooter {

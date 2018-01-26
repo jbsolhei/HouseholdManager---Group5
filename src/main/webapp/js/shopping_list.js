@@ -231,6 +231,20 @@ function ajax_addItem(shoppingListId, itemName, handleData) {
     })
 }
 
+function ajax_updateShoppingListName(shoppingListId, name) {
+    ajaxAuth({
+        type: 'PUT',
+        url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/name',
+        data: name,
+        contentType: 'text/plain',
+        success: function (data) {
+        },
+        error: function (result) {
+            console.log(result);
+        }
+    })
+}
+
 /* --- visual updates methods --- */
 
 
@@ -615,15 +629,13 @@ function removeObjectArray(array, element) {
     array.splice(index, 1);
 }
 
-
-
 /**
  * Used to edit name and who can see a shopping list.
  * @param edit True if edit, false if edit is done.
  */
 function editShoppingList(edit) {
     if (edit) {
-        var slName = SHL[activeSHL].name;
+        var slName = he.decode(SHL[activeSHL].name);
         $("#edit_shopping_list_btn").addClass("hide");
         $("#edit_header").removeClass("hide");
         $("#archive_shopping_list_btn").addClass("hide");
@@ -634,7 +646,7 @@ function editShoppingList(edit) {
         $("#list_of_users_associated_with_shopping_list").removeClass("hide");
         toggleListOfAssociatedUsers();
     } else {
-
+        ajax_updateShoppingListName(SHL[activeSHL].shoppingListId, $("#editTitleInput").val());
         loadSideMenu();
         removeEditElemets();
         $("#archive_shopping_list_btn").removeClass("hide");
@@ -666,21 +678,17 @@ $(document).on('click', '#archiveTab', function () {
 });
 
 function checkAll() {
-    ajax_getShoppingListUsers(SHL[activeSHL].shoppingListId, function (users) {
-        $.each(users, function (i, val) {
-            console.log("checked: " + val.userId);
-            checkAssociatedUser(val.userId);
-        });
-    })
+    var users = getCurrentHousehold().residents;
+    $.each(users, function (i, val) {
+        checkAssociatedUser(val.userId);
+    });
 }
 
 function uncheckAll() {
-    ajax_getShoppingListUsers(SHL[activeSHL].shoppingListId, function (users) {
-        $.each(users, function (i, val) {
-            console.log("unchecked: "+val.userId);
-            uncheckAssociatedUser(val.userId);
-        });
-    })
+    var users = getCurrentHousehold().residents;
+    $.each(users, function (i, val) {
+        uncheckAssociatedUser(val.userId);
+    });
 }
 
 $(document).on('click', '#checkAllth', function () {

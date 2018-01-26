@@ -216,4 +216,19 @@ public class ShoppingListService {
     public boolean insertUserInShoppingList(@PathParam("shopping_list_id") int shoppingListId, int userId) {
         return (ShoppingListDAO.updateUserInShoppingList(shoppingListId, userId, false) != -1);
     }
+
+    /**
+     * Updates the name of a shopping list.
+     *
+     * @param shoppingListId The id of the shopping list.
+     * @param name The new name
+     * @return Returns true if successful and false if not.
+     */
+    @PUT
+    @Auth(AuthType.HOUSEHOLD)
+    @Path("/{shopping_list_id}/name")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public boolean updateShoppingListName(@PathParam("shopping_list_id") int shoppingListId, String name) {
+        return ShoppingListDAO.updateShoppingListName(shoppingListId, name);
+    }
 }
