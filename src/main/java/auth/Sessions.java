@@ -24,11 +24,6 @@ public class Sessions {
      * @return the Session object, or null if it doesn't exist or has timed out.
      */
     public static Session getSession(String token) {
-        // TODO Fjern validforever-session i prod
-        if ("validforever".equals(token)) {
-            return new Session("validforever", 1, 0);
-        }
-
         Session session = sessions.get(token);
         if (session == null) {
             return null;
