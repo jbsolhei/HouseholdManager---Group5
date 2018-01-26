@@ -14,7 +14,7 @@ public class ChoreDAO {
     /**
      * Inserts one chore for a given householdId to the database
      *
-     * @param chore a {@link classes.Chore} object.
+     * @param chore the {@link classes.Chore} object to insert.
      */
     public static void postChore(Chore chore){
 
@@ -52,8 +52,8 @@ public class ChoreDAO {
      * Returns all the chores for a given household where the date is >= today
      * Missing date because of the transformation from sql to java to javascript is missing..
      *
-     * @param householdId a int.
-     * @return chores
+     * @param householdId The id of the household.
+     * @return an {@link java.util.ArrayList} of chores.
      */
     public static ArrayList<Chore> getChores(int householdId){
         ArrayList<Chore> chores = new ArrayList<>();
@@ -96,10 +96,10 @@ public class ChoreDAO {
     }
 
     /**
-     * <p>getUserChores.</p>
+     * Returns a list of all chores for a user
      *
-     * @param userId a int.
-     * @return a {@link java.util.ArrayList} object.
+     * @param userId the userid.
+     * @return an {@link java.util.ArrayList} of {@link classes.Chore} objects.
      */
     public static ArrayList<Chore> getUserChores(int userId){
         ArrayList<Chore> chores = new ArrayList<>();
@@ -145,7 +145,7 @@ public class ChoreDAO {
     /**
      * Deletes a chore from the database
      *
-     * @param choreId a int.
+     * @param choreId the id of the chore to delete.
      */
     public static void deleteChore(int choreId){
         String query = "DELETE FROM Chore WHERE choreId = ?;";
@@ -168,8 +168,8 @@ public class ChoreDAO {
     /**
      * Updates the chore in the database with the same id as the chore in param.
      *
-     * @param chore a {@link classes.Chore} object.
-     * @return a int.
+     * @param chore the edited {@link classes.Chore} object.
+     * @return -1 for fail, 0 for no edits, 1 for success.
      */
     public static int editChore(Chore chore){
 
@@ -201,8 +201,9 @@ public class ChoreDAO {
 
     /**
      * "Cheks" a chore that is done.
-     * @param chore
-     * @return -1 if not ok, return st.executeUpdate if ok?
+     *
+     * @param chore the chore to inspect
+     * @return -1 or 0 for error, 1 if success
      */
     public static int checkChore(Chore chore){
         String query = "UPDATE Chore SET done = ? WHERE choreId = ?;";
