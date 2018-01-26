@@ -128,7 +128,7 @@ FOREIGN KEY (shopping_tripId) REFERENCES Shopping_trip(shopping_tripId));
 
 CREATE TABLE Notification (
   userId INTEGER NOT NULL,
-  houseId INTEGER NOT NULL,
+  houseId INTEGER,
   notificationId INTEGER AUTO_INCREMENT NOT NULL,
   message VARCHAR(120),
   notificationDateTime DATETIME NOT NULL,
