@@ -79,6 +79,6 @@
     background-color: tomato;
 }
 
-.selectedChoreListElement{
-
+.clickableChore:hover {
+    background-color: rgba(19, 66, 2, 0.05);
 }
