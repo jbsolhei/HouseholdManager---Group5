@@ -260,6 +260,19 @@ function swapContent(bodyContent) {
     updateCurrentHousehold(bodyContent);
 }
 
+function swapHouseholdFromHouseholdOverview (houseId){
+    ajaxAuth({
+        url: "res/household/" + houseId,
+        type: "GET",
+        contentType: "application/json; charser=utf-8",
+        success: function (data) {
+            window.localStorage.setItem("house", JSON.stringify(data));
+            $(".page-wrapper").load(household);
+        },
+        dataType: "json"
+    });
+}
+
 function navToShoppingList(shoppingListId){
     activeSHL = shoppingListId;
     swapContent(shoppinglists);
