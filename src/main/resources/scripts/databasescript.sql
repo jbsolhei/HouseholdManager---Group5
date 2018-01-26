@@ -134,6 +134,6 @@ CREATE TABLE Notification (
   notificationDateTime DATETIME NOT NULL,
   isRead BOOLEAN NOT NULL DEFAULT FALSE,
   CONSTRAINT notification PRIMARY KEY(notificationId),
-  FOREIGN KEY (userId) REFERENCES Person(userId) ON DELETE SET NULL ,
+  FOREIGN KEY (userId) REFERENCES Person(userId) ON DELETE SET NULL,
   FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE
 );
