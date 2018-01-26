@@ -182,8 +182,6 @@ public class ChoreDAO {
             st.setString(2, chore.getDescription());
             st.setTimestamp(3, Timestamp.valueOf(chore.getTime()));
             st.setInt(4, chore.getUserId());
-            System.out.println(chore.getUserId());
-            System.out.println(chore.getChoreId());
             if (chore.isDone()) {
                 st.setInt(5, 1);
             } else {
@@ -211,8 +209,6 @@ public class ChoreDAO {
              Connection conn = dbc.getConn();
              PreparedStatement st = conn.prepareStatement(query)){
 
-            System.out.println(chore.getUserId());
-            System.out.println(chore.getChoreId());
             if (chore.isDone()) {
                 st.setInt(1, 1);
             } else {
