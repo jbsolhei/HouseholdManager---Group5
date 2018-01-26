@@ -3,7 +3,6 @@ package auth;
 import database.DAOTest;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,11 +11,17 @@ public class UserAuthTest {
 
     @Before
     public void setUp() throws Exception {
+        /*
+         * Set up in-memory H2 test database.
+         * This test file is not part of the DAO test suite so we'll
+         * have to set up and tear down the database here manually
+         */
         DAOTest.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
+        // Tear down H2 test database
         DAOTest.tearDown();
     }
 
@@ -47,14 +52,12 @@ public class UserAuthTest {
         assertFalse(UserAuth.canUserAccessHousehold(999, 10));
     }
 
-    @Ignore
     @Test
     public void canUserAccessShoppingList() {
         assertTrue(UserAuth.canUserAccessShoppingList(50, 10));
         assertFalse(UserAuth.canUserAccessShoppingList(50, 11));
     }
 
-    @Ignore
     @Test
     public void isUserHouseholdAdmin() {
         assertTrue(UserAuth.isUserHouseholdAdmin(50, 10));
@@ -65,5 +68,13 @@ public class UserAuthTest {
     public void canUserReadUser() {
         assertTrue(UserAuth.canUserReadUser(50, 51));
         assertFalse(UserAuth.canUserReadUser(50, 1));
+    }
+
+    @Test
+    public void canUserDeleteNotification() {
+        assertTrue(UserAuth.canUserDeleteNotification(50, 1));
+        assertFalse(UserAuth.canUserDeleteNotification(50, 2));
+        assertTrue(UserAuth.canUserDeleteNotification(51, 2));
+        assertFalse(UserAuth.canUserDeleteNotification(51, 1));
     }
 }

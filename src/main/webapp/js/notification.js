@@ -61,13 +61,13 @@ function deleteNotification(notificationId) {
  * @param userId The id of the user.
  */
 function getNotifications(userId) {
+
     ajaxAuth({
         url: "res/user/"+ userId +"/notifications",
         type: "GET",
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (result) {
-            console.log("notifications updated!");
             notifications = result;
             updateNotificationDropdown();
             updateNotificationBell();
@@ -84,6 +84,8 @@ function getNotifications(userId) {
  * @param notifications A Notification object.
  */
 function updateNotificationDropdown() {
+    var noteboi = $("#notifyDropdownListId");
+    noteboi.html("");
     for (i = 0; i < notifications.length; i++) {
         var dateTime = notifications[i].dateTime;
         if (dateTime !== null) dateTime = dateTime.slice(0, dateTime.length - 2);
@@ -113,18 +115,20 @@ function countNotifications() {
  */
 function updateNotificationBell() {
     var number = countNotifications();
+    var numbers = $("#notificationValue");
     if (countNotifications() > 0) {
         $("#notifyBellId").css('color', 'white');
-        $("#notificationValue").html("");
-        $("#notificationValue").addClass("numberCircle");
-        $("#notificationValue").append(""+number+"");
+        numbers.html("");
+        numbers.addClass("numberCircle");
+        numbers.append(""+number+"");
         $("#notifyBellId1").css('color', 'white');
         $("#notificationValue1").html("");
         $("#notificationValue1").addClass("numberCircle");
         $("#notificationValue1").append(""+number+"");
     } else {
-        $("#notificationValue").html("");
-        $("#notificationValue").removeClass("numberCircle");
+        $("#notifyBellId").css('color', 'gray');
+        numbers.html("");
+        numbers.removeClass("numberCircle")
         $("#notificationValue1").html("");
         $("#notificationValue1").removeClass("numberCircle");
     }

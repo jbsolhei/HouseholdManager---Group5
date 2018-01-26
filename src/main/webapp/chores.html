@@ -4,7 +4,7 @@
             <div class="panel panel-default widget" id="choresLeftUpperPanel">
                 <div class="cHeader panel-heading" id="choresLeftUpperPanelHeading">
                     Chores
-                    <a id="addTodoGlyphicon" onclick="switchChoresContent(1)" class="btn btn-md pull-right">
+                    <a id="addTodoGlyphicon" href="#newChoreTitleInput" onclick="switchChoresContent(1)" class="btn btn-md pull-right">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </div>
@@ -76,14 +76,16 @@
                                 </tr>
                                 <tr>
                                     <td><span class="choreDisc">Description</span></td>
-                                    <td><span class="text-right" id="choresDetailsDescriptionContent"></span></td>
+                                    <td><p id="choresDetailsDescriptionContent" style="word-break: break-word;"></p></td>
                                 </tr>
                                 <tr>
                                     <td><span class="choreDisc">Options</span></td>
                                     <td>
                                         <button class="btn btn-default" onclick="checkSelectedChore(selectedChore)" id="checkSelectedChoreButton">Check/uncheck chore</button>
                                         <button class="btn btn-default" onclick="editChore(selectedChore)">Edit chore</button>
-                                        <button class="btn btn-default" onclick="deleteSelectedChore(selectedChore.choreId)" id="deleteSelectedChoreButton">Delete chore</button>
+                                        <a id="deleteSelectedChoreButton" class="btn btn-danger btn-sm">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </a>
                                     </td>
                                 </tr>
                             </table>

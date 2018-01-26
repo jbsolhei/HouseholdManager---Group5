@@ -240,9 +240,14 @@ div.miniprofile {
     float: left;
 }
 
+.panel-heading>h4 {
+    display: inline-block;
+}
+
 #miniProfile-profile-img{
     max-width: 100%;
-} /* hei*/
+}
+
 .glyphicon-remove {
     cursor: pointer;
 }

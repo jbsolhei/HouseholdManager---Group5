@@ -1,6 +1,8 @@
 function loadHousehold(){
     $("#hh_name").html(getCurrentHousehold().name);
-    $("#hh_address").html(getCurrentHousehold().address);
+    $("#householdAddress").html(getCurrentHousehold().address);
+    $("#numOfMembers").html(getCurrentHousehold().residents.length);
+    $("#numOfAdmins").html(getCurrentHousehold().admins.length);
     buildMemberTable();
     buildOtherInfoHousehold();
 }

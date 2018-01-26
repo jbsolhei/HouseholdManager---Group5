@@ -82,14 +82,21 @@
             <div class="panel panel-default widget">
                 <div class="hhoHeader panel-heading" style="background-color: #efdaa5;">Other Information</div>
                 <div class="panel-body">
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-5"><b>Address:</b></div>
-                        <div class="col-sm-7" id="householdAddress"></div>
+                    <div style="border-bottom: 1px solid #eee;" id="otherInformationHousehold col-sm-12">
+                        <label id="numOfMembers"></label><label> members</label><br>
+
+                        <label id="numOfAdmins"></label><label> administrators</label><br>
+                    <br></div><br>
+                    <div style="border-bottom: 1px solid #eee;">
+                        <label>Address: </label><br><label id="householdAddress"></label><br>
+                        <br>
                     </div>
                     <br>
+                    <div style="border-bottom: 1px solid #eee;">
+                        <label>*Other information* </label><br><label id="otherInfo"></label><br>
+                        <br>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
