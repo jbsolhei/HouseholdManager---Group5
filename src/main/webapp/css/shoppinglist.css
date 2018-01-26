@@ -112,8 +112,6 @@ a {
     height: 100%;
     width: 100%;
     overflow-y: auto;
-    border-left: solid 2px lightgrey;
-    border-left: solid 2px lightgrey;
 }
 
 #edit_header, #input_header {

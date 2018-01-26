@@ -573,10 +573,8 @@ function toggleListOfAssociatedUsersToNewShoppingList() {
             $("#associated_users_table").append('<tr><td id="associated_user_id_' + val.userId + '" onclick="checkUserInNewShoppingList(' + val.userId + ')"><i class="glyphicon glyphicon-unchecked"></i></td><td><span>' + val.name + '</span></td></tr>');
         });
         $.each(userIdsNewShoppingList, function (i, val) {
-            $("#associated_user_id_" + val).replaceWith('<td id="associated_user_id_' + val + '" onclick="uncheckUserInNewShoppingList(' + val + ')"><i class="glyphicon glyphicon-check"></i></td>')
+            $("#associated_user_id_" + val).replaceWith('<td id="associated_user_id_' + val + '" onclick="uncheckUserInNewShoppingList(' + val + ')"><i class="glyphicon glyphicon-check"></i></td>');
         });
-
-        //$("#list_of_users_associated_with_shopping_list").css('display', 'block');
 }
 
 function closeListOfAssociatedUsersToNewShoppingList() {
