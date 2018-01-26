@@ -39,31 +39,10 @@ a {
 }
 
 #list_of_users_associated_with_shopping_list {
-    display: none;
-    transition: height 1.5s;
-}
-
-#edit_share_shopping_list_btn {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-#delete_shopping_list_btn {
-    float: right;
 }
 
 .item-is-checked {
     text-decoration: line-through;
-}
-
-#title_header {
-    height: 50px;
-    display: block;
- }
-
-#input_header {
-    height: 50px;
-    display: none;
 }
 
 #ok_new_shopping_list_btn, #share_new_shopping_list_btn {
@@ -77,10 +56,6 @@ a {
 #cancel_new_shopping_list_btn {
     margin-left: 10px;
     border-radius: 4px;
-}
-
-.footerWrapper, #input_header {
-    height: 45px;
 }
 
 .panel-footer{
@@ -105,4 +80,71 @@ a {
 
 #shopping_list_white_space {
     padding: 25px 0 25px 0;
+}
+
+#addShoppinglistGlyphicon {
+    padding: 0;
+}
+
+.SL {
+    min-height: 78vh !important;
+    max-height: 78vh !important;
+    overflow: auto !important;
+    border-bottom: none;
+}
+
+#associated_users_table {
+   overflow: scroll;
+}
+
+#title_header {
+    padding: 5px 10px;
+}
+
+.headerBtn {
+    margin-right: 5px;
+}
+
+#list_of_users_wrapper table {
+    width: 100%;
+}
+
+#list_of_users_wrapper {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+<<<<<<< HEAD
+    border-left: solid 2px lightgrey;
+    border-left: solid 2px lightgrey;
+=======
+>>>>>>> 6d722ba04dc6ba0915a5e7f8fdc6601e56afb1b6
+}
+
+#edit_header, #input_header {
+    padding: 5px 10px;
+}
+
+#submit_edit_btn, #ok_new_shopping_list_btn, #cancel_new_shopping_list_btn {
+    margin: 0;
+}
+
+#editInputGroup, #newInputGroup {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.inputHolder {
+    padding: 0;
+}
+
+.liTab {
+    width: 50%;
+    margin: 0;
+    text-align: center;
+}
+
+#slFooter {
+    border-top: none;
+    background-color: white;
 }
