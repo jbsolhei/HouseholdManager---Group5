@@ -468,7 +468,6 @@ function showInputHeader() {
 
     removeEditElemets();
     hidePanelBody();
-
     $("#title_header").addClass('hide');
     $("#input_header").removeClass('hide');
     $("#headlineInput").focus();
@@ -574,6 +573,7 @@ function toggleListOfAssociatedUsersToNewShoppingList() {
         });
 
         //$("#list_of_users_associated_with_shopping_list").css('display', 'block');
+
 }
 
 function closeListOfAssociatedUsersToNewShoppingList() {
