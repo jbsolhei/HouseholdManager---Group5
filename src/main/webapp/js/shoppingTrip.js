@@ -172,7 +172,7 @@ function addShoppinglists(data) {
             $("<option>")
                 .attr("id", "trip-" + data[i].shoppingListId)
                 .data("trip-id", data[i].shoppingListId)
-                .text(data[i].name)
+                .text(he.decode(data[i].name))
         );
     }
 }
