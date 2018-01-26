@@ -298,7 +298,8 @@ function showMiniProfile(index){
         $("#members").fadeOut(500);
         setTimeout(function () {
             $("#panel-heading-text").replaceWith("<span id=\"panel-heading-button\" onclick=\"hideMiniProfile()\"><span class=\"glyphicon glyphicon-chevron-left\"></span> Back</span>");
-
+            $("#editAdminsSymbol").addClass("hide");
+            $("#inviteUsersHouseholdPage").addClass("hide");
             if (members[index].userId === getCurrentUser().userId) {
                 $("#toEditProfileButton").show();
                 //document.getElementById("#toEditProfileButton").innerHTML = '';
@@ -348,6 +349,8 @@ function showMiniProfile(index){
 }
 
 function hideMiniProfile(){
+    $("#editAdminsSymbol").removeClass("hide");
+    $("#inviteUsersHouseholdPage").removeClass("hide");
     $("#panel-heading-button").replaceWith("<span id=\"panel-heading-text\">Members</span>");
     $("#members").fadeIn(500);
     $("#miniProfile").addClass("hide");
