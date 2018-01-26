@@ -384,7 +384,7 @@ function buildListOfHouseHolds() {
     getAllHouseholdsForUser(getCurrentUser().userId, function (households) {
         $.each(households, function (i, val) {
             console.log(val);
-            $("#household_overview_list_of_households").append('<li><a onclick="setCurrentHousehold('+ val.houseId +', true)">'+ val.name +'</a></li>');
+            $("#household_overview_list_of_households").append('<li><a onclick="swapHouseholdFromHouseholdOverview('+ val.houseId +', true)">'+ val.name +'</a></li>');
         });
     });
 }
