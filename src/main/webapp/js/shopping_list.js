@@ -314,7 +314,6 @@ function showListFromMenu(SLIndex, isArchived){
             });
         }
         $("#headline").replaceWith('<a id="headline">' + shoppingList.name + '</a>');
-        $("#shoppingListItemInput").focus();
         $("#shoppingList" + activeSHL).removeClass("active");
         $("#shoppingList" + SLIndex).addClass("active");
         if (isArchived) archivedSHL = SLIndex;
@@ -458,6 +457,8 @@ function addItemToShoppingList() {
                 showListFromMenu(activeSHL)
             }
         })
+    } else {
+        $("#shoppingListItemInput").effect("highlight", {color: '#d9534f'}, 250);
     }
 }
 

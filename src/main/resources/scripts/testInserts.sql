@@ -32,15 +32,28 @@ INSERT INTO Item (itemId, name, checkedBy, shopping_listId) VALUES (3, 'Taco', n
 INSERT INTO Task (description, taskId, houseId, userId) VALUES ('Fix the fridge', 2, 1, 5);
 INSERT INTO Task (description, taskId, houseId, userId) VALUES ('Masturbate', 3, 1, 1);
 */
-INSERT INTO Person (userId, email, name, password, telephone) VALUES (50, 'test@testesen.no', 'Test Testesen', '$2a$12$ZyzEIbrC.0Q2.SfWhkOIGO36NHzDvUkNzvx8qV.mZFBHyZFrrCnum', 90807060);
-INSERT INTO Person (userId, email, name, password, telephone) VALUES (51, 'gubbe@epost.no', 'Gubben Gnu', '$2a$12$ZyzEIbrC.0Q2.SfWhkOIGO36NHzDvUkNzvx8qV.mZFBHyZFrrCnum', 40302010);
-INSERT INTO Household (houseId, house_name, house_address) VALUES (10, 'Kollektivet', 'Sverres gate 1');
-INSERT INTO House_user (houseId, userId, isAdmin) VALUES (10, 50, TRUE);
-INSERT INTO House_user (houseId, userId, isAdmin) VALUES (10, 51, TRUE);
-INSERT INTO Chore (chore_datetime, description, choreId, houseId, userId) VALUES ('2018-01-20 10:00:00', 'Vask badet', 100, 10, 50);
-INSERT INTO Chore (chore_datetime, description, choreId, houseId, userId) VALUES ('2018-01-21 11:00:00', 'Vask gulvet', 110, 1, 1);
-INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (10, 'Dagligvarer', 10);
-INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES (11, 'Fredagstaco', 1);
+
+/* Test data used by UserAuthTest */
+INSERT INTO Person (userId, email, name, password, telephone) VALUES
+  (50, 'test@testesen.no', 'Test Testesen', '$2a$12$ZyzEIbrC.0Q2.SfWhkOIGO36NHzDvUkNzvx8qV.mZFBHyZFrrCnum', 90807060),
+  (51, 'gubbe@epost.no', 'Gubben Gnu', '$2a$12$ZyzEIbrC.0Q2.SfWhkOIGO36NHzDvUkNzvx8qV.mZFBHyZFrrCnum', 40302010);
+INSERT INTO Household (houseId, house_name, house_address) VALUES
+  (10, 'Kollektivet', 'Sverres gate 1');
+INSERT INTO House_user (houseId, userId, isAdmin) VALUES
+  (10, 50, TRUE),
+  (10, 51, FALSE);
+INSERT INTO Chore (chore_datetime, description, choreId, houseId, userId) VALUES
+  ('2018-01-20 10:00:00', 'Vask badet', 100, 10, 50),
+  ('2018-01-21 11:00:00', 'Vask gulvet', 110, 1, 1);
+INSERT INTO Shopping_list (shopping_listId, name, houseId) VALUES
+  (10, 'Dagligvarer', 10),
+  (11, 'Fredagstaco', 1);
+INSERT INTO User_Shopping_list (userId, shopping_listId) VALUES
+  (50, 10);
+INSERT INTO Notification (notificationId, userId, houseId, message, notificationDateTime) VALUES
+  (1, 50, 10, 'Test 1', '2018-01-01 00:00:00'),
+  (2, 51, 10, 'Test 2', '2018-06-23 12:10:22');
+
 
 INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test', '2014-10-12', '', 50, 1, NULL);
 INSERT INTO Shopping_trip (expence, shopping_tripName, shopping_tripDate, comment, userId, houseId, shopping_listId) VALUES (100, 'Test2', '2015-10-12', '', 50, 1, NULL);
