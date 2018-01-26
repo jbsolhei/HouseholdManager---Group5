@@ -128,12 +128,12 @@ FOREIGN KEY (shopping_tripId) REFERENCES Shopping_trip(shopping_tripId));
 
 CREATE TABLE Notification (
   userId INTEGER NOT NULL,
-  houseId INTEGER NOT NULL,
+  houseId INTEGER,
   notificationId INTEGER AUTO_INCREMENT NOT NULL,
   message VARCHAR(120),
   notificationDateTime DATETIME NOT NULL,
   isRead BOOLEAN NOT NULL DEFAULT FALSE,
   CONSTRAINT notification PRIMARY KEY(notificationId),
-  FOREIGN KEY (userId) REFERENCES Person(userId) ON DELETE SET NULL ,
+  FOREIGN KEY (userId) REFERENCES Person(userId) ON DELETE SET NULL,
   FOREIGN KEY (houseId) REFERENCES Household(houseId) ON DELETE CASCADE
 );

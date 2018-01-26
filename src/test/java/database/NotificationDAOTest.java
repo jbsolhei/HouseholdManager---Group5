@@ -63,7 +63,7 @@ public class NotificationDAOTest {
 
         NotificationDAO.addNotificationToDB(notification);
 
-        String query = "SELECT * FROM Notification WHERE notificationId = 2";
+        String query = "SELECT * FROM Notification WHERE notificationId = 4";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
