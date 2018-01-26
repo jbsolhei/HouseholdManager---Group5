@@ -152,9 +152,6 @@ public class ShoppingListService {
     @Path("/{shopping_list_id}/users")
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateUsers(@PathParam("shopping_list_id") int shopping_list_id, int[] userIds) {
-        for (int u : userIds) {
-            System.out.println(u);
-        }
         ShoppingListDAO.updateUsers(userIds, shopping_list_id);
     }
 
@@ -172,7 +169,6 @@ public class ShoppingListService {
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean updateCheckedBy(@PathParam("itemId") int itemId, int userId) {
         int rs = ShoppingListDAO.updateCheckedBy(userId, itemId);
-        System.out.println(userId + " " + itemId);
         return rs >= 0;
     }
 
@@ -188,7 +184,6 @@ public class ShoppingListService {
     @Path("/{shopping_list_id}")
     @Consumes(MediaType.TEXT_PLAIN)
     public boolean updateArchived(@PathParam("shopping_list_id") int shoppingListId, boolean archived) {
-        System.out.println("shoppingListId: " + shoppingListId + ". archived = " + archived);
         return (ShoppingListDAO.updateArchived(shoppingListId, archived) != -1);
     }
 

@@ -4,8 +4,8 @@
             <div class="panel panel-default">
                 <div class="hhoHeader panel-heading styled-heading clearfix" style="background-color: #efdaa5;">
                     <span id="panel-heading-text">Members</span>
-                    <span class="glyphicon glyphicon-plus pull-right clickable" data-toggle="modal" data-target="#theModal" onclick="callModal('modals/addMemberHousehold.html')"></span>
-                    <p id="editAdminsSymbol" class="pull-right" style="padding-right: 30px;"></p>
+                    <span title="Invite user(s) to household" class="glyphicon glyphicon-plus pull-right clickable" data-toggle="modal" data-target="#theModal" onclick="callModal('modals/addMemberHousehold.html')"></span>
+                    <p title="Edit administrators in this household" id="editAdminsSymbol" class="pull-right" style="padding-right: 30px;"></p>
                 </div>
                 <div class="panel-body scrollWhenFull HH">
                     <div class="hide" id="miniProfile">
@@ -71,24 +71,32 @@
                     </tbody>
                 </table>
                 </div>
-                <div class="panel-footer" style="height: auto; !important;">
+                <div class="panel-footer"><div id="panelFooterHouseholdOverview"></div></div>
+                <!--<div class="panel-footer" style="height: auto; !important;">
                     <p id="alertBackToUser" style="width: 100%; height: 100%; margin-bottom: 0px"></p>
                     <div id="panelFooterHouseholdOverview" class="pull-right" style="height: 100%; !important; "></div>
-                </div>
+                </div>-->
             </div>
         </div>
         <div class="col-sm-4 widgetCol">
             <div class="panel panel-default widget">
                 <div class="hhoHeader panel-heading" style="background-color: #efdaa5;">Other Information</div>
                 <div class="panel-body">
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-5"><b>Address:</b></div>
-                        <div class="col-sm-7" id="householdAddress"></div>
+                    <div style="border-bottom: 1px solid #eee;" id="otherInformationHousehold col-sm-12">
+                        <label id="numOfMembers"></label><label> members</label><br>
+
+                        <label id="numOfAdmins"></label><label> administrators</label><br>
+                    <br></div><br>
+                    <div style="border-bottom: 1px solid #eee;">
+                        <label>Address: </label><br><label id="householdAddress"></label><br>
+                        <br>
                     </div>
                     <br>
+                    <div style="border-bottom: 1px solid #eee;">
+                        <label>*Other information* </label><br><label id="otherInfo"></label><br>
+                        <br>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>

@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 
 /**
- * <p>ChoreService class.</p>
+ * The rest service for chores
  *
  * @author team5
  */
@@ -20,10 +20,10 @@ import java.util.ArrayList;
 public class ChoreService {
 
     /**
-     * <p>getChores.</p>
+     * Gets all chores for a house
      *
-     * @param houseId a int.
-     * @return a {@link java.util.ArrayList} object.
+     * @param houseId the house id. (from path)
+     * @return an {@link java.util.ArrayList} of {@link classes.Chore}.
      */
     @GET
     @Auth(AuthType.HOUSEHOLD)
@@ -41,9 +41,9 @@ public class ChoreService {
     }*/
 
     /**
-     * <p>postChore.</p>
+     * Posts a chore to the database
      *
-     * @param houseId a int.
+     * @param houseId the house id. (from path)
      * @param chore a {@link classes.Chore} object.
      */
     @POST
@@ -56,9 +56,9 @@ public class ChoreService {
     }
 
     /**
-     * <p>editChore.</p>
+     * Edits an existing chore
      *
-     * @param houseId a int.
+     * @param houseId the house id. (from path)
      * @param chore a {@link classes.Chore} object.
      * @return a int.
      */
@@ -73,11 +73,11 @@ public class ChoreService {
     }
 
     /**
-     * <p>checkChore.</p>
+     * Marks a chore as 'complete'
      *
-     * @param houseId a int.
+     * @param houseId the house id. (from path)
      * @param chore a {@link classes.Chore} object.
-     * @param context a {@link javax.ws.rs.container.ContainerRequestContext} object.
+     * @param context context from current session. (from auth header)
      * @return a int.
      */
     @PUT
@@ -91,9 +91,9 @@ public class ChoreService {
     }
 
     /**
-     * <p>deleteChore.</p>
+     * Deletes a chore
      *
-     * @param choreId a int.
+     * @param choreId the chore id.
      */
     @DELETE
     @Auth(AuthType.HOUSEHOLD)
