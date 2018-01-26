@@ -259,3 +259,14 @@ div.miniprofile {
 #membersTableInput:hover{
     cursor: pointer;
 }
+
+#household_overview_list_of_households_btn {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: #436470;
+}
+
+#household_caret {
+    margin-left: 10px;
+}
