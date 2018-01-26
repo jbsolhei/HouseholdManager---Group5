@@ -290,33 +290,30 @@ function newChoreButtonPressed(){
     }
 }
 function verifyChoreInput(inputType){//Inputtype - 0 for new, 1 for edit, 2 for remove missingInput-classes
-    var allGood = true;
+    var allGoodInTheHood = true;
     if(inputType === 0){
+
         if($("#newChoreTitleInput").val().length<1){
-            $("#newChoreTitleInput").addClass("missingChoreInput");
-            return false;
-        }else if(!verifyTimeString($("#newChoreLocalTimeInput").val())){
-            $("#newChoreLocalTimeInput").addClass("missingChoreInput");
-            $("#newChoreTitleInput").removeClass("missingChoreInput");
-            return false;
-        }else{
-            return true;
+            $("#newChoreTitleInput").effect("highlight", {color: '#d9534f'}, 250);
+            $("#newChoreTitleInput").focus();
+            allGoodInTheHood = false;
         }
+        if(!verifyTimeString($("#newChoreLocalTimeInput").val())){
+            $("#newChoreLocalTimeInput").effect("highlight", {color: '#d9534f'}, 250);
+            allGoodInTheHood = false;
+        }
+        return allGoodInTheHood;
     }else if(inputType === 1){
         if($("#editChoreTitleInput").val().length<1){
-            $("#editChoreTitleInput").addClass("missingChoreInput");
+            $("#editChoreTitleInput").effect("highlight", {color: '#d9534f'}, 250);
             $("#editChoreTitleInput").focus();
-            return false;
-        }else if(!verifyTimeString($("#editChoreLocalTimeInput").val())){
-            $("#editChoreLocalTimeInput").addClass("missingChoreInput");
-            $("#editChoreTitleInput").removeClass("missingChoreInput");
-            return false;
-        }else{
-            return true;
+            allGoodInTheHood = false;
         }
-    }else if(inputType === 2){
-        $("#editChoreTitleInput").removeClass("missingChoreInput");
-        $("#newChoreTitleInput").removeClass("missingChoreInput");
+        if(!verifyTimeString($("#editChoreLocalTimeInput").val())){
+            $("#editChoreLocalTimeInput").effect("highlight", {color: '#d9534f'}, 250);
+            allGoodInTheHood = false;
+        }
+        return allGoodInTheHood;
     }
 }
 function verifyTimeString(timeString){
