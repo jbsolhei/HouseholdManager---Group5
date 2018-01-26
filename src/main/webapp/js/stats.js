@@ -97,18 +97,24 @@ function drawChoreStats() {
     });
 }
 
+function checkAll(chart){
+    console.log(chart)
+}
+
 function showChoreStats(data) {
     var sets = [];
 
     for (i = 0; i < data.length; i++) {
         var newSet = {
-            label: data[i].userName,
+            label: he.decode(data[i].userName),
             backgroundColor: 'rgba(0,0,0,0)',
             borderColor: '#'+Math.floor(Math.random()*16777215).toString(16),
 
             data: data[i].tasks,
-
-            lineTension: 0.2
+            lineTension: 0.2,
+            _meta: {
+                hidden: true
+            }
         };
 
         sets.push(newSet);
@@ -139,7 +145,7 @@ function showChoreStats(data) {
                         display: true,
                         labelString: 'Month'
                     }
-                }],
+                }]
             }
         }
     });
