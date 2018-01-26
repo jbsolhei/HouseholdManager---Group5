@@ -5,8 +5,8 @@
     font-size: 1.0em;
     color: black;
     letter-spacing: 1px;
-    max-height: 4.5vh;
-    min-height: 4.5vh;
+    max-height: 45px;
+    min-height: 45px;
     overflow: hidden;
     border: none;
     outline: none;
@@ -142,7 +142,7 @@ tr:hover {
     height: 50%;
 }
 
-.SL, .ST, .STAT{
+.ST, .STAT{
     max-height: 75vh;
     min-height: 75vh;
 }

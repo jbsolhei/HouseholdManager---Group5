@@ -1,6 +1,3 @@
-/**
- * Created by Camilla Velvin on 11.01.2018.
- */
 var name;
 var phone;
 var email;
@@ -112,7 +109,7 @@ function addUser() {
         success: function (result) {
             if(result === true) {
                 $("#alertbox").html('<div class="alert alert-success">' +
-                    '<strong>Success!</strong> You have now created a user.</div>');
+                    '<strong>Success!</strong> You have now created a user. </div>');
                 $(".alert-success").fadeTo(1000, 500).slideUp(500, function(){
                     login(person.email,person.password);
                 });

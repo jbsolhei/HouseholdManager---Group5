@@ -212,6 +212,10 @@ div.miniprofile {
     width: 90%; !important;
 }
 
+.modal-success.modal-header {
+    background-color: #47c9a2;
+}
+
 .control-label{
     width: 100%;!important;
 }
@@ -222,9 +226,14 @@ div.miniprofile {
     float: left;
 }
 
+.panel-heading>h4 {
+    display: inline-block;
+}
+
 #miniProfile-profile-img{
     max-width: 100%;
-} /* hei*/
+}
+
 .glyphicon-remove {
     cursor: pointer;
 }

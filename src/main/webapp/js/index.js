@@ -49,7 +49,7 @@ function checkSession(){
                 window.location.replace("OpeningPage.html");
             }
         }
-    })
+    });
 }
 
 function setCurrentUser(id) {
@@ -221,8 +221,18 @@ function addHouseholdsToList(userId) {
     });
 
     $("#currentHouseholdId").html(getCurrentHousehold().name + ' <span class="caret"></span>');
+}
 
-
+function getAllHouseholdsForUser(userId, handleData){
+    ajaxAuth({
+        url: "res/user/" + userId + "/hh",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function(data){
+            handleData(data);
+        },
+        dataType: "json"
+    });
 }
 
 //Sets the chosen household to current household.

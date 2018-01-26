@@ -127,13 +127,15 @@
                 </div>
                 <div class="navbar-collapse collapse" id="mobileNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="visible-xs" onclick="swapContent(dashboard)">Dashboard</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(household)">Household</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(shoppinglists)">Shopping lists</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(shoppingtrips)">Shopping trip</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(chores)">Chores</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(statistics)">Statistics</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(news)">News</a></li>
+                        <li><a onclick="swapContent(dashboard); closeNav()" class="visible-xs"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
+                        <li><a onclick="swapContent(profile);closeNav()" class="visible-xs"><i class="glyphicon glyphicon-user"></i>My Page</a></li>
+                        <li><a onclick="swapContent(household); closeNav()" class="visible-xs"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
+                        <li><a onclick="swapContent(shoppinglists); closeNav()" class="visible-xs"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
+                        <li><a onclick="swapContent(shoppingtrips); closeNav()" class="visible-xs"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trip</a></li>
+                        <li><a onclick="swapContent(chores);closeNav()" class="visible-xs"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
+                        <li><a onclick="swapContent(finance); closeNav()" class="visible-xs"><i class="glyphicon glyphicon-credit-card"></i>  Finance</a></li>
+                        <li><a onclick="swapContent(stats); closeNav()" class="visible-xs"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
+                        <li><a onclick="swapContent(news); closeNav()" class="visible-xs"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
 
                         <li class="dropdown-toggle" id="dropdownBell">
                             <a id="notifyBellId" class="dropdown-toggle">
@@ -147,7 +149,7 @@
                                     </ul>
                                 </div>
                                 <div class="panel-footer">
-                                    <button id="removeAllNotificationsButton"type="button" class="btn btn-default" style="width: 100%" data-dismiss="modal">Remove all</button>
+                                    <button id="removeAllNotificationsButton" type="button" class="btn btn-default" style="width: 100%" data-dismiss="modal">Remove all</button>
                                 </div>
                             </div>
                         </li>
@@ -198,11 +200,6 @@
     <script>
         var sideBarOpen = false;
 
-        $(function() {
-            setInterval(checkSession, 20000);
-            swapContent(dashboard);
-        });
-
         function openNav() {
             sideBarOpen = true;
             $("#sideBarId").css('width', '250px');
@@ -222,11 +219,11 @@
         });
 
         $(document).ready(function(){
+            setInterval(checkSession, 20000);
+            setInterval(function(){getNotifications(getCurrentUser().userId)},1000);
+            swapContent(dashboard);
             $('[data-toggle="popover"]').popover();
         });
-
-        getNotifications(getCurrentUser().userId);
-        updateNotificationBell();
     </script>
 
     <style>
