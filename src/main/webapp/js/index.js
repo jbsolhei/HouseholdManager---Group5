@@ -49,7 +49,7 @@ function checkSession(){
                 window.location.replace("OpeningPage.html");
             }
         }
-    })
+    });
 }
 
 function setCurrentUser(id) {

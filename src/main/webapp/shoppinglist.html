@@ -1,18 +1,20 @@
-<link href="css/shoppinglist.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- <script src="js/shoppinglist.js"></script> -->
-<script src="js/shopping_list.js"></script>
 
 <div id="shoppingListId" class="container-fluid">
     <div id="mainRow" class="row content">
         <div class="col-md-3 widgetCol">
             <div class="panel panel-default widget">
-                <div class="slHeader panel-heading styled-heading clearfix">
-                    <p id="SLHeaderID" >Shopping lists <span id="SLHIcon" onclick="showInputHeader()" class="pull-right clickable"><i class="glyphicon glyphicon-plus"></i></span></p>
+
+                <div class="panel-heading slHeader">
+                    Shopping lists
+                    <a id="addShoppinglistGlyphicon" href="#text_input_new_shopping_list" onclick="showInputHeader()" class="btn btn-md pull-right">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
                 </div>
+
                 <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#shopping_list_active_tab">Active</a></li>
-                    <li><a data-toggle="tab" href="#shopping_list_archived_tab">Archived</a></li>
+                    <li class="active liTab"><a id="activeTab" data-toggle="tab" href="#shopping_list_active_tab">Active</a></li>
+                    <li class="liTab"><a id="archiveTab" data-toggle="tab" href="#shopping_list_archived_tab">Archived</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -23,58 +25,53 @@
                         <!-- Archived tab will load here -->
                     </div>
                 </div>
-
-                <div class="footerWrapper">
-                    <div class="panel-footer">
-                        <div id="searchField" class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for list..">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
+
+
         <div class="col-md-9 widgetCol">
-            <div id="shopping_list_panel_header" class="panel panel-default widget">
+            <div class="panel panel-default widget">
                 <div id="title_header" class="slHeader panel-heading">
-                    <div class="row">
-                        <p id="headline" class="col-md-10"></p>
-                        <span class="col-md-2">
-                            <button id="edit_shopping_list_btn" class="btn-info" onclick="toggleListOfAssociatedUsers()">Share</button>
-                        </span>
+                    <a id="headline"></a>
+                    <span>
+                        <a id="edit_shopping_list_btn" class="headerBtn btn btn-default pull-right" onclick="editShoppingList(true)">Edit</a>
+                        <a id="archive_shopping_list_btn" class="headerBtn btn btn-warning pull-right" onclick="archiveShoppingList()">Archive</a>
+                        <a id="unarchive_shopping_list_btn" class="hide headerBtn btn btn-warning pull-right" onclick="unArchiveShoppingList()">Unarchive</a>
+                    </span>
+                </div>
+
+                <div id="edit_header" class="slHeader panel-heading hide">
+                    <div id="editInputGroup" class="input-group">
+                        <a class="inputHolder col-sm-11"><input class="form-control" id="editTitleInput" type="text" placeholder="" style="font-size:18px"></a>
+                        <a id="submit_edit_btn" class="col-sm-1 headerBtn btn btn-default pull-right" onclick="editShoppingList(false)">Submit</a>
                     </div>
                 </div>
-                <div id="input_header" class="slHeader panel-heading">
-                    <div class="input-group">
-                        <input class="form-control" id="text_input_new_shopping_list" placeholder="Name of Shopping List" type="text" >
-                        <!--
-                        <span id="okButton" onclick="addNewShoppingList()" class="input-group-addon btn btn-info btn-lg hide">Ok</span>
-                        -->
-                        <span class="input-group-btn">
-                            <button id="ok_new_shopping_list_btn" onclick="createNewShoppingList()" class="btn btn-success">Ok</button>
-                        </span>
-                        <span class="input-group-btn">
-                                <button id="share_new_shopping_list_btn" onclick="toggleListOfAssociatedUsersToNewShoppingList()" class="btn btn-info" type="button">Share</button>
-                        </span>
-                        <span class="input-group-btn">
-                                <button id="cancel_new_shopping_list_btn" onclick="hideInputHeader()" class="btn btn-danger" type="button">Cancel</button>
-                        </span>
+
+                <div id="input_header" class="slHeader panel-heading hide">
+                    <div id="newInputGroup" class="input-group">
+                        <a class="inputHolder col-sm-10"><input class="form-control" id="text_input_new_shopping_list" placeholder="Name of Shopping List" type="text"></a>
+                        <a class="col-sm-1 headerBtn btn btn-default pull-right" id="ok_new_shopping_list_btn" onclick="createNewShoppingList()">Ok</a>
+                        <a class="col-sm-1 headerBtn btn btn-default pull-right" id="cancel_new_shopping_list_btn" onclick="hideInputHeader()">Cancel</a>
                     </div>
                 </div>
-                <div id="list_of_users_associated_with_shopping_list">
-                    <table id="associated_users_table">
-                        <thead>
-                        <tr>
-                            <th><button class="btn glyphicon glyphicon-unchecked"></button> Select All</th>
-                            <th>Users who can view this list</th>
-                        </tr>
-                        </thead>
-                    </table>
+
+                <div id="list_of_users_associated_with_shopping_list" class="panel-body scrollWhenFull SL">
+                    <div id="list_of_users_wrapper">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th id="uncheckAllth" class="hide"><i class="glyphicon glyphicon-check"></i></th>
+                                <th id="checkAllth" ><i class="glyphicon glyphicon-unchecked"></i></th>
+                                <th><span>Users who can view this list</span></th>
+                            </tr>
+                            </thead>
+                            <tbody id="associated_users_table">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
                 <div id="shopping_list_data_panel" class="panel-body scrollWhenFull SL">
                     <div class="input-group">
                         <span onclick="addItemToShoppingList()" id="additem" class="input-group-addon btn btn-info btn-lg">Add item</span>
@@ -83,30 +80,22 @@
                     <div class="row content">
                         <table class="table table-striped">
                             <thead>
-                            <tr>
-                                <th class="col-md-1">Checked</th>
-                                <th class="col-md-5">Item</th>
-                                <th class="col-md-5">Bought by</th>
-                                <th class="col-md-1">Remove</th>
-                            </tr>
+                                <tr>
+                                    <th class="col-md-1">Checked</th>
+                                    <th class="col-md-4">Item</th>
+                                    <th class="col-md-6">Bought by</th>
+                                    <th class="col-md-1">Remove</th>
+                                </tr>
                             </thead>
-                            <tbody id="newItem"></tbody>
+                            <tbody id="newItem">
+                            </tbody>
                         </table>
                     </div>
                     <p id="emptyListText" class="hide">Your shopping list is empty..</p>
                 </div>
-                <div id="shopping_list_white_space" class="hide"></div>
-                <div class="footerWrapper">
-                    <div class="panel-footer">
-                        <div id="buttonDiv">
-                            <a id="archive_shopping_list_btn" onclick="archiveShoppingList()" class="btn btn-warning btn-sm">
-                                <span class="glyphicon glyphicon-trash"></span> Archive shopping list
-                            </a>
-                            <a id="delete_shopping_list_btn" onclick="deleteShoppingList()" class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-trash"></span> Delete this list
-                            </a>
-                        </div>
-                    </div>
+
+                <div id="slFooter" class="panel-footer">
+                    <a id="delete_shopping_list_btn" class="headerBtn btn btn-danger pull-right glyphicon glyphicon-trash" onclick="deleteShoppingList()" ></a>
                 </div>
             </div>
         </div>

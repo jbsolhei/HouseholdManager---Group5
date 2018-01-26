@@ -1,6 +1,8 @@
 function loadHousehold(){
     $("#hh_name").html(getCurrentHousehold().name);
-    $("#hh_address").html(getCurrentHousehold().address);
+    $("#householdAddress").html(getCurrentHousehold().address);
+    $("#numOfMembers").html(getCurrentHousehold().residents.length);
+    $("#numOfAdmins").html(getCurrentHousehold().admins.length);
     buildMemberTable();
     buildOtherInfoHousehold();
 }
@@ -55,7 +57,7 @@ function editAdmins() {
         } else {
             image = "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png";
         }
-        $("#panelFooterHouseholdOverview").html("<button class='btn' id='buttonEditAdmins' onclick='updateAdminsInHousehold()'>Update admministrators</button>")
+        $("#panelFooterHouseholdOverview").html("<button class='btn' id='buttonEditAdmins' onclick='updateAdminsInHousehold()'><span class=\"glyphicon glyphicon-refresh\"></span> Update admministrators</button>")
 
         $("table#members tbody").append(
             "<tr data-user-index=\"" + i + "\">\n" +
@@ -190,11 +192,11 @@ function buildMemberTable(){
 
         var removeTd = "<td></td>";
         if (user.userId === currentUser.userId) {
-            removeTd = "<td><span class='glyphicon glyphicon-remove remove' " +
+            removeTd = "<td  title='Leave this household'><span class='glyphicon glyphicon-remove remove' " +
                 "data-toggle='confirm' data-remove='self'></span></td>";
         }
         else if (currentUserIsAdmin) {
-            removeTd = "<td><span class='glyphicon glyphicon-remove remove' " +
+            removeTd = "<td title='Remove this user from household'><span class='glyphicon glyphicon-remove remove' " +
                 "data-toggle='confirm' data-remove='" + user.userId + "'></span></td>";
         }
         var image;
@@ -205,7 +207,7 @@ function buildMemberTable(){
         }
 
         $("table#members tbody").append(
-            "<tr data-user-index=\"" + i + "\">\n" +
+            "<tr data-user-index=\"" + i + "\" id='membersTableInput'>\n" +
             adminTd + "\n" +
             "<td><div class=\"img-circle\">" +
             "<img alt='profile picture' class=\"img-responsive img-pic\" src='"+image+"'>" +

@@ -6,9 +6,9 @@ var userChoreList;
 var householdChoreList;
 var selectedChore;
 var totChore = 0;
+var usersChore = true;
 
 function readyChores(){
-    console.log("readyChores()");
     switchChoresContent(0);
     listUserChores();
 
@@ -38,7 +38,6 @@ function readyChores(){
 }
 
 function listUserChores(){
-    console.log("listUserChores()");
     getChoresForUser(getCurrentUser().userId,function(data){
         userChoreList = data;
         var leftUpperTableBodyHTML = "";
@@ -64,8 +63,6 @@ function listUserChores(){
             totChore++;
         });
         $("#choresLeftUpperTableBody").html(leftUpperTableBodyHTML);
-        console.log("userChoreList:");
-        console.log(userChoreList);
         listHouseholdChores();
     });
 }
@@ -87,7 +84,6 @@ function sortByDate(array){
 }
 
 function listHouseholdChores() {
-    console.log("listHouseholdChores()");
     getChoresForHousehold(getCurrentHousehold().houseId, function(data){
         data = sortByDate(data);
         householdChoreList = [];
@@ -130,25 +126,28 @@ function getSelectedChoreFromUpdatedTotal(id){
     $.each(userChoreList,function(i,val){
         if(val.choreId===id){
             selectedChore = val;
-            showChoreInfo(val);
+            usersChore = true;
             $(".text-muted").removeClass("text-muted");
             $("#choreTab"+id).addClass("text-muted");
+            showChoreInfo(val);
             choreSent = true;
+            console.log("Chore is from userchores");
         }
     });
     if(!choreSent){
         $.each(householdChoreList,function(i,val){
             if(val.choreId===id){
+                usersChore = false;
                 selectedChore = val;
-                showChoreInfo(val);
                 $(".text-muted").removeClass("text-muted");
                 $("#choreTab"+id).addClass("text-muted");
+                showChoreInfo(val);
+                console.log("Chore is not from userchores");
             }
         });
     }
 }
 function checkSelectedChore(chore){
-    console.log("checkSelectedChore():");
     if(chore.userId===getCurrentUser().userId){
         chore.done = !chore.done;
         checkChore(chore);
@@ -158,25 +157,21 @@ function checkSelectedChore(chore){
 }
 
 function deleteSelectedChore(id){
-    console.log("deleteSelectedChore() on " + id);
     ajaxAuth({
         url: "res/household/"+getCurrentHousehold().houseId+"/chores/"+id,
         type: "DELETE",
         success: function(){
-            console.log("Chore deleted.");
             selectedChore = undefined;
             readyChores();
             switchChoresContent(3);
         },
         error: function(data){
-            console.log("Error in deleteSelectedChore()");
             console.log(data);
         }
     })
 }
 
 function selectChoreInfo(from, choreId){
-    console.log("selectChoreInfo()");
     if (from===0){
         selectedChore = userChoreList[choreId];
     } else {
@@ -185,12 +180,9 @@ function selectChoreInfo(from, choreId){
     showChoreInfo(selectedChore);
 }
 function showChoreInfo(chore){
-    console.log("showChoreInfo");
     if(chore!==undefined){
-        console.log(chore.done);
         switchChoresContent(0);
         $("#choresRightUpperPanelHeading").html(chore.title);
-        console.log(chore.title);
         $("#choresDetailsDescriptionContent").html(chore.description);
         $("#choresDetailsDateTimeContent").html(chore.time.dayOfMonth + "."+chore.time.monthValue+"." + chore.time.year + " " + pad(chore.time.hour) + ":" + pad(chore.time.minute));
         getHouseholdFromId((chore.houseId),function (data) {$("#choresDetailsHouseholdContent").html(data.name);});
@@ -210,6 +202,14 @@ function showChoreInfo(chore){
 function switchChoresContent(num) {
 
     if(num===0){
+        if(selectedChore!==undefined){
+            console.log(usersChore);
+            if(!usersChore) {
+                document.getElementById("checkSelectedChoreButton").disabled = true;
+            } else {
+                document.getElementById("checkSelectedChoreButton").disabled = false;
+            }
+        }
         $("#choresRightPanelSecondWindow").addClass("hide");
         $("#choresRightPanelThirdWindow").addClass("hide");
         $("#choresRightPanelFirstWindow").removeClass("hide");
@@ -227,7 +227,6 @@ function switchChoresContent(num) {
         });
         $("#newChoreDropdownMenu").html(newChoreDropdownHTML);
         var currentTime = new Date;
-        console.log((currentTime.getFullYear()+"-"+pad(currentTime.getMonth())+"-"+pad(currentTime.getDay())+"T"+pad(currentTime.getHours())+":"+pad(currentTime.getMinutes())));
         document.getElementById("newChoreLocalTimeInput").value = (currentTime.getFullYear()+"-"+pad(currentTime.getMonth()+1)+"-"+pad(currentTime.getDate()+1)+"T"+pad(currentTime.getHours())+":"+pad(currentTime.getMinutes()));
     }else if(num===2){
         $("#choresRightPanelFirstWindow").addClass("hide");
@@ -246,7 +245,6 @@ function switchChoresContent(num) {
 }
 
 function newChoreButtonPressed(){
-    console.log(selectedUserForNewChore);
 
     //input formatting:
     var newChoreTitle = $("#newChoreTitleInput").val();
@@ -261,7 +259,6 @@ function newChoreButtonPressed(){
     var newHouseId = getCurrentHousehold().houseId;
     var checked = false;
     var newChore = {houseId:newHouseId,title:newChoreTitle, description:newChoreDescription, time: newChoreDate, userId: newChoreUserId, done:checked};
-    console.log(newChore);
     if(verifyChoreInput(0)){
         verifyChoreInput(2);
         selectedUserForNewChore = null;
@@ -300,7 +297,6 @@ function editChore(chore){
     $("#editChoreDescriptionInput").val(he.unescape(chore.description));
     $("#editChoreDescriptionControl").text("(" + $("#editChoreDescriptionInput").val().length + "/240)");    $("#editChoreDropdownButton").html(chore.user==null?"No user <span class=\"caret\"></span>":chore.user.name + ' <span class="caret"></span>');
     document.getElementById("editChoreLocalTimeInput").value = (chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
-    console.log(chore.time.year+"-"+pad(chore.time.monthValue)+"-"+chore.time.dayOfMonth+"T"+pad(chore.time.hour)+":"+pad(chore.time.minute));
 }
 function editChoreButtonPressed(){
     var editedChoreTitle = $("#editChoreTitleInput").val();
@@ -315,7 +311,6 @@ function editChoreButtonPressed(){
     }
     var editedChoreDone = selectedChore.done;
     var editedChore = {choreId:selectedChore.choreId, title:editedChoreTitle, description:editedChoreDescription, time: editedChoreDate, userId: editedChoreUserId, done:editedChoreDone};
-    console.log(editedChore);
     updateChore(editedChore);
 }
 function pad(n){
@@ -323,41 +318,34 @@ function pad(n){
 }
 
 function getChoresForUser(id, handleData){
-    console.log("Get chores for user: " + id);
     ajaxAuth({
         url: "res/user/"+id+"/chores",
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function(data){
-            console.log("Success in getChoresForUser()");
             handleData(data);
         },
         error: function(data){
-            console.log("Error in getChoresForUser()");
             console.log(data);
         }
     })
 }
 
 function getChoresForHousehold(id, handleData){
-    console.log("Get chores for household: " + id);
     ajaxAuth({
         url: "res/household/"+id+"/chores",
         type: "GET",
         contentType:"application/json; charset=utf-8",
         success: function(data){
-            console.log("Success in getChoresForHousehold()");
             handleData(data);
         },
         error: function(data){
-            console.log("Error in getChoresForHousehold");
             console.log(data);
         }
     });
 }
 
 function postNewChore(chore){
-    console.log("postNewCore()");
     ajaxAuth({
         url: "res/household/"+getCurrentHousehold().houseId+"/chores",
         type: "POST",
@@ -365,22 +353,18 @@ function postNewChore(chore){
         dataType: "json",
         data: JSON.stringify(chore),
         success: function () {
-            console.log("Mor di jobbe ikke her kis");
             addNotification(chore.userId, getCurrentHousehold().houseId, "You have been added to the chore \"" + chore.title + "\", by " + getCurrentUser().name);
             selectedChore = undefined;
             readyChores();
             switchChoresContent(3);
         },
         error:function(data) {
-            console.log("Error in postNewChore()");
             console.log(data);
         }
     });
 }
 
 function updateChore(chore){
-    console.log("updateChore()");
-    console.log(chore);
     ajaxAuth({
         url: "res/household/"+getCurrentHousehold().houseId+"/chores",
         type: "PUT",
@@ -388,27 +372,17 @@ function updateChore(chore){
         dataType: "json",
         data: JSON.stringify(chore),
         success: function(data){
-            console.log("Success in updateChore()");
-            console.log("Updateresult: ");
-            console.log(data);
             readyChores();
         },
         error: function(data){
-            console.log("error in updateChore()");
             console.log(data);
         }
     });
 }
 
 function checkChore(chore){
-    /*console.log("checkChore()");
-    console.log(chore);
-    var tempChore = chore;*/
     var currentTime = new Date(); //Generates a valid date so as not to screw with the Chore DTO i backend. This date is not stored in the database
     chore.time = "" + currentTime.getFullYear()+"-"+pad(currentTime.getMonth()+1)+"-"+pad(currentTime.getDate()+1)+"T"+pad(currentTime.getHours())+":"+pad(currentTime.getMinutes());
-    /*tempChore.time = tempTime;
-    console.log("tempChore:");
-    console.log(tempChore);*/
     ajaxAuth({
         url: "res/household/"+getCurrentHousehold().houseId+"/chores/check",
         type: "PUT",

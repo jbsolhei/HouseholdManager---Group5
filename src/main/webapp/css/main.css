@@ -152,9 +152,14 @@ body {
     height: auto;
 }
 #homePageId{
+    margin-top: -2px;
+    padding-bottom: 15px;
     border: solid 15px transparent;
-
     position: absolute;
+}
+
+#homePageId:hover{
+    text-decoration: none !important;
 }
 
 .clickableChore:hover{
@@ -180,8 +185,8 @@ div.miniprofile {
     width: 100%;
 }
 #buttonEditAdmins {
-    float: right;
-    background-color: rgba(150, 19, 12, 0.3);
+    /*float: right;*/
+    background-color: #e8ca7d;
     height: 100%;
 }
 
@@ -207,6 +212,10 @@ div.miniprofile {
     width: 90%; !important;
 }
 
+.modal-success.modal-header {
+    background-color: #47c9a2;
+}
+
 .control-label{
     width: 100%;!important;
 }
@@ -229,6 +238,10 @@ div.miniprofile {
     cursor: pointer;
 }
 
-#panel-heading-button:hover{
+#panel-heading-button:hover, #membersTableInput:hover, .glyphicon:hover{
+    cursor: pointer;
+}
+
+#membersTableInput:hover{
     cursor: pointer;
 }
