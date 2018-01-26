@@ -46,6 +46,13 @@
     margin-top: 4px;
 }
 
+#notifyBellId1 {
+    color: #436470;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 4px;
+}
+
 #currentHouseholdId:hover, #logoutId:hover, #myPageId:hover, #homePageId:hover {
     cursor: pointer;
     background-color: #162B32;
@@ -153,8 +160,15 @@ body {
 }
 #homePageId{
     margin-top: -2px;
-    padding-bottom: 15px;
-    border: solid 15px transparent;
+    padding: 14px;
+    /*border: solid 15px transparent;*/
+    position: absolute;
+}
+
+#bellForCell {
+    margin-top: -2px;
+    padding: 14px;
+    left: 5em;
     position: absolute;
 }
 

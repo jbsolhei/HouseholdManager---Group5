@@ -15,8 +15,6 @@ var dateTime =    currentdate.getFullYear() + "-"
                 + currentdate.getMinutes() + ":"
                 + currentdate.getSeconds();
 
-    console.log(dateTime);
-
     var notification = {
         userId: userId,
         houseId: houseId,
@@ -96,6 +94,7 @@ function updateNotificationDropdown() {
         if (houseName == null) houseName = "";
 
         $("#notifyDropdownListId").prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
+        $("#notifyDropdownListId1").prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
     }
 }
 
@@ -105,6 +104,7 @@ function updateNotificationDropdown() {
  */
 function countNotifications() {
     var notifications = $('#notifyDropdownListId').children('li').length;
+    var notifications = $('#notifyDropdownListId1').children('li').length;
     return notifications;
 }
 
@@ -118,9 +118,15 @@ function updateNotificationBell() {
         $("#notificationValue").html("");
         $("#notificationValue").addClass("numberCircle");
         $("#notificationValue").append(""+number+"");
+        $("#notifyBellId1").css('color', 'white');
+        $("#notificationValue1").html("");
+        $("#notificationValue1").addClass("numberCircle");
+        $("#notificationValue1").append(""+number+"");
     } else {
         $("#notificationValue").html("");
-        $("#notificationValue").removeClass("numberCircle")
+        $("#notificationValue").removeClass("numberCircle");
+        $("#notificationValue1").html("");
+        $("#notificationValue1").removeClass("numberCircle");
     }
 
 }
@@ -141,12 +147,18 @@ $(document).on('click', '.notificationElement', function () {
 
     $("#notificationValue").html("");
     $("#notificationValue").append(""+countNotifications()+"");
+    $("#notificationValue1").html("");
+    $("#notificationValue1").append(""+countNotifications()+"");
 
     if (countNotifications() <= 0) {
         $("#notifyBellId").css('color', '#436470');
         $('#notifyBellId').parent().removeClass('open');
         $("#notificationValue").html("");
-        $("#notificationValue").removeClass("numberCircle")
+        $("#notificationValue").removeClass("numberCircle");
+        $("#notifyBellId1").css('color', '#436470');
+        $('#notifyBellId1').parent().removeClass('open');
+        $("#notificationValue1").html("");
+        $("#notificationValue1").removeClass("numberCircle");
     }
 });
 
@@ -160,6 +172,7 @@ $(document).on('click', '#removeAllNotificationsButton', function () {
         console.log("nr deleted: " + notifications[i].notificationId);
         deleteNotification(notifications[i].notificationId);
         $('#notifyDropdownListId').children('li').remove();
+        $('#notifyDropdownListId1').children('li').remove();
     }
     console.log("ant not after del: " + countNotifications());
     updateNotificationBell();
@@ -175,10 +188,12 @@ $(document).on('click', 'body', function (e) {
 
     if (b == undefined && a !== null || b.slice(0, 4) !== "noti" && opened) {
         $('#notifyBellId').parent().removeClass('open');
+        $('#notifyBellId1').parent().removeClass('open');
 
         opened = false;
     } else if (b == "dropdown-toggle" && countNotifications() > 0) {
         opened = true;
         $('#notifyBellId').parent().toggleClass('open');
+        $('#notifyBellId1').parent().toggleClass('open');
     }
 });

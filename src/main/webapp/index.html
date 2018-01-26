@@ -116,8 +116,24 @@
                         <a id="homePageId" onclick="swapContent(dashboard)">
                             Home
                         </a>
+                        <a class="visible-xs dropdown-toggle" id="bellForCell">
+                                <div id="notifyBellId1" class="dropdown-toggle">
+                                    <i class="glyphicon glyphicon-bell"></i>
+                                    <div class="numberCircle" id="notificationValue1"></div>
+                                </div>
 
+                                <div class="panel panel-default dropdown-menu pull-left" style="float: left">
+                                    <div class="panel-body" style="padding-left: 0px; padding-right: 0px;">
+                                        <ul id="notifyDropdownListId1" class="noti list-group" role="menu" aria-labelledby="menu1">
+                                        </ul>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <button id="removeAllNotificationsButton1"type="button" class="btn btn-default" style="width: 100%" data-dismiss="modal">Remove all</button>
+                                    </div>
+                                </div>
+                        </a>
                     </div>
+
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mobileNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -127,15 +143,15 @@
                 </div>
                 <div class="navbar-collapse collapse" id="mobileNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="visible-xs" onclick="swapContent(dashboard)">Dashboard</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(household)">Household</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(shoppinglists)">Shopping lists</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(shoppingtrips)">Shopping trip</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(chores)">Chores</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(statistics)">Statistics</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(news)">News</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(dashboard)"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(household)"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(shoppinglists)"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(shoppingtrips)"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trips</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(chores)"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(statistics)"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(news)"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
 
-                        <li class="dropdown-toggle" id="dropdownBell">
+                        <li class="dropdown-toggle visible-sm visible-md visible-lg">
                             <a id="notifyBellId" class="dropdown-toggle">
                                 <i class="glyphicon glyphicon-bell"></i>
                                 <div class="numberCircle" id="notificationValue"></div>
@@ -171,10 +187,10 @@
         <nav id="sideBarId" class="sidebar hidden-xs">
             <ul class="list-unstyled components">
                 <li><a onclick="swapContent(dashboard); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
-                <li><a onclick="swapContent(profile);closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-user"></i>My Page</a></li>
+                <li><a onclick="swapContent(profile);closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-user"></i>  My Page</a></li>
                 <li><a onclick="swapContent(household); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
                 <li><a onclick="swapContent(shoppinglists); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
-                <li><a onclick="swapContent(shoppingtrips); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trip</a></li>
+                <li><a onclick="swapContent(shoppingtrips); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trips</a></li>
                 <li><a onclick="swapContent(chores);closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
                 <li><a onclick="swapContent(finance); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-credit-card"></i>  Finance</a></li>
                 <li><a onclick="swapContent(stats); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
