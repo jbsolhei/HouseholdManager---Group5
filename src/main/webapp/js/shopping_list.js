@@ -412,10 +412,9 @@ function uncheckItem(itemId) {
  */
 function checkAssociatedUser(userId) {
     console.log("check user:" + userId);
-    $("#associated_user_id_" + userId).addClass("glyphicon-refresh").removeClass("glyphicon-unchecked");
     ajax_insertUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
         if (data) {
-            $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="uncheckAssociatedUser('+ userId +')" class="glyphicon glyphicon-check"></td>')
+            $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="uncheckAssociatedUser('+ userId +')"><i class="glyphicon glyphicon-check"></i></td>')
         }
     })
 }
@@ -426,10 +425,9 @@ function checkAssociatedUser(userId) {
  */
 function uncheckAssociatedUser(userId) {
     console.log("uncheck user:" + userId);
-    $("#associated_user_id_" + userId).addClass("glyphicon-refresh").removeClass("glyphicon-check");
     ajax_deleteUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
         if (data) {
-            $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="checkAssociatedUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td>')
+            $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="checkAssociatedUser('+ userId +')"><i class="glyphicon glyphicon-unchecked"></i></td>')
         }
     })
 }
@@ -592,7 +590,8 @@ function closeListOfAssociatedUsersToNewShoppingList() {
  */
 function checkUserInNewShoppingList(userId) {
     userIdsNewShoppingList.push(userId);
-    $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId + '" onclick="uncheckUserInNewShoppingList(' + userId + ')" class="glyphicon glyphicon-check"></td>');
+    console.log(userId);
+    $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId + '" onclick="uncheckUserInNewShoppingList(' + userId + ')"><i class="glyphicon glyphicon-check"></i></td>');
 }
 
 /**
@@ -601,7 +600,8 @@ function checkUserInNewShoppingList(userId) {
  */
 function uncheckUserInNewShoppingList(userId) {
     removeObjectArray(userIdsNewShoppingList, userId);
-    $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId + '" onclick="checkUserInNewShoppingList(' + userId + ')" class="glyphicon glyphicon-unchecked"></td>');
+    console.log(userId);
+    $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId + '" onclick="checkUserInNewShoppingList(' + userId + ')"><i class="glyphicon glyphicon-unchecked"></i></td>');
 }
 
 /**
@@ -626,7 +626,6 @@ function editShoppingList(edit) {
         $("#edit_shopping_list_btn").addClass("hide");
         $("#edit_header").removeClass("hide");
         $("#archive_shopping_list_btn").addClass("hide");
-        $("#delete_shopping_list_btn").addClass("hide");
         $("#title_header").addClass("hide");
         console.log("BLIR KJØRT");
         $("#editTitleInput").attr("value", slName);
@@ -643,7 +642,6 @@ function editShoppingList(edit) {
 }
 
 function removeEditElemets() {
-    $("#delete_shopping_list_btn").removeClass("hide");
     $("#edit_shopping_list_btn").removeClass("hide");
     $("#edit_header").addClass("hide");
     $("#shopping_list_data_panel").removeClass("hide");
@@ -667,4 +665,22 @@ $(document).on('click', '#archiveTab', function () {
     $("#unarchive_shopping_list_btn").removeClass("hide");
 });
 
+function checkAll(check) {
+    if (check) {
 
+    } else {
+
+    }
+}
+
+$(document).on('click', '#checkAllth', function () {
+    $("#checkAllth").addClass('hide');
+    $("#uncheckAllth").removeClass('hide');
+   console.log('click check all');
+});
+
+$(document).on('click', '#uncheckAllth', function () {
+    $("#uncheckAllth").addClass('hide');
+    $("#checkAllth").removeClass('hide');
+   console.log('click uncheck all');
+});

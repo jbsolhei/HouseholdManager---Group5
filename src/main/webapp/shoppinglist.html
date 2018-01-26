@@ -13,8 +13,8 @@
                 </div>
 
                 <ul class="nav nav-tabs">
-                    <li class="active"><a id="activeTab" data-toggle="tab" href="#shopping_list_active_tab">Active</a></li>
-                    <li><a id="archiveTab" data-toggle="tab" href="#shopping_list_archived_tab">Archived</a></li>
+                    <li class="active liTab"><a id="activeTab" data-toggle="tab" href="#shopping_list_active_tab">Active</a></li>
+                    <li class="liTab"><a id="archiveTab" data-toggle="tab" href="#shopping_list_archived_tab">Archived</a></li>
                 </ul>
 
                 <div class="tab-content">
@@ -30,14 +30,13 @@
 
 
         <div class="col-md-9 widgetCol">
-            <div id="shopping_list_panel_header" class="panel panel-default widget">
+            <div class="panel panel-default widget">
                 <div id="title_header" class="slHeader panel-heading">
                     <a id="headline"></a>
                     <span>
                         <a id="edit_shopping_list_btn" class="headerBtn btn btn-default pull-right" onclick="editShoppingList(true)">Edit</a>
                         <a id="archive_shopping_list_btn" class="headerBtn btn btn-warning pull-right" onclick="archiveShoppingList()">Archive</a>
                         <a id="unarchive_shopping_list_btn" class="hide headerBtn btn btn-warning pull-right" onclick="unArchiveShoppingList()">Unarchive</a>
-                        <a id="delete_shopping_list_btn" class="headerBtn btn btn-danger pull-right" onclick="deleteShoppingList()" >Delete</a>
                     </span>
                 </div>
 
@@ -61,7 +60,8 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th><i class="glyphicon glyphicon-unchecked"></i></th>
+                                <th id="checkAllth"><i class="glyphicon glyphicon-check"></i></th>
+                                <th id="uncheckAllth" class="hide"><i class="glyphicon glyphicon-unchecked"></i></th>
                                 <th><span>Users who can view this list</span></th>
                             </tr>
                             </thead>
@@ -92,6 +92,10 @@
                         </table>
                     </div>
                     <p id="emptyListText" class="hide">Your shopping list is empty..</p>
+                </div>
+
+                <div id="slFooter" class="panel-footer">
+                    <a id="delete_shopping_list_btn" class="headerBtn btn btn-danger pull-right glyphicon glyphicon-trash" onclick="deleteShoppingList()" ></a>
                 </div>
             </div>
         </div>
