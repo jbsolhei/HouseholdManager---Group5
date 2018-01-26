@@ -239,22 +239,6 @@ function changePassword() {
                         console.log(res);
                     }
                 });
-                /*ajaxAuth({
-                    url: "res/user/"+getCurrentUser().userId+"/checkPassword",
-                    type: 'POST',
-                    contentType: 'text/plain; charset=utf-8',
-                    data: oldPassword,
-                    success: function (res) {
-                        console.log(res);
-                        if (res == "true") {
-                            updatePassword(newPassword);
-                           // saveInformation();
-                        } else {
-                            document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-                                '<strong>Current password does not match</strong></div>';
-                        }
-                    }
-                });*/
             } else {
                 document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
                     '<strong>New password does not match</strong></div>';

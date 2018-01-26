@@ -180,8 +180,8 @@ div.miniprofile {
     width: 100%;
 }
 #buttonEditAdmins {
-    float: right;
-    background-color: rgba(150, 19, 12, 0.3);
+    /*float: right;*/
+    background-color: #e8ca7d;
     height: 100%;
 }
 
