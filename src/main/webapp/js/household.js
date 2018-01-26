@@ -190,11 +190,11 @@ function buildMemberTable(){
 
         var removeTd = "<td></td>";
         if (user.userId === currentUser.userId) {
-            removeTd = "<td><span class='glyphicon glyphicon-remove remove' " +
+            removeTd = "<td  title='Leave this household'><span class='glyphicon glyphicon-remove remove' " +
                 "data-toggle='confirm' data-remove='self'></span></td>";
         }
         else if (currentUserIsAdmin) {
-            removeTd = "<td><span class='glyphicon glyphicon-remove remove' " +
+            removeTd = "<td title='Remove this user from household'><span class='glyphicon glyphicon-remove remove' " +
                 "data-toggle='confirm' data-remove='" + user.userId + "'></span></td>";
         }
         var image;
@@ -205,7 +205,7 @@ function buildMemberTable(){
         }
 
         $("table#members tbody").append(
-            "<tr data-user-index=\"" + i + "\">\n" +
+            "<tr data-user-index=\"" + i + "\" id='membersTableInput'>\n" +
             adminTd + "\n" +
             "<td><div class=\"img-circle\">" +
             "<img alt='profile picture' class=\"img-responsive img-pic\" src='"+image+"'>" +
