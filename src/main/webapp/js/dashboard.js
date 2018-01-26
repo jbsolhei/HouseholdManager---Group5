@@ -56,7 +56,7 @@ function printShoppingListsToDashboard(house) {
         for (var i = 0; i < house.shoppingLists.length; i++) {
             if(!(house.shoppingLists[i].isArchived)){
                 var current = house.shoppingLists[i];
-                var inputSting = "<li onclick='navToShoppingList(" + i + ")' class='list-group-item'>" + current.name + "</li>";
+                var inputSting = "<li class='list-group-item'>" + current.name + "</li>";
                 $("#dashboard_shopping_list_unordered_list").append(inputSting);
             }
         }

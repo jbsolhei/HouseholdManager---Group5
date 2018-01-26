@@ -33,7 +33,7 @@ public class DBConnector implements AutoCloseable {
             }
         }
         catch (Exception e) {
-            CleanUp.writeMessage(e, "DBConnector constructor");
+            e.printStackTrace();
         }
     }
 
@@ -58,7 +58,7 @@ public class DBConnector implements AutoCloseable {
             //pool.setDebugUnreturnedConnectionStackTraces(true);
         }
         catch (PropertyVetoException e) {
-            CleanUp.writeMessage(e, "DBConnector.setUpPool()");
+            e.printStackTrace();
             throw new SQLException("Can't set up ComboPooledDataSource", e);
         }
     }
@@ -95,7 +95,7 @@ public class DBConnector implements AutoCloseable {
             PreparedStatement preparedStatement = conn.prepareStatement(statement);
             return preparedStatement.executeQuery();
         } catch (SQLException sqle) {
-            CleanUp.writeMessage(sqle, "getResultFromStatement");
+            sqle.printStackTrace();
         }
         return null;
     }
@@ -112,7 +112,7 @@ public class DBConnector implements AutoCloseable {
             PreparedStatement preparedStatement = conn.prepareStatement(statement);
             return preparedStatement.executeUpdate()!=0;
         }catch(SQLException sqle){
-            CleanUp.writeMessage(sqle, "updateDatabase");
+            sqle.printStackTrace();
             return false;
         }
     }

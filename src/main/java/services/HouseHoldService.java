@@ -24,7 +24,7 @@ import java.util.HashMap;
 public class HouseHoldService {
 
     /**
-     * <p>getTest.</p>
+     * This is a test method to check the rest service
      *
      * @return a {@link java.lang.String} object.
      */
@@ -35,10 +35,10 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>addHouseHold.</p>
+     * Adds a household to the database
      *
-     * @param newHousehold a {@link classes.Household} object.
-     * @return a int.
+     * @param newHousehold the {@link classes.Household} to add.
+     * @return 0 for fail 1 for success.
      */
     @POST
     @Auth
@@ -50,10 +50,10 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>addUserToHousehold.</p>
+     * Adds a user to a household.
      *
-     * @param house a int.
-     * @param user a {@link java.lang.String} object.
+     * @param house the house id. (from path)
+     * @param user the users id in plaintext.
      */
     @POST
     @Auth(AuthType.HOUSEHOLD_ADMIN)
@@ -64,10 +64,10 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>addUserFromInvite.</p>
+     * Adds a user from an invite token.
      *
-     * @param token a {@link java.lang.String} object.
-     * @param user a {@link java.lang.String} object.
+     * @param token the invite token. (from path)
+     * @param user the user id as plaintext.
      * @return a {@link javax.ws.rs.core.Response} object.
      */
     @POST
@@ -88,10 +88,10 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>inviteUsersToHousehold.</p>
+     * Sends an invite to a household to many users
      *
-     * @param house a int.
-     * @param email an array of {@link java.lang.String} objects.
+     * @param house the house id. (from path)
+     * @param email an array of emails.
      * @return a {@link javax.ws.rs.core.Response} object.
      */
     @POST
@@ -112,9 +112,10 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>addAdmin.</p>
+     * Add an admin to a household.
+     * (if the user is not in household)
      *
-     * @param id a int.
+     * @param id the house id. (from path)
      * @param user a {@link classes.User} object.
      * @return a boolean.
      */
@@ -141,10 +142,11 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>makeAdmin.</p>
+     * Make a user admin
+     * (if user is in household)
      *
-     * @param id a int.
-     * @param user an user object.
+     * @param id the house id. (from path)
+     * @param user a {@link classes.User} object.
      * @return a boolean.
      */
     @PUT
@@ -156,10 +158,10 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>unmakeAdmin. Make an admin not admin</p>
+     * <p>Make an admin not admin</p>
      *
-     * @param id a int.
-     * @param user an user object.
+     * @param id the house id. (from path)
+     * @param user a {@link classes.User} object.
      * @return a boolean.
      */
     @PUT
@@ -171,9 +173,9 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>getMembers.</p>
+     * Gets a households members
      *
-     * @param id a int.
+     * @param id the house id. (from path)
      * @return an array of {@link classes.User} objects.
      */
     @GET
@@ -185,10 +187,10 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>getHousehold.</p>
+     * Gets all info about a household
      *
-     * @param id a int.
-     * @param context a {@link javax.ws.rs.container.ContainerRequestContext} object.
+     * @param id the house id. (from path)
+     * @param context session context. (from auth header)
      * @return a {@link classes.Household} object.
      */
     @GET
@@ -200,9 +202,9 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>updateHousehold.</p>
+     * Update a household name/address
      *
-     * @param id a int.
+     * @param id the house id. (from path)
      * @param newHouse a {@link classes.Household} object.
      * @return a int.
      */
@@ -217,10 +219,10 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>removeMyselfFromHousehold.</p>
+     * Remove current logged in user from household.
      *
-     * @param householdId a int.
-     * @param context a {@link javax.ws.rs.container.ContainerRequestContext} object.
+     * @param householdId the house id. (from path)
+     * @param context session context. (from auth header)
      * @return a {@link javax.ws.rs.core.Response} object.
      */
     @DELETE
@@ -237,10 +239,10 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>removeOthersFromHousehold.</p>
+     * Remove a user from a household
      *
-     * @param householdId a int.
-     * @param userId a int.
+     * @param householdId the house id. (from path)
+     * @param userId the user id. (from path)
      * @return a {@link javax.ws.rs.core.Response} object.
      */
     @DELETE
@@ -256,9 +258,9 @@ public class HouseHoldService {
     }
 
     /**
-     * <p>deleteHousehold.</p>
+     * Delete a household
      *
-     * @param id a int.
+     * @param id the household id. (from path)
      */
     @DELETE
     @Auth(AuthType.HOUSEHOLD_ADMIN)
