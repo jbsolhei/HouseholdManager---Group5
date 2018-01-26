@@ -461,6 +461,33 @@ public class ShoppingListDAO {
         }
     }
 
+    /**
+     * Used to update the name of a shopping list.
+     * @param shoppingListId The id of the shopping list that is being updated.
+     * @param name The new name.
+     * @return Returns true if successful and false if not.
+     */
+    public static boolean updateShoppingListName(int shoppingListId, String name) {
+        String query = "UPDATE Shopping_list SET name = ? WHERE shopping_listId = ?";
+        int updated = -1;
+
+        try (DBConnector dbc = new DBConnector();
+             Connection conn = dbc.getConn();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            st.setString(1, name);
+            st.setInt(2, shoppingListId);
+
+             updated = st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (updated < 0) return false;
+        return true;
+    }
+
     private static User[] toUserArray(ArrayList<User> users) {
         User[] userArray = new User[users.size()];
         for (int i = 0; i < users.size(); i++) {

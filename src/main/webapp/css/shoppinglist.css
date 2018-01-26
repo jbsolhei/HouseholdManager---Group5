@@ -71,12 +71,12 @@ a {
 }
 
 #additem {
-    background: #5cb85c;
-    color: #f9f9f9;
+    background: lightgrey;
+    color: black;
 }
 
 #additem:hover {
-    background: #47a447;
+    background: grey;
 }
 
 .input-group {
@@ -122,7 +122,6 @@ a {
     height: 100%;
     width: 100%;
     overflow-y: auto;
-    border-left: solid 2px lightgrey;
 }
 
 #edit_header, #input_header {
@@ -143,10 +142,15 @@ a {
     padding: 0;
 }
 
+
 .liTab {
     width: 50%;
     margin: 0;
     text-align: center;
+}
+
+#headline {
+    margin-top: 10px;
 }
 
 #slFooter {

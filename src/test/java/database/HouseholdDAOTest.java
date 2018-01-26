@@ -16,9 +16,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 public class HouseholdDAOTest {
-    DBConnector dbc = new DBConnector();
-    Connection conn;
-    Statement st;
+    private DBConnector dbc = new DBConnector();
+    private Connection conn;
+    private Statement st;
 
     @Before
     public void setUp() throws Exception {
@@ -39,7 +39,7 @@ public class HouseholdDAOTest {
             count++;
         }
 
-        assertEquals(1,count);
+        assertEquals(1, count);
     }
 
     @Test

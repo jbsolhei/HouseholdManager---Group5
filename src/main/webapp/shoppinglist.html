@@ -35,8 +35,6 @@
                     <a id="headline"></a>
                     <span>
                         <a id="edit_shopping_list_btn" class="headerBtn btn btn-default pull-right" onclick="editShoppingList(true)">Edit</a>
-                        <a id="archive_shopping_list_btn" class="headerBtn btn btn-warning pull-right" onclick="archiveShoppingList()">Archive</a>
-                        <a id="unarchive_shopping_list_btn" class="hide headerBtn btn btn-warning pull-right" onclick="unArchiveShoppingList()">Unarchive</a>
                     </span>
                 </div>
 
@@ -60,8 +58,8 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th id="uncheckAllth" class="hide"><i class="glyphicon glyphicon-check"></i></th>
-                                <th id="checkAllth" ><i class="glyphicon glyphicon-unchecked"></i></th>
+                                <th id="uncheckAllth"><i class="glyphicon glyphicon-check"></i></th>
+                                <th id="checkAllth" class="hide"><i class="glyphicon glyphicon-unchecked"></i></th>
                                 <th><span>Users who can view this list</span></th>
                             </tr>
                             </thead>
@@ -73,9 +71,9 @@
                 </div>
 
                 <div id="shopping_list_data_panel" class="panel-body scrollWhenFull SL">
-                    <div class="input-group">
+                    <div id="addItemInputGroup" class="input-group">
                         <input id="shoppingListItemInput" type="text" class="form-control" name="item" placeholder="Item">
-                        <span onclick="addItemToShoppingList()" id="additem" class="input-group-addon btn btn-info btn-lg">Add item</span>
+                        <span onclick="addItemToShoppingList()" id="additem" class="input-group-addon btn btn-info">Add item</span>
                     </div>
                     <div class="row content">
                         <table class="table table-striped">
@@ -96,6 +94,8 @@
 
                 <div id="slFooter" class="panel-footer">
                     <a id="delete_shopping_list_btn" class="headerBtn btn btn-danger pull-right glyphicon glyphicon-trash" onclick="deleteShoppingList()" ></a>
+                    <a id="unarchive_shopping_list_btn" class="hide headerBtn btn btn-warning pull-right" onclick="unArchiveShoppingList()">Unarchive</a>
+                    <a id="archive_shopping_list_btn" class="headerBtn btn btn-warning pull-right" onclick="archiveShoppingList()">Archive</a>
                 </div>
             </div>
         </div>

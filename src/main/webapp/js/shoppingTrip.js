@@ -12,7 +12,6 @@ function getShoppingTrips() {
         dataType: 'json',
         contentType: "application/json; charset=utf-8",
         success: function(data) {
-            console.log(data);
             if (data!==null&&data!==undefined) {
                 numberOfItems = data.length;
                 if (numberOfItems!==0) {
@@ -37,7 +36,7 @@ function deleteShoppingTrip(){
             console.log("List #" + activeSHT.shoppingTripId + " deleted.");
             getShoppingTrips();
         }
-    })
+    });
 }
 
 function viewShoppingTrips(data) {
@@ -58,14 +57,12 @@ function viewInformation(shoppingTripId, i) {
         success: function (result) {
             activeSHT = result;
             activeSHT.shoppingTripId = shoppingTripId;
-            console.log(activeSHT);
             updateInformation(result)
         },
         error: function (result) {
         }
     });
     $("#tab-" + activeTab).removeClass("active");
-    console.log(i);
     $("#tab-" + i).addClass("active");
     activeTab = i;
 }
@@ -120,7 +117,6 @@ function createPageAddShoppingTrip() {
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                console.log("ant user " + data.length);
                 result = data;
                 addMembers(data);
             },
@@ -131,12 +127,11 @@ function createPageAddShoppingTrip() {
             $("<option>").attr("id", "trip-0").data("trip-id", 0).text("-None-")
         );
         ajaxAuth({
-            url: "res/household/" + getCurrentHousehold().houseId + "/shopping_lists/" + getCurrentUser().userId,//Må byttes ut med currentHousehold!!!!
+            url: "res/household/" + getCurrentHousehold().houseId + "/shopping_lists/user/" + getCurrentUser().userId,//Må byttes ut med currentHousehold!!!!
             type: 'get',
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                console.log("shopping lists: " + data);
                 addShoppinglists(data);
             },
             error: function (result) {

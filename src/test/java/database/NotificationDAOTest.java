@@ -59,7 +59,6 @@ public class NotificationDAOTest {
     public void addNotificationToDB() throws Exception {
 
         Notification notification = new Notification();
-        notification.setNotificationId(999);
         notification.setUserId(200);
         notification.setHouseId(1);
         notification.setMessage("Du har blitt lagt til i en handleliste.");
@@ -67,7 +66,8 @@ public class NotificationDAOTest {
 
         NotificationDAO.addNotificationToDB(notification);
 
-        String query = "SELECT * FROM Notification WHERE notificationId = 999";
+        // OBS: id i queryet må endres hvis testdata endres, da id er autogenerert
+        String query = "SELECT * FROM Notification WHERE notificationId = 4";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
