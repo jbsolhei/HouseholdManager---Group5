@@ -395,7 +395,7 @@ function postNewChore(chore){
         dataType: "json",
         data: JSON.stringify(chore),
         success: function () {
-            addNotification(chore.userId, getCurrentHousehold().houseId, "You have been added to the chore \"" + chore.title + "\", by " + getCurrentUser().name);
+            if(getCurrentUser().userId!==chore.userId)addNotification(chore.userId, getCurrentHousehold().houseId, "You have been added to the chore \"" + chore.title + "\", by " + getCurrentUser().name);
             selectedChore = undefined;
             readyChores();
             switchChoresContent(3);
@@ -414,7 +414,7 @@ function updateChore(chore){
         dataType: "json",
         data: JSON.stringify(chore),
         success: function(data){
-            addNotification(chore.userId, getCurrentHousehold().houseId, ""+getCurrentUser.name+" has edited your chore \"" + chore.title + "\"");
+            if(getCurrentUser().userId!==chore.userId)addNotification(chore.userId, getCurrentHousehold().houseId, ""+getCurrentUser.name+" has edited your chore \"" + chore.title + "\"");
             readyChores();
         },
         error: function(data){
