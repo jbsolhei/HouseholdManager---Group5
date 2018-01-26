@@ -5,45 +5,33 @@ var selectedUserForNewChore = null;
 var userChoreList;
 var householdChoreList;
 var selectedChore;
-var totChore = 0;
 var usersChore = true;
+var userHHsForChores;
+
 
 function readyChores(){
     switchChoresContent(0);
-    listUserChores();
+    setUpChoreListeners();
 
+    getUserHouseholdsForChores();
 
-    $("#newChoreTitleInput").keyup(function(){
-        if($("#newChoreTitleInput").val().length>60){
-            $("#newChoreTitleInput").val($("#newChoreTitleInput").val().substring(0,60));
-        }
-    });
-    $("#editChoreTitleInput").keyup(function(){
-        if($("#editChoreTitleInput").val().length>60){
-            $("#editChoreTitleInput").val($("#editChoreTitleInput").val().substring(0,60));
-        }
-    });
-    $("#newChoreDescriptionInput").keyup(function(){
-        if($("#newChoreDescriptionInput").val().length>240){
-            $("#newChoreDescriptionInput").val($("#newChoreDescriptionInput").val().substring(0,240));
-        }
-        $("#newChoreDescriptionControl").text("(" + $("#newChoreDescriptionInput").val().length + "/240)");
-    });
-    $("#editChoreDescriptionInput").keyup(function(){
-        if($("#editChoreDescriptionInput").val().length>240){
-            $("#editChoreDescriptionInput").val($("#editChoreDescriptionInput").val().substring(0,240));
-        }
-        $("#editChoreDescriptionControl").text("(" + $("#editChoreDescriptionInput").val().length + "/240)");
-    });
+}
+
+function getUserHouseholdsForChores(){
+    getAllHouseholdsForUser(getCurrentUser().userId, function(data){
+        userHHsForChores = data;
+        listUserChores();
+    })
 }
 
 function listUserChores(){
     getChoresForUser(getCurrentUser().userId,function(data){
-        userChoreList = data;
-        var leftUpperTableBodyHTML = "";
-        var today = new Date();
+        userChoreList = sortByDate(data);
 
+        var today = new Date();
+        $("#choresLeftUpperTableBody").html("");
         $.each(data,function(i,val){
+            var leftUpperTableBodyHTML = "";
             if(today>toJSDate(val.time)&&!val.done){
                 leftUpperTableBodyHTML+="<tr class='clickableChore overdueChoreListElement'";
             }else if(today>toJSDate(val.time)&&val.done){
@@ -57,12 +45,16 @@ function listUserChores(){
                 "<td>"+val.title+"</td>" +
                 "<td id='userChoreListElhh"+i+"'></td>" +
                 "<td>"+val.time.dayOfMonth + "."+val.time.monthValue+"." + val.time.year+"</td></tr>";
-            getHouseholdFromId(val.houseId, function (data) {
-               $("#userChoreListElhh" + i).text(data.name);
-            });
-            totChore++;
+
+
+            $("#choresLeftUpperTableBody").append(leftUpperTableBodyHTML);
+            $.each(userHHsForChores, function(j,HHval){
+                if(val.houseId===HHval.houseId){
+                    $("#userChoreListElhh"+i).text(HHval.name);
+
+                }
+            })
         });
-        $("#choresLeftUpperTableBody").html(leftUpperTableBodyHTML);
         listHouseholdChores();
     });
 }
@@ -112,7 +104,6 @@ function listHouseholdChores() {
                 }
                 leftLowerTableBodyHTML +=
                     "<td>"+val.time.dayOfMonth + "."+val.time.monthValue+"." + val.time.year+"</td></tr>";
-                totChore++;
             }
         });
         $("#choresLeftLowerTableBody").html(leftLowerTableBodyHTML);
@@ -131,7 +122,6 @@ function getSelectedChoreFromUpdatedTotal(id){
             $("#choreTab"+id).addClass("text-muted");
             showChoreInfo(val);
             choreSent = true;
-            console.log("Chore is from userchores");
         }
     });
     if(!choreSent){
@@ -142,7 +132,6 @@ function getSelectedChoreFromUpdatedTotal(id){
                 $(".text-muted").removeClass("text-muted");
                 $("#choreTab"+id).addClass("text-muted");
                 showChoreInfo(val);
-                console.log("Chore is not from userchores");
             }
         });
     }
@@ -163,12 +152,19 @@ function deleteSelectedChore(id){
         success: function(){
             selectedChore = undefined;
             readyChores();
-            switchChoresContent(3);
+            switchChoresContent(0);
         },
         error: function(data){
             console.log(data);
         }
     })
+}
+function cleanChoreSlate(){
+    $("#choresRightUpperPanelHeading").html("");
+    $("#choresDetailsDescriptionContent").html("");
+    $("#choresDetailsDateTimeContent").html("");
+    $("#choresDetailsUserNameContent").html("");
+    $("#choresDetailsCheckedContent").html("");
 }
 
 function selectChoreInfo(from, choreId){
@@ -203,16 +199,32 @@ function switchChoresContent(num) {
 
     if(num===0){
         if(selectedChore!==undefined){
-            console.log(usersChore);
             if(!usersChore) {
                 document.getElementById("checkSelectedChoreButton").disabled = true;
             } else {
                 document.getElementById("checkSelectedChoreButton").disabled = false;
             }
+        }else{
+            cleanChoreSlate();
         }
         $("#choresRightPanelSecondWindow").addClass("hide");
         $("#choresRightPanelThirdWindow").addClass("hide");
         $("#choresRightPanelFirstWindow").removeClass("hide");
+
+
+        $("#deleteSelectedChoreButton").confirmation({
+            rootSelector: "span.remove[data-toggle='confirm']",
+            popout: true,
+            singleton: true,
+            title: "Delete this chore?",
+            btnOkClass: "btn-sm btn-danger",
+            btnOkIcon: "glyphicon glyphicon-trash",
+            btnCancelClass: "btn-sm btn-default",
+            onConfirm: function () {
+                deleteSelectedChore(selectedChore.choreId);
+            }
+        });
+
     }else if(num===1){
         $("#choresRightPanelFirstWindow").addClass("hide");
         $("#choresRightPanelThirdWindow").addClass("hide");
@@ -250,6 +262,7 @@ function newChoreButtonPressed(){
     var newChoreTitle = $("#newChoreTitleInput").val();
     var newChoreDescription = $("#newChoreDescriptionInput").val();
     var newChoreDate = $("#newChoreLocalTimeInput").val();
+    console.log(newChoreDate);
     var newChoreUserId;
     if(selectedUserForNewChore!==null){
         newChoreUserId = getCurrentHousehold().residents[selectedUserForNewChore].userId;
@@ -270,18 +283,43 @@ function verifyChoreInput(inputType){//Inputtype - 0 for new, 1 for edit, 2 for 
         if($("#newChoreTitleInput").val().length<1){
             $("#newChoreTitleInput").addClass("missingChoreInput");
             return false;
+        }else if(!verifyTimeString($("#newChoreLocalTimeInput").val())){
+            $("#newChoreLocalTimeInput").addClass("missingChoreInput");
+            $("#newChoreTitleInput").removeClass("missingChoreInput");
+            return false;
         }else{
             return true;
         }
     }else if(inputType === 1){
         if($("#editChoreTitleInput").val().length<1){
             $("#editChoreTitleInput").addClass("missingChoreInput");
+        }else if(!verifyTimeString($("#editChoreLocalTimeInput").val())){
+            $("#editChoreLocalTimeInput").addClass("missingChoreInput");
+            $("#editChoreTitleInput").removeClass("missingChoreInput");
         }else{
             return true;
         }
     }else if(inputType === 2){
         $("#editChoreTitleInput").removeClass("missingChoreInput");
         $("#newChoreTitleInput").removeClass("missingChoreInput");
+    }
+}
+function verifyTimeString(timeString){
+    console.log(timeString);
+    var verifiableYear = timeString.substring(0,4);
+    console.log(verifiableYear);
+    var verifiableMonth = timeString.substring(5,7);
+    console.log(verifiableMonth);
+    var verifiableDay = timeString.substring(8,10);
+    console.log(verifiableDay);
+    var verifiableHour = timeString.substring(11, 13);
+    console.log(verifiableHour);
+    var verifiableMinute = timeString.substring(14,16);
+    console.log(verifiableMinute);
+    if(timeString.length!==16){
+        return false;
+    }else{
+        return true;
     }
 }
 
@@ -311,7 +349,11 @@ function editChoreButtonPressed(){
     }
     var editedChoreDone = selectedChore.done;
     var editedChore = {choreId:selectedChore.choreId, title:editedChoreTitle, description:editedChoreDescription, time: editedChoreDate, userId: editedChoreUserId, done:editedChoreDone};
-    updateChore(editedChore);
+    if(verifyChoreInput(1)) {
+        verifyChoreInput(2);
+        selectedUserForNewChore = null;
+        updateChore(editedChore);
+    }
 }
 function pad(n){
     return ((""+n).length<2)?("0"+n):(""+n);
@@ -372,6 +414,7 @@ function updateChore(chore){
         dataType: "json",
         data: JSON.stringify(chore),
         success: function(data){
+            addNotification(chore.userId, getCurrentHousehold().houseId, ""+getCurrentUser.name+" has edited your chore \"" + chore.title + "\"");
             readyChores();
         },
         error: function(data){
@@ -395,5 +438,30 @@ function checkChore(chore){
         error: function(data){
             console.log(data);
         }
+    });
+}
+
+function setUpChoreListeners(){
+    $("#newChoreTitleInput").keyup(function(){
+        if($("#newChoreTitleInput").val().length>60){
+            $("#newChoreTitleInput").val($("#newChoreTitleInput").val().substring(0,60));
+        }
+    });
+    $("#editChoreTitleInput").keyup(function(){
+        if($("#editChoreTitleInput").val().length>60){
+            $("#editChoreTitleInput").val($("#editChoreTitleInput").val().substring(0,60));
+        }
+    });
+    $("#newChoreDescriptionInput").keyup(function(){
+        if($("#newChoreDescriptionInput").val().length>240){
+            $("#newChoreDescriptionInput").val($("#newChoreDescriptionInput").val().substring(0,240));
+        }
+        $("#newChoreDescriptionControl").text("(" + $("#newChoreDescriptionInput").val().length + "/240)");
+    });
+    $("#editChoreDescriptionInput").keyup(function(){
+        if($("#editChoreDescriptionInput").val().length>240){
+            $("#editChoreDescriptionInput").val($("#editChoreDescriptionInput").val().substring(0,240));
+        }
+        $("#editChoreDescriptionControl").text("(" + $("#editChoreDescriptionInput").val().length + "/240)");
     });
 }
