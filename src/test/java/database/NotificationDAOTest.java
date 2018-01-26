@@ -5,10 +5,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class NotificationDAOTest {
 
@@ -56,6 +59,7 @@ public class NotificationDAOTest {
     public void addNotificationToDB() throws Exception {
 
         Notification notification = new Notification();
+        notification.setNotificationId(999);
         notification.setUserId(200);
         notification.setHouseId(1);
         notification.setMessage("Du har blitt lagt til i en handleliste.");
@@ -63,7 +67,7 @@ public class NotificationDAOTest {
 
         NotificationDAO.addNotificationToDB(notification);
 
-        String query = "SELECT * FROM Notification WHERE notificationId = 2";
+        String query = "SELECT * FROM Notification WHERE notificationId = 999";
 
         try (DBConnector dbc = new DBConnector();
              Connection conn = dbc.getConn();
