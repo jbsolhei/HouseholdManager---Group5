@@ -49,10 +49,11 @@ public class ChoreService {
     @POST
     @Auth(AuthType.HOUSEHOLD)
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postChore(@PathParam("id") int houseId, Chore chore){
+    @Produces(MediaType.APPLICATION_JSON)
+    public int postChore(@PathParam("id") int houseId, Chore chore){
         chore.setTitle(StringEscapeUtils.escapeHtml4(chore.getTitle()));
         chore.setDescription(StringEscapeUtils.escapeHtml4(chore.getDescription()));
-        ChoreDAO.postChore(chore);
+        return ChoreDAO.postChore(chore);
     }
 
     /**

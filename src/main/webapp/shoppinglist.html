@@ -50,8 +50,8 @@
                 <div id="input_header" class="slHeader panel-heading hide">
                     <div id="newInputGroup" class="input-group">
                         <a class="inputHolder col-sm-10"><input class="form-control" id="text_input_new_shopping_list" placeholder="Name of Shopping List" type="text"></a>
-                        <a class="col-sm-1 headerBtn btn btn-default pull-right" id="ok_new_shopping_list_btn" onclick="createNewShoppingList()">Ok</a>
                         <a class="col-sm-1 headerBtn btn btn-default pull-right" id="cancel_new_shopping_list_btn" onclick="hideInputHeader()">Cancel</a>
+                        <a class="col-sm-1 headerBtn btn btn-default pull-right" id="ok_new_shopping_list_btn" onclick="createNewShoppingList()">Ok</a>
                     </div>
                 </div>
 
@@ -74,8 +74,8 @@
 
                 <div id="shopping_list_data_panel" class="panel-body scrollWhenFull SL">
                     <div class="input-group">
-                        <span onclick="addItemToShoppingList()" id="additem" class="input-group-addon btn btn-info btn-lg">Add item</span>
                         <input id="shoppingListItemInput" type="text" class="form-control" name="item" placeholder="Item">
+                        <span onclick="addItemToShoppingList()" id="additem" class="input-group-addon btn btn-info btn-lg">Add item</span>
                     </div>
                     <div class="row content">
                         <table class="table table-striped">

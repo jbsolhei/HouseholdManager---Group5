@@ -3,6 +3,7 @@ var months = ["January", "February", "March", "April", "May", "June", "July",
 
 months = fixData(months);
 
+var chart;
 var userStats;
 var householdStats;
 
@@ -11,7 +12,7 @@ function fixData(innData) {
     var startMonth = d.getMonth() + 1;
 
     var a = innData.slice(startMonth);
-    var b = innData.slice(0, startMonth)
+    var b = innData.slice(0, startMonth);
     Array.prototype.push.apply(a, b);
 
    return a;
@@ -102,12 +103,11 @@ function showChoreStats(data) {
 
     for (i = 0; i < data.length; i++) {
         var newSet = {
-            label: data[i].userName,
+            label: he.decode(data[i].userName),
             backgroundColor: 'rgba(0,0,0,0)',
             borderColor: '#'+Math.floor(Math.random()*16777215).toString(16),
 
             data: data[i].tasks,
-
             lineTension: 0.2
         };
 
@@ -115,7 +115,7 @@ function showChoreStats(data) {
     }
 
     var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
+    chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'line',
 
@@ -139,8 +139,32 @@ function showChoreStats(data) {
                         display: true,
                         labelString: 'Month'
                     }
-                }],
+                }]
             }
         }
     });
+    console.log(chart);
+    hideAllDatasets();
+}
+
+function toggleAllData(){
+    if ($("#boxxyboi").is(":checked")){
+        hideAllDatasets();
+    } else {
+        showAllDatasets();
+    }
+}
+
+function hideAllDatasets(){
+    $.each(chart.config.data.datasets,function(i,val){
+        val.hidden = true;
+    });
+    chart.update();
+}
+
+function showAllDatasets(){
+    $.each(chart.config.data.datasets,function(i,val){
+        val.hidden = false;
+    });
+    chart.update();
 }

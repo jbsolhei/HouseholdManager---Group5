@@ -5,10 +5,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class NotificationDAOTest {
 
@@ -63,6 +66,7 @@ public class NotificationDAOTest {
 
         NotificationDAO.addNotificationToDB(notification);
 
+        // OBS: id i queryet må endres hvis testdata endres, da id er autogenerert
         String query = "SELECT * FROM Notification WHERE notificationId = 4";
 
         try (DBConnector dbc = new DBConnector();

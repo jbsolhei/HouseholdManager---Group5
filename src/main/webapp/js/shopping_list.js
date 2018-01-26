@@ -457,6 +457,8 @@ function addItemToShoppingList() {
                 showListFromMenu(activeSHL)
             }
         })
+    } else {
+        $("#shoppingListItemInput").effect("highlight", {color: '#d9534f'}, 250);
     }
 }
 
