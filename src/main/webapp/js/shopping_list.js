@@ -7,19 +7,16 @@ var userIdsNewShoppingList = [];
 /* --- Ajax- methods --- */
 
 function ajax_getShoppingLists(handleData) {
-    console.log('ajax_getShoppingLists()');
     ajaxAuth({
         type: 'GET',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/user/' + getCurrentUser().userId,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log("success: ajax_getShoppingLists()");
             handleData(data);
         },
         error: function (data) {
-            console.log("error: ajax_getShoppingLists()");
-            console.log(data);
+            console.log("Error " + data);
         }
     })
 }
@@ -32,15 +29,12 @@ function ajax_getShoppingLists(handleData) {
  * @success returns the generated shopping list ID, and updates users
  */
 function ajax_createNewList(shoppingListName, handleData) {
-    console.log('ajax_createNewList()');
-    console.log('data:' + shoppingListName);
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/',
         data: shoppingListName,
         contentType: 'text/plain',
         success: function (shoppingListId) {
-            console.log("success: ajax_createNewList(). shoppingListId: " + shoppingListId);
             handleData(shoppingListId);
         },
         error: function () {
@@ -57,15 +51,12 @@ function ajax_createNewList(shoppingListName, handleData) {
  * @param handleData
  */
 function ajax_updateUsers (userIds, shoppingListId, handleData) {
-    console.log('ajax_updateUsers()');
-    console.log(JSON.stringify(userIds));
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/users',
         data: JSON.stringify(userIds),
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
-            console.log("success: ajax_updateUsers()");
             handleData(data)
         },
         error: function () {
@@ -80,18 +71,15 @@ function ajax_updateUsers (userIds, shoppingListId, handleData) {
  * @param shoppingListId, the shopping list ID
  */
 function ajax_getShoppingList(shoppingListId, handleData) {
-    console.log('ajax_getShoppingList(). shoppingListId: ' + shoppingListId);
     ajaxAuth({
         type: 'GET',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId,
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log("success: ajax_getShoppingList()");
             handleData(data);
         },
         error: function (data) {
-            console.log("error: ajax_getShoppingList()");
             console.log(data);
         }
     })
@@ -102,7 +90,6 @@ function ajax_getShoppingList(shoppingListId, handleData) {
  * @param itemId, the item ID
  */
 function ajax_updateCheckedBy(itemId, userId, handleData) {
-    console.log('ajax_updateCheckedBy(). itemId: ' + itemId + ". userId: " + userId);
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/items/' + itemId + '/user/',
@@ -110,11 +97,9 @@ function ajax_updateCheckedBy(itemId, userId, handleData) {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
-            console.log("success: ajax_updateCheckedBy()");
             handleData(data);
         },
         error: function (result) {
-            console.log("error: ajax_updateCheckedBy()");
             console.log(result);
         }
     })
@@ -126,16 +111,13 @@ function ajax_updateCheckedBy(itemId, userId, handleData) {
  * @param shoppingListId, the shopping list ID
  */
 function ajax_deleteShoppingList(shoppingListId, handleData) {
-    console.log('ajax_deleteShoppingList()');
     ajaxAuth({
         type: 'DELETE',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId,
         success: function (data) {
-            console.log("success: ajax_deleteShoppingList()");
             handleData(data);
         },
         error: function (result) {
-            console.log("error: ajax_deleteShoppingList()");
             console.log(result);
         }
     })
@@ -148,36 +130,30 @@ function ajax_deleteShoppingList(shoppingListId, handleData) {
  * @param archived, the wanted value of archived
  */
 function ajax_updateArchived(shoppingListId, archived, handleData){
-    console.log('ajax_updateArchived(). shoppingListId: ' + shoppingListId + '. archived: ' + archived);
     ajaxAuth({
         type: 'PUT',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId,
         data: archived,
         contentType: 'text/plain',
         success: function (data) {
-            console.log("success: ajax_updateArchived()");
             handleData(data);
         },
         error: function (result) {
-            console.log("error: ajax_updateArchived()");
             console.log(result);
         }
     })
 }
 
 function ajax_getShoppingListUsers(shoppingListId, handleData) {
-    console.log('ajax_getShoppingListUsers()');
     ajaxAuth({
         type: 'GET',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/users',
         data: shoppingListId,
         contentType: 'text/plain',
         success: function (data) {
-            console.log("success: ajax_getShoppingListUsers()");
             handleData(data);
         },
         error: function (result) {
-            console.log("error: ajax_getShoppingListUsers()");
             console.log(result);
         }
     })
@@ -191,18 +167,15 @@ function ajax_getShoppingListUsers(shoppingListId, handleData) {
  * @param handleData, function to be called upon success
  */
 function ajax_deleteUserInShoppingList(shoppingListId, userId, handleData) {
-    console.log('ajax_deleteUserInShoppingList(). shoppingListId: ' + shoppingListId + ". userId: " + userId);
     ajaxAuth({
         type: 'DELETE',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/user',
         data: ""+userId,
         contentType: 'text/plain',
         success: function (data) {
-            console.log("success: ajax_deleteUserInShoppingList()");
             handleData(data);
         },
         error: function (result) {
-            console.log("error: ajax_deleteUserInShoppingList()");
             console.log(result);
         }
     })
@@ -216,52 +189,43 @@ function ajax_deleteUserInShoppingList(shoppingListId, userId, handleData) {
  * @param handleData, function to be called upon success
  */
 function ajax_insertUserInShoppingList(shoppingListId, userId, handleData) {
-    console.log('ajax_insertUserInShoppingList(). shoppingListId: ' + shoppingListId + ". userId: " + userId);
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/user',
         data: ""+userId,
         contentType: 'text/plain',
         success: function (data) {
-            console.log("success: ajax_insertUserInShoppingList()");
             handleData(data);
         },
         error: function (result) {
-            console.log("error: ajax_insertUserInShoppingList()");
             console.log(result);
         }
     })
 }
 
 function ajax_deleteItem(shoppingListId, itemId, handleData) {
-    console.log('ajax_deleteItem(). shoppingListId: ' + shoppingListId + ". itemId: " + itemId);
     ajaxAuth({
         type: 'DELETE',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/items/' + itemId,
         success: function (data) {
-            console.log("success: ajax_insertUserInShoppingList()");
             handleData(data);
         },
         error: function (result) {
-            console.log("error: ajax_insertUserInShoppingList()");
             console.log(result);
         }
     })
 }
 
 function ajax_addItem(shoppingListId, itemName, handleData) {
-    console.log('ajax_addItem(). shoppingListId: ' + shoppingListId + ". itemName: " + itemName);
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/items',
         data: itemName,
         contentType: 'text/plain',
         success: function (data) {
-            console.log("success: ajax_addItem()");
             handleData(data);
         },
         error: function (result) {
-            console.log("error: ajax_addItem()");
             console.log(result);
         }
     })
@@ -285,7 +249,6 @@ function readyShoppingList(){
  */
 function loadSideMenu(){
     ajax_getShoppingLists(function (ShoppingLists) {
-        console.log(ShoppingLists);
         SHL = ShoppingLists;
         if(SHL!==null&&SHL!==undefined)numberOfLists = SHL.length;
         if(numberOfLists>0){
@@ -329,12 +292,11 @@ function loadSideMenu(){
  * @param SLIndex
  */
 function showListFromMenu(SLIndex, isArchived){
+    removeEditElemets();
     closeListOfAssociatedUsers();
     hideInputHeader();
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-    console.log("SLIndex: " + SLIndex);
     ajax_getShoppingList(SHL[SLIndex].shoppingListId, function (shoppingList) {
-        console.log(shoppingList);
         if(shoppingList.items.length===0){
             $("#emptyListText").removeClass("hide");
         }else{
@@ -344,14 +306,14 @@ function showListFromMenu(SLIndex, isArchived){
                 var checkedBy;
                 if(val.checkedBy === null) {
                     checkedBy="";
-                    $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="checkItem(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td id="name_item_id_' + val.itemId + '">' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                    $("#newItem").prepend('<tr id="item' + val.itemId + '"><td><span onclick="checkItem(' + val.itemId + ')" id="unchecked' + val.itemId + '" class="glyphicon glyphicon-unchecked"></span></td><td id="name_item_id_' + val.itemId + '">' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
                 } else {
                     checkedBy = val.checkedBy.name;
-                    $("#newItem").append('<tr id="item' + val.itemId + '"><td><span onclick="uncheckItem(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td id="name_item_id_' + val.itemId + '" class="item-is-checked">' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
+                    $("#newItem").prepend('<tr id="item' + val.itemId + '"><td><span onclick="uncheckItem(' + val.itemId + ')" id="checked' + val.itemId + '" class="glyphicon glyphicon-check"></span></td><td id="name_item_id_' + val.itemId + '" class="item-is-checked">' + val.name + '</td><td id="checkedBy'+val.itemId+'">'+checkedBy+'</td><td><span onclick="deleteItem(' + val.itemId + ')" class="glyphicon glyphicon-remove"></span></td></tr>');
                 }
             });
         }
-        $("#headline").replaceWith('<p id="headline" class="col-md-10">' + shoppingList.name + '</p>');
+        $("#headline").replaceWith('<a id="headline">' + shoppingList.name + '</a>');
         $("#shoppingListItemInput").focus();
         $("#shoppingList" + activeSHL).removeClass("active");
         $("#shoppingList" + SLIndex).addClass("active");
@@ -371,27 +333,25 @@ function navToAShoppingList(shoppingListIndex, isArchived) {
     showListFromMenu(activeSHL)
 }
 
+
 /**
  * method to refresh the list of toggle the list of associated users
  */
 function toggleListOfAssociatedUsers() {
-    if ($("#list_of_users_associated_with_shopping_list").css('display') === "none") {
+    //if ($("#list_of_users_associated_with_shopping_list").css('display') === "none") {
         var shoppingListId = SHL[activeSHL].shoppingListId;
-        console.log(shoppingListId);
         var householdUsers = getCurrentHousehold().residents;
         $("#associated_users_table").empty();
         ajax_getShoppingListUsers(shoppingListId, function (users) {
-            console.log(users);
-            $("#associated_users_table").append('<thead><tr><th><button class="btn glyphicon glyphicon-unchecked"></button> Select All</th><th>' + "Users that can view this list" + '</th></tr></thead>');
             $.each(householdUsers, function (i, val) {
-                $("#associated_users_table").append('<tbody><tr><td id="associated_user_id_' + val.userId + '" onclick="checkAssociatedUser(' + val.userId + ')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr></tbody>');
+                $("#associated_users_table").append('<tr><td id="associated_user_id_' + val.userId + '" onclick="checkAssociatedUser(' + val.userId + ')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr>');
             });
             $.each(users, function (i, val) {
                 $("#associated_user_id_" + val.userId).replaceWith('<td id="associated_user_id_' + val.userId + '" onclick="uncheckAssociatedUser(' + val.userId + ')" class="glyphicon glyphicon-check"></td>')
             });
             $("#list_of_users_associated_with_shopping_list").css('display', 'block');
         })
-    } else $("#list_of_users_associated_with_shopping_list").css('display', 'none');
+    //} else $("#list_of_users_associated_with_shopping_list").css('display', 'none');
 }
 
 function closeListOfAssociatedUsers() {
@@ -480,7 +440,6 @@ function uncheckAssociatedUser(userId) {
  * @param itemId the itemId
  */
 function deleteItem(itemId) {
-    console.log("delete item:" + itemId);
     ajax_deleteItem(SHL[activeSHL].shoppingListId, itemId, function (data) {
         if (data) {
             showListFromMenu(activeSHL, false)
@@ -510,25 +469,28 @@ function addItemToShoppingList() {
  * Method to reveal the input field in the header, and set the headline as active
  */
 function showInputHeader() {
+
+    removeEditElemets();
     hidePanelBody();
-    $("#title_header").css('display', 'none');
-    $("#input_header").css('display', 'block');
-    $("#text_input_new_shopping_list").focus();
+    $("#title_header").addClass('hide');
+    $("#input_header").removeClass('hide');
+    $("#headlineInput").focus();
     $.each(getCurrentHousehold().residents, function (i, val) {
         userIdsNewShoppingList.push(val.userId);
     });
+
+    toggleListOfAssociatedUsersToNewShoppingList();
 }
 
 /**
  * Method to hide the input field in the header
  */
 function hideInputHeader() {
-    if ($("#input_header").css('display') === 'block') {
-        $("#input_header").css('display', 'none');
-        $("#title_header").css('display', 'block');
-        $("#shopping_list_white_space").addClass("hide");
-        $("#shopping_list_data_panel").removeClass("hide");
-    }
+
+    $("#input_header").addClass('hide');
+    $("#title_header").removeClass('hide');
+    $("#list_of_users_associated_with_shopping_list").addClass("hide");
+    $("#shopping_list_data_panel").removeClass("hide");
 }
 
 /**
@@ -538,8 +500,8 @@ function hideInputHeader() {
 function createNewShoppingList() {
     hideInputHeader();
     closeListOfAssociatedUsersToNewShoppingList();
-    console.log($("#text_input_new_shopping_list").val());
     var shoppingListName = $("#text_input_new_shopping_list").val();
+    $("#text_input_new_shopping_list").val("");
     if (shoppingListName !== null || shoppingListName !== '') {
         ajax_createNewList(shoppingListName, function (shoppingListId) {
             if (shoppingListId) {
@@ -581,11 +543,23 @@ function archiveShoppingList() {
 }
 
 /**
+ * Function to mark a shopping list as active
+ */
+function unArchiveShoppingList() {
+    var shoppingListId = SHL[activeSHL].shoppingListId;
+    ajax_updateArchived(shoppingListId, "false", function (data) {
+        if (data) {
+            loadSideMenu();
+        }
+    })
+}
+
+/**
  * function to hide the panel body
  */
 function hidePanelBody() {
     $("#shopping_list_data_panel").addClass("hide");
-    $("#shopping_list_white_space").removeClass("hide");
+    $("#list_of_users_associated_with_shopping_list").removeClass("hide");
 }
 
 /**
@@ -593,25 +567,16 @@ function hidePanelBody() {
  * function uses the global variable userIdsNewShoppingList
  */
 function toggleListOfAssociatedUsersToNewShoppingList() {
-    if ($("#list_of_users_associated_with_shopping_list").css('display') === "none") {
-
         var householdUsers = getCurrentHousehold().residents;
-        $("#associated_users_table").empty();
-        $("#associated_users_table").append('<thead><tr><th><button class="btn glyphicon glyphicon-unchecked"></button> Select All</th><th>' + "Users that can view this list" + '</th></tr></thead>');
+        $("#associated_users_table").html("");
         $.each(householdUsers, function (i, val) {
-            $("#associated_users_table").append('<tbody><tr><td id="associated_user_id_' + val.userId + '" onclick="checkUserInNewShoppingList(' + val.userId + ')" class="glyphicon glyphicon-unchecked"></td><td>' + val.name + '</td></tr></tbody>');
-
+            $("#associated_users_table").append('<tr><td id="associated_user_id_' + val.userId + '" onclick="checkUserInNewShoppingList(' + val.userId + ')" class="glyphicon glyphicon-unchecked"></td><td><span>' + val.name + '</span></td></tr>');
         });
-        console.log(userIdsNewShoppingList);
         $.each(userIdsNewShoppingList, function (i, val) {
-            console.log(val);
             $("#associated_user_id_" + val).replaceWith('<td id="associated_user_id_' + val + '" onclick="uncheckUserInNewShoppingList(' + val + ')" class="glyphicon glyphicon-check"></td>')
         });
-        $("#list_of_users_associated_with_shopping_list").css('display', 'block');
-    }
-    else {
-        $("#list_of_users_associated_with_shopping_list").css('display', 'none');
-    }
+
+        //$("#list_of_users_associated_with_shopping_list").css('display', 'block');
 }
 
 function closeListOfAssociatedUsersToNewShoppingList() {
@@ -627,7 +592,6 @@ function closeListOfAssociatedUsersToNewShoppingList() {
 function checkUserInNewShoppingList(userId) {
     userIdsNewShoppingList.push(userId);
     $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId + '" onclick="uncheckUserInNewShoppingList(' + userId + ')" class="glyphicon glyphicon-check"></td>');
-    console.log(userIdsNewShoppingList);
 }
 
 /**
@@ -637,7 +601,6 @@ function checkUserInNewShoppingList(userId) {
 function uncheckUserInNewShoppingList(userId) {
     removeObjectArray(userIdsNewShoppingList, userId);
     $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId + '" onclick="checkUserInNewShoppingList(' + userId + ')" class="glyphicon glyphicon-unchecked"></td>');
-    console.log(userIdsNewShoppingList);
 }
 
 /**
@@ -649,3 +612,58 @@ function removeObjectArray(array, element) {
     const index = array.indexOf(element);
     array.splice(index, 1);
 }
+
+
+
+/**
+ * Used to edit name and who can see a shopping list.
+ * @param edit True if edit, false if edit is done.
+ */
+function editShoppingList(edit) {
+    if (edit) {
+        var slName = SHL[activeSHL].name;
+        $("#edit_shopping_list_btn").addClass("hide");
+        $("#edit_header").removeClass("hide");
+        $("#archive_shopping_list_btn").addClass("hide");
+        $("#delete_shopping_list_btn").addClass("hide");
+        $("#title_header").addClass("hide");
+        console.log("BLIR KJØRT");
+        $("#editTitleInput").attr("value", slName);
+        hidePanelBody();
+        $("#list_of_users_associated_with_shopping_list").removeClass("hide");
+        toggleListOfAssociatedUsers();
+    } else {
+
+        loadSideMenu();
+        removeEditElemets();
+        $("#archive_shopping_list_btn").removeClass("hide");
+
+    }
+}
+
+function removeEditElemets() {
+    $("#delete_shopping_list_btn").removeClass("hide");
+    $("#edit_shopping_list_btn").removeClass("hide");
+    $("#edit_header").addClass("hide");
+    $("#shopping_list_data_panel").removeClass("hide");
+    $("#title_header").removeClass("hide");
+    $("#list_of_users_associated_with_shopping_list").addClass("hide");
+}
+
+$(document).keypress(function(e) {
+    if (e.keyCode == 13 && $("#shoppingListItemInput").is(":focus")) {
+        addItemToShoppingList();
+    }
+});
+
+$(document).on('click', '#activeTab', function () {
+    $("#unarchive_shopping_list_btn").addClass("hide");
+    $("#archive_shopping_list_btn").removeClass("hide");
+});
+
+$(document).on('click', '#archiveTab', function () {
+    $("#archive_shopping_list_btn").addClass("hide");
+    $("#unarchive_shopping_list_btn").removeClass("hide");
+});
+
+
