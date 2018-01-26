@@ -15,8 +15,6 @@ var dateTime =    currentdate.getFullYear() + "-"
                 + currentdate.getMinutes() + ":"
                 + currentdate.getSeconds();
 
-    console.log(dateTime);
-
     var notification = {
         userId: userId,
         houseId: houseId,
@@ -87,7 +85,9 @@ function getNotifications(userId) {
  */
 function updateNotificationDropdown() {
     var noteboi = $("#notifyDropdownListId");
+    var noteboi2 = $("#notifyDropdownListId1");
     noteboi.html("");
+    noteboi2.html("");
     for (i = 0; i < notifications.length; i++) {
         var dateTime = notifications[i].dateTime;
         if (dateTime !== null) dateTime = dateTime.slice(0, dateTime.length - 2);
@@ -98,6 +98,7 @@ function updateNotificationDropdown() {
         if (houseName == null) houseName = "";
 
         noteboi.prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
+        noteboi2.prepend("<li id='notifId"+id+"' class='noti notificationElement list-group-item'><p class='notifyMessageId'>"+ message +"</p><p class='noti notifyDateTimeId'>"+dateTime+"<span class='noti notifyHousehold'>"+houseName+"</span></p></li>");
     }
 }
 
@@ -107,6 +108,7 @@ function updateNotificationDropdown() {
  */
 function countNotifications() {
     var notifications = $('#notifyDropdownListId').children('li').length;
+    notifications = $('#notifyDropdownListId1').children('li').length;
     return notifications;
 }
 
@@ -116,15 +118,22 @@ function countNotifications() {
 function updateNotificationBell() {
     var number = countNotifications();
     var numbers = $("#notificationValue");
+    var numbers1 = $("#notificationValue1");
     if (countNotifications() > 0) {
         $("#notifyBellId").css('color', 'white');
         numbers.html("");
         numbers.addClass("numberCircle");
         numbers.append(""+number+"");
+        $("#notifyBellId1").css('color', 'white');
+        numbers1.html("");
+        numbers1.addClass("numberCircle");
+        numbers1.append(""+number+"");
     } else {
-        $("#notifyBellId").css('color', 'gray');
-        numbers.html("");
+        $("#notifyBellId").css('color', '#436470');
         numbers.removeClass("numberCircle")
+        numbers.html("");
+        numbers1.html("");
+        numbers1.removeClass("numberCircle");
     }
 
 }
@@ -145,12 +154,18 @@ $(document).on('click', '.notificationElement', function () {
 
     $("#notificationValue").html("");
     $("#notificationValue").append(""+countNotifications()+"");
+    $("#notificationValue1").html("");
+    $("#notificationValue1").append(""+countNotifications()+"");
 
     if (countNotifications() <= 0) {
         $("#notifyBellId").css('color', '#436470');
         $('#notifyBellId').parent().removeClass('open');
         $("#notificationValue").html("");
-        $("#notificationValue").removeClass("numberCircle")
+        $("#notificationValue").removeClass("numberCircle");
+        $("#notifyBellId1").css('color', '#436470');
+        $('#notifyBellId1').parent().removeClass('open');
+        $("#notificationValue1").html("");
+        $("#notificationValue1").removeClass("numberCircle");
     }
 });
 
@@ -164,6 +179,7 @@ $(document).on('click', '#removeAllNotificationsButton', function () {
         console.log("nr deleted: " + notifications[i].notificationId);
         deleteNotification(notifications[i].notificationId);
         $('#notifyDropdownListId').children('li').remove();
+        $('#notifyDropdownListId1').children('li').remove();
     }
     console.log("ant not after del: " + countNotifications());
     updateNotificationBell();
@@ -179,10 +195,12 @@ $(document).on('click', 'body', function (e) {
 
     if (b == undefined && a !== null || b.slice(0, 4) !== "noti" && opened) {
         $('#notifyBellId').parent().removeClass('open');
+        $('#notifyBellId1').parent().removeClass('open');
 
         opened = false;
     } else if (b == "dropdown-toggle" && countNotifications() > 0) {
         opened = true;
         $('#notifyBellId').parent().toggleClass('open');
+        $('#notifyBellId1').parent().toggleClass('open');
     }
 });
