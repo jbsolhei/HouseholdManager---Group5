@@ -49,7 +49,7 @@ public class ChoreDAO {
     }
 
     /**
-     * Returns all the chores for a given household where the date is >= today
+     * Returns all the chores for a given household where the date is greater than today
      * Missing date because of the transformation from sql to java to javascript is missing..
      *
      * @param householdId The id of the household.
