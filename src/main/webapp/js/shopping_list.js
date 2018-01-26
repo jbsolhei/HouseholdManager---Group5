@@ -245,7 +245,6 @@ function ajax_updateShoppingListName(shoppingListId, name) {
     })
 }
 
-
 /* --- visual updates methods --- */
 
 function readyShoppingList(){
