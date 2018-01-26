@@ -6,6 +6,7 @@ var userChoreList;
 var householdChoreList;
 var selectedChore;
 var totChore = 0;
+var usersChore = true;
 
 function readyChores(){
     switchChoresContent(0);
@@ -125,19 +126,23 @@ function getSelectedChoreFromUpdatedTotal(id){
     $.each(userChoreList,function(i,val){
         if(val.choreId===id){
             selectedChore = val;
-            showChoreInfo(val);
+            usersChore = true;
             $(".text-muted").removeClass("text-muted");
             $("#choreTab"+id).addClass("text-muted");
+            showChoreInfo(val);
             choreSent = true;
+            console.log("Chore is from userchores");
         }
     });
     if(!choreSent){
         $.each(householdChoreList,function(i,val){
             if(val.choreId===id){
+                usersChore = false;
                 selectedChore = val;
-                showChoreInfo(val);
                 $(".text-muted").removeClass("text-muted");
                 $("#choreTab"+id).addClass("text-muted");
+                showChoreInfo(val);
+                console.log("Chore is not from userchores");
             }
         });
     }
@@ -177,11 +182,6 @@ function selectChoreInfo(from, choreId){
 function showChoreInfo(chore){
     if(chore!==undefined){
         switchChoresContent(0);
-        if(chore.userId !== getCurrentUser().userId) {
-            document.getElementById("checkSelectedChoreButton").disabled = true;
-        } else {
-            document.getElementById("checkSelectedChoreButton").disabled = false;
-        }
         $("#choresRightUpperPanelHeading").html(chore.title);
         $("#choresDetailsDescriptionContent").html(chore.description);
         $("#choresDetailsDateTimeContent").html(chore.time.dayOfMonth + "."+chore.time.monthValue+"." + chore.time.year + " " + pad(chore.time.hour) + ":" + pad(chore.time.minute));
@@ -202,6 +202,14 @@ function showChoreInfo(chore){
 function switchChoresContent(num) {
 
     if(num===0){
+        if(selectedChore!==undefined){
+            console.log(usersChore);
+            if(!usersChore) {
+                document.getElementById("checkSelectedChoreButton").disabled = true;
+            } else {
+                document.getElementById("checkSelectedChoreButton").disabled = false;
+            }
+        }
         $("#choresRightPanelSecondWindow").addClass("hide");
         $("#choresRightPanelThirdWindow").addClass("hide");
         $("#choresRightPanelFirstWindow").removeClass("hide");
