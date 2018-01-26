@@ -142,14 +142,14 @@
                 </div>
                 <div class="navbar-collapse collapse" id="mobileNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="visible-xs" onclick="swapContent(dashboard)"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(household)"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(shoppinglists)"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(shoppingtrips)"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trips</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(chores)"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
-                        <li><a onclick="swapContent(finance); closeNav()" class="visible-xs"><i class="glyphicon glyphicon-credit-card"></i>  Finance</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(statistics)"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(news)"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(dashboard); closeNav()"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(household); closeNav()"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(shoppinglists); closeNav()"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(shoppingtrips); closeNav()"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trips</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(chores); closeNav()"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(finance); closeNav()"><i class="glyphicon glyphicon-credit-card"></i>  Finance</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(statistics); closeNav()"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(news); closeNav()"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
 
                         <li class="dropdown-toggle" id="dropdownBell">
                             <a id="notifyBellId" class="dropdown-toggle">
@@ -187,7 +187,6 @@
         <nav id="sideBarId" class="sidebar hidden-xs">
             <ul class="list-unstyled components">
                 <li><a onclick="swapContent(dashboard); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
-
                 <li><a onclick="swapContent(profile);closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-user"></i>  My Page</a></li>
                 <li><a onclick="swapContent(household); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
                 <li><a onclick="swapContent(shoppinglists); closeNav()" class="btn btn-default btn-sidebar"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
@@ -282,7 +281,6 @@
         }
 
         .numberCircle {
-
             position: absolute;
             float: right;
             right: 4px;
