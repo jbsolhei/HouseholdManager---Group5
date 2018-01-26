@@ -116,7 +116,7 @@ function editUserInfo() {
     }
     $("#edit_profile_picture").html("<br><label class='control-label profile_labels' for='profile_information_list_picture'>Profile picture:</label>" +
     "<input class='form-control' type='text' id='edit_profile_information_picture'" +
-        "value='"+img+"' placeholder='Profile picture url..'>");
+        "value='"+img+"' placeholder='Profile picture url.. (optional)'>");
 
     $("#edit_profile_name").html("");
     $("#edit_profile_name").html("<h3><input class='form-control' type='text' id='edit_profile_information_name'" +

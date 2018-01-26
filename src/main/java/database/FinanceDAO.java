@@ -11,16 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>FinanceDAO class.</p>
+ * FinanceDAO handles transactions between users, debt and income.
  *
  */
 public class FinanceDAO {
 
     /**
-     * <p>getDebt.</p>
+     * Gets the debt of a user
      *
-     * @param userId a int.
-     * @return a {@link java.util.ArrayList} object.
+     * @param userId the id of the user to get debt for.
+     * @return an {@link java.util.ArrayList} of {@link Debt} objects.
      */
     public static ArrayList<Debt> getDebt(int userId) {
         ArrayList<Debt> debts = new ArrayList<>();
@@ -56,10 +56,10 @@ public class FinanceDAO {
     }
 
     /**
-     * <p>getIncome.</p>
+     * Gets what other people owe a given user
      *
-     * @param userId a int.
-     * @return a {@link java.util.ArrayList} object.
+     * @param userId the user to get income for.
+     * @return an {@link java.util.ArrayList} of {@link Debt} objects.
      */
     public static ArrayList<Debt> getIncome(int userId){
         ArrayList<Debt> income = new ArrayList<>();
@@ -96,10 +96,10 @@ public class FinanceDAO {
     }
 
     /**
-     * <p>deleteDebt.</p>
+     * Deletes a debt from the database
      *
-     * @param fromUser a int.
-     * @param toUser a int.
+     * @param fromUser the 'from' user on the debt.
+     * @param toUser the 'to' user on the debt.
      */
     public static void deleteDebt(int fromUser, int toUser) {
         String query = "DELETE FROM Finance WHERE fromPerson = ? AND toPerson = ?;";

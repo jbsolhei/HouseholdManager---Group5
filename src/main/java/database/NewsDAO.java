@@ -10,7 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * <p>NewsDAO class.</p>
+ * This class handles adding/removing/getting news
+ * from the database
  *
  */
 public class NewsDAO {
@@ -19,7 +20,7 @@ public class NewsDAO {
      * Used to get all news for a household from the database
      *
      * @param houseId the id of the household
-     * @return a list of news objects
+     * @return a list of {@link News} objects
      */
     public static ArrayList<News> getNews(int houseId){
         ArrayList<News> news = new ArrayList<>();
@@ -62,7 +63,7 @@ public class NewsDAO {
     /**
      * Used to post news to the database
      *
-     * @param news the news object
+     * @param news the {@link News} object to add
      * @return 1 for success 0 for fail
      */
     public static int postNews(News news){
