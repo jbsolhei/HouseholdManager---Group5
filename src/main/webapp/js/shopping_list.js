@@ -414,6 +414,7 @@ function checkAssociatedUser(userId) {
     ajax_insertUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
         if (data) {
             $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="uncheckAssociatedUser('+ userId +')"><i class="glyphicon glyphicon-check"></i></td>')
+            console.log('checked! ' + data);
         }
     })
 }
@@ -426,6 +427,7 @@ function uncheckAssociatedUser(userId) {
     ajax_deleteUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
         if (data) {
             $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="checkAssociatedUser('+ userId +')"><i class="glyphicon glyphicon-unchecked"></i></td>')
+            console.log('unchecked! ' + data);
         }
     })
 }
@@ -635,7 +637,6 @@ function editShoppingList(edit) {
         loadSideMenu();
         removeEditElemets();
         $("#archive_shopping_list_btn").removeClass("hide");
-
     }
 }
 
@@ -664,12 +665,12 @@ $(document).on('click', '#archiveTab', function () {
 });
 
 function checkAll() {
-        ajax_getShoppingListUsers(SHL[activeSHL].shoppingListId, function (users) {
-            $.each(users, function (i, val) {
-                console.log("checked: " + val.userId);
-                checkAssociatedUser(val.userId);
-            });
-        })
+    ajax_getShoppingListUsers(SHL[activeSHL].shoppingListId, function (users) {
+        $.each(users, function (i, val) {
+            console.log("checked: " + val.userId);
+            checkAssociatedUser(val.userId);
+        });
+    })
 }
 
 function uncheckAll() {
@@ -685,12 +686,12 @@ $(document).on('click', '#checkAllth', function () {
     checkAll();
     $("#checkAllth").addClass('hide');
     $("#uncheckAllth").removeClass('hide');
-   console.log('click check all');
+    console.log('click check all');
 });
 
 $(document).on('click', '#uncheckAllth', function () {
     uncheckAll();
     $("#uncheckAllth").addClass('hide');
     $("#checkAllth").removeClass('hide');
-   console.log('click uncheck all');
+    console.log('click uncheck all');
 });

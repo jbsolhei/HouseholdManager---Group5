@@ -113,11 +113,6 @@ a {
     height: 100%;
     width: 100%;
     overflow-y: auto;
-<<<<<<< HEAD
-    border-left: solid 2px lightgrey;
-    border-left: solid 2px lightgrey;
-=======
->>>>>>> 6d722ba04dc6ba0915a5e7f8fdc6601e56afb1b6
 }
 
 #edit_header, #input_header {
