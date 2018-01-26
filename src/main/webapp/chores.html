@@ -4,7 +4,7 @@
             <div class="panel panel-default widget" id="choresLeftUpperPanel">
                 <div class="cHeader panel-heading" id="choresLeftUpperPanelHeading">
                     Chores
-                    <a id="addTodoGlyphicon" onclick="switchChoresContent(1)" class="btn btn-md pull-right">
+                    <a id="addTodoGlyphicon" href="#newChoreTitleInput" onclick="switchChoresContent(1)" class="btn btn-md pull-right">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </div>
@@ -12,7 +12,7 @@
                 <div class="panel-body scrollWhenFull C">
                     <ul class="nav nav-tabs">
                         <li class="active choreTab"><a data-toggle="tab" href="#yourChoresTab">Your chores</a></li>
-                        <li class="choreTab" ><a data-toggle="tab" href="#householdChoresTab">Household Chores</a></li>
+                        <li class="choreTab" ><a id="houseHoldChoresTabHeader" data-toggle="tab" href="#householdChoresTab">Household Chores</a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -82,7 +82,6 @@
                                     <td><span class="choreDisc">Options</span></td>
                                     <td>
                                         <button class="btn btn-default" onclick="checkSelectedChore(selectedChore)" id="checkSelectedChoreButton">Check/uncheck chore</button>
-                                        <button class="btn btn-default" onclick="editChore(selectedChore)">Edit chore</button>
                                         <a id="deleteSelectedChoreButton" class="btn btn-danger btn-sm">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </a>

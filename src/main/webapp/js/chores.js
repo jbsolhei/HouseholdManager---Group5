@@ -7,11 +7,13 @@ var householdChoreList;
 var selectedChore;
 var usersChore = true;
 var userHHsForChores;
+var newlyPostedChoreId;
 
 
 function readyChores(){
     switchChoresContent(0);
     setUpChoreListeners();
+    $("#houseHoldChoresTabHeader").text("Chores for "+getCurrentHousehold().name);
 
     getUserHouseholdsForChores();
 
@@ -109,10 +111,17 @@ function listHouseholdChores() {
         $("#choresLeftLowerTableBody").html(leftLowerTableBodyHTML);
         if(selectedChore!==undefined){
             getSelectedChoreFromUpdatedTotal(selectedChore.choreId);
+        }else if(newlyPostedChoreId!==undefined){
+            getSelectedChoreFromUpdatedTotal(newlyPostedChoreId);
+            newlyPostedChoreId = undefined;
         }
     });
 }
 function getSelectedChoreFromUpdatedTotal(id){
+    console.log("getTotal()");
+    console.log(id);
+    console.log(userChoreList);
+    console.log(householdChoreList);
     var choreSent = false;
     $.each(userChoreList,function(i,val){
         if(val.choreId===id){
@@ -178,7 +187,9 @@ function selectChoreInfo(from, choreId){
 function showChoreInfo(chore){
     if(chore!==undefined){
         switchChoresContent(0);
-        $("#choresRightUpperPanelHeading").html(chore.title);
+        $("#choresRightUpperPanelHeading").html(chore.title + "<a id='addTodoGlyphicon' onclick='editChore(selectedChore)' class='btn btn-md pull-right'>" +
+            "                        <span class='glyphicon glyphicon-edit'></span>\n" +
+            "                    </a>");
         $("#choresDetailsDescriptionContent").html(chore.description);
         $("#choresDetailsDateTimeContent").html(chore.time.dayOfMonth + "."+chore.time.monthValue+"." + chore.time.year + " " + pad(chore.time.hour) + ":" + pad(chore.time.minute));
         getHouseholdFromId((chore.houseId),function (data) {$("#choresDetailsHouseholdContent").html(data.name);});
@@ -279,29 +290,30 @@ function newChoreButtonPressed(){
     }
 }
 function verifyChoreInput(inputType){//Inputtype - 0 for new, 1 for edit, 2 for remove missingInput-classes
+    var allGoodInTheHood = true;
     if(inputType === 0){
+
         if($("#newChoreTitleInput").val().length<1){
-            $("#newChoreTitleInput").addClass("missingChoreInput");
-            return false;
-        }else if(!verifyTimeString($("#newChoreLocalTimeInput").val())){
-            $("#newChoreLocalTimeInput").addClass("missingChoreInput");
-            $("#newChoreTitleInput").removeClass("missingChoreInput");
-            return false;
-        }else{
-            return true;
+            $("#newChoreTitleInput").effect("highlight", {color: '#d9534f'}, 250);
+            $("#newChoreTitleInput").focus();
+            allGoodInTheHood = false;
         }
+        if(!verifyTimeString($("#newChoreLocalTimeInput").val())){
+            $("#newChoreLocalTimeInput").effect("highlight", {color: '#d9534f'}, 250);
+            allGoodInTheHood = false;
+        }
+        return allGoodInTheHood;
     }else if(inputType === 1){
         if($("#editChoreTitleInput").val().length<1){
-            $("#editChoreTitleInput").addClass("missingChoreInput");
-        }else if(!verifyTimeString($("#editChoreLocalTimeInput").val())){
-            $("#editChoreLocalTimeInput").addClass("missingChoreInput");
-            $("#editChoreTitleInput").removeClass("missingChoreInput");
-        }else{
-            return true;
+            $("#editChoreTitleInput").effect("highlight", {color: '#d9534f'}, 250);
+            $("#editChoreTitleInput").focus();
+            allGoodInTheHood = false;
         }
-    }else if(inputType === 2){
-        $("#editChoreTitleInput").removeClass("missingChoreInput");
-        $("#newChoreTitleInput").removeClass("missingChoreInput");
+        if(!verifyTimeString($("#editChoreLocalTimeInput").val())){
+            $("#editChoreLocalTimeInput").effect("highlight", {color: '#d9534f'}, 250);
+            allGoodInTheHood = false;
+        }
+        return allGoodInTheHood;
     }
 }
 function verifyTimeString(timeString){
@@ -394,11 +406,13 @@ function postNewChore(chore){
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: JSON.stringify(chore),
-        success: function () {
+        success: function (data) {
+            console.log("Success in postNewChore");
+            console.log(data);
             if(getCurrentUser().userId!==chore.userId)addNotification(chore.userId, getCurrentHousehold().houseId, "You have been added to the chore \"" + chore.title + "\", by " + getCurrentUser().name);
             selectedChore = undefined;
+            newlyPostedChoreId = data;
             readyChores();
-            switchChoresContent(3);
         },
         error:function(data) {
             console.log(data);

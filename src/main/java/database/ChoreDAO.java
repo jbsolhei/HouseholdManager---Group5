@@ -16,13 +16,13 @@ public class ChoreDAO {
      *
      * @param chore the {@link classes.Chore} object to insert.
      */
-    public static void postChore(Chore chore){
+    public static int postChore(Chore chore){
 
         String query = "INSERT INTO Chore (description, chore_datetime, houseId, userId, done, title) VALUES (?, ?, ?, ?, ?, ?);";
 
         try (DBConnector dbc = new DBConnector();
             Connection conn = dbc.getConn();
-            PreparedStatement st = conn.prepareStatement(query)){
+            PreparedStatement st = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)){
 
             st.setString(6, chore.getTitle());
             st.setString(1, chore.getDescription());
@@ -39,12 +39,19 @@ public class ChoreDAO {
 
             st.executeUpdate();
 
+            try (ResultSet resultSet = st.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+
             st.close();
 
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return 0;
 
     }
 
