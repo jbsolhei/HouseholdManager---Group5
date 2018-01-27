@@ -89,7 +89,6 @@ function updateNotificationDropdown() {
     noteboi.html("");
     noteboi2.html("");
     if(notifications.length > 0) {
-        $("#removeAllNotificationsButton").html("hehr");
         $("#removeAllNotificationsButton1").show();
     }
     for (i = 0; i < notifications.length; i++) {
