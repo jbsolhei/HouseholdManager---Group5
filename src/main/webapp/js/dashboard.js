@@ -1,6 +1,3 @@
-/**
- * Created by Simen Moen Storvik on 12.01.2018.
- */
 
 //TODO: Vurdere bruken av lokalt lagrede brukere under opplisting av chores og handlelister mtp på autoriseringsproblemer.
 
@@ -38,7 +35,7 @@ function printHouseholdChoresToDashboard(id){
                         }
                         var inputString = "<tr>" +
                             "<td>" + current.title + "</td>" +
-                            "<td>" + pad(current.time.dayOfMonth) + "."+pad(current.time.monthValue)+"." + current.time.year  + " " + pad(current.time.hour)+":"+pad(current.time.minute)+ "</td>" +
+                            "<td>" + pad(current.time.hour)+":"+pad(current.time.minute)+ "</td>" +
                             "<td>" + name + "</td>" +
                             "</tr>";
                         $("#dashboard_chores_table_body").append(inputString);
@@ -50,6 +47,7 @@ function printHouseholdChoresToDashboard(id){
         }
     });
 }
+
 
 function printShoppingListsToDashboard(house) {
     ajax_getShoppingLists(function (shoppingLists) {
@@ -73,9 +71,6 @@ function checkIfEnter(e) {
 
 function postNewsOnDashboard() {
 
-
-
-
     var post = $("#newPost").val();
     $("#newPost").val("");
     postNews(post, printNewsToDashboard);
@@ -89,7 +84,13 @@ function printNewsToDashboard(){
         for (var i = 0;i<loops;i++) {
             var html = "";
             var post = data[i];
-            var time = post.time.dayOfMonth+"."+post.time.monthValue+" "+post.time.hour+":"+post.time.minute;
+            var minute;
+            if(post.time.minute < 10) {
+                minute = "0"+post.time.minute;
+            } else {
+                minute = post.time.minute;
+            }
+            var time = post.time.dayOfMonth+"."+post.time.monthValue+" "+post.time.hour+":"+minute;
             var decoded = he.unescape(post.message);
             if (decoded.length<34){
                 html = "<div class=\"well well-sm\">\n" +

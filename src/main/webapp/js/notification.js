@@ -88,6 +88,9 @@ function updateNotificationDropdown() {
     var noteboi2 = $("#notifyDropdownListId1");
     noteboi.html("");
     noteboi2.html("");
+    if(notifications.length > 0) {
+        $("#removeAllNotificationsButton1").show();
+    }
     for (i = 0; i < notifications.length; i++) {
         var dateTime = notifications[i].dateTime;
         if (dateTime !== null) dateTime = dateTime.slice(0, dateTime.length - 2);
@@ -113,13 +116,14 @@ function countNotifications() {
 }
 
 /**
- * Updates the notifications bell to the color orange if there are some notifications left in the dropdown.
+ * Updates the notifications bell to the color white if there are some notifications left in the dropdown.
  */
 function updateNotificationBell() {
     var number = countNotifications();
     var numbers = $("#notificationValue");
     var numbers1 = $("#notificationValue1");
     if (countNotifications() > 0) {
+        $("#panelForNotifications").removeClass("hide");
         $("#notifyBellId").css('color', 'white');
         numbers.html("");
         numbers.addClass("numberCircle");
@@ -129,6 +133,7 @@ function updateNotificationBell() {
         numbers1.addClass("numberCircle");
         numbers1.append(""+number+"");
     } else {
+        $("#panelForNotifications").addClass("hide");
         $("#notifyBellId").css('color', '#436470');
         numbers.removeClass("numberCircle")
         numbers.html("");
@@ -164,8 +169,9 @@ $(document).on('click', '.notificationElement', function () {
         $("#notificationValue").removeClass("numberCircle");
         $("#notifyBellId1").css('color', '#436470');
         $('#notifyBellId1').parent().removeClass('open');
-        $("#notificationValue1").html("");
-        $("#notificationValue1").removeClass("numberCircle");
+        $("#panelForNotifications").html("heipådeg");
+        $("#panelForNotifications1").addClass("collapse");
+
     }
 });
 

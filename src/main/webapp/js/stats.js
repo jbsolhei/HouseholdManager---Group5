@@ -19,6 +19,7 @@ function fixData(innData) {
 }
 
 function drawExpenseGraph() {
+    $(".switchboi").addClass("hide");
     $("#choreStatId").removeClass("activeStat");
     $("#moneyStatId").addClass("activeStat");
     ajaxAuth({
@@ -78,6 +79,7 @@ function showExpenseStats() {
 }
 
 function drawChoreStats() {
+    $(".switchboi").removeClass("hide");
     $("#moneyStatId").removeClass("activeStat");
     $("#choreStatId").addClass("activeStat");
     ajaxAuth({

@@ -79,6 +79,9 @@
     background-color: tomato;
 }
 
+.clickableChore:hover {
+    background-color: rgba(19, 66, 2, 0.05);
+}
 #completed_personal_chores_box, #completed_household_chores_box {
     padding: 10px;
     text-align: center;

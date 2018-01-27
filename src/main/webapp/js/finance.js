@@ -13,8 +13,6 @@ function getDebt(){
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function(debts){ //debts er av typen Debt
-            console.log("getDebt():");
-            console.log(debts);
             var sum = 0;
             debt = [];
             for(var i = 0; i < debts.length; i++){
@@ -25,7 +23,6 @@ function getDebt(){
         },
         error: function(data) {
             console.log("Error in getDebts");
-            console.log(data);
         },
         dataType: "json"
     });
@@ -44,12 +41,9 @@ function getIncome(){
                 income[i] = incomes[i];
             }
             $("#debtSumIncoming").replaceWith('<div class="col-xs-3 nopadding debt-sum" id="debtSumIncoming">' + sum + ',-</div>');
-            console.log("getIncome():");
-            console.log(income);
         },
         error: function(data) {
             console.log("Error in getIncomes");
-            console.log(data);
         },
         dataType: "json"
     });
@@ -57,39 +51,24 @@ function getIncome(){
 
 function loadFinanceTables(){
     console.log("loadFinanceTables()");
-    console.log(debt);
-    console.log(income);
 
     $("#debtTable").html("<tbody id=\"debtTable\"></tbody>");
     $("#incomeTable").html("<tbody id=\"incomeTable\"></tbody>");
 
     var members = getCurrentHousehold().residents;
     for(var i = 0; i < debt.length; i++){
-        for(var j = 0; j < members.length; j++){
-            if(debt[i].toUser.userId == members[j].userId){
-                debt[i].toUser = members[j];
-                j = members.length;
-            }
-        }
         if(debt[i].amount != 0) {
             $("#debtTable").append('<tr id="debt' + i + '" data-target="#theModal" data-toggle="modal" onclick="payMoney(' + i + ')">\n' +
-                '                                <td>' + debt[i].toUser.name + '</td>\n' +
-                '                                <td>' + debt[i].amount + ',-</td>\n' +
-                '                                <td><span title="Click to pay this person" onclick="payMoney(' + i + ')" class="glyphicon glyphicon-credit-card"></span></td>\n' +
-                '                            </tr>'
+                '<td>' + debt[i].toUser.name + '</td>\n' +
+                '<td>' + debt[i].amount + ',-</td>\n' +
+                '<td><span title="Click to pay this person" onclick="payMoney(' + i + ')" class="glyphicon glyphicon-credit-card"></span></td>\n' +
+                '</tr>'
             );
         }
-
     }
 
     for(var i = 0; i < income.length; i++){
-        for(var j = 0; j < members.length; j++){
-            if(income[i].toUser.userId == members[j].userId){
-                income[i].toUser = members[j];
-                j = members.length;
-            }
-        }
-        if(income[i].amount != 0){
+        if(income[i].amount != 0) {
             $("#incomeTable").append('<tr id="income' + i + '" data-target="#theModal" data-toggle="modal" onclick="sendPaymentRequest(' + i + ')">\n' +
                 '                                <td>' + income[i].toUser.name + '</td>\n' +
                 '                                <td>' + income[i].amount + ',-</td>\n' +
@@ -98,7 +77,6 @@ function loadFinanceTables(){
             );
         }
 
-//heim
     }
 }
 

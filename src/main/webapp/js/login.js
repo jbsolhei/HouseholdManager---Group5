@@ -1,6 +1,3 @@
-/**
- * Created by Camilla Velvin on 11.01.2018.
- */
 function login(email,password){
     var loginPerson = {"name": "", "email": email, "telephone": "", "password": password};
     $.ajax({

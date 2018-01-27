@@ -32,15 +32,29 @@ function listUserChores(){
 
         var today = new Date();
         $("#choresLeftUpperTableBody").html("");
+        var first = true;
+        var id = 0;
         $.each(data,function(i,val){
             var leftUpperTableBodyHTML = "";
             if(today>toJSDate(val.time)&&!val.done){
+                if(first) {
+                    id = data[i];
+                    first = false;
+                }
                 leftUpperTableBodyHTML+="<tr class='clickableChore overdueChoreListElement'";
             }else if(today>toJSDate(val.time)&&val.done){
                 leftUpperTableBodyHTML += "<tr class='hide'";
             }else if(today<toJSDate(val.time)&&val.done){
+                if(first) {
+                    id = data[i];
+                    first = false;
+                }
                 leftUpperTableBodyHTML+="<tr class='clickableChore checkedChoreListElement'";
             }else{
+                if(first) {
+                    id = data[i];
+                    first = false;
+                }
                 leftUpperTableBodyHTML += "<tr class='clickableChore'";
             }
             leftUpperTableBodyHTML += " id='choreTab"+val.choreId+"' onclick='getSelectedChoreFromUpdatedTotal("+val.choreId+")'>" +
@@ -57,6 +71,9 @@ function listUserChores(){
                 }
             })
         });
+        if(!first) {
+            showChoreInfo(id);
+        }
         listHouseholdChores();
     });
 }
@@ -410,7 +427,9 @@ function postNewChore(chore){
         success: function (data) {
             console.log("Success in postNewChore");
             console.log(data);
-            if(getCurrentUser().userId!==chore.userId)addNotification(chore.userId, getCurrentHousehold().houseId, "You have been added to the chore \"" + chore.title + "\", by " + getCurrentUser().name);
+            if(getCurrentUser().userId!==chore.userId){
+                addNotification(chore.userId, getCurrentHousehold().houseId, "You have been added to the chore \"" + chore.title + "\", by " + getCurrentUser().name);
+            }
             selectedChore = undefined;
             newlyPostedChoreId = data;
             readyChores();

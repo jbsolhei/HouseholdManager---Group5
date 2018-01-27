@@ -65,7 +65,7 @@ public class ChoreDAO {
     public static ArrayList<Chore> getChores(int householdId){
         ArrayList<Chore> chores = new ArrayList<>();
         Chore chore;
-        String query = "SELECT * FROM Chore WHERE houseId = ?;";
+        String query = "SELECT * FROM Chore WHERE houseId = ? ORDER BY chore_datetime ASC;";
 
         try (DBConnector dbc = new DBConnector();
             Connection conn = dbc.getConn();
