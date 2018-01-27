@@ -31,7 +31,8 @@ function listUserChores(){
         userChoreList = sortByDate(data);
 
         var today = new Date();
-        $("#choresLeftUpperTableBody").html("");
+        $("#choresLeftUpperTableBody").empty();
+        $("#choresLeftUpperTableBody_completed").empty();
         var first = true;
         var id = 0;
         $.each(data,function(i,val){
