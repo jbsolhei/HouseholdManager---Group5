@@ -224,3 +224,19 @@ tr:hover {
 .householdOverviewHeading{
     background-color: #efdaa5;
 }
+
+#shopping_list_widget_body {
+    padding: 0;
+}
+
+#dashboard_shopping_list_unordered_list {
+    margin: 0;
+}
+
+#dashboard_shopping_list_unordered_list .list-group-item:first-child {
+    border-radius: 0;
+}
+
+#dashboard_shopping_list_unordered_list .list-group-item:last-child {
+    border-radius: 0;
+}

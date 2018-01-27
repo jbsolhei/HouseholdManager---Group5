@@ -23,12 +23,27 @@
                                 <tr>
                                     <th>Title</th>
                                     <th>Household</th>
-                                    <th>Date</th>
+                                    <th>Deadline</th>
                                 </tr>
                                 </thead>
                                 <tbody id="choresLeftUpperTableBody">
                                 </tbody>
                             </table>
+
+                            <button id="completed_personal_chores_box" onclick="toggleYourCompletedList()" class="btn btn-block">Press to view completed chores</button>
+
+                            <div id="yourChoresTab_completed" class="tab-pane fade in active hide">
+                                <!-- Personal done chores tab -->
+                                <table class="table" id="choresLeftUpperTable_completed">
+                                    <thead id="choresLeftUpperTableHead_completed">
+                                    <tr>
+                                        <th>Completed</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="choresLeftUpperTableBody_completed">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                         <div id="householdChoresTab" class="tab-pane fade panel-body">
@@ -38,12 +53,27 @@
                                 <tr>
                                     <th>Title</th>
                                     <th>Responsible</th>
-                                    <th>Date</th>
+                                    <th>Deadline</th>
                                 </tr>
                                 </thead>
                                 <tbody id="choresLeftLowerTableBody">
                                 </tbody>
                             </table>
+
+                            <button id="completed_household_chores_box" onclick="toggleHouseholdCompletedList()" class="btn btn-block">Press to view completed chores</button>
+
+                            <div id="householdChoresTab_completed" class="tab-pane fade in active hide">
+                                <!-- Personal done chores tab -->
+                                <table class="table" id="choresLeftLowerTable_completed">
+                                    <thead id="choresLeftLowerTableHead_completed">
+                                    <tr>
+                                        <th>Completed</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="choresLeftLowerTableBody_completed">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,7 +95,7 @@
                                     <td><span class="text-right" id="choresDetailsUserNameContent"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="choreDisc">Date</span></td>
+                                    <td><span class="choreDisc">Deadline</span></td>
                                     <td><span class="text-right" id="choresDetailsDateTimeContent"></span></td>
                                 </tr>
                                 <tr>
@@ -76,7 +106,7 @@
                                 </tr>
                                 <tr>
                                     <td><span class="choreDisc">Description</span></td>
-                                    <td><p id="choresDetailsDescriptionContent" style="word-break: break-word;"></p></td>
+                                    <td><p id="choresDetailsDescriptionContent" style="word-break: 'break-word';"></p></td>
                                 </tr>
                                 <tr>
                                     <td><span class="choreDisc">Options</span></td>
@@ -101,7 +131,7 @@
 
                             <table class="infoTabel">
                                 <tr>
-                                    <td><span class="choreDisc">Date</span></td>
+                                    <td><span class="choreDisc">Deadline</span></td>
                                     <td><input class="newChoreInput" id="newChoreLocalTimeInput" type="datetime-local"></td>
                                 </tr>
                                 <tr>
@@ -145,7 +175,7 @@
 
                             <table class="infoTabel">
                                 <tr>
-                                    <td><span class="choreDisc">Date</span></td>
+                                    <td><span class="choreDisc">Deadline</span></td>
                                     <td><input class="newChoreInput" id="editChoreLocalTimeInput" type="datetime-local"></td>
                                 </tr>
                                 <tr>

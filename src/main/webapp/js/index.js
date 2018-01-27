@@ -127,7 +127,8 @@ function updateCurrentHousehold(bodyContent, successCallback){
     }
 }
 
-function setCurrentHousehold(hid) {
+function setCurrentHousehold(hid, page) {
+    console.log(page);
     if (hid === 0){
         ajaxAuth({
             url: "res/user/"+window.localStorage.getItem("userId")+"/hh",
@@ -155,6 +156,7 @@ function setCurrentHousehold(hid) {
             type: "GET",
             contentType: "application/json; charser=utf-8",
             success: function (data) {
+                console.log('success');
                 if (data.length!==null) {
                     window.localStorage.setItem("house", JSON.stringify(data));
                     window.location.replace("index.html");
@@ -256,6 +258,19 @@ function callModalRun(modalContent, functions) {
 
 function swapContent(bodyContent) {
     updateCurrentHousehold(bodyContent);
+}
+
+function swapHouseholdFromHouseholdOverview (houseId){
+    ajaxAuth({
+        url: "res/household/" + houseId,
+        type: "GET",
+        contentType: "application/json; charser=utf-8",
+        success: function (data) {
+            window.localStorage.setItem("house", JSON.stringify(data));
+            $(".page-wrapper").load(household);
+        },
+        dataType: "json"
+    });
 }
 
 function navToShoppingList(shoppingListId){

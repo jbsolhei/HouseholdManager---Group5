@@ -57,21 +57,25 @@ function loadFinanceTables(){
 
     var members = getCurrentHousehold().residents;
     for(var i = 0; i < debt.length; i++){
-        $("#debtTable").append('<tr id="debt' + i + '" data-target="#theModal" data-toggle="modal" onclick="payMoney(' + i + ')">\n' +
-            '<td>' + debt[i].toUser.name + '</td>\n' +
-            '<td>' + debt[i].amount + ',-</td>\n' +
-            '<td><span title="Click to pay this person" onclick="payMoney(' + i + ')" class="glyphicon glyphicon-credit-card"></span></td>\n' +
-            '</tr>'
-        );
+        if(debt[i].amount != 0) {
+            $("#debtTable").append('<tr id="debt' + i + '" data-target="#theModal" data-toggle="modal" onclick="payMoney(' + i + ')">\n' +
+                '<td>' + debt[i].toUser.name + '</td>\n' +
+                '<td>' + debt[i].amount + ',-</td>\n' +
+                '<td><span title="Click to pay this person" onclick="payMoney(' + i + ')" class="glyphicon glyphicon-credit-card"></span></td>\n' +
+                '</tr>'
+            );
+        }
     }
 
     for(var i = 0; i < income.length; i++){
-        $("#incomeTable").append('<tr id="income' + i + '" data-target="#theModal" data-toggle="modal" onclick="sendPaymentRequest(' + i + ')">\n' +
-            '                                <td>' + income[i].toUser.name + '</td>\n' +
-            '                                <td>' + income[i].amount + ',-</td>\n' +
-            '                                <td title="Click to send an alert tho this person"><span onclick="payMoney(' + i + ')" class="glyphicon glyphicon-bullhorn"></span></td>\n' +
-            '                            </tr>'
-        );
+        if(income[i].amount != 0) {
+            $("#incomeTable").append('<tr id="income' + i + '" data-target="#theModal" data-toggle="modal" onclick="sendPaymentRequest(' + i + ')">\n' +
+                '                                <td>' + income[i].toUser.name + '</td>\n' +
+                '                                <td>' + income[i].amount + ',-</td>\n' +
+                '                                <td title="Click to send an alert tho this person"><span onclick="payMoney(' + i + ')" class="glyphicon glyphicon-bullhorn"></span></td>\n' +
+                '                            </tr>'
+            );
+        }
 
     }
 }
