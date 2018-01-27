@@ -119,9 +119,7 @@
 
         if (expr.test(email)) {
             $("#newUsersList").prepend("<li class='newUserListElement'><a>" + email + "</a></li>");
-            console.log(email + " added");
-            $("#addUserInput").val("");
-            $("#addUserInput").focus();
+            $("#addUserInput").val("").focus();
         }
     }
 
@@ -174,9 +172,6 @@
                 } else {
                     alert("Error adding household")
                 }
-            },
-            error: function (e) {
-                console.log(e);
             }
         });
     }
@@ -192,9 +187,6 @@
                 dataType: 'json',
                 success: function (result) {
 
-                },
-                error: function (e) {
-                    console.log(e);
                 }
             })
         }

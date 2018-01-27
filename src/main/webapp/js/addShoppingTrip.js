@@ -9,7 +9,6 @@ function createPageAddShoppingTrip() {
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                console.log(data);
                 result = data;
                 addMembers(data);
             },
@@ -126,8 +125,6 @@ function addShoppingTrip() {
 
             },
             error: function (response) {
-                console.log("error");
-                console.log(response);
             }
 
         });

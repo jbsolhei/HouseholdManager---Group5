@@ -17,8 +17,8 @@ function login(email,password){
             showLoadingScreen(false);
             if (xhr.status === 401) {
                 $("#wrong-credentials-message").clearQueue().fadeIn().delay(2000).fadeOut();
-                $("#emailInputId").shake(2, 7, 300);
-                $("#passwordInputId").shake(2, 7, 300);
+                $("#emailInputId").clearQueue().shake(2, 7, 300);
+                $("#passwordInputId").clearQueue().shake(2, 7, 300);
             }
         }
     });

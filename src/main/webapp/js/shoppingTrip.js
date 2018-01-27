@@ -33,7 +33,6 @@ function deleteShoppingTrip(){
         type: "DELETE",
         url: "res/shoppingtrip/"+activeSHT.shoppingTripId,
         success:function(){
-            console.log("List #" + activeSHT.shoppingTripId + " deleted.");
             getShoppingTrips();
         }
     });
@@ -92,7 +91,6 @@ function switchShoppingtripContent(num) {
     if(num == 0){
         $("#shoppingtripRightPanelSecondPanel").addClass("hide");
         $("#shoppingtripRightFirstPanel").removeClass("hide");
-        console.log("har nå skiftet skjerm");
     } else if (num == 1){
         $("#shoppingtripRightFirstPanel").addClass("hide");
         $("#shoppingtripRightPanelSecondPanel").removeClass("hide");
@@ -234,10 +232,6 @@ function addShoppingTrip() {
                         '<strong>Failed!</strong>Something went wrong. Please try again.</div>';
                 }
 
-            },
-            error: function (response) {
-                console.log("error");
-                console.log(response);
             }
 
         });

@@ -16,8 +16,6 @@ function inviteMembersToHousehold() {
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (result) {
-                    console.log("Invites sent. Result: ");
-                    console.log(result);
                     $("#invite-members-status").text("Invites sent!");
                     setTimeout(function() {
                         $("#theModal").modal("hide");
@@ -26,7 +24,6 @@ function inviteMembersToHousehold() {
             });
         }
         else {
-            console.log("getCurrentHousehold() == null !");
             $("#theModal").modal("hide");
         }
     }

@@ -115,13 +115,8 @@ function updateAdminsInHousehold() {
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: function (result) {
-                            console.log("kommer hit?")
                             addNotification(id, getCurrentHousehold().houseId, "Congratulations you have been made administrator :-)")
-                        },
-                        error: function (e) {
-                            console.log(e);
                         }
-
                     });
                 }
             } else {
@@ -141,14 +136,7 @@ function updateAdminsInHousehold() {
                             url: "res/household/"+getCurrentHousehold().houseId+"/unmakeAdmin",
                             data: JSON.stringify(data),
                             dataType: 'json',
-                            contentType: 'application/json; charset=utf-8',
-                            success: function (result) {
-                                console.log("Admin made non-admin " + result);
-                            },
-                            error: function (e) {
-                                console.log(e);
-                            }
-
+                            contentType: 'application/json; charset=utf-8'
                         });
                     }
                 }
@@ -240,7 +228,6 @@ function buildMemberTable(){
         onConfirm: function () {
             showLoadingScreen(true);
             var remove = $(this).data("remove");
-            console.log("Confirm clicked! Removing " + remove);
             if (remove === "self") {
                 removeMyselfFromHousehold();
             }
@@ -310,7 +297,6 @@ function removeUserFromHousehold(userId) {
 }
 
 function showMiniProfile(index){
-    console.log(index);
     if(index != undefined) {
         var members = getCurrentHousehold().residents;
         $("#members").fadeOut(500);
@@ -383,8 +369,7 @@ function editProfile(){
 function buildListOfHouseHolds() {
     getAllHouseholdsForUser(getCurrentUser().userId, function (households) {
         $.each(households, function (i, val) {
-            console.log(val);
-            $("#household_overview_list_of_households").append('<li><a onclick="swapHouseholdFromHouseholdOverview('+ val.houseId +', true)">'+ val.name +'</a></li>');
+            $("#household_overview_list_of_households").append('<li><a onclick="swapHouseholdFromHouseholdOverview('+ val.houseId +')">'+ val.name +'</a></li>');
         });
     });
 }

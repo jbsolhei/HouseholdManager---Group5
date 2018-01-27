@@ -31,7 +31,8 @@ function listUserChores(){
         userChoreList = sortByDate(data);
 
         var today = new Date();
-        $("#choresLeftUpperTableBody").html("");
+        $("#choresLeftUpperTableBody").empty();
+        $("#choresLeftUpperTableBody_completed").empty();
         var first = true;
         var id = 0;
         $.each(data,function(i,val){
@@ -136,10 +137,6 @@ function listHouseholdChores() {
     });
 }
 function getSelectedChoreFromUpdatedTotal(id){
-    console.log("getTotal()");
-    console.log(id);
-    console.log(userChoreList);
-    console.log(householdChoreList);
     var choreSent = false;
     $.each(userChoreList,function(i,val){
         if(val.choreId===id){
@@ -180,9 +177,6 @@ function deleteSelectedChore(id){
             selectedChore = undefined;
             readyChores();
             switchChoresContent(0);
-        },
-        error: function(data){
-            console.log(data);
         }
     })
 }
@@ -204,6 +198,7 @@ function selectChoreInfo(from, choreId){
 }
 function showChoreInfo(chore){
     if(chore!==undefined){
+        selectedChore = chore;
         switchChoresContent(0);
         $("#choresRightUpperPanelHeading").html(chore.title + "<a id='addTodoGlyphicon' onclick='editChore(selectedChore)' class='btn btn-md pull-right'>" +
             "                        <span class='glyphicon glyphicon-edit'></span>\n" +
@@ -242,7 +237,7 @@ function switchChoresContent(num) {
 
 
         $("#deleteSelectedChoreButton").confirmation({
-            rootSelector: "span.remove[data-toggle='confirm']",
+            rootSelector: "#deleteSelectedChoreButton",
             popout: true,
             singleton: true,
             title: "Delete this chore?",
@@ -291,7 +286,6 @@ function newChoreButtonPressed(){
     var newChoreTitle = $("#newChoreTitleInput").val();
     var newChoreDescription = $("#newChoreDescriptionInput").val();
     var newChoreDate = $("#newChoreLocalTimeInput").val();
-    console.log(newChoreDate);
     var newChoreUserId;
     if(selectedUserForNewChore!==null){
         newChoreUserId = getCurrentHousehold().residents[selectedUserForNewChore].userId;
@@ -335,17 +329,11 @@ function verifyChoreInput(inputType){//Inputtype - 0 for new, 1 for edit, 2 for 
     }
 }
 function verifyTimeString(timeString){
-    console.log(timeString);
     var verifiableYear = timeString.substring(0,4);
-    console.log(verifiableYear);
     var verifiableMonth = timeString.substring(5,7);
-    console.log(verifiableMonth);
     var verifiableDay = timeString.substring(8,10);
-    console.log(verifiableDay);
     var verifiableHour = timeString.substring(11, 13);
-    console.log(verifiableHour);
     var verifiableMinute = timeString.substring(14,16);
-    console.log(verifiableMinute);
     if(timeString.length!==16){
         return false;
     }else{
@@ -396,9 +384,6 @@ function getChoresForUser(id, handleData){
         contentType: "application/json; charset=utf-8",
         success: function(data){
             handleData(data);
-        },
-        error: function(data){
-            console.log(data);
         }
     })
 }
@@ -410,9 +395,6 @@ function getChoresForHousehold(id, handleData){
         contentType:"application/json; charset=utf-8",
         success: function(data){
             handleData(data);
-        },
-        error: function(data){
-            console.log(data);
         }
     });
 }
@@ -425,17 +407,12 @@ function postNewChore(chore){
         dataType: "json",
         data: JSON.stringify(chore),
         success: function (data) {
-            console.log("Success in postNewChore");
-            console.log(data);
             if(getCurrentUser().userId!==chore.userId){
                 addNotification(chore.userId, getCurrentHousehold().houseId, "You have been added to the chore \"" + chore.title + "\", by " + getCurrentUser().name);
             }
             selectedChore = undefined;
             newlyPostedChoreId = data;
             readyChores();
-        },
-        error:function(data) {
-            console.log(data);
         }
     });
 }
@@ -450,9 +427,6 @@ function updateChore(chore){
         success: function(data){
             if(getCurrentUser().userId!==chore.userId)addNotification(chore.userId, getCurrentHousehold().houseId, ""+getCurrentUser.name+" has edited your chore \"" + chore.title + "\"");
             readyChores();
-        },
-        error: function(data){
-            console.log(data);
         }
     });
 }
@@ -468,9 +442,6 @@ function checkChore(chore){
         data: JSON.stringify(chore),
         success: function(data){
             readyChores();
-        },
-        error: function(data){
-            console.log(data);
         }
     });
 }

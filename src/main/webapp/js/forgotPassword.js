@@ -3,7 +3,6 @@
  */
 function submitForgotPass() {
     var email = $("#email1").val();
-    console.log(email);
     if(email != "") {
         sendEmail(email);
     }
@@ -16,15 +15,10 @@ function sendEmail(email) {
         data: email,
         contentType: "text/plain",
         success: function(response) {
-            console.log(response);
             changeView()
-        },
-        error: function(result) {
-            console.log(result);
         }
     });
 }
 function changeView() {
-    $("#forgottenModule").html("");
-    $("#forgottenModule").append("<div><p>If the user exist, an email is sent</p></div>");
+    $("#forgottenModule").html("").append("<div><p>If the user exist, an email is sent</p></div>");
 }

@@ -27,13 +27,7 @@ var dateTime =    currentdate.getFullYear() + "-"
         type: "POST",
         data: JSON.stringify(notification),
         contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        success: function (result) {
-            console.log("Notification added: " + result);
-        },
-        error: function (e) {
-            console.log(e);
-        }
+        dataType: 'json'
     })
 }
 
@@ -46,13 +40,7 @@ function deleteNotification(notificationId) {
         url: "res/notification/" + notificationId,
         type: "DELETE",
         contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        success: function (result) {
-            console.log("Notification deleted: " + result);
-        },
-        error: function (e) {
-            console.log(e);
-        }
+        dataType: 'json'
     })
 }
 
@@ -72,9 +60,6 @@ function getNotifications(userId) {
             updateNotificationDropdown();
             updateNotificationBell();
             return result;
-        },
-        error: function (e) {
-            console.log(e);
         }
     })
 }
@@ -180,14 +165,11 @@ $(document).on('click', '.notificationElement', function () {
  */
 $(document).on('click', '#removeAllNotificationsButton', function () {
     var num = countNotifications();
-    console.log("ant not: " +  num);
     for(var i = 0; i < num; i++){
-        console.log("nr deleted: " + notifications[i].notificationId);
         deleteNotification(notifications[i].notificationId);
         $('#notifyDropdownListId').children('li').remove();
         $('#notifyDropdownListId1').children('li').remove();
     }
-    console.log("ant not after del: " + countNotifications());
     updateNotificationBell();
 });
 
