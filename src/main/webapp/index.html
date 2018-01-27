@@ -113,7 +113,7 @@
                             <span id="expandSidebarButtonId" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
                         </a>
 
-                        <a id="homePageId" onclick="swapContent(dashboard)">
+                        <a id="homePageId" onclick="swapContent(dashboard);">
                             Home
                         </a>
                         <a class="visible-xs dropdown-toggle" id="bellForCell">
@@ -133,7 +133,7 @@
                                 </div>
                         </a>
                     </div>
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mobileNavbar">
+                    <button id="toggleMobileNavbar" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mobileNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -142,14 +142,14 @@
                 </div>
                 <div class="navbar-collapse collapse" id="mobileNavbar">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="visible-xs" onclick="swapContent(dashboard); closeNav()"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(household); closeNav()"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(shoppinglists); closeNav()"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(shoppingtrips); closeNav()"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trips</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(chores); closeNav()"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(finance); closeNav()"><i class="glyphicon glyphicon-credit-card"></i>  Finance</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(statistics); closeNav()"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>
-                        <li><a class="visible-xs" onclick="swapContent(news); closeNav()"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(dashboard); closeNavMobile()"><i class="glyphicon glyphicon-th-large"></i>  Dashboard</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(household); closeNavMobile()"><i class="glyphicon glyphicon-home"></i>  Household</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(shoppinglists); closeNavMobile()"><i class="glyphicon glyphicon-list-alt"></i>  Shopping lists</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(shoppingtrips); closeNavMobile()"><i class="glyphicon glyphicon-shopping-cart"></i>  Shopping trips</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(chores); closeNavMobile()"><i class="glyphicon glyphicon glyphicon-check"></i>  Chores</a></li>
+                        <li><a class="visible-xs" onclick="swapContent(finance); closeNavMobile()"><i class="glyphicon glyphicon-credit-card"></i>  Finance</a></li>
+                        <!--<li><a class="visible-xs" onclick="swapContent(statistics); closeNavMobile()"><i class="glyphicon glyphicon-stats"></i>  Statistics</a></li>-->
+                        <li><a class="visible-xs" onclick="swapContent(news); closeNavMobile()"><i class="glyphicon glyphicon-comment"></i>  News</a></li>
 
                         <li class="dropdown-toggle visible-lg visible-md visible-sm" id="dropdownBell">
                             <a id="notifyBellId" class="dropdown-toggle">
@@ -176,7 +176,7 @@
                                 <li style="border-top: 1px solid #e8e8e8;" data-toggle="modal" onclick='callModal("modals/addHousehold.html")' data-target="#theModal"> <a href="#"><strong>New Household   <span class="glyphicon glyphicon-plus"></span></strong></a></li>
                             </ul>
                         </li>
-                        <li><a id="myPageId" onclick="swapContent(profile)">My Page</a></li>
+                        <li><a id="myPageId" onclick="swapContent(profile); closeNavMobile()">My Page</a></li>
                         <li><a id="logoutId" onclick="logout()">Logout</a></li>
                     </ul>
                 </div>
@@ -227,6 +227,11 @@
             $("#sideBarId").css('width', '0px');
             $(".page-wrapper").css('margin-left', '0px');
             $("#sideBarBrandId").html('<span id="expandSidebarButtonId" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>');
+
+        }
+
+        function closeNavMobile() {
+            $("#toggleMobileNavbar").click();
         }
 
         $(document).mouseup(function () {
