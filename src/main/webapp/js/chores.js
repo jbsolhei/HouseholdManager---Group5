@@ -198,6 +198,7 @@ function selectChoreInfo(from, choreId){
 }
 function showChoreInfo(chore){
     if(chore!==undefined){
+        selectedChore = chore;
         switchChoresContent(0);
         $("#choresRightUpperPanelHeading").html(chore.title + "<a id='addTodoGlyphicon' onclick='editChore(selectedChore)' class='btn btn-md pull-right'>" +
             "                        <span class='glyphicon glyphicon-edit'></span>\n" +
@@ -236,7 +237,7 @@ function switchChoresContent(num) {
 
 
         $("#deleteSelectedChoreButton").confirmation({
-            rootSelector: "span.remove[data-toggle='confirm']",
+            rootSelector: "#deleteSelectedChoreButton",
             popout: true,
             singleton: true,
             title: "Delete this chore?",
