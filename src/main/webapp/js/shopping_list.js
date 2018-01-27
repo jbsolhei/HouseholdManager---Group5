@@ -607,6 +607,7 @@ function editShoppingList(edit) {
         $("#edit_shopping_list_btn").addClass("hide");
         $("#edit_header").removeClass("hide");
         $("#archive_shopping_list_btn").addClass("hide");
+        $("#make_shopping_trip_from_list").addClass("hide");
         $("#title_header").addClass("hide");
         $("#editTitleInput").attr("value", slName);
         hidePanelBody();
@@ -620,13 +621,14 @@ function editShoppingList(edit) {
             ajax_updateShoppingListName(SHL[activeSHL].shoppingListId, newShoppingListName);
             loadSideMenu();
             removeEditElemets();
-            $("#archive_shopping_list_btn").removeClass("hide");
         }
     }
 }
 
 function removeEditElemets() {
     $("#edit_shopping_list_btn").removeClass("hide");
+    $("#make_shopping_trip_from_list").removeClass("hide");
+    $("#archive_shopping_list_btn").removeClass("hide");
     $("#edit_header").addClass("hide");
     $("#shopping_list_data_panel").removeClass("hide");
     $("#title_header").removeClass("hide");

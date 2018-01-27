@@ -150,6 +150,7 @@ body {
 }
 #profile-panel-info {
     margin-top: 10px;
+    margin-bottom: 4vh;
 }
 .sidePanelProfile {
     width: 100%;
@@ -264,7 +265,10 @@ div.miniprofile {
     padding: 10px;
     margin-bottom: 10px;
     width: 100%;
-    background-color: #436470;
+    background-color: #EFDAA5;
+    border: none;
+    color: #000;
+    /*font-size: 1em;*/
 }
 
 #household_caret {

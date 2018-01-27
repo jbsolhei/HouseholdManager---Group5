@@ -123,7 +123,7 @@
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
-                    if(response == true){
+                    if(response === true){
                         for (i = 0; i < contributors.length; i++) {
                             addNotification(contributors[i].userId, getCurrentHousehold().houseId, "You have been added to Shopping Trip, \""+name+"\", by " + getCurrentUser().name);
                         }
@@ -132,11 +132,10 @@
                         $("#alertbox").html('<div class="alert alert-success">' +
                             '<strong>Success!</strong> Shoppingtrip added.</div>');
 
-                        $(".alert-success").fadeTo(500, 500).slideUp(500, function(){
+                        $(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
                             switchShoppingtripContent(0);
+                            $("#theModal").modal("hide");
                         });
-
-
 
                     } else {
                         $("#alertbox").html('<div id="alertbox" class="alert alert-danger">' +

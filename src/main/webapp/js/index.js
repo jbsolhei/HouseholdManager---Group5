@@ -263,6 +263,7 @@ function swapHouseholdFromHouseholdOverview (houseId){
         success: function (data) {
             window.localStorage.setItem("house", JSON.stringify(data));
             $(".page-wrapper").load(household);
+            $("#currentHouseholdId").html(data.name + ' <span class="caret"></span>');
         },
         dataType: "json"
     });

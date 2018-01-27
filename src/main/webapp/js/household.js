@@ -369,7 +369,7 @@ function editProfile(){
 function buildListOfHouseHolds() {
     getAllHouseholdsForUser(getCurrentUser().userId, function (households) {
         $.each(households, function (i, val) {
-            $("#household_overview_list_of_households").append('<li><a onclick="swapHouseholdFromHouseholdOverview('+ val.houseId +', true)">'+ val.name +'</a></li>');
+            $("#household_overview_list_of_households").append('<li><a onclick="swapHouseholdFromHouseholdOverview('+ val.houseId +')">'+ val.name +'</a></li>');
         });
     });
 }
