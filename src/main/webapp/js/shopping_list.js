@@ -15,9 +15,6 @@ function ajax_getShoppingLists(handleData) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             handleData(data);
-        },
-        error: function (data) {
-            console.log("Error " + data);
         }
     })
 }
@@ -37,9 +34,6 @@ function ajax_createNewList(shoppingListName, handleData) {
         contentType: 'text/plain',
         success: function (shoppingListId) {
             handleData(shoppingListId);
-        },
-        error: function () {
-            console.log("error: ajax_createNewList()");
         }
     })
 }
@@ -59,9 +53,6 @@ function ajax_updateUsers (userIds, shoppingListId, handleData) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             handleData(data)
-        },
-        error: function () {
-            console.log("error: ajax_updateUsers()");
         }
     })
 }
@@ -79,9 +70,6 @@ function ajax_getShoppingList(shoppingListId, handleData) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             handleData(data);
-        },
-        error: function (data) {
-            console.log(data);
         }
     })
 }
@@ -99,9 +87,6 @@ function ajax_updateCheckedBy(itemId, userId, handleData) {
         contentType: 'application/json; charset=utf-8',
         success: function (data) {
             handleData(data);
-        },
-        error: function (result) {
-            console.log(result);
         }
     })
 }
@@ -117,9 +102,6 @@ function ajax_deleteShoppingList(shoppingListId, handleData) {
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId,
         success: function (data) {
             handleData(data);
-        },
-        error: function (result) {
-            console.log(result);
         }
     })
 }
@@ -138,9 +120,6 @@ function ajax_updateArchived(shoppingListId, archived, handleData){
         contentType: 'text/plain',
         success: function (data) {
             handleData(data);
-        },
-        error: function (result) {
-            console.log("error in ajax_updateArchived");
         }
     })
 }
@@ -153,9 +132,6 @@ function ajax_getShoppingListUsers(shoppingListId, handleData) {
         contentType: 'text/plain',
         success: function (data) {
             handleData(data);
-        },
-        error: function (result) {
-            console.log(result);
         }
     })
 }
@@ -175,9 +151,6 @@ function ajax_deleteUserInShoppingList(shoppingListId, userId, handleData) {
         contentType: 'text/plain',
         success: function (data) {
             handleData(data);
-        },
-        error: function (result) {
-            console.log(result);
         }
     })
 }
@@ -197,9 +170,6 @@ function ajax_insertUserInShoppingList(shoppingListId, userId, handleData) {
         contentType: 'text/plain',
         success: function (data) {
             handleData(data);
-        },
-        error: function (result) {
-            console.log(result);
         }
     })
 }
@@ -210,9 +180,6 @@ function ajax_deleteItem(shoppingListId, itemId, handleData) {
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/items/' + itemId,
         success: function (data) {
             handleData(data);
-        },
-        error: function (result) {
-            console.log(result);
         }
     })
 }
@@ -225,9 +192,6 @@ function ajax_addItem(shoppingListId, itemName, handleData) {
         contentType: 'text/plain',
         success: function (data) {
             handleData(data);
-        },
-        error: function (result) {
-            console.log(result);
         }
     })
 }
@@ -237,12 +201,7 @@ function ajax_updateShoppingListName(shoppingListId, name) {
         type: 'PUT',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/' + shoppingListId + '/name',
         data: name,
-        contentType: 'text/plain',
-        success: function (data) {
-        },
-        error: function (result) {
-            console.log(result);
-        }
+        contentType: 'text/plain'
     })
 }
 
@@ -315,7 +274,6 @@ function showListFromMenu(SLIndex, isArchived){
     removeEditElemets();
     closeListOfAssociatedUsers();
     hideInputHeader();
-    console.log("showListFromMenu");
     if (SHL[SLIndex] !== undefined) {
         $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
         ajax_getShoppingList(SHL[SLIndex].shoppingListId, function (shoppingList) {
@@ -342,10 +300,8 @@ function showListFromMenu(SLIndex, isArchived){
             else activeSHL = SLIndex;
         });
     } else if ($("#activeTab").parent().hasClass("active")) {
-        console.log("Removes everything from active tab");
         $("#shopping_list_active_tab").html("");
     } else if ($("#archiveTab").parent().hasClass("active")) {
-        console.log("Removes everything from archive tab");
         $("#shopping_list_archived_tab").html("");
     }
 }
@@ -395,7 +351,6 @@ function closeListOfAssociatedUsers() {
  * @param itemId, the item ID
  */
 function checkItem(itemId) {
-    console.log("The right function is being called :D");
     $("#unchecked" + itemId).addClass("glyphicon-refresh").removeClass("glyphicon-unchecked");
     ajax_updateCheckedBy(itemId, getCurrentUser().userId, function (data) {
         if (data === true) {
@@ -404,7 +359,6 @@ function checkItem(itemId) {
             $("#checkedBy" + itemId).html(getCurrentUser().name);
             showListFromMenu(activeSHL);
         } else {
-            console.log("error: data === false");
             $("#unchecked" + itemId).addClass("glyphicon-check").removeClass("glyphicon-refresh");
         }
     })
@@ -417,7 +371,6 @@ function checkItem(itemId) {
  * @param itemId, the item ID
  */
 function uncheckItem(itemId) {
-    console.log("The right function is being called :D");
     $("#checked" + itemId).addClass("glyphicon-refresh").removeClass("glyphicon-unchecked");
     ajax_updateCheckedBy(itemId, 0, function (data) {
         if (data === true) {
@@ -426,7 +379,6 @@ function uncheckItem(itemId) {
             $("#checkedBy" + itemId).html('');
             showListFromMenu(activeSHL);
         } else  {
-            console.log("error: data === false");
             $("#checked" + itemId).addClass("glyphicon-unchecked").removeClass("glyphicon-refresh");
         }
     })
@@ -442,7 +394,6 @@ function checkAssociatedUser(userId) {
     ajax_insertUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
         if (data) {
             $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="uncheckAssociatedUser('+ userId +')"><i class="glyphicon glyphicon-check"></i></td>')
-            console.log('checked! ' + data);
         }
     })
 }
@@ -455,7 +406,6 @@ function uncheckAssociatedUser(userId) {
     ajax_deleteUserInShoppingList(SHL[activeSHL].shoppingListId, userId, function (data) {
         if (data) {
             $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId +'" onclick="checkAssociatedUser('+ userId +')"><i class="glyphicon glyphicon-unchecked"></i></td>')
-            console.log('unchecked! ' + data);
         }
     })
 }
@@ -533,8 +483,6 @@ function createNewShoppingList() {
     if (shoppingListName !== null || shoppingListName !== '') {
         ajax_createNewList(shoppingListName, function (shoppingListId) {
             if (shoppingListId) {
-                console.log("userIds " );
-                console.log(userIdsNewShoppingList);
                 ajax_updateUsers(userIdsNewShoppingList, shoppingListId, function () {
                     $("#headline").replaceWith('<p id="headline" class="col-md-10">' + shoppingListName + '</p>');
                     loadSideMenu();
@@ -623,7 +571,6 @@ function closeListOfAssociatedUsersToNewShoppingList() {
  */
 function checkUserInNewShoppingList(userId) {
     userIdsNewShoppingList.push(userId);
-    console.log(userId);
     $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId + '" onclick="uncheckUserInNewShoppingList(' + userId + ')"><i class="glyphicon glyphicon-check"></i></td>');
 }
 
@@ -633,7 +580,6 @@ function checkUserInNewShoppingList(userId) {
  */
 function uncheckUserInNewShoppingList(userId) {
     removeObjectArray(userIdsNewShoppingList, userId);
-    console.log(userId);
     $("#associated_user_id_" + userId).replaceWith('<td id="associated_user_id_' + userId + '" onclick="checkUserInNewShoppingList(' + userId + ')"><i class="glyphicon glyphicon-unchecked"></i></td>');
 }
 
@@ -659,7 +605,6 @@ function editShoppingList(edit) {
         $("#edit_header").removeClass("hide");
         $("#archive_shopping_list_btn").addClass("hide");
         $("#title_header").addClass("hide");
-        console.log("BLIR KJØRT");
         $("#editTitleInput").attr("value", slName);
         hidePanelBody();
         $("#list_of_users_associated_with_shopping_list").removeClass("hide");
@@ -719,12 +664,10 @@ $(document).on('click', '#checkAllth', function () {
     checkAll();
     $("#checkAllth").addClass('hide');
     $("#uncheckAllth").removeClass('hide');
-    console.log('click check all');
 });
 
 $(document).on('click', '#uncheckAllth', function () {
     uncheckAll();
     $("#uncheckAllth").addClass('hide');
     $("#checkAllth").removeClass('hide');
-    console.log('click uncheck all');
 });

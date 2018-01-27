@@ -44,7 +44,6 @@ function printHouseholdsToWall(id) {
             if (data!==null&&data!==undefined){
                 for (var i=0;i<data.length;i++){
                     var val = data[i];
-                    console.log(val);
                     var inputString = "<tr><td>" + val.name + "</td><td>" + val.address + "</td></tr>";
                     $("#profile_households_table_body").append(inputString);
                 }
@@ -126,22 +125,18 @@ function editUserInfo() {
     $("#edit_profile_email").html("<input class='form-control' type='email' id='edit_profile_information_email'" +
         "value='"+currUs.email+"' placeholder='Email'>");
 
-    $("#edit_profile_phone").html("");
     $("#edit_profile_phone").html("<input class='form-control' type='number' id='edit_profile_information_phone' " +
         "value='"+currUs.telephone+"' placeholder='Telephone'>");
 
-    $("#edit_profile_bio").html("");
     var bio;
     if(currUs.bio != null && currUs.bio != "null") {
         bio = currUs.bio;
     } else {
         bio = "";
     }
-    console.log(bio);
     $("#edit_profile_bio").html("<textarea class='form-control' rows='3' type='text' id='edit_profile_information_bio' " +
     "placeholder='Bio'>"+bio+"</textarea>");
 
-    $("#edit_profile_relationship").html("");
     $("#edit_profile_relationship").html('<select class="form-control" id="edit_profile_information_relationship" value="' + currUs.relationship + '">\n' +
         '            <option value="">--Chose an option--</option>\n' +
         '            <option value="Single">Single</option>\n' +
@@ -165,7 +160,6 @@ function editUserInfo() {
     }
     document.getElementById("edit_profile_information_relationship").options[selected_relationship].selected = true;
 
-    $("#edit_profile_gender").html("");
     $("#edit_profile_gender").html('<select class="form-control" id="edit_profile_information_gender" value="' + currUs.gender + '">\n' +
         '            <option value="">--Chose an option--</option>\n' +
         '            <option value="Female">Female</option>\n' +
@@ -201,7 +195,6 @@ function editUserInfo() {
         "<div class='col-md-9'>" +
         "<input class='form-control' type='password' id='repeatPassword'></div></div>");
 
-    $("#edit_button").html("");
     $("#edit_button").html("<div onclick='changePassword()' class='panel-footer cursorPointer' id='profile-footer'>Save information</div>");
 
 }
@@ -211,9 +204,7 @@ function changePassword() {
     var newPassword = $("#newPassword").val();
     var repeatPassword = $("#repeatPassword").val();
 
-    console.log(oldPassword);
-
-    if(oldPassword == "") {
+    if(oldPassword === "") {
         saveInformation();
     } else {
         if(newPassword.length < 8) {
@@ -239,16 +230,13 @@ function changePassword() {
                                     '<strong>New password does not match</strong></div>';
                             }
                         }
-                    },
-                    error: function (res) {
-                        console.log(res);
                     }
                 });
             }
 
             else{
-                document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-                    '<strong>Failed to update password.</strong> Make sure your new passwords match & that your old password is correct. </div>';
+                $("#alertbox").html('<div class="alert alert-danger">' +
+                    '<strong>Failed to update password.</strong> Make sure your new passwords match & that your old password is correct. </div>');
             }
         }
     }
@@ -261,11 +249,7 @@ function updatePassword(password) {
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         success: function (res) {
-            console.log(res);
             saveInformation();
-        },
-        error: function (res) {
-            console.log(res);
         }
     });
 }
@@ -281,8 +265,8 @@ function saveInformation() {
 
 
     if(newEmail == "" || newPhone == "" || newName == "") {
-        document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-            '<strong>Please fill in all the information</strong></div>';
+        $("#alertbox").html('<div class="alert alert-danger">' +
+            '<strong>Please fill in all the information</strong></div>');
     } else {
         var editUser = {
             "name": newName,
@@ -300,17 +284,15 @@ function saveInformation() {
             data: JSON.stringify(editUser),
             success: function (result) {
                 if (result == "true") {
-                    document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
-                        '<strong>Your profile is changed</strong></div>';
+                    $("#alertbox").html('<div class="alert alert-success">' +
+                        '<strong>Your profile is changed</strong></div>');
                     updateCurrentUser(getCurrentUser().userId);
                     $("#myPageId").click();
                 } else {
-                    document.getElementById("alertbox").innerHTML = '<div class="alert alert-danger">' +
-                        '<strong>Email already exists</strong></div>';
+                    $("#alertbox").html('<div class="alert alert-danger">' +
+                        '<strong>Email already exists</strong></div>');
                 }
 
-            },
-            error: function (result) {
             }
         });
     }

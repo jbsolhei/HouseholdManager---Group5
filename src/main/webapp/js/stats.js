@@ -31,9 +31,6 @@ function drawExpenseGraph() {
             householdStats = result;
             householdStats = fixData(householdStats);
             showExpenseStats();
-        },
-        error: function (e) {
-            console.log(e);
         }
     });
 }
@@ -93,9 +90,6 @@ function drawChoreStats() {
                 userStats[i].tasks = fixData(userStats[i].tasks);
             }
             showChoreStats(userStats);
-        },
-        error: function (e) {
-            console.log(e);
         }
     });
 }
@@ -145,7 +139,6 @@ function showChoreStats(data) {
             }
         }
     });
-    console.log(chart);
     hideAllDatasets();
 }
 

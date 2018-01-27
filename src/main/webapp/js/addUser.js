@@ -117,10 +117,6 @@ function addUser() {
                 $("#alertbox").html('<div class="alert alert-danger">' +
                     '<strong>The email or phone number already exist</strong></div>');
             }
-        },
-        error: function (e) {
-            console.log("error");
-            console.log(e);
         }
     })
 }

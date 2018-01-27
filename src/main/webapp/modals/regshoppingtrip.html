@@ -56,7 +56,6 @@
     var slId = SHL[activeSHL].shoppingListId;
     var slName = he.decode(SHL[activeSHL].name);
     ajax_getShoppingListUsers(slId, function (members) {
-        console.log(members.length);
        for (i = 0; i < members.length; i++) {
             $("#members").append('<label style="text-align: left; width: 100%"><input id="memberId'+members[i].userId+'" type="checkbox" class="theClass" value="" checked>'+members[i].name+'</label>');
        }
@@ -67,7 +66,6 @@
     ajax_getShoppingList(slId, function (list) {
        for(i = 0; i < list.items.length; i++) {
            if (list.items[i].checkedBy !== null && list.items[i].checkedBy.userId === getCurrentUser().userId) {
-               console.log(list.items[i]);
                itmesCheckedByCurrentUser.push(list.items[i]);
                itemText += list.items[i].name +", ";
            }
@@ -131,8 +129,8 @@
                         }
                         getShoppingTrips();
 
-                        document.getElementById("alertbox").innerHTML = '<div class="alert alert-success">' +
-                            '<strong>Success!</strong> Shoppingtrip added.</div>';
+                        $("#alertbox").html('<div class="alert alert-success">' +
+                            '<strong>Success!</strong> Shoppingtrip added.</div>');
 
                         $(".alert-success").fadeTo(500, 500).slideUp(500, function(){
                             switchShoppingtripContent(0);
@@ -141,22 +139,14 @@
 
 
                     } else {
-                        document.getElementById("alertbox").innerHTML = '<div id="alertbox" class="alert alert-danger">' +
-                            '<strong>Failed!</strong>Something went wrong. Please try again.</div>';
+                        $("#alertbox").html('<div id="alertbox" class="alert alert-danger">' +
+                            '<strong>Failed!</strong>Something went wrong. Please try again.</div>');
                     }
 
-                },
-                error: function (response) {
-                    console.log("error");
-                    console.log(response);
                 }
-
             });
         }
     }
-
-
-
 
     //createPage();
 </script>

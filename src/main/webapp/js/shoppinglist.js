@@ -41,14 +41,12 @@ function additem() {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("Items successfully saved in database");
             navToShoppingList(activeSHL);
         }
     });
 }
 
 function check(itemId){
-    console.log(itemId);
     var user = getCurrentUser();
     ajaxAuth({
         type: 'POST',
@@ -57,7 +55,6 @@ function check(itemId){
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("List successfully added to database");
             $("#unchecked" + itemId).replaceWith('<span onclick="unCheck(' + itemId + ')" name="checked" id="checked' + itemId + '" class="glyphicon glyphicon-check"></span>');
             $("#checkedBy" + itemId).html(user.name);
             navToShoppingList(activeSHL);
@@ -73,8 +70,6 @@ function unCheck(itemId){
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("Item successfully added to database");
-            console.log(itemId);
             $("#checked" + itemId).replaceWith('<span onclick="check(' + itemId + ')" name="unchecked" id="unchecked' + itemId + '" class="glyphicon glyphicon-unchecked"></span>');
             $("#checkedBy" + itemId).html('');
             navToShoppingList(activeSHL);
@@ -84,34 +79,24 @@ function unCheck(itemId){
 
 function deleteItem(itemNumber){
     $("#item" + itemNumber).remove();
-    console.log("Item to be deleted: "+itemNumber);
     /*deleteItems[numberOfDeleteItems] = itemNumber;
     numberOfDeleteItems += 1;*/
-    console.log(currentItemList);
     ajaxAuth({
         type: "DELETE",
-        url: "res/household/"+getCurrentHousehold().houseId +"/shopping_lists/"+SHL[activeSHL].shoppingListId+"/items/"+itemNumber,
-        success: function(){
-            console.log("Item #" + itemNumber + " deleted.");
-        }
+        url: "res/household/"+getCurrentHousehold().houseId +"/shopping_lists/"+SHL[activeSHL].shoppingListId+"/items/"+itemNumber
     });
     navToShoppingList(activeSHL);
 }
 
 function showList(SLIndex){
-    console.log(SHL);
     $("#newItem").replaceWith('<tbody id="newItem"></tbody>');
-    console.log("SLIndex: " + SLIndex);
     currentItemList = SHL[SLIndex].items;
-    console.log("Length of current itemlist: " + currentItemList.length);
     if(currentItemList.length===0){
         $("#emptyListText").removeClass("hide");
     }else{
         $("#emptyListText").addClass("hide");
         $.each(currentItemList,function(i,val){
-            console.log('val.itemId: ' + val.itemId);
             if (val.itemId !== 0) {
-                console.log(typeof val.checkedBy);
                 var checkedBy;
                 if (val.checkedBy === null) {
                     checkedBy = "";
@@ -160,7 +145,6 @@ function deleteList(){
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("List successfully deleted from database");
             if(activeSHL!==0)activeSHL--;
             navToShoppingList(activeSHL);
         }
@@ -168,10 +152,7 @@ function deleteList(){
 }
 
 function addNewShoppingList(){
-    console.log("1: addNewShoppingList pressed, previous numOfLists: " + numberOfLists);
     numberOfLists += 1;
-    console.log("2: Current number of lists: " + numberOfLists);
-    console.log('Has been clicked:' + $("#privateButton").hasClass("has_been_clicked"));
     var name = $("#headlineInput").val();
     $("#headlineInput").value = "";
     $("#headline").removeClass("hide");
@@ -185,66 +166,48 @@ function addNewShoppingList(){
     var userIds = [];
     if ($("#privateButton").hasClass("has_been_clicked")) {
         userIds.push(getCurrentUser().userId);
-        console.log('user: ' + getCurrentUser())
     } else {
         users = getCurrentHousehold().residents;
         for (var i = 0; i<users.length; i++) {
             userIds.push(users[i].userId)
         }
-        console.log('user:' + userIds)
     }
     activeSHL = numberOfLists-1;
     addNewList(name, userIds);
-    console.log("5: JS updates activeSHL.");
 }
 
 function addNewList(name, users){
-    console.log("3: addNewList() starts. Name: " + name);
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_lists/',
         data: name,
         contentType: 'text/plain',
         success: function (data) {
-            console.log("List successfully added to database");
             updateUsersAjax(data, users);
         }
     });
-    console.log("4: addNewList() is done.");
 }
 
 function updateUsers() {
     var hh = getCurrentHousehold();
     var usersIds = [];
     var checkedUsers = $(".checked-in-modal");
-    console.log(checkedUsers);
     for (var i = 0; i<checkedUsers.length; i++) {
         var id = checkedUsers[i].id;
         id = id.replace('uniqueUserId_', '');
         usersIds.push(id);
-        console.log('id: ' + id);
     }
 
-    console.log(JSON.stringify({'userids': usersIds}));
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + hh.houseId + '/shopping_list/' + SHL[activeSHL].shoppingListId +'/users',
         data: JSON.stringify(usersIds),
         dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-        success: function () {
-            console.log("List successfully added to database");
-        },
-        error: function (result) {
-            console.log(result);
-        }
+        contentType: 'application/json; charset=utf-8'
     });
 }
 
 function updateUsersAjax(shoppingListId, users) {
-    console.log("!!! - shoppingListId: " + shoppingListId +  " houseId: " + getCurrentHousehold().houseId);
-    console.log(JSON.stringify({'userids': users}));
-
     ajaxAuth({
         type: 'POST',
         url: 'res/household/' + getCurrentHousehold().houseId + '/shopping_list/' + shoppingListId + '/users',
@@ -252,11 +215,7 @@ function updateUsersAjax(shoppingListId, users) {
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("List successfully added to database");
             navToShoppingList(activeSHL);
-        },
-        error: function (result) {
-            console.log(result);
         }
     });
 
@@ -275,25 +234,18 @@ function getUsers() {
                 $("#inList").append('<tr><td id="uniqueUserId_'+ userId +'" onclick="checkUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td><td>' + allUsers[i].name + '</td></tr>');
             }
             for (var i = 0; i<users.length; i++) {
-                console.log(users[i].userId);
                 $("#uniqueUserId_" + users[i].userId).replaceWith('<td id="uniqueUserId_' + users[i].userId +'" onclick="uncheckUser('+ users[i].userId +')" class="glyphicon glyphicon-check checked-in-modal"></td>')
             }
-        },
-        error: function(data) {
-            console.log("Error in getUsers");
-            console.log(data);
         },
         dataType: "json"
     });
 }
 
 function checkUser(userId) {
-    console.log("check user:" + userId);
     $("#uniqueUserId_" + userId).replaceWith('<td id="uniqueUserId_' + userId +'" onclick="uncheckUser('+ userId +')" class="glyphicon glyphicon-check checked-in-modal"></td>')
 }
 
 function uncheckUser(userId) {
-    console.log("uncheck user:" + userId);
     $("#uniqueUserId_" + userId).replaceWith('<td id="uniqueUserId_' + userId +'" onclick="checkUser('+ userId +')" class="glyphicon glyphicon-unchecked"></td>')
 }
 
