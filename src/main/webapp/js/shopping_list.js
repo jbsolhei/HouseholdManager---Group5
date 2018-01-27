@@ -476,11 +476,14 @@ function hideInputHeader() {
  * Pulls users to be added from the userIdsNewShoppingList variable
  */
 function createNewShoppingList() {
-    hideInputHeader();
-    closeListOfAssociatedUsersToNewShoppingList();
-    var shoppingListName = $("#text_input_new_shopping_list").val();
-    $("#text_input_new_shopping_list").val("");
-    if (shoppingListName !== null || shoppingListName !== '') {
+    var shoppingListName = $("#text_input_new_shopping_list").val().trim();
+    if (shoppingListName === "") {
+        $("#text_input_new_shopping_list").clearQueue().shake(2, 7, 300);
+    }
+    else {
+        hideInputHeader();
+        closeListOfAssociatedUsersToNewShoppingList();
+        $("#text_input_new_shopping_list").val("");
         ajax_createNewList(shoppingListName, function (shoppingListId) {
             if (shoppingListId) {
                 ajax_updateUsers(userIdsNewShoppingList, shoppingListId, function () {
@@ -610,10 +613,15 @@ function editShoppingList(edit) {
         $("#list_of_users_associated_with_shopping_list").removeClass("hide");
         toggleListOfAssociatedUsers();
     } else {
-        ajax_updateShoppingListName(SHL[activeSHL].shoppingListId, $("#editTitleInput").val());
-        loadSideMenu();
-        removeEditElemets();
-        $("#archive_shopping_list_btn").removeClass("hide");
+        var newShoppingListName = $("#editTitleInput").val().trim();
+        if (newShoppingListName === "") {
+            $("#editTitleInput").clearQueue().shake(2, 7, 300);
+        } else {
+            ajax_updateShoppingListName(SHL[activeSHL].shoppingListId, newShoppingListName);
+            loadSideMenu();
+            removeEditElemets();
+            $("#archive_shopping_list_btn").removeClass("hide");
+        }
     }
 }
 

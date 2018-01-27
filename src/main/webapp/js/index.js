@@ -339,7 +339,6 @@ function showLoadingScreen(show) {
 jQuery.fn.shake = function(intShakes, intDistance, intDuration) {
     this.each(function() {
         $(this).css("position", "relative");
-        $(this).clearQueue();
         for (var x = 1; x <= intShakes; x++) {
             $(this).animate({
                 left : -intDistance
