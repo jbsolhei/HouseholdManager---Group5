@@ -77,6 +77,7 @@ function showExpenseStats() {
 
 function drawChoreStats() {
     $(".switchboi").removeClass("hide");
+    $("#boxxyboi").prop("checked", true);
     $("#moneyStatId").removeClass("activeStat");
     $("#choreStatId").addClass("activeStat");
     ajaxAuth({
@@ -139,14 +140,13 @@ function showChoreStats(data) {
             }
         }
     });
-    hideAllDatasets();
 }
 
 function toggleAllData(){
     if ($("#boxxyboi").is(":checked")){
-        hideAllDatasets();
-    } else {
         showAllDatasets();
+    } else {
+        hideAllDatasets();
     }
 }
 
