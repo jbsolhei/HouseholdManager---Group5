@@ -294,22 +294,28 @@ function getNews(runThisAfter){
 }
 
 function postNews(text,runThisAfter){
-    var message = {"message":text};
-    var residents = getCurrentHousehold().residents;
-    for (i = 0; i < residents.length; i++) {
-        if (residents[i].userId !== getCurrentUser().userId) addNotification(residents[i].userId, getCurrentHousehold().houseId, getCurrentUser().name + " has posted news.")
-    }
-    ajaxAuth({
-        url:"res/household/"+getCurrentHousehold().houseId+"/news",
-        type: "POST",
-        data: JSON.stringify(message),
-        contentType: "application/json; charset=utf-8",
-        success: function(data){
-            console.log("Success!");
-            runThisAfter(data);
-            // Do things after post here
+    if(text != "" && text != null){
+        var message = {"message":text};
+        if(message != "" && message != null){
+            ajaxAuth({
+                url:"res/household/"+getCurrentHousehold().houseId+"/news",
+                type: "POST",
+                data: JSON.stringify(message),
+                contentType: "application/json; charset=utf-8",
+                success: function(data){
+                    console.log("Success!");
+                    var residents = getCurrentHousehold().residents;
+                    for (i = 0; i < residents.length; i++) {
+                        if (residents[i].userId !== getCurrentUser().userId) addNotification(residents[i].userId, getCurrentHousehold().houseId, getCurrentUser().name + " has posted news.")
+                    }
+                    runThisAfter(data);
+                    // Do things after post here
+                }
+            });
         }
-    });
+    }
+
+
 }
 
 function deleteNews(newsId,runThisAfter){

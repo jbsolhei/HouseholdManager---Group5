@@ -70,10 +70,12 @@ function checkIfEnter(e) {
 }
 
 function postNewsOnDashboard() {
-
     var post = $("#newPost").val();
     $("#newPost").val("");
-    postNews(post, printNewsToDashboard);
+    if(post != "" && post != null){
+        postNews(post, printNewsToDashboard);
+    }
+
 }
 
 function printNewsToDashboard(){
