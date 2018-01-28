@@ -1,5 +1,4 @@
 ### Latest Release: [![release](http://github-release-version.herokuapp.com/github/StamosUltra/HouseholdManager---Group5/release.svg?style=flat)](https://github.com/StamosUltra/HouseholdManager---Group5/releases/latest)
-<br>
 
 ---
 
