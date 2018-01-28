@@ -45,6 +45,7 @@ public class ChoreService {
      *
      * @param houseId the house id. (from path)
      * @param chore a {@link classes.Chore} object.
+     * @return result of the postChore() method
      */
     @POST
     @Auth(AuthType.HOUSEHOLD)
