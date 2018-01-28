@@ -13,8 +13,12 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 /**
- * <p>AuthorizationFilter class.</p>
+ * <p>AuthorizationFilter checks if the user associated with the current session has the right privileges
+ * to use the REST-endpoint it requests.</p>
  *
+ * @see AuthenticationFilter
+ * @see AuthType
+ * @see UserAuth
  */
 @Auth
 @Provider
@@ -103,6 +107,10 @@ public class AuthorizationFilter implements ContainerRequestFilter {
         }
     }
 
+    /**
+     * Aborts the current request with a HTTP 403 Forbidden response.
+     * @param context the ContainerRequestContext of the request.
+     */
     private void unauthorized(ContainerRequestContext context) {
         context.abortWith(Response.status(Response.Status.FORBIDDEN).build());
     }

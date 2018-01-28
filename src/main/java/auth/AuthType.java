@@ -2,7 +2,11 @@ package auth;
 
 /**
  * <p>Authorization types for different user actions.</p>
- * <p>This enum defines different user authorization levels required by different user actions.</p>
+ * <p>This enum defines different user authorization levels required by different user actions.
+ * Use one of these values as the parameter of the @{@link Auth} annotation to specify
+ * what authorization levels is required on a REST-endpoint.</p>
+ *
+ * @see Auth
  */
 public enum AuthType {
     /**

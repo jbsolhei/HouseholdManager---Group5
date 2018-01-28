@@ -5,12 +5,17 @@ import java.util.Base64;
 import java.util.HashMap;
 
 /**
- * <p>Sessions class.</p>
+ * <p>Static methods to generate and retrieve Sessions.</p>
  *
+ * @see Session
  */
 public class Sessions {
 
+    /**
+     * The time in seconds for when an inactive session should be timed out and invalidated.
+     */
     private static final int TIMEOUT_SECS = 1800; // 30 min
+
     private static HashMap<String, Session> sessions = new HashMap<>();
 
     private Sessions() {

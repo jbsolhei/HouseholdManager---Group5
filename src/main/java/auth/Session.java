@@ -2,8 +2,9 @@ package auth;
 
 
 /**
- * <p>Session class.</p>
+ * <p>Class representing a single session.</p>
  *
+ * @see Sessions
  */
 public class Session {
 
