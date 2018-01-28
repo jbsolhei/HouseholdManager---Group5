@@ -1,6 +1,5 @@
 package database;
 
-import classes.Debt;
 import classes.ShoppingTrip;
 import classes.User;
 
@@ -207,7 +206,8 @@ public class ShoppingTripDAO {
 
     /**
      * This function updates the debt between people if someone deletes a shopping trip.
-     * @param shoppingTripId
+     *
+     * @param shoppingTripId the id of the shoppingtrip
      * @return true if ok, false if failed
      */
     public static boolean updateDebtValue(int shoppingTripId) {

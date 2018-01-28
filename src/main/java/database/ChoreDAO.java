@@ -15,6 +15,7 @@ public class ChoreDAO {
      * Inserts one chore for a given householdId to the database
      *
      * @param chore the {@link classes.Chore} object to insert.
+     * @return the choreId.
      */
     public static int postChore(Chore chore){
 
