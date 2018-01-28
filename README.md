@@ -1,6 +1,8 @@
 ### Latest Release: [![release](http://github-release-version.herokuapp.com/github/StamosUltra/HouseholdManager---Group5/release.svg?style=flat)](https://github.com/StamosUltra/HouseholdManager---Group5/releases/latest)
 <br>
 
+---
+
 <img src=https://raw.githubusercontent.com/StamosUltra/HouseholdManager---Group5/master/src/main/webapp/images/HHM_logo_text.png><br>
 
 Denne appen er for kollektiv eller andre hushold som ønsker å holde styr på felles ansvar, utgifter og gjøremål!<br>
