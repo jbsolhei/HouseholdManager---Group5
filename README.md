@@ -7,6 +7,7 @@ Denne appen er for kollektiv eller andre hushold som ønsker å holde styr på f
 Med Householdmanager får du full oversikt over din husstand!<br>
 Du kan se statistikker, poste nyheter eller dele regninger for felles utgifter!
 
+---
 
 ### Build status
 
