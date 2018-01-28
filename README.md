@@ -1,5 +1,4 @@
-### Latest Release:
-[![release](http://github-release-version.herokuapp.com/github/StamosUltra/HouseholdManager---Group5/release.svg?style=flat)](https://github.com/StamosUltra/HouseholdManager---Group5/releases/latest)
+### Latest Release: [![release](http://github-release-version.herokuapp.com/github/StamosUltra/HouseholdManager---Group5/release.svg?style=flat)](https://github.com/StamosUltra/HouseholdManager---Group5/releases/latest)
 <br>
 
 <img src=https://raw.githubusercontent.com/StamosUltra/HouseholdManager---Group5/master/src/main/webapp/images/HHM_logo_text.png><br>
