@@ -21,9 +21,6 @@ function getDebt(){
             }
             $("#debtSumOutgoing").replaceWith('<div class="col-xs-3 nopadding debt-sum" id="debtSumOutgoing">' + sum + ',-</div>');
         },
-        error: function(data) {
-            console.log("Error in getDebts");
-        },
         dataType: "json"
     });
 }
@@ -42,16 +39,11 @@ function getIncome(){
             }
             $("#debtSumIncoming").replaceWith('<div class="col-xs-3 nopadding debt-sum" id="debtSumIncoming">' + sum + ',-</div>');
         },
-        error: function(data) {
-            console.log("Error in getIncomes");
-        },
         dataType: "json"
     });
 }
 
 function loadFinanceTables(){
-    console.log("loadFinanceTables()");
-
     $("#debtTable").html("<tbody id=\"debtTable\"></tbody>");
     $("#incomeTable").html("<tbody id=\"incomeTable\"></tbody>");
 
@@ -99,11 +91,11 @@ function sendPaymentRequest(i) {
 
 function loadFinanceModal() {
     if(payOrAlert == 0){
-        document.getElementById("payMoneyText").innerHTML = '<p id="payMoneyText">Do you confirm that you have payed ' + name + ' ' + amount + ',- ?</p>';
+        $("#payMoneyText").html('<p id="payMoneyText">Do you confirm that you have payed ' + name + ' ' + amount + ',- ?</p>');
 
     } else {
         $("#financeModalTitle").replaceWith('<h4 id="financeModalTitle" class="modal-title">Send payment alert</h4>');
-        document.getElementById("payMoneyText").innerHTML = '<p id="payMoneyText">Confirm to send this alert:</p>';
+        $("#payMoneyText").html('<p id="payMoneyText">Confirm to send this alert:</p>');
         $("#payMoneyInput").append('<textarea class="form-control" rows="2" id="payMoneyInput">Please pay the ' + income[index].amount + ',- that you owe me.</textarea>');
         $("#confirmPaymentButton").replaceWith('<button id="confirmSendAlertPaymentButton" type="button" class="btn btn-primary" onclick="confirmSendAlertPayment()">Send alert</button>');
     }
@@ -119,17 +111,14 @@ function confirmPayment(){
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
         success: function () {
-            console.log("Debt deleted.");
-            console.log(debt);
             $("#closeFinanceModalButton").click();
             $("#debt" + index).remove();
-        },
+        }
     });
     addNotification(debt[index].toUser.userId, getCurrentHousehold().houseId, getCurrentUser().name + " have payed you the " + debt[index].amount + ",- they owed you. If this is not correct, please contact " + getCurrentUser().name + ".");
 }
 
 function confirmSendAlertPayment() {
-    console.log($("textarea#payMoneyInput").val());
     addNotification(income[index].toUser.userId, getCurrentHousehold().houseId, "ALERT FROM " + getCurrentUser().name.toUpperCase() + ": " + $("textarea#payMoneyInput").val());
     $("#closeFinanceModalButton").click();
 }

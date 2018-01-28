@@ -240,7 +240,7 @@
 
         $(document).ready(function(){
             setInterval(checkSession, 20000);
-            setInterval(function(){getNotifications(getCurrentUser().userId)},1000);
+            setInterval(function(){getNotifications(getCurrentUser().userId)},5000);
             swapContent(dashboard);
             $('[data-toggle="popover"]').popover();
         });

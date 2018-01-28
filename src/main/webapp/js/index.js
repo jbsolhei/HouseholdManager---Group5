@@ -23,14 +23,14 @@ function ajaxAuth(attr) {
     attributes.headers.Authorization = "Bearer " + window.localStorage.getItem("sessionToken");
 
     attributes.error = function (xhr, textStatus, exceptionThrown) {
-        console.log("[AjaxAuth] Error: " + xhr.status + ": " + textStatus + ", " + exceptionThrown);
+        console.log("[AjaxAuth] Error " + xhr.status + ": " + textStatus + ", " + exceptionThrown);
         console.trace();
 
         if (typeof attr.error === "function") {
             attr.error(xhr, textStatus, exceptionThrown);
         }
 
-        if (xhr.status === 401){
+        if (xhr.status === 401) {
             window.localStorage.clear();
             window.location.replace("OpeningPage.html");
         }
@@ -128,7 +128,6 @@ function updateCurrentHousehold(bodyContent, successCallback){
 }
 
 function setCurrentHousehold(hid, page) {
-    console.log(page);
     if (hid === 0){
         ajaxAuth({
             url: "res/user/"+window.localStorage.getItem("userId")+"/hh",
@@ -156,7 +155,6 @@ function setCurrentHousehold(hid, page) {
             type: "GET",
             contentType: "application/json; charser=utf-8",
             success: function (data) {
-                console.log('success');
                 if (data.length!==null) {
                     window.localStorage.setItem("house", JSON.stringify(data));
                     window.location.replace("index.html");
@@ -196,7 +194,6 @@ function checkWelcome() {
 }
 
 function logout() {
-    console.log("clicked");
     window.localStorage.clear();
     window.location.replace("OpeningPage.html");
 }
@@ -216,7 +213,6 @@ function addHouseholdsToList(userId) {
                 $("#listOfHouseholds").prepend("<li><a class='householdElement' id='"+households[i].houseId+"'>" + households[i].name + "</a></li>");
             }
             householdsLoaded = true;
-            console.log("DATA LOADET");
             $('#coverScreen').css('display', "none");
         },
         dataType: "json"
@@ -249,7 +245,6 @@ function callModal(modalContent) {
 }
 
 function callModalRun(modalContent, functions) {
-    console.log(modalContent);
     $("#modal").load(modalContent);
     for (var i = 0; i<functions.length; i++) {
         functions[i]();
@@ -268,6 +263,7 @@ function swapHouseholdFromHouseholdOverview (houseId){
         success: function (data) {
             window.localStorage.setItem("house", JSON.stringify(data));
             $(".page-wrapper").load(household);
+            $("#currentHouseholdId").html(data.name + ' <span class="caret"></span>');
         },
         dataType: "json"
     });
@@ -303,7 +299,6 @@ function postNews(text,runThisAfter){
                 data: JSON.stringify(message),
                 contentType: "application/json; charset=utf-8",
                 success: function(data){
-                    console.log("Success!");
                     var residents = getCurrentHousehold().residents;
                     for (i = 0; i < residents.length; i++) {
                         if (residents[i].userId !== getCurrentUser().userId) addNotification(residents[i].userId, getCurrentHousehold().houseId, getCurrentUser().name + " has posted news.")

@@ -13,7 +13,6 @@
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/forgotPassword.js"></script>
-    <script src="js/test-hash.js"></script>
     <script src="js/addUser.js"></script>
     <script src="js/index.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Raleway:200,100i" rel="stylesheet">
@@ -38,7 +37,7 @@
 
             <ul class="nav navbar-nav navbar-right" id="login-form">
                 <li id="wrong-credentials-message"><a class="loginA">Wrong email or password</a></li>
-                <li id="forgotPassword"><a class="loginA" >Forgot password?</a></li>
+                <li id="forgotPassword"><a class="loginA clickable" data-toggle="modal" data-target="#theModal" onclick="callModal('modals/forgotten.html')">Forgot password?</a></li>
                 <li id="emailInputId"><a><input placeholder="Email" class="form-control" type="email" id="email" name="email"/></a></li>
                 <li id="passwordInputId"><a><input placeholder="Password" class="form-control" type="password" id="password" name="password"/></a></li>
                 <li id="loginButton"><a class="loginA" onclick="login($('#email').val(),$('#password').val()); showLoadingScreen(true)"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>

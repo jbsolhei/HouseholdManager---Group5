@@ -55,16 +55,16 @@ function printShoppingListsToDashboard(house) {
         $.each(shoppingLists, function (i, val) {
             if (!(val.archived)) {
                 var current = house.shoppingLists[i];
-                var inputSting = "<li class='list-group-item'>" + current.name + "</li>";
+                var inputSting = "<li class='list-group-item' onclick='navToShoppingList(" + i + ")'>" + current.name + "</li>";
                 $("#dashboard_shopping_list_unordered_list").append(inputSting);
             }
-        })
+        });
     });
 }
 
 function checkIfEnter(e) {
     var keycode = (e.keyCode ? e.keyCode : e.which);
-    if (keycode == '13') {
+    if (keycode === 13) {
         postNewsOnDashboard();
     }
 }

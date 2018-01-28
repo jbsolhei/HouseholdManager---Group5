@@ -48,9 +48,7 @@ function addNewUserToList() {
 
     if (expr.test(email)) {
         $("#newUsersList").prepend("<li class='newUserListElement'><a>" + email + "</a></li>");
-        console.log(email + " added");
-        $("#addUserInput").val("");
-        $("#addUserInput").focus();
+        $("#addUserInput").val("").focus();
     }
 }
 
@@ -58,8 +56,8 @@ function addNewUserToList() {
 function confirm() {
 //if some of the forms are not filled in
     if (house_name == "" || house_address == "") {
-        document.getElementById("alertbox").innerHTML = '<div style="text-align: left" class="alert alert-danger">' +
-            '<strong>Failed to create Household.</strong> Please fill in all the forms. </div>';
+        $("#alertbox").html('<div style="text-align: left" class="alert alert-danger">' +
+            '<strong>Failed to create Household.</strong> Please fill in all the forms. </div>');
 
 
         $(".alert-danger").fadeTo(5000, 500).slideUp(500, function(){
@@ -68,8 +66,8 @@ function confirm() {
 
     } else {
 
-        document.getElementById("alertbox").innerHTML = '<div style="text-align: left" class="alert alert-success">' +
-            '<strong>Success!</strong> You have now created a Household.</div>';
+        $("#alertbox").html('<div style="text-align: left" class="alert alert-success">' +
+            '<strong>Success!</strong> You have now created a Household.</div>');
 
         $(".alert-success").fadeTo(3000, 500).slideUp(500, function(){
             $(".alert-danger").slideUp(500);
@@ -105,9 +103,6 @@ function addHousehold(household) {
             } else {
                 alert("Error adding household")
             }
-        },
-        error: function (e) {
-            console.log(e);
         }
     });
 }
@@ -120,13 +115,7 @@ function sendInviteToUsers(houseId, emails) {
             type: "POST",
             data: JSON.stringify(emails),
             contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (result) {
-
-            },
-            error: function (e) {
-                console.log(e);
-            }
+            dataType: 'json'
         })
     }
     setCurrentHousehold(houseId);

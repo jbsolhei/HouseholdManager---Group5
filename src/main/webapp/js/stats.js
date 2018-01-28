@@ -31,9 +31,6 @@ function drawExpenseGraph() {
             householdStats = result;
             householdStats = fixData(householdStats);
             showExpenseStats();
-        },
-        error: function (e) {
-            console.log(e);
         }
     });
 }
@@ -80,6 +77,7 @@ function showExpenseStats() {
 
 function drawChoreStats() {
     $(".switchboi").removeClass("hide");
+    $("#boxxyboi").prop("checked", true);
     $("#moneyStatId").removeClass("activeStat");
     $("#choreStatId").addClass("activeStat");
     ajaxAuth({
@@ -93,9 +91,6 @@ function drawChoreStats() {
                 userStats[i].tasks = fixData(userStats[i].tasks);
             }
             showChoreStats(userStats);
-        },
-        error: function (e) {
-            console.log(e);
         }
     });
 }
@@ -145,15 +140,13 @@ function showChoreStats(data) {
             }
         }
     });
-    console.log(chart);
-    hideAllDatasets();
 }
 
 function toggleAllData(){
     if ($("#boxxyboi").is(":checked")){
-        hideAllDatasets();
-    } else {
         showAllDatasets();
+    } else {
+        hideAllDatasets();
     }
 }
 

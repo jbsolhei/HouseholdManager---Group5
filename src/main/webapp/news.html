@@ -12,7 +12,6 @@
 
         document.getElementById("comment").value = "";
         getNews(function (listOfNews) {
-            console.log(listOfNews);
             $("#list_of_news").html("");
             for(var i=0; i<listOfNews.length; i++) {
                 var time;
