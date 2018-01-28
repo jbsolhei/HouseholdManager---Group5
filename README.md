@@ -3,6 +3,10 @@
 
 <img src=https://raw.githubusercontent.com/StamosUltra/HouseholdManager---Group5/master/src/main/webapp/images/HHM_logo_text.png><br>
 
+Denne appen er for kollektiv eller andre hushold som ønsker å holde styr på felles ansvar, utgifter og gjøremål!<br>
+Med Householdmanager får du full oversikt over din husstand!<br>
+Du kan se statistikker, poste nyheter eller dele regninger for felles utgifter!
+
 
 ### Build status
 
