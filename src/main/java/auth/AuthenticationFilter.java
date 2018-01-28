@@ -10,8 +10,10 @@ import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 
 /**
- * <p>AuthenticationFilter class.</p>
- *
+ * <p>AuthenticationFilter checks the incoming request for a "Authorization: Bearer" header and
+ * verifies the validity of the session associated with the token.</p>
+
+ * @see AuthorizationFilter
  */
 @Auth
 @Provider
@@ -40,6 +42,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
     }
 
+    /**
+     * Aborts the current request with a HTTP 401 Unauthorized response.
+     * @param context the ContainerRequestContext of the request.
+     */
     private void unauthenticated(ContainerRequestContext context) {
         context.abortWith(
                 Response.status(Response.Status.UNAUTHORIZED)

@@ -9,8 +9,11 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * <p>Auth class.</p>
+ * <p>Annotation used on REST-endpoints which requires authentication/authorization.</p>
+ * <p>An optional value-parameter specifies what authorization type should be used.
+ * The default is {@link AuthType#DEFAULT}.</p>
  *
+ * @see AuthType
  */
 @NameBinding
 @Retention(RUNTIME)
